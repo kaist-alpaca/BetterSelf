@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
-String exerciseName = '';
+String exerciseName = ''; //운동 이름 전역변수
+double exerciseTime = 0; // 운동 시간 저장용 변수
+double weight = 70; // 사용자 체중 전역변수
 
 void main() {
   runApp(ExerciseNote());
@@ -28,12 +31,15 @@ class SelectPage extends StatelessWidget {
     return Scaffold(
         body: Container(
       child: ListView(children: [
+        //리스트뷰 설정
         Column(
           children: [
             TextButton(
                 onPressed: () {
-                  exerciseName = '경*중도 웨이트트레이닝';
+                  //버튼 누르면
+                  exerciseName = '경*중도 웨이트트레이닝'; //운동 이름 전역변수 변경
                   Navigator.push(
+                      // 스톱워치 페이지로 이동
                       contextselect,
                       MaterialPageRoute(
                           builder: (contextselect) => StopwatchPage()));
@@ -397,17 +403,87 @@ class SelectPage extends StatelessWidget {
   }
 }
 
-class StopwatchPage extends StatelessWidget {
+//이 아래로 스톱워치 페이지 구현
+class StopwatchPage extends StatefulWidget {
+  StopwatchPage({Key? key}) : super(key: key);
+
   @override
+  _StopwatchPageState createState() => _StopwatchPageState();
+}
+
+class _StopwatchPageState extends State<StopwatchPage> {
+  late Timer _timer;
+  double _timeCount = 0; //시간 기록용
+  double _timesec = 0; // 초단위 시간
+  double _timemillisec = 0; // 0.01초단위 시간
+  double _timemin = 0; //분단위 시간
+  bool _isRunning = false;
+
+  void _start() {
+    //타이머 시작함수
+    _timer = Timer.periodic(Duration(milliseconds: 10), (timer) {
+      setState(() {
+        _timeCount++;
+        _timemillisec = _timeCount % 100;
+        _timesec = (_timeCount ~/ 100).toDouble();
+        _timemin = (_timesec ~/ 60).toDouble();
+      });
+    });
+  }
+
+  void _pause() {
+    //타이머 중지함수
+    _timer.cancel();
+  }
+
+  void _clickPlayButton() {
+    //시작 버튼 누르는 함수
+    _isRunning = !_isRunning;
+
+    if (_isRunning) {
+      _start();
+    } else {
+      _pause();
+    }
+  }
+
+  void _clickResetButton() {
+    // 리셋함수
+    setState(() {
+      _isRunning = false;
+      _timer.cancel();
+      _timeCount = 0;
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
       child: Column(
         children: [
+          FloatingActionButton(
+            //운동 시작&중지 버튼.
+            child: _isRunning ? Icon(Icons.pause) : Icon(Icons.play_arrow),
+            onPressed: () => setState(() {
+              _clickPlayButton();
+            }),
+          ),
+          Text('$_timemin 분 $_timesec . $_timemillisec 초'), //현재 운동시간 표시
           TextButton(
-            onPressed: () {},
-            child: Text('$exerciseName 시작'),
-          )
+            //리셋 및 저장버튼
+            onPressed: () {
+              exerciseTime = _timesec;
+              _clickResetButton();
+            },
+            child: Text('저장'),
+          ),
+          Text('$exerciseTime')
         ],
       ),
     ));
