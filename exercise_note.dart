@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:intl/intl.dart'; // pubspec.yaml의 dependencies에 intl: ^0.17.0 추가.
 
 String exerciseName = ''; //운동 이름 저장용 전역변수
 double exerciseTime = 0; // 운동 시간 저장용 변수
 double weight = 70; // 사용자 체중 전역변수
 double calories = 0; //소모 칼로리 저장용 변수
+String startTime = ''; //운동 시작 시각
+String endTime = ''; //운동 종료 시각
 
 void main() {
   runApp(ExerciseNote());
@@ -418,7 +421,8 @@ class _StopwatchPageState extends State<StopwatchPage> {
   double _timesec = 0; // 초단위 시간
   double _timemillisec = 0; // 0.01초단위 시간
   double _timemin = 0; //분단위 시간
-  bool _isRunning = false;
+  bool _isRunning = false; //지금 스톱워치 기록중인지 확인용
+  bool _isRecording = false; //지금 시작시간이 기록되었는지 확인용
 
   void _start() {
     //타이머 시작함수
@@ -445,6 +449,12 @@ class _StopwatchPageState extends State<StopwatchPage> {
       _start();
     } else {
       _pause();
+    } //시작 중지 구분
+
+    if (_isRecording) {
+    } else {
+      _isRecording = !_isRecording; //기록중이 아니었다면 시작시각 기록
+      startTime = DateFormat('yyyy-MM-dd-HH:mm:ss').format(DateTime.now());
     }
   }
 
@@ -482,12 +492,16 @@ class _StopwatchPageState extends State<StopwatchPage> {
             onPressed: () {
               exerciseTime = _timesec;
               calories = exerciseCalorie(exerciseName, exerciseTime, weight);
+              endTime =
+                  DateFormat('yyyy-MM-dd-HH:mm:ss').format(DateTime.now());
+              _isRecording = false;
               _clickResetButton();
             },
             child: Text('저장'),
           ),
           Text('$exerciseTime 초 동안 운동했습니다.'),
-          Text('$calories kcal 만큼의 칼로리를 소모했습니다.')
+          Text('$calories kcal 만큼의 칼로리를 소모했습니다.'),
+          Text('$startTime 부터 $endTime 까지 운동했습니다.'),
         ],
       ),
     ));
