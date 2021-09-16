@@ -21,7 +21,10 @@ App for 2021 TS222
 
 ///////
 
-### 앱의 각 기능 및 기능 요구사항, 각 기능의 개발 일정(link):
+### 앱의 각 기능(link):
+https://www.notion.so/44857f388b60475a8d078aab5d7d170
+
+### 기능 요구사항 및 개발 일정(link):
 https://www.notion.so/32b60f03d650463aab1e504b236c8cb0
 
 ///////
