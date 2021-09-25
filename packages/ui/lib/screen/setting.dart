@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ui/common/custom_icons_icons.dart';
 import 'package:ui/screen/setting_ID.dart';
 import 'package:ui/screen/setting_PW.dart';
 import 'package:ui/screen/setting_data.dart';
@@ -17,9 +16,9 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreen extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
-    var maxWidth = MediaQuery.of(context).size.width;
-    var maxHeight = MediaQuery.of(context).size.height;
-    var defaultSize = maxWidth * 0.0025;
+    final maxWidth = MediaQuery.of(context).size.width;
+    final maxHeight = MediaQuery.of(context).size.height;
+    final defaultSize = maxWidth * 0.0025;
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -169,19 +168,19 @@ class _SettingScreen extends State<SettingScreen> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            settingBar(
+            SettingBar(
               name: "ID",
               screen: SettingIDScreen(),
             ),
-            settingBar(
+            SettingBar(
               name: "암호",
               screen: SettingPWScreen(),
             ),
-            settingBar(
+            SettingBar(
               name: "위치 설정",
               screen: SettingLocationScreen(),
             ),
-            settingBar(
+            SettingBar(
               name: "데이터 관리",
               screen: SettingDataScreen(),
             ),
@@ -199,11 +198,11 @@ class _SettingScreen extends State<SettingScreen> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            settingBar(
+            SettingBar(
               name: "보안 정책",
               screen: SettingScurityScreen(),
             ),
-            settingBar(
+            SettingBar(
               name: "이용약관",
               screen: SettingTermsScreen(),
             ),

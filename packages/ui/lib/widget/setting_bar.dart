@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ui/common/custom_icons_icons.dart';
 
-class settingBar extends StatelessWidget {
+class SettingBar extends StatelessWidget {
   final name;
   final screen;
 
-  const settingBar({Key? key, @required this.name, @required this.screen})
+  const SettingBar({Key? key, @required this.name, @required this.screen})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var maxWidth = MediaQuery.of(context).size.width;
-    var maxHeight = MediaQuery.of(context).size.height;
-    var defaultSize = maxWidth * 0.0025;
+    final maxWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
         Navigator.push(
