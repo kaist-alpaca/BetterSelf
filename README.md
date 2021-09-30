@@ -83,7 +83,7 @@ https://www.notion.so/32b60f03d650463aab1e504b236c8cb0
 
 ### About commit
 
-- [XXXXX] OOOO
+- [XXXXX] OOOO | ****
     - XXXXX | 헤더
 
         feat : 새로운 기능에 대한 커밋
@@ -101,9 +101,12 @@ https://www.notion.so/32b60f03d650463aab1e504b236c8cb0
         - 제목은 명령문으로 사용하며 과거형을 사용하지 않는다
         - 본문의 각 행은 72글자 내로 제한
         - 어떻게 보다는 무엇과 왜를 설명한다
+    - **** | 소요시간
+        - 해당 기능을 구현하는 데에 들었던 시간을 기록한다
+        - 개발과 관련된 commit에만 입력한다
     - 예시)
 
-        [feat] sqflite (X) → [feat] 내부 데이터베이스의 CRUD 기능을 만듦
+        [feat] sqflite (X) → [feat] 내부 데이터베이스의 CRUD 기능을 만듦 | 4시간
 
 ### 주의사항
 
