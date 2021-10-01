@@ -79,7 +79,20 @@ https://www.notion.so/32b60f03d650463aab1e504b236c8cb0
 
 ### About branch
 
-- 개발팀장이 전적으로 관리
+(branch에 대한 보다 자세한 내용은 https://backlog.com/git-tutorial/kr/stepup/stepup1_1.html을 참고할 것)
+
+대부분의 개발 작업은 develop 브랜치에서 이루어진다. 보다 자세한 설명은 다음과 같다 :
+새로운 애자일을 만들고자 할 때, develop 브랜치에서 갈라지는 새로운 하위 브랜치를 만든다.
+해당 애자일에서 요구되는 기능을 제작 및 수정할 때마다 하위 브랜치 상에 commit한다.
+해당 애자일이 완성되었을 경우, 만들었던 하위 브랜치를 develop 브랜치에 merge한다.
+마일스톤을 달성할 때마다 develop 브랜치에서 갈라지는 release 브랜치를 만든다.
+이때, 브랜치의 이름은 release-[master 기준 앱 버전].[해당 버전에서의 릴리즈 버전]으로 통일한다.
+develop에서 다음 마일스톤을 향해 달려가는 동안, release 브랜치에서 코드를 점검하고 수정한다.
+해당 release 버전이 완성되면 이를 각각 master 브랜치와 develop 브랜치에 merge한다.
+master 브랜치에는 배포 가능한 최종 형태의 코드가 올라간다.
+이미 master 브랜치로 올라간 버전에서 급히 수정해야 할 것이 생긴 경우, master 브랜치에서 갈라지는 hotfix 브랜치를 만든다.
+이때, 브랜치의 이름은 hotfix-[master 기준 앱 버전].[해당 버전에서의 hotfix 버전]으로 통일한다.
+수정이 완료되었으면 이를 각각 master 브랜치와 develop 브랜치에 merge한다.
 
 ### About commit
 
