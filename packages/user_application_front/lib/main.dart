@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'src/login_page/login_screen.dart'; //로그인 페이지 import
+import 'src/screen/login_screen.dart'; //로그인 페이지 import
 
 void main() {
   runApp(const MyApp());
