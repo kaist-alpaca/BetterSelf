@@ -1,7 +1,7 @@
 user_application_front
 2.12
-file:///D:/BPSApp/user_application_front/
-file:///D:/BPSApp/user_application_front/lib/
+file:///D:/ALPACA/BPSapp/packages/user_application_front/
+file:///D:/ALPACA/BPSapp/packages/user_application_front/lib/
 async
 2.12
 file:///D:/flutter/.pub-cache/hosted/pub.dartlang.org/async-2.8.1/

@@ -33,6 +33,7 @@ class _LoginScreen extends State<LoginScreen> {
           GestureDetector(
             onTap: () {
               //터치하면 여기에 구글 로그인 구현.
+              // 한 번 초기정보 설정했으면(초기정보가 저장되어있으면 바로 홈페이지로 이동 구현)
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => BasicInfoScreen()));
             },

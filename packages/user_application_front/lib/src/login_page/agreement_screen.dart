@@ -10,7 +10,7 @@ class _AgreementScreen extends State<AgreementScreen> {
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
-    var fontSize2 = 20;
+
     return Scaffold(
         appBar: AppBar(
           title: Text("개인정보 처리방침 및 이용약관"),
