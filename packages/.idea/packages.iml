@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/health_apple_test/build" />
+      <excludeFolder url="file://$MODULE_DIR$/health_apple_test/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/kakao_sample_profile/build" />
+      <excludeFolder url="file://$MODULE_DIR$/kakao_sample_profile/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/ui/build" />
+      <excludeFolder url="file://$MODULE_DIR$/bottom_bar/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/bottom_bar/build" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
