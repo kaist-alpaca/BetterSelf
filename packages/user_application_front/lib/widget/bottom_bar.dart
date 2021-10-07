@@ -24,7 +24,6 @@ class BottomNavigation extends StatelessWidget {
         items: items,
       ),
       tabBuilder: (context, index) {
-        index=1;
         switch (index) {
           case 0:
             return CupertinoTabView(builder: (context) {

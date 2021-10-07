@@ -36,6 +36,8 @@ class _LoginScreen extends State<LoginScreen> {
               // 한 번 초기정보 설정했으면(초기정보가 저장되어있으면 바로 홈페이지로 이동 구현)
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => BasicInfoScreen()));
+              /*Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AppMain()));*/ //바로 홈페이지로 이동하는 코드
             },
             child: Container(
                 height: valHeight * 0.08,

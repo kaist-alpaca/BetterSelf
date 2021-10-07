@@ -33,6 +33,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
+    double defaultSize = valWidth * 0.0025;
     return Scaffold(
         appBar: AppBar(
           title: Text('설정'),
@@ -46,7 +47,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                 child: Text(
                   "내 정보",
                   style: TextStyle(
-                    fontSize: 8,
+                    fontSize: defaultSize * 20,
                   ),
                 ),
                 margin: EdgeInsets.fromLTRB(
@@ -61,7 +62,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                     children: [
                       SizedBox(
                         //프사 위 여백
-                        height: valHeight * 0.16,
+                        height: valHeight * 0.07,
                       ),
                       Container(
                           //여기에 아마도 프사
@@ -70,6 +71,9 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                           color: Colors.grey,
                           margin: EdgeInsets.fromLTRB(
                               valWidth * 0.025, 0, valWidth * 0.025, 0)),
+                      SizedBox(
+                        height: valHeight * 0.1,
+                      )
                     ],
                   ),
                   Column(
@@ -83,7 +87,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                           Container(
                               child: Text(
                             "ID",
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(fontSize: defaultSize * 15),
                           )),
                           Container(
                             //ID 입력란
@@ -104,7 +108,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                           Container(
                               child: Text(
                             "성별",
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(fontSize: defaultSize * 15),
                           )),
                           Container(
                             //성별 입력란
@@ -125,28 +129,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                           Container(
                               child: Text(
                             "생년월일",
-                            style: TextStyle(fontSize: 10),
-                          )),
-                          Container(
-                            //생년월일 입력란
-                            height: valHeight * 0.06,
-                            width: valWidth * 0.34,
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.black, width: 3)),
-                            margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
-                                valWidth * 0.02, valWidth * 0.015),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                              child: Text(
-                            "ID",
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(fontSize: 15),
                           )),
                           Container(
                             //생년월일 입력란
@@ -167,7 +150,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                           Container(
                               child: Text(
                             "키",
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(fontSize: defaultSize * 15),
                           )),
                           Container(
                             //키 입력란
@@ -188,7 +171,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                           Container(
                               child: Text(
                             "체중",
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(fontSize: defaultSize * 15),
                           )),
                           Container(
                             //체중 입력란
@@ -227,7 +210,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                   child: Text(
                     "저장",
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: defaultSize * 15,
                     ),
                   ),
                 ),

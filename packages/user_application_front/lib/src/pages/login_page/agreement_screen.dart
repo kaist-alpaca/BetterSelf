@@ -10,6 +10,7 @@ class _AgreementScreen extends State<AgreementScreen> {
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
+    double defaultSize = valWidth * 0.0025;
 
     return Scaffold(
         appBar: AppBar(
@@ -28,7 +29,7 @@ class _AgreementScreen extends State<AgreementScreen> {
                     child: Text(
                       "App 이용약관",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: defaultSize * 35,
                       ),
                     ),
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
@@ -47,7 +48,7 @@ class _AgreementScreen extends State<AgreementScreen> {
                     child: Text(
                       "개인정보 처리방침",
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: defaultSize * 35,
                       ),
                     ),
                     margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
@@ -65,7 +66,7 @@ class _AgreementScreen extends State<AgreementScreen> {
                       child: Text(
                         "개인(신용)정보 수집 및 이용동의",
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: defaultSize * 35,
                         ),
                       ),
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 5)),
