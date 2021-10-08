@@ -33,7 +33,7 @@ class _InbodyScreen extends State<InbodyScreen> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    buttonCase = 1;
+                    buttonCase = 0;
                     setState(() {});
                   },
                   child: Text('7일'),
@@ -48,13 +48,15 @@ class _InbodyScreen extends State<InbodyScreen> {
                     child: Text('31일')),
                 ElevatedButton(
                     onPressed: () {
-                      buttonCase = 2;
+                      setState(() {
+                        buttonCase = 2;
+                      });
                       print('button case here is $buttonCase');
                     },
                     child: Text('12개월'))
               ],
             ),
-            InbodyTabs(buttonCase: buttonCase)
+            InbodyTabs(buttonCase)
           ],
         ),
       ),

@@ -22,22 +22,22 @@ class _State extends State<> {
   }
 }*/
 
+int? buttonCase;
+
 class InbodyTabs extends StatefulWidget {
-  final buttonCase;
-  const InbodyTabs({@required this.buttonCase});
-  
+  InbodyTabs(int a) {
+    buttonCase = a;
+  }
+
   @override
-  _InbodyTabs createState() => _InbodyTabs(buttonCase);
+  _InbodyTabs createState() => _InbodyTabs();
 }
 
 int testValue = 0;
 
 class _InbodyTabs extends State<InbodyTabs> {
-  int buttonCase;
-  _InbodyTabs(this.buttonCase);
   @override
   Widget build(BuildContext context) {
-    print('restarted');
     print('In buttonCase is $buttonCase');
     if (buttonCase == 0) {
       //7일로 선택되었을 때 표현될 위젯들은 여기에.
