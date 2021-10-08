@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import '../pages/data_page/stress_screen.dart';
+import '../pages/data_page/exercise_screen.dart';
+import '../pages/data_page/sleep_screen.dart';
+import '../pages/data_page/food_screen.dart';
 
 class ReportScreen extends StatefulWidget {
   @override
   _ReportScreen createState() => _ReportScreen();
 }
 
+//7일,31일,12개월 조절용 버튼 변수들
 int stressButton = 0;
+int exerciseButton = 0;
+int sleepButton = 0;
+int foodButton = 0;
 
 class _ReportScreen extends State<ReportScreen> {
   @override
@@ -105,8 +112,9 @@ class _ReportScreen extends State<ReportScreen> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        stressButton = 0;
-                        setState(() {});
+                        setState(() {
+                          stressButton = 0;
+                        });
                       },
                       child: Text('7일'),
                     ),
@@ -138,7 +146,233 @@ class _ReportScreen extends State<ReportScreen> {
                       child: Text('여기에 스트레스 코칭, 겸 피드백하러 가기 버튼.'),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.black)),
-                    ))
+                      margin: EdgeInsets.only(bottom: valHeight * 0.032),
+                    )),
+                Container(
+                  height: barHeight,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(bottom: valHeight * 0.028),
+                  child: Text(
+                    '운동',
+                    style: TextStyle(fontSize: barFontSize),
+                  ),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                ),
+                Row(
+                  // 운동 데이터 버튼(7일/31일/12개월 구분)
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          exerciseButton = 0;
+                        });
+                      },
+                      child: Text('7일'),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            exerciseButton = 1;
+                          });
+                        },
+                        child: Text('31일')),
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            exerciseButton = 2;
+                          });
+                        },
+                        child: Text('12개월'))
+                  ],
+                ),
+                ExerciseScreen(exerciseButton),
+                Container(
+                  height: valHeight * 0.2,
+                  width: graphWidth,
+                  margin: EdgeInsets.only(
+                      top: valHeight * 0.04, bottom: valHeight * 0.04),
+                  color: Colors.grey,
+                  child: Text('여기에 오늘의 운동'),
+                ),
+                GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: valHeight * 0.32,
+                      width: graphWidth,
+                      child: Text('여기에 지난 운동 코칭, 겸 피드백하러 가기 버튼.'),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black)),
+                      margin: EdgeInsets.only(bottom: valHeight * 0.032),
+                    )),
+                Container(
+                  //여기부터 수면
+                  height: barHeight,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(bottom: valHeight * 0.028),
+                  child: Text(
+                    '수면',
+                    style: TextStyle(fontSize: barFontSize),
+                  ),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                ),
+                Row(
+                  // 수면 버튼(7일/31일/12개월 구분)
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          sleepButton = 0;
+                        });
+                      },
+                      child: Text('7일'),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            sleepButton = 1;
+                          });
+                        },
+                        child: Text('31일')),
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            sleepButton = 2;
+                          });
+                        },
+                        child: Text('12개월'))
+                  ],
+                ),
+                SleepScreen(sleepButton),
+                SizedBox(
+                  height: valHeight * 0.04,
+                ),
+                GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: valHeight * 0.32,
+                      width: graphWidth,
+                      child: Text('여기에 지난 수면 코칭, 겸 피드백하러 가기 버튼.'),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black)),
+                      margin: EdgeInsets.only(bottom: valHeight * 0.032),
+                    )),
+                Container(
+                  //여기서부터 식단
+                  height: barHeight,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(bottom: valHeight * 0.028),
+                  child: Text(
+                    '식단',
+                    style: TextStyle(fontSize: barFontSize),
+                  ),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                ),
+                Row(
+                  // 식단 데이터 버튼(7일/31일/12개월 구분)
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          foodButton = 0;
+                        });
+                      },
+                      child: Text('7일'),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            foodButton = 1;
+                          });
+                        },
+                        child: Text('31일')),
+                    ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            foodButton = 2;
+                          });
+                        },
+                        child: Text('12개월'))
+                  ],
+                ),
+                FoodScreen(foodButton),
+                Container(
+                  height: valHeight * 0.2,
+                  width: graphWidth,
+                  margin: EdgeInsets.only(
+                      top: valHeight * 0.04, bottom: valHeight * 0.04),
+                  color: Colors.grey,
+                  child: Text('여기에 오늘의 식단'),
+                ),
+                GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: valHeight * 0.32,
+                      width: graphWidth,
+                      child: Text('여기에 지난 식단 코칭, 겸 피드백하러 가기 버튼.'),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black)),
+                      margin: EdgeInsets.only(bottom: valHeight * 0.032),
+                    )),
+                Container(
+                  //여기서부터 전반 코칭
+                  height: barHeight,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(bottom: valHeight * 0.028),
+                  child: Text(
+                    '전반 코칭',
+                    style: TextStyle(fontSize: barFontSize),
+                  ),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                ),
+                Container(
+                  height: valHeight * 0.32,
+                  width: graphWidth,
+                  child: Text('여기에는 전반 코칭 기록 및 수정'),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  margin: EdgeInsets.only(bottom: valHeight * 0.03),
+                ),
+                Row(
+                  //히스토리 및 피드백 추가
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: valHeight * 0.08,
+                        width: graphWidth / 2.0,
+                        color: Colors.grey,
+                        child: Text('히스토리'),
+                      ),
+                    ),
+                    SizedBox(
+                      width: valWidth * 0.02,
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: valHeight * 0.08,
+                        width: graphWidth / 2.0,
+                        color: Colors.grey,
+                        child: Text('피드백 추가'),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: valHeight * 0.3,
+                )
               ],
             ),
           )
