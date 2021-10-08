@@ -15,4 +15,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: LoginScreen(), //앱 시작시 로그인 페이지로 이동
-    
+    );
+  }
+}
