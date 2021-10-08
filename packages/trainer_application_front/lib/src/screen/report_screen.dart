@@ -3,6 +3,11 @@ import '../pages/data_page/stress_screen.dart';
 import '../pages/data_page/exercise_screen.dart';
 import '../pages/data_page/sleep_screen.dart';
 import '../pages/data_page/food_screen.dart';
+import '../pages/feedback_page/exercise_feedback_screen.dart';
+import '../pages/feedback_page/food_feedback_screen.dart';
+import '../pages/feedback_page/sleep_feedback_screen.dart';
+import '../pages/feedback_page/stress_feedback_screen.dart';
+import '../pages/feedback_page/inbody_feedback_screen.dart';
 
 class ReportScreen extends StatefulWidget {
   @override
@@ -85,7 +90,12 @@ class _ReportScreen extends State<ReportScreen> {
                 ),
                 GestureDetector(
                   //인바디 피드백하러 가기
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => InbodyFeedbackScreen()));
+                  },
                   child: Container(
                     height: valHeight * 0.05,
                     width: graphWidth - valWidth * 0.003,
@@ -139,7 +149,12 @@ class _ReportScreen extends State<ReportScreen> {
                   height: valHeight * 0.04,
                 ),
                 GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => StressFeedbackScreen()));
+                    },
                     child: Container(
                       height: valHeight * 0.32,
                       width: graphWidth,
@@ -198,7 +213,12 @@ class _ReportScreen extends State<ReportScreen> {
                   child: Text('여기에 오늘의 운동'),
                 ),
                 GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ExerciseFeedbackScreen()));
+                    },
                     child: Container(
                       height: valHeight * 0.32,
                       width: graphWidth,
@@ -253,7 +273,12 @@ class _ReportScreen extends State<ReportScreen> {
                   height: valHeight * 0.04,
                 ),
                 GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SleepFeedbackScreen()));
+                    },
                     child: Container(
                       height: valHeight * 0.32,
                       width: graphWidth,
@@ -313,7 +338,12 @@ class _ReportScreen extends State<ReportScreen> {
                   child: Text('여기에 오늘의 식단'),
                 ),
                 GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => FoodFeedbackScreen()));
+                    },
                     child: Container(
                       height: valHeight * 0.32,
                       width: graphWidth,
