@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:message/services/auth.dart';
 import 'package:message/widgets/widget.dart';
 
 class signin extends StatefulWidget {
@@ -15,7 +16,7 @@ class _signinState extends State<signin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('A Title'),
+        title: Text('Signin'),
       ),
       body: Container(
         alignment: Alignment.bottomCenter,
@@ -44,17 +45,22 @@ class _signinState extends State<signin> {
                       ]
                   )
               ),
-              child: Text("Sign Up", style: TextStyle(color: Colors.white)),
+              child: Text("Sign in", style: TextStyle(color: Colors.white)),
             ),
             SizedBox(height: 16,),
-            Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.symmetric(vertical: 20),
-              decoration: const BoxDecoration(
+            GestureDetector(
+              onTap: (){
+                AuthMethods().signInWithGoogle(context);
+              },
+              child: Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width,
+                padding: EdgeInsets.symmetric(vertical: 20),
+                decoration: const BoxDecoration(
                   color: Colors.white,
+                ),
+                child: Text("Sign in with Google", style: TextStyle(color: Colors.black)),
               ),
-              child: Text("Sign with Google", style: TextStyle(color: Colors.black)),
             ),
           ]
           )
