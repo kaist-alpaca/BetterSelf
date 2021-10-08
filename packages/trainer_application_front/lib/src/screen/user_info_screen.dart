@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../screen/report_screen.dart';
 
 class UserInfoScreen extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _UserInfoScreen extends State<UserInfoScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: valHeight * 0.08,
+                height: valHeight * 0.05,
               ),
               Container(
                 height: valHeight * 0.25,
@@ -42,7 +43,10 @@ class _UserInfoScreen extends State<UserInfoScreen> {
                 height: valHeight * 0.15,
               ),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ReportScreen()));
+                },
                 child: Container(
                   height: 0.055 * valHeight,
                   width: 0.63 * valWidth,

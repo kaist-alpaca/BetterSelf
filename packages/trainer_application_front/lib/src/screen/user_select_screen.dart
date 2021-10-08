@@ -35,6 +35,7 @@ class _UserSelectScreen extends State<UserSelectScreen> {
                   height: valHeight * 0.2,
                   width: valWidth * 0.8,
                   child: Text('여기에 각 유저 명단이 있으면 됨.'),
+                  color: Colors.grey,
                 ),
               )
             ],
