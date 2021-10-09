@@ -190,6 +190,9 @@ class _ExerciseFeedbackScreen extends State<ExerciseFeedbackScreen> {
                   margin: EdgeInsets.only(
                       top: valHeight * 0.008, bottom: valHeight * 0.036),
                 ),
+                SizedBox(
+                  height: valHeight * 0.3,
+                )
               ],
             ),
           ),
