@@ -78,8 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
               //여기에다 하루 로그? 기록? 추가하면 됨.
               height: valHeight * 0.4,
               color: Colors.grey,
-              width: valWidth * 0.9,
-              child: Text('여기에 하루 로그 추가할 것.'),
+              width: valWidth * 0.95,
+              child: Text('여기에 하루 로그 추가할 것. 여기에서 만들어지는 버튼으로 운동/식단 기록 되야한다캄'),
             )
           ],
         ),
