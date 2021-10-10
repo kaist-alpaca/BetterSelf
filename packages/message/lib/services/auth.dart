@@ -14,7 +14,7 @@ class AuthMethods{
 
   getCurrentUser() async{
     final FirebaseAuth local = FirebaseAuth.instance;
-    return await local.currentUser;
+    return local.currentUser;
   }
 
   signInWithGoogle(BuildContext context) async{
@@ -42,6 +42,7 @@ class AuthMethods{
       SharedPreferenceHelper().saveUserProfileUrl(userDetails.photoURL);
 
       Map<String, dynamic> userInfoMap = {
+        "profileUrl" : "",
         "email": userDetails.email,
         "username" : userDetails.email!.replaceAll("@gmail.com", ""),
         "name": userDetails.displayName,
