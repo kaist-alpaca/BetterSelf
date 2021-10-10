@@ -21,7 +21,7 @@ class _ChatroomState extends State<Chatroom> {
   TextEditingController textmessage = TextEditingController();
 
   getchatroomid(String a, String b){
-    if(a.substring(0,1).codeUnitAt(0) > b.substring(0,1).codeUnitAt(0)){
+    if(a.compareTo(b) < 0){
       return "$b\_$a";
     }else{
       return "$a\_$b";
@@ -59,15 +59,23 @@ class _ChatroomState extends State<Chatroom> {
     return StreamBuilder<QuerySnapshot>(
         stream: messagestream,
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
-          print('\n\n\n\n\ndebug1 : $messagestream\n\n\n\n\n');
           return snapshot.hasData? ListView(
               children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 print('debug2 : ${snapshot.data!.docs.length}');
                 Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                print('debug3 : ${data['message']}');
-                return ListTile(
-                  title: Text(data['message'], style: TextStyle(color: Colors.white),),
-                );
+                print('sendby : ${data['sendby'].toString()}');
+                print('user : ${user.toString()}');
+                if(data['sendby'].toString().compareTo(user.toString()) == 0 ? true : false){
+                  print('debug4: right');
+                  return ListTile(
+                    title: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[Text(data['message'], style: TextStyle(color: Colors.white)),])
+                  );
+                } else{
+                  print('debug4: left');
+                  return ListTile(
+                    title: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[Text(data['message'], style: TextStyle(color: Colors.white)),])
+                  );
+                }
             }).toList(),) : Center(child : CircularProgressIndicator());
         }
     );

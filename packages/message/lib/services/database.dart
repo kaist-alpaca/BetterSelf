@@ -26,6 +26,6 @@ class DatabaseMethos{
   }
 
   Future<Stream<QuerySnapshot>> getchatroomMessages(chatroomId) async{
-    return await FirebaseFirestore.instance.collection("chatrooms").doc(chatroomId).collection("chats").orderBy("time", descending: true).snapshots();
+    return await FirebaseFirestore.instance.collection("Chatrooms").doc(chatroomId).collection("chats").orderBy("time", descending: true).snapshots();
   }
 }
