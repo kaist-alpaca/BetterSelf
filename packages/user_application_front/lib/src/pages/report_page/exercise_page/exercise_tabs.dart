@@ -1,26 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:user_application_front/src/pages/report_page/inbody_page/inbody_screen.dart';
-
-/*class InbodyTabs extends StatefulWidget{
-  @override
-  _InbodyTabs createState() => _InbodyTabs(buttonCase: 0);
-}*/
-/*
-class  extends StatefulWidget {
-  const ({ Key? key }) : super(key: key);
-
-  @override
-  _State createState() => _State();
-}
-
-class _State extends State<> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      
-    );
-  }
-}*/
 
 int? buttonCase;
 
@@ -33,62 +11,205 @@ class ExerciseTabs extends StatefulWidget {
   _ExerciseTabs createState() => _ExerciseTabs();
 }
 
-int testValue = 0;
-
 class _ExerciseTabs extends State<ExerciseTabs> {
   @override
   Widget build(BuildContext context) {
-    print('In buttonCase is $buttonCase');
+    final valHeight = MediaQuery.of(context).size.height; //화면 높이
+    final valWidth = MediaQuery.of(context).size.width; //화면 너비
+    double defaultSize = valWidth * 0.0025; //폰트사이즈용
+    double graphWidth = valWidth * 0.86; // 그래프들 너비
+
     if (buttonCase == 0) {
       //7일로 선택되었을 때 표현될 위젯들은 여기에.
       return Container(
           child: Center(
               child: Column(children: [
         Container(
-          child: Text('여기다가 7일짜리 그래프'),
+          height: valHeight * 0.34,
+          width: graphWidth,
+          color: Colors.grey,
+          margin:
+              EdgeInsets.only(top: valHeight * 0.03, bottom: valHeight * 0.05),
+          child: Text('여기에 7일짜리 소모 칼로리 그래프 들어가야 함.'),
         ),
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              testValue++;
-            });
-          },
-          child: Container(
-            height: 20,
-            width: 20,
-            color: Colors.grey,
-            child: Text('$testValue'),
-          ),
+        Row(
+          //기간(날짜) 선택하는 bar.
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GestureDetector(
+              //날짜 왼쪽으로 넘기는 버튼
+              onTap: () {},
+              child: Container(
+                width: valWidth * 0.1,
+                height: valHeight * 0.1,
+                child: Text('왼쪽버튼'),
+              ),
+            ),
+            Container(
+              width: valWidth * 0.8,
+              child: Text('보고 있는 날짜 범위'),
+            ),
+            GestureDetector(
+              //날짜 오른쪽으로 넘기는 버튼
+              onTap: () {},
+              child: Container(
+                width: valWidth * 0.1,
+                height: valHeight * 0.1,
+                child: Text('오른쪽버튼'),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: valHeight * 0.03,
+        ),
+        Container(
+          height: valHeight * 0.5,
+          width: graphWidth,
+          color: Colors.grey,
+          child: Text('여기에 해당 주간의 일주일 코칭'),
+        ),
+        SizedBox(
+          height: valHeight * 0.1,
         )
       ])));
     } else if (buttonCase == 1) {
       //31일로 선택되었을 때 표현될 위젯들은 여기에
       return Container(
-        child: Center(
-          child: Column(children: [
-            Container(
-              child: Text('여기다가 31일짜리 그래프'),
+          child: Center(
+              child: Column(children: [
+        Container(
+          height: valHeight * 0.34,
+          width: graphWidth,
+          color: Colors.blue,
+          margin:
+              EdgeInsets.only(top: valHeight * 0.03, bottom: valHeight * 0.05),
+          child: Text('여기에 31일짜리 소모 칼로리 그래프 들어가야 함.'),
+        ),
+        Row(
+          //기간(날짜) 선택하는 bar.
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GestureDetector(
+              //날짜 왼쪽으로 넘기는 버튼
+              onTap: () {},
+              child: Container(
+                width: valWidth * 0.1,
+                height: valHeight * 0.1,
+                child: Text('왼쪽버튼'),
+              ),
             ),
             Container(
-              width: 20,
-              height: 20,
-              color: Colors.red,
-            )
-          ]),
+              width: valWidth * 0.8,
+              child: Text('보고 있는 날짜 범위'),
+            ),
+            GestureDetector(
+              //날짜 오른쪽으로 넘기는 버튼
+              onTap: () {},
+              child: Container(
+                width: valWidth * 0.1,
+                height: valHeight * 0.1,
+                child: Text('오른쪽버튼'),
+              ),
+            ),
+          ],
         ),
-      );
+        SizedBox(
+          height: valHeight * 0.03,
+        ),
+        Container(
+          height: valHeight * 0.4,
+          width: graphWidth,
+          color: Colors.grey,
+          child: Text('여기에 해당 달의 달력'),
+          margin: EdgeInsets.only(bottom: valHeight * 0.03),
+        ),
+        Container(
+          height: valHeight * 0.26,
+          width: graphWidth,
+          color: Colors.grey,
+          child: Text('여기다 선택한 날의 운동'),
+          margin: EdgeInsets.only(bottom: valHeight * 0.03),
+        ),
+        Container(
+          height: valHeight * 0.26,
+          width: graphWidth,
+          color: Colors.grey,
+          child: Text('여기다 선택한 날의 운동 코칭'),
+        ),
+        SizedBox(
+          height: valHeight * 0.1,
+        )
+      ])));
     } else if (buttonCase == 2) {
       //12개월로 선택되었을 때 표현될 위젯들은 여기에.
       return Container(
           child: Center(
               child: Column(children: [
         Container(
-          child: Text('여기다가 12개월짜리 그래프'),
+          height: valHeight * 0.34,
+          width: graphWidth,
+          color: Colors.red,
+          margin:
+              EdgeInsets.only(top: valHeight * 0.03, bottom: valHeight * 0.05),
+          child: Text('여기에 12개월짜리 소모 칼로리 그래프 들어가야 함.'),
+        ),
+        Row(
+          //기간(날짜) 선택하는 bar.
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GestureDetector(
+              //날짜 왼쪽으로 넘기는 버튼
+              onTap: () {},
+              child: Container(
+                width: valWidth * 0.1,
+                height: valHeight * 0.1,
+                child: Text('왼쪽버튼'),
+              ),
+            ),
+            Container(
+              width: valWidth * 0.8,
+              child: Text('보고 있는 날짜 범위'),
+            ),
+            GestureDetector(
+              //날짜 오른쪽으로 넘기는 버튼
+              onTap: () {},
+              child: Container(
+                width: valWidth * 0.1,
+                height: valHeight * 0.1,
+                child: Text('오른쪽버튼'),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: valHeight * 0.03,
         ),
         Container(
-          width: 20,
-          height: 20,
-          color: Colors.blue,
+          height: valHeight * 0.4,
+          width: graphWidth,
+          color: Colors.grey,
+          child: Text('여기에 해당 달의 달력'),
+          margin: EdgeInsets.only(bottom: valHeight * 0.03),
+        ),
+        Container(
+          height: valHeight * 0.26,
+          width: graphWidth,
+          color: Colors.grey,
+          child: Text('여기다 선택한 날의 운동'),
+          margin: EdgeInsets.only(bottom: valHeight * 0.03),
+        ),
+        Container(
+          height: valHeight * 0.26,
+          width: graphWidth,
+          color: Colors.grey,
+          child: Text('여기다 선택한 날의 운동 코칭'),
+        ),
+        SizedBox(
+          height: valHeight * 0.1,
         )
       ])));
     } else {

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:user_application_front/src/pages/setting_page/setting_ID.dart';
 import 'package:user_application_front/src/pages/setting_page/agreement_screen.dart';
 import 'package:user_application_front/widget/setting_bar.dart';
+import '../screen/login_screen.dart';
 
 //이곳의 질병기초정보와 개인정보동의서는 setting page의 것 (로그인 페이지와는 또 따로)임을 확인.
 
