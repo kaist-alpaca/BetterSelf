@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:message/services/auth.dart';
 import 'package:message/services/database.dart';
@@ -17,7 +18,6 @@ class Chatroom extends StatefulWidget {
 class _ChatroomState extends State<Chatroom> {
 
   var user = AuthMethods().auth.currentUser!.email.toString().replaceAll("@gmail.com", "");
-
   TextEditingController textmessage = TextEditingController();
 
   getchatroomid(String a, String b){
@@ -50,17 +50,32 @@ class _ChatroomState extends State<Chatroom> {
     }
   }
 
-  getandsetmessage(){
+  Widget chatmessages(BuildContext context, ){
 
+    Stream<QuerySnapshot> messagestream = FirebaseFirestore.instance.collection("Chatrooms")
+        .doc(getchatroomid(user, widget.userchatwith)).collection("chats").orderBy("time")
+        .snapshots();
+
+    return StreamBuilder<QuerySnapshot>(
+        stream: messagestream,
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot){
+          print('\n\n\n\n\ndebug1 : $messagestream\n\n\n\n\n');
+          return snapshot.hasData? ListView(
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
+                print('debug2 : ${snapshot.data!.docs.length}');
+                Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                print('debug3 : ${data['message']}');
+                return ListTile(
+                  title: Text(data['message'], style: TextStyle(color: Colors.white),),
+                );
+            }).toList(),) : Center(child : CircularProgressIndicator());
+        }
+    );
   }
 
   @override
-  void initstate(){
-    getandsetmessage();
-  }
 
   Widget build(BuildContext context) {
-
     print('debug: ${getchatroomid(user, widget.userchatwith)}');
 
     return WillPopScope(
@@ -75,6 +90,7 @@ class _ChatroomState extends State<Chatroom> {
           body: Container(
             child: Stack(
               children: [
+                chatmessages(context),
                 Container(
                   alignment: Alignment.bottomCenter,
                   child: Container(
@@ -107,8 +123,8 @@ class _ChatroomState extends State<Chatroom> {
                           child: const Icon(Icons.message, color: Colors.white,)
                         ),
                       ],
-
                     ),
+
                   )
                 )
               ],
