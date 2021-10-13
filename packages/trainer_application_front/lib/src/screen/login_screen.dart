@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../pages/login_page/agreement_screen.dart'; // 이용약관 스크린
 import '../screen/user_select_screen.dart';
+import '../pages/login_page/basic_info_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -33,8 +34,13 @@ class _LoginScreen extends State<LoginScreen> {
           GestureDetector(
             onTap: () {
               //터치하면 여기에 구글 로그인 구현.
+              //기초정보 설정 전일 경우, 아래 것 이용해서 기초정보 설정 페이지로 이동.
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UserSelectScreen()));
+                  MaterialPageRoute(builder: (context) => BasicInfoScreen()));
+
+              //이미 기초정보가 설정되어 있다면, 아래 것 이용해서 사용자 선택 페이지로 이동.
+              /*Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserSelectScreen()));*/
             }, // 로그인 이후 사용자 선택 페이지로 이동.
             child: Container(
                 height: valHeight * 0.08,
