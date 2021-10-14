@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screen/report_screen.dart';
+import 'report_screen.dart';
 
 class UserInfoScreen extends StatefulWidget {
   @override
@@ -30,18 +30,7 @@ class _UserInfoScreen extends State<UserInfoScreen> {
                 color: Colors.grey,
                 child: Text('여기에 프사와 기본 정보들'),
               ),
-              SizedBox(
-                height: valHeight * 0.05,
-              ),
-              Container(
-                height: valHeight * 0.2,
-                width: valWidth * 0.84,
-                color: Colors.grey,
-                child: Text('여기에 사용자 관련 노트 작성.'),
-              ),
-              SizedBox(
-                height: valHeight * 0.15,
-              ),
+              SizedBox(height: valHeight * 0.02),
               GestureDetector(
                 onTap: () {
                   Navigator.push(context,
@@ -52,9 +41,58 @@ class _UserInfoScreen extends State<UserInfoScreen> {
                   width: 0.63 * valWidth,
                   decoration: BoxDecoration(
                       border: Border.all(color: Colors.black, width: 2)),
-                  child: Text('리포트 확인'),
+                  child: Text('BP 리포트 확인'),
+                  margin: EdgeInsets.only(bottom: valHeight * 0.04),
                 ),
-              )
+              ),
+              Container(
+                height: valHeight * 0.035,
+                width: valWidth * 0.6,
+                child: Text(
+                  '코칭',
+                  style: TextStyle(fontSize: defaultSize * 7),
+                ),
+              ),
+              Container(
+                height: valHeight * 0.25,
+                width: valWidth * 0.84,
+                color: Colors.grey,
+                margin: EdgeInsets.only(bottom: valHeight * 0.015),
+                child: Text('여기에 지난 전반 코칭이 들어가야 함'),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {}, //여기에 코칭 히스토리로 이동
+                    child: Container(
+                      height: valHeight * 0.04,
+                      width: valWidth * 0.38,
+                      color: Colors.grey,
+                      child: Text(
+                        '코칭 히스토리',
+                        style: TextStyle(fontSize: defaultSize * 11),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: valWidth * 0.02,
+                  ),
+                  GestureDetector(
+                    onTap: () {}, //여기에 코칭 추가로 이동
+                    child: Container(
+                      height: valHeight * 0.04,
+                      width: valWidth * 0.38,
+                      color: Colors.grey,
+                      child: Text(
+                        '코칭 추가',
+                        style: TextStyle(fontSize: defaultSize * 11),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ));

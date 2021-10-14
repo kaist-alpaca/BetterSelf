@@ -22,15 +22,15 @@ class _UserSelectScreen extends State<UserSelectScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: valHeight * 0.1,
+                height: valHeight * 0.008,
               ),
               Container(
-                height: valHeight * 0.07,
+                height: valHeight * 0.03,
                 child: Text(
                   '회원 정보',
                   style: TextStyle(fontSize: defaultSize * 8),
                 ),
-                margin: EdgeInsets.only(bottom: valHeight * 0.04),
+                margin: EdgeInsets.only(bottom: valHeight * 0.006),
               ),
               GestureDetector(
                 onTap: () {
@@ -48,12 +48,12 @@ class _UserSelectScreen extends State<UserSelectScreen> {
                 ),
               ),
               Container(
-                height: valHeight * 0.07,
+                height: valHeight * 0.03,
                 child: Text(
                   '새로운 메시지',
                   style: TextStyle(fontSize: defaultSize * 8),
                 ),
-                margin: EdgeInsets.only(bottom: valHeight * 0.04),
+                margin: EdgeInsets.only(bottom: valHeight * 0.006),
               ),
               GestureDetector(
                 onTap: () {
