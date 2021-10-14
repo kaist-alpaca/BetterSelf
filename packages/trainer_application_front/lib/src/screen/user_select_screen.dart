@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screen/user_info_screen.dart';
+import '../pages/communication_page/chatting_screen.dart';
 
 class UserSelectScreen extends StatefulWidget {
   @override
@@ -61,7 +62,7 @@ class _UserSelectScreen extends State<UserSelectScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => UserInfoScreen()));
+                          builder: (context) => ChattingScreen()));
                 },
                 child: Container(
                   height: valHeight * 0.2,
