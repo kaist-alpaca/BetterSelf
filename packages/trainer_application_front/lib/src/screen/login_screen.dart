@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../pages/login_page/agreement_screen.dart'; // 이용약관 스크린
-import '../screen/user_select_screen.dart';
+import 'package:trainer_application_front/app_main.dart';
 import '../pages/login_page/basic_info_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -40,7 +40,7 @@ class _LoginScreen extends State<LoginScreen> {
 
               //이미 기초정보가 설정되어 있다면, 아래 것 이용해서 사용자 선택 페이지로 이동.
               /*Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UserSelectScreen()));*/
+                  MaterialPageRoute(builder: (context) => AppMain()));*/
             }, // 로그인 이후 사용자 선택 페이지로 이동.
             child: Container(
                 height: valHeight * 0.08,

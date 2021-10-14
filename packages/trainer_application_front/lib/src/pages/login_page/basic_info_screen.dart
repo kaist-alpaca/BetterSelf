@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../screen/user_select_screen.dart';
+import 'package:trainer_application_front/app_main.dart';
 
 class BasicInfoScreen extends StatefulWidget {
   @override
@@ -114,10 +115,8 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                 //저장
                 onTap: () {
                   //여기에 저장 기능 만들어야함.
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => UserSelectScreen()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AppMain()));
                 },
                 child: Container(
                   height: valHeight * 0.08,
