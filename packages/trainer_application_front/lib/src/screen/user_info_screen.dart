@@ -50,7 +50,7 @@ class _UserInfoScreen extends State<UserInfoScreen> {
                 width: valWidth * 0.6,
                 child: Text(
                   '코칭',
-                  style: TextStyle(fontSize: defaultSize * 7),
+                  style: TextStyle(fontSize: defaultSize * 12),
                 ),
               ),
               Container(
