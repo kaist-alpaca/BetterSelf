@@ -14,7 +14,7 @@ class _UserSelectScreen extends State<UserSelectScreen> {
     double defaultSize = valWidth * 0.0025;
     return Scaffold(
         appBar: AppBar(
-          title: Text('회원 정보'),
+          title: Text('트레이너 프사랑 이름'),
         ),
         body: Center(
           child: Column(
@@ -23,6 +23,14 @@ class _UserSelectScreen extends State<UserSelectScreen> {
             children: [
               SizedBox(
                 height: valHeight * 0.1,
+              ),
+              Container(
+                height: valHeight * 0.07,
+                child: Text(
+                  '회원 정보',
+                  style: TextStyle(fontSize: defaultSize * 8),
+                ),
+                margin: EdgeInsets.only(bottom: valHeight * 0.04),
               ),
               GestureDetector(
                 onTap: () {
@@ -36,8 +44,32 @@ class _UserSelectScreen extends State<UserSelectScreen> {
                   width: valWidth * 0.8,
                   child: Text('여기에 각 유저 명단이 있으면 됨.'),
                   color: Colors.grey,
+                  margin: EdgeInsets.only(bottom: valHeight * 0.05),
                 ),
-              )
+              ),
+              Container(
+                height: valHeight * 0.07,
+                child: Text(
+                  '새로운 메시지',
+                  style: TextStyle(fontSize: defaultSize * 8),
+                ),
+                margin: EdgeInsets.only(bottom: valHeight * 0.04),
+              ),
+              GestureDetector(
+                onTap: () {
+                  //여기 메시지 화면으로 넘겨야함.
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserInfoScreen()));
+                },
+                child: Container(
+                  height: valHeight * 0.2,
+                  width: valWidth * 0.8,
+                  child: Text('여기에 각 유저 메시지 명단이 있으면 됨.'),
+                  color: Colors.grey,
+                ),
+              ),
             ],
           ),
         ));
