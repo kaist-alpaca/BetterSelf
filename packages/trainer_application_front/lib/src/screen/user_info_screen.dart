@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'report_screen.dart';
+import '../pages/info_coaching_page/add_coaching_screen.dart';
+import '../pages/info_coaching_page/coaching_history_screen.dart';
 
 class UserInfoScreen extends StatefulWidget {
   @override
@@ -65,7 +67,12 @@ class _UserInfoScreen extends State<UserInfoScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
-                    onTap: () {}, //여기에 코칭 히스토리로 이동
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CoachingHistoryScreen()));
+                    }, //여기에 코칭 히스토리로 이동
                     child: Container(
                       height: valHeight * 0.04,
                       width: valWidth * 0.38,
@@ -80,7 +87,12 @@ class _UserInfoScreen extends State<UserInfoScreen> {
                     width: valWidth * 0.02,
                   ),
                   GestureDetector(
-                    onTap: () {}, //여기에 코칭 추가로 이동
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddCoachingScreen()));
+                    }, //여기에 코칭 추가로 이동
                     child: Container(
                       height: valHeight * 0.04,
                       width: valWidth * 0.38,
