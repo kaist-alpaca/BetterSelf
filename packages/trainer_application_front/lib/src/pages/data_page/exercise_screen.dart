@@ -31,8 +31,24 @@ class _ExerciseScreen extends State<ExerciseScreen> {
           width: 20,
           color: Colors.grey,
         ),
-        SizedBox(
-          height: valHeight * 0.04,
+        Container(
+          height: valHeight * 0.05,
+          width: valWidth * 0.8,
+          margin: EdgeInsets.only(top: valHeight * 0.028),
+          child: Text(
+            '코칭',
+            style: TextStyle(fontSize: defaultSize * 12),
+          ),
+        ),
+        Container(
+          height: valHeight * 0.05,
+          width: graphWidth,
+          margin: EdgeInsets.only(
+              bottom: valHeight * 0.028, top: valHeight * 0.028),
+          child: Text(
+            'ㅇㅇㅇㅇ의 피드백', //오늘 날짜의 피드백이어야함.
+            style: TextStyle(fontSize: defaultSize * 12),
+          ),
         ),
         Container(
           height: valHeight * 0.025,

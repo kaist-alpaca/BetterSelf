@@ -18,7 +18,9 @@ class _ExerciseFeedbackScreen extends State<ExerciseFeedbackScreen> {
     double barHeight = valHeight * 0.08;
     double barFontSize = defaultSize * 18;
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('운동 데이터'),
+        ),
         body: ListView(children: [
           Center(
             child: Column(

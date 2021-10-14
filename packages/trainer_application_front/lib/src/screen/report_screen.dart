@@ -34,6 +34,38 @@ class _ReportScreen extends State<ReportScreen> {
                   margin: EdgeInsets.only(
                       left: valWidth * 0.14, top: valHeight * 0.03),
                 ),
+                Row(
+                  //기간(날짜) 선택하는 bar.
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      //날짜 왼쪽으로 넘기는 버튼
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.1,
+                        height: valHeight * 0.1,
+                        child: Text('왼쪽버튼'),
+                      ),
+                    ),
+                    Container(
+                      width: valWidth * 0.8,
+                      child: Text('보고 있는 날짜 범위'),
+                    ),
+                    GestureDetector(
+                      //날짜 오른쪽으로 넘기는 버튼
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.1,
+                        height: valHeight * 0.1,
+                        child: Text('오른쪽버튼'),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: valHeight * 0.02,
+                ),
                 Container(
                   //여기에 인바디(생체) 데이터가 보여야함
                   color: Colors.grey,
