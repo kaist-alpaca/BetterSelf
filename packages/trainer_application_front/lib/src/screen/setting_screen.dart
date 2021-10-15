@@ -37,7 +37,7 @@ class _SettingScreen extends State<SettingScreen> {
                 children: [
                   Container(
                     //ID 써있는 텍스트
-                    height: valHeight * 0.1,
+                    height: valHeight * 0.06,
                     width: valWidth * 0.2,
                     child: Text(
                       'ID',
@@ -51,7 +51,7 @@ class _SettingScreen extends State<SettingScreen> {
                     //이거 누르면 ID 입력하는 팝업 등장해야함.
                     onTap: () {}, //요기에 작성
                     child: Container(
-                      height: valHeight * 0.1,
+                      height: valHeight * 0.06,
                       width: valWidth * 0.2,
                       child: Text(
                         'Edit',
@@ -61,7 +61,7 @@ class _SettingScreen extends State<SettingScreen> {
                   )
                 ],
               ),
-              SizedBox(height: valHeight * 0.08),
+              SizedBox(height: valHeight * 0.02),
               Row(
                 //여기가 성별 설정하는 곳
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -107,8 +107,22 @@ class _SettingScreen extends State<SettingScreen> {
                 ],
               ),
               SizedBox(
-                height: valHeight * 0.14,
+                height: valHeight * 0.07,
               ),
+              GestureDetector(
+                //저장
+                onTap: () {
+                  //여기에 저장 기능 만들어야함.
+                },
+                child: Container(
+                  height: valHeight * 0.08,
+                  width: valWidth * 0.65,
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: Text('저장'),
+                ),
+              ),
+              SizedBox(height: valHeight * 0.014),
               GestureDetector(
                 //로그아웃
                 onTap: () {
@@ -121,7 +135,7 @@ class _SettingScreen extends State<SettingScreen> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: Text('Log Out'),
                 ),
-              )
+              ),
             ],
           ),
         ));

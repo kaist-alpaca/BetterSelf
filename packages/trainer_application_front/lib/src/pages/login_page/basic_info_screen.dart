@@ -39,7 +39,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                 children: [
                   Container(
                     //ID 써있는 텍스트
-                    height: valHeight * 0.1,
+                    height: valHeight * 0.06,
                     width: valWidth * 0.2,
                     child: Text(
                       'ID',
@@ -53,7 +53,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                     //이거 누르면 ID 입력하는 팝업 등장해야함.
                     onTap: () {}, //요기에 작성
                     child: Container(
-                      height: valHeight * 0.1,
+                      height: valHeight * 0.06,
                       width: valWidth * 0.2,
                       child: Text(
                         'Edit',
@@ -63,7 +63,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                   )
                 ],
               ),
-              SizedBox(height: valHeight * 0.08),
+
               Row(
                 //여기가 성별 설정하는 곳
                 mainAxisAlignment: MainAxisAlignment.center,
