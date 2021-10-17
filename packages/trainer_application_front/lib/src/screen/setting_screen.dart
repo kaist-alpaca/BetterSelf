@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../screen/user_select_screen.dart';
-import 'package:trainer_application_front/app_main.dart';
 
-class BasicInfoScreen extends StatefulWidget {
+class SettingScreen extends StatefulWidget {
   @override
-  _BasicInfoScreen createState() => _BasicInfoScreen();
+  _SettingScreen createState() => _SettingScreen();
 }
 
-class _BasicInfoScreen extends State<BasicInfoScreen> {
+class _SettingScreen extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -15,7 +13,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
     double defaultSize = valWidth * 0.0025;
     return Scaffold(
         appBar: AppBar(
-          title: Text('계정 설정'),
+          title: Text('설정'),
         ),
         body: Center(
           child: Column(
@@ -63,7 +61,7 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                   )
                 ],
               ),
-
+              SizedBox(height: valHeight * 0.02),
               Row(
                 //여기가 성별 설정하는 곳
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -109,14 +107,12 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                 ],
               ),
               SizedBox(
-                height: valHeight * 0.14,
+                height: valHeight * 0.07,
               ),
               GestureDetector(
                 //저장
                 onTap: () {
                   //여기에 저장 기능 만들어야함.
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AppMain()));
                 },
                 child: Container(
                   height: valHeight * 0.08,
@@ -125,7 +121,21 @@ class _BasicInfoScreen extends State<BasicInfoScreen> {
                       BoxDecoration(border: Border.all(color: Colors.black)),
                   child: Text('저장'),
                 ),
-              )
+              ),
+              SizedBox(height: valHeight * 0.014),
+              GestureDetector(
+                //로그아웃
+                onTap: () {
+                  //여기에 로그아웃 기능 만들어야함.
+                },
+                child: Container(
+                  height: valHeight * 0.08,
+                  width: valWidth * 0.65,
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: Text('Log Out'),
+                ),
+              ),
             ],
           ),
         ));
