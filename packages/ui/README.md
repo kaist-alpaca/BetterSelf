@@ -1,16 +1,5 @@
 # ui
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+ui 패키지입니다.
+각 스크린 별 조작을다룹니다.
+ui widget 이외의 프로그램과 상호작용은 없으므로, ui 제작시 주의사항은 없습니다.

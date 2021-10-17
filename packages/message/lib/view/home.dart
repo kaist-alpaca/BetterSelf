@@ -80,6 +80,7 @@ class _HomeState extends State<Home> {
   //         }
   //       });
   // }
+
   Widget searchUsersList(){
     return ListView.builder(
       itemCount : SearchedUserName.length,

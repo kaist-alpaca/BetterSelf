@@ -1,16 +1,10 @@
 # bottom_bar
 
-A new Flutter project.
+bottom bar를 조작하는 package입니다
+main애서 bottom_bar.dart widget을 호출하고,
+bottom_bar.dart에서는 screen 폴더 내의 함수를 호출해 위젯바의 아이콘과 기능을 반환합니다.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2021.10.17
+ui패키지와 기능이 중복됩니다.
+삭제 혹은 패키지내의 old version폴더로 이전 부탁드립니다.
