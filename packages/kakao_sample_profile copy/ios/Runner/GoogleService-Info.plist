@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>610158921201-4qenulsscnhge2k2l5o084c92anvf0rd.apps.googleusercontent.com</string>
+	<string>686202723932-3r9fmcqkge69qb7fqasb6mn5oc4mh1rt.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.610158921201-4qenulsscnhge2k2l5o084c92anvf0rd</string>
+	<string>com.googleusercontent.apps.686202723932-3r9fmcqkge69qb7fqasb6mn5oc4mh1rt</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>610158921201-fhr487pi83boegrbjvo7j1f3d8mqtggr.apps.googleusercontent.com</string>
+	<string>686202723932-dlg9udusmgl599qnlg36krm29rfiipgl.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDjTRovl_74w3KT7JFCtWv9-mVgB8VLuR0</string>
+	<string>AIzaSyBahCQEVb7dTSAszlXAsWq0Tf35ZoPf2jQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>610158921201</string>
+	<string>686202723932</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.kakao-sample-profile</string>
+	<string>com.alpaca.betatest</string>
 	<key>PROJECT_ID</key>
-	<string>kakao-sample-profile-f52ae</string>
+	<string>message-199ad</string>
 	<key>STORAGE_BUCKET</key>
-	<string>kakao-sample-profile-f52ae.appspot.com</string>
+	<string>message-199ad.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:610158921201:ios:acff2585cad66b4120f050</string>
+	<string>1:686202723932:ios:1b1c13c6d8e6d0f0fc1099</string>
 </dict>
 </plist>
