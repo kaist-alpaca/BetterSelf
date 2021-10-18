@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "686202723932-dlg9udusmgl599qnlg36krm29rfiipgl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.kakao_sample_profile",
+            "certificate_hash": "8aabcdd68bad58831fb307ecde3981af4163678c"
+          }
+        },
+        {
           "client_id": "686202723932-hgaedrjgqpr6nq1t3bolgvs9314rgcve.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -39,10 +47,10 @@
               "client_type": 3
             },
             {
-              "client_id": "686202723932-ut0h51p8gpbdvm8013jl5gufao138vhe.apps.googleusercontent.com",
+              "client_id": "686202723932-3r9fmcqkge69qb7fqasb6mn5oc4mh1rt.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.message"
+                "bundle_id": "com.alpaca.betatest"
               }
             }
           ]
@@ -83,10 +91,10 @@
               "client_type": 3
             },
             {
-              "client_id": "686202723932-ut0h51p8gpbdvm8013jl5gufao138vhe.apps.googleusercontent.com",
+              "client_id": "686202723932-3r9fmcqkge69qb7fqasb6mn5oc4mh1rt.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.message"
+                "bundle_id": "com.alpaca.betatest"
               }
             }
           ]

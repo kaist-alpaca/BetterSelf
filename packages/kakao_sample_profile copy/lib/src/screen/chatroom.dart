@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_sample_profile/services/auth.dart';
 import 'package:kakao_sample_profile/services/database.dart';
+import 'package:kakao_sample_profile/src/screen/communication_screen.dart';
 import 'package:random_string/random_string.dart';
 
 class Chatroom extends StatefulWidget {
@@ -84,52 +85,59 @@ class _ChatroomState extends State<Chatroom> {
   Widget build(BuildContext context) {
     print('debug: ${getchatroomid(user, widget.userchatwith)}');
 
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const CommunicationScreen()));
+          return Future.value(false);
+        },
+        child: Scaffold(
           appBar: AppBar(
-          title: Text('${widget.userchatwith} + $user'),
+            title: Text('${widget.userchatwith} + $user'),
           ),
           body: Container(
             child: Stack(
               children: [
                 chatmessages(context),
                 Container(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
-                    color: Colors.white10,
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child : Row(
-                      children: [Expanded(
-                        child: TextField(style: TextStyle(color: Colors.black),
-                        controller: textmessage,
-                        decoration: const InputDecoration(
-                          hintText: "message...",
-                          hintStyle: TextStyle(
-                            color: Colors.black,
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black)
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black)
-                          )),
-                          )
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      color: Colors.white10,
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      child : Row(
+                        children: [Expanded(
+                            child: TextField(style: TextStyle(color: Colors.white),
+                              controller: textmessage,
+                              decoration: const InputDecoration(
+                                  hintText: "message...",
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white)
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.white)
+                                  )),
+                            )
                         ),
-                        GestureDetector(
-                          onTap: (){
-                            print('debug: clicked');
-                            print("debug: textmessage_ ${textmessage.text}");
-                            constructMessage(true);
-                            setState(() {});
-                          },
-                          child: const Icon(Icons.message, color: Colors.black,)
-                        ),
-                      ],
-                    ),
-                  )
+                          GestureDetector(
+                              onTap: (){
+                                print('debug: clicked');
+                                print("debug: textmessage_ ${textmessage.text}");
+                                constructMessage(true);
+                                setState(() {});
+                              },
+                              child: const Icon(Icons.message, color: Colors.white,)
+                          ),
+                        ],
+                      ),
+
+                    )
                 )
               ],
             ),
           ),
+        )
     );
   }
 }
