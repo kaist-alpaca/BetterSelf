@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import '../pages/login_page/agreement_screen.dart'; // 이용약관 스크린
 import 'package:google_sign_in/google_sign_in.dart';
@@ -26,6 +27,20 @@ class _LoginScreen extends State<LoginScreen> {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
+
+    UserCredential result = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    User? userDetails = result.user;
+
+    Map<String, dynamic> userInfoMap = {
+      "profileUrl" : "",
+      "email": userDetails!.email,
+      "username" : userDetails.email!.replaceAll("@gmail.com", ""),
+      "name": userDetails.displayName,
+      "imgUrl" : userDetails.photoURL
+    };
+
+    FirebaseFirestore.instance.collection("users").doc(userDetails.uid).set(userInfoMap);
 
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
