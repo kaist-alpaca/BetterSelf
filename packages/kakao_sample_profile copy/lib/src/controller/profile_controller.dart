@@ -17,6 +17,18 @@ class ProfileController extends GetxController {
   UserModel originMyProfile = UserModel();
   Rx<UserModel> myProfile = UserModel().obs;
 
+  DateTime date = DateTime.now();
+
+  void dateMinus(DateTime value) {
+    date = date.subtract(Duration(days: 1));
+    update();
+  }
+
+  void datePlus(DateTime value) {
+    date = date.add(Duration(days: 1));
+    update();
+  }
+
   String? gender;
   String? birthday;
   String? height;
