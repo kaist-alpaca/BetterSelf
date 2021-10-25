@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:alpaca_develop/src/chart/gradient_chart.dart';
 import 'package:alpaca_develop/src/chart/line_chart.dart';
 import 'package:alpaca_develop/src/chart/line_chart3.dart';
 import 'package:alpaca_develop/src/chart/line_chart2.dart';
@@ -24,6 +25,12 @@ class _ReportScreen extends State<ReportScreen> {
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
+  ];
+
+  final List<Color> _gradientColors = [
+    const Color(0xFF6FFF7C),
+    const Color(0xFF0087FF),
+    const Color(0xFF5620FF),
   ];
 
   @override
@@ -91,7 +98,7 @@ class _ReportScreen extends State<ReportScreen> {
                   height: 0.2 * valHeight,
                   width: valWidth * 0.84,
                   margin: EdgeInsets.only(left: valWidth * 0.08),
-                  child: madeLineChart(scores: _scores),
+                  child: MadeLineChart(scores: _scores),
                 ),
               ),
               SizedBox(height: valHeight * 0.02),
@@ -110,6 +117,7 @@ class _ReportScreen extends State<ReportScreen> {
                       width: valWidth * 0.4,
                       height: valHeight * 0.2,
                       color: Colors.grey,
+                      child: GradientChart(scores: _scores),
                     ),
                   ),
                   SizedBox(width: valWidth * 0.04),

@@ -6,17 +6,15 @@ class Score {
   Score(this.value, this.time);
 }
 
-class madeLineChart extends StatefulWidget {
+class MadeLineChart extends StatefulWidget {
   final List<Score> scores;
-  const madeLineChart({Key? key, required this.scores}) : super(key: key);
+  const MadeLineChart({Key? key, required this.scores}) : super(key: key);
 
   @override
-  _madeLineChartState createState() => _madeLineChartState();
+  _MadeLineChartState createState() => _MadeLineChartState();
 }
 
-const WeekDays = ["", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
-class _madeLineChartState extends State<madeLineChart> {
+class _MadeLineChartState extends State<MadeLineChart> {
   late double _min, _max;
   late List<double> _Y;
   late List<String> _X;
