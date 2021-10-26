@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:alpaca_develop/common/custom_icons_icons.dart';
+import 'package:betterme/common/custom_icons_icons.dart';
 
 class SettingBar extends StatelessWidget {
   final name;

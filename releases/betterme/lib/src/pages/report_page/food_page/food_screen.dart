@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:alpaca_develop/src/pages/report_page/food_page/food_tabs.dart';
+import 'package:betterme/src/pages/report_page/food_page/food_tabs.dart';
 
 int buttonCase = 0; // 버튼 상태 확인용
 

@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:alpaca_develop/services/auth.dart';
-import 'package:alpaca_develop/services/database.dart';
-import 'package:alpaca_develop/src/screen/chatroom.dart';
-import 'package:alpaca_develop/widgets/widget.dart';
+import 'package:betterme/services/auth.dart';
+import 'package:betterme/services/database.dart';
+import 'package:betterme/src/screen/chatroom.dart';
+import 'package:betterme/widgets/widget.dart';
 
 class CommunicationScreen extends StatefulWidget {
   const CommunicationScreen({Key? key}) : super(key: key);

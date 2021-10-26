@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:alpaca_develop/src/controller/profile_controller.dart';
-import 'package:alpaca_develop/src/screen/login_screen.dart';
+import 'package:betterme/src/controller/profile_controller.dart';
+import 'package:betterme/src/screen/login_screen.dart';
 import 'package:get/get.dart';
 import 'login_page/check_user.dart';
 

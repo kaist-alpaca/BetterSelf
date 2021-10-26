@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:alpaca_develop/common/custom_icons_icons.dart';
-import 'package:alpaca_develop/src/screen/communication_screen.dart';
-import 'package:alpaca_develop/src/screen/home_screen.dart';
-import 'package:alpaca_develop/src/screen/report_screen.dart';
-import 'package:alpaca_develop/src/screen/setting_screen.dart';
+import 'package:betterme/common/custom_icons_icons.dart';
+import 'package:betterme/src/screen/communication_screen.dart';
+import 'package:betterme/src/screen/home_screen.dart';
+import 'package:betterme/src/screen/report_screen.dart';
+import 'package:betterme/src/screen/setting_screen.dart';
 
 class BuildHome extends StatefulWidget {
   const BuildHome({Key? key}) : super(key: key);
@@ -47,14 +47,14 @@ class _BuildHomeState extends State<BuildHome> {
         children: checker == 0
             ? <Widget>[
                 // 정상 로그인시 홈스크린 보인다.
-                // HomeScreenMain(),
+                HomeScreenMain(),
+                ReportScreen(),
+                CommunicationScreen(),
+                SettingScreen(),
                 // ReportScreen(),
-                // CommunicationScreen(),
-                // SettingScreen(),
-                ReportScreen(),
-                ReportScreen(),
-                ReportScreen(),
-                ReportScreen()
+                // ReportScreen(),
+                // ReportScreen(),
+                // ReportScreen()
               ]
             : <Widget>[
                 // 정상 로그인시 홈스크린 보인다.

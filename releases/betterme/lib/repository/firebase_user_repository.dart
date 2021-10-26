@@ -1,4 +1,4 @@
-import 'package:alpaca_develop/src/model/user_model.dart';
+import 'package:betterme/src/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 void readDoc(DocumentSnapshot doc) {

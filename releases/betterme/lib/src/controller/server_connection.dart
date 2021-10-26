@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:alpaca_develop/src/model/user_model.dart';
+import 'package:betterme/src/model/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class ServerConnection {

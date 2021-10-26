@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:get/get.dart';
-import 'package:alpaca_develop/src/controller/image_crop_controller.dart';
-import 'package:alpaca_develop/src/model/user_model.dart';
+import 'package:betterme/src/controller/image_crop_controller.dart';
+import 'package:betterme/src/model/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;

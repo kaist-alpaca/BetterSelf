@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:alpaca_develop/src/controller/profile_controller.dart';
-import 'package:alpaca_develop/src/pages/home_add.dart/home_add_1.dart';
-import 'package:alpaca_develop/src/pages/home_add.dart/home_add_2.dart';
+import 'package:betterme/src/controller/profile_controller.dart';
+import 'package:betterme/src/pages/home_add.dart/home_add_1.dart';
+import 'package:betterme/src/pages/home_add.dart/home_add_2.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 import 'package:flutter_svg/svg.dart';
 

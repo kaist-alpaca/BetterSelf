@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:alpaca_develop/src/controller/profile_controller.dart';
-import 'package:alpaca_develop/src/widget/setting_bar.dart';
-import 'package:alpaca_develop/src/pages/setting_page/basic_ill_screen.dart';
+import 'package:betterme/src/controller/profile_controller.dart';
+import 'package:betterme/src/widget/setting_bar.dart';
+import 'package:betterme/src/pages/setting_page/basic_ill_screen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:alpaca_develop/src/pages/setting_page/setting_ID.dart';
-import 'package:alpaca_develop/src/pages/setting_page/agreement_screen.dart';
+import 'package:betterme/src/pages/setting_page/setting_ID.dart';
+import 'package:betterme/src/pages/setting_page/agreement_screen.dart';
 import 'package:get/get.dart';
 import '../controller/profile_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';

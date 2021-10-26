@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:alpaca_develop/src/controller/profile_controller.dart';
-import 'package:alpaca_develop/src/widget/setting_bar.dart';
-import 'package:alpaca_develop/src/pages/login_page/basic_ill_screen.dart';
+import 'package:betterme/src/controller/profile_controller.dart';
+import 'package:betterme/src/widget/setting_bar.dart';
+import 'package:betterme/src/pages/login_page/basic_ill_screen.dart';
 import 'package:get/get.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';

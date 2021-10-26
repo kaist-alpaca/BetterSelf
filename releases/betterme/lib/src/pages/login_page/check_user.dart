@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:alpaca_develop/src/controller/server_connection.dart';
+import 'package:betterme/src/controller/server_connection.dart';
 
 import '../build_home.dart';
 import 'basic_info_screen.dart';

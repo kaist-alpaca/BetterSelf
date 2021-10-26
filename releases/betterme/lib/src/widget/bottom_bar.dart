@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:alpaca_develop/common/custom_icons_icons.dart';
-import 'package:alpaca_develop/src/screen/communication_screen.dart';
-import 'package:alpaca_develop/src/screen/home_screen.dart';
-import 'package:alpaca_develop/src/screen/report_screen.dart';
-import 'package:alpaca_develop/src/screen/setting_screen.dart';
+import 'package:betterme/common/custom_icons_icons.dart';
+import 'package:betterme/src/screen/communication_screen.dart';
+import 'package:betterme/src/screen/home_screen.dart';
+import 'package:betterme/src/screen/report_screen.dart';
+import 'package:betterme/src/screen/setting_screen.dart';
 
 class BottomNavigation extends StatelessWidget {
   final List<BottomNavigationBarItem> items = [

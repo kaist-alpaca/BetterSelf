@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:alpaca_develop/src/controller/profile_controller.dart';
+import 'package:betterme/src/controller/profile_controller.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 class BasicIllScreen extends StatelessWidget {

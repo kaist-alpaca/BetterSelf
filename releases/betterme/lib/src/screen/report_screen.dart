@@ -1,15 +1,15 @@
 import 'dart:math';
 
-import 'package:alpaca_develop/src/chart/gradient_chart.dart';
-import 'package:alpaca_develop/src/chart/line_chart.dart';
-import 'package:alpaca_develop/src/chart/line_chart3.dart';
-import 'package:alpaca_develop/src/chart/line_chart2.dart';
+import 'package:betterme/src/chart/gradient_chart.dart';
+import 'package:betterme/src/chart/line_chart.dart';
+import 'package:betterme/src/chart/line_chart3.dart';
+import 'package:betterme/src/chart/line_chart2.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:alpaca_develop/src/pages/report_page/inbody_page/inbody_screen.dart';
-import 'package:alpaca_develop/src/pages/report_page/food_page/food_screen.dart';
-import 'package:alpaca_develop/src/pages/report_page/exercise_page/exercise_screen.dart';
+import 'package:betterme/src/pages/report_page/inbody_page/inbody_screen.dart';
+import 'package:betterme/src/pages/report_page/food_page/food_screen.dart';
+import 'package:betterme/src/pages/report_page/exercise_page/exercise_screen.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ReportScreen extends StatefulWidget {
