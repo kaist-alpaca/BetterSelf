@@ -1,3 +1,55 @@
+#1 개발 목적 및 주의 사항 
+
 - 기능과 관련해서 독립적으로 패키지를 만들고 관리하는 장소. 각 하위 폴더의 이름은 한글로 기능이 무엇인지 드러날 수 있도록 적는다.
     - 기능은 백엔드와 프론트엔드 모두를 포함한다.
 - 각 패키지를 완성했을 경우 해당 패키지를 test에 복사한다.
+
+
+#2 ALPACA Ubuntu Network 
+
+IP Address : 143.248.156.145
+
+DDNS : kaistuser.iptime.org
+
+Port Forwarding : Name / External port / Internal port
+	ssh / 22 / 22
+	react / 1234 / 3000
+	php / 8080 / 80
+
+
+#3 ALPACA Ubuntu Server 
+how to connect by ssh : ssh alpaca@kaistuser.iptime.org / pw : alpaca
+	root user pw : alpaca
+	if it does not work, use port 22
+
+ALPACA Ubuntu local MySQL
+	alpaca / alpaca
+
+how to connect by VSCode
+1. Install ftp-simple
+2. f1 & click ftp-simple : Config - FTP connection setting
+3. change as the following
+[
+
+	{
+		"name": "alpaca",
+		"host": "kaistuser.iptime.org",
+		"port": 22,
+		"type": "sftp",
+		"username": "alpaca",
+		"password": "alpaca",
+		"path": "/",
+		"autosave": true,
+		"confirm": false
+	}
+]
+4. f1 & click ftp-simple : Remote directory open to workspace
+
+#4 AWS RDS MySQL 
+
+tsclouddb.cn3e2kgsuevi.ap-northeast-2.rds.amazonaws.com
+pw : alpacadbadmin!@
+
+to connect directly my sql at ALPACA Ubuntu : 
+	mysql -htsclouddb.cn3e2kgsuevi.ap-northeast-2.rds.amazonaws.com -ualpacadbadmin -p
+	pw : alpacadbadmin!@

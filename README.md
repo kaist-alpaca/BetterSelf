@@ -1,4 +1,4 @@
-# BPSapp
+# BetterMe
 App for 2021 TS222
 
 ///////
@@ -100,12 +100,13 @@ https://www.notion.so/32b60f03d650463aab1e504b236c8cb0
 - [XXXXX] OOOO
     - XXXXX | 헤더
 
-        feat : 새로운 기능에 대한 커밋
-        fix : 버그 수정에 대한 커밋
-        build : 빌드 관련 파일 수정에 대한 커밋
-        docs : 문서 수정에 대한 커밋
-        style : 코드 스타일 혹은 포맷 등에 관한 커밋
-        refactor :  코드 리팩토링에 대한 커밋
+        feat: 새로운 기능에 대한 커밋
+        fix: 버그 수정에 대한 커밋
+        build: 빌드 관련 파일 수정에 대한 커밋
+        docs: 문서 수정에 대한 커밋
+        style: 코드 스타일 혹은 포맷 등에 관한 커밋
+        refactor:  코드 리팩토링에 대한 커밋
+        restructure: 폴더 및 파일 재구성에 관한 커밋 
 
     - OOOO | 세부설명
         - 제목과 본문을 빈 행으로 구분한다
@@ -124,4 +125,257 @@ https://www.notion.so/32b60f03d650463aab1e504b236c8cb0
 - reset를 하지 말 것
     - 불가피하게 다운그레이드가 필요한 경우에는, 모든 인원이 합의한 후 개발팀장의 지도 하에 soft reset을 진행한다.
 
+### Coding Style 
+
+written by 백호, from Notion.
+
+Effective Dart Coding Style
+
+- 해당 파트 정리에 있어서, PREFER(하면 좋다)는 임의로 적어두었음.
+- 해당 파트 정리에 있어서, 현재 우리가 코딩하는 단계에서 불필요한 내용, 또는 오히려 헷갈릴 듯한 내용은 적지 않았음. (대체로 '이런이런거 쓰지 마라' 라고는 하는 부분인데, 클린 코드로는 비효율적이지만, 코딩 초보로서는 있어도 괜찮거나 있는게 좋을 법한 부분)
+
+- Before reading
+    - 기본 원칙
+        1. Be consistent
+        2. Be brief
+        
+    - 약어
+        - A library member is a top-level field, getter, setter, or function. Basically, anything at the top level that isn’t a type.
+        - A class member is a constructor, field, getter, setter, function, or operator declared inside a class. Class members can be instance or static, abstract or concrete.
+        - A member is either a library member or a class member.
+        - A variable, when used generally, refers to top-level variables, parameters, and local variables. It doesn’t include static or instance fields.
+        - A type is any named type declaration: a class, typedef, or enum.
+        - A property is a top-level variable, getter (inside a class or at the top level, instance or static), setter (same), or field (instance or static). Roughly any “field-like” named construct.
+
+- Styles: [https://dart.dev/guides/language/effective-dart/style](https://dart.dev/guides/language/effective-dart/style)
+    - Identifiers
+        - UpperCamelCase: 첫글자 포함, 띄어쓰기 때마다 대문자
+        - lowerCamelCase: 첫글자 제외, 띄어쓰기 때마다 대문자
+        - lowercase_with_underscores: 띄어쓰기 대신 _ 사용
+
+    - Class / Type & Extensions - UpperCamelCase.
+        - class, enum types, typedef, type parameter, Extension 등.
+        - metadata annotations에 포함되는 class들도 포함.
+
+    - library, packages, directories, source files, prefixes - lowercase_with_underscores
+        - import 'package:alpaca_is_the_best' as alpaca_best ;   (O)
+        - import 'package:alpaca_is_the_best' as alpacaBest;   (X)
+
+    - Other identifiers - lowerCamelCase
+        - class members, top-level definitions, **variables**, **parameters**, named parameters, constant...
+
+    - 단어 나열 약어는 전부 대문자, 한 단어 약어는 맨 앞만 대문자.
+        - Input / Output = IO  (O)       Io  (X)  -> class IOPort {}
+        - Idenfification = Id (O)       ID  (X)  → class IdCard {}
+        - Http  (O)       HTTP  (X) → class HttpConnection {}
+
+- 금지사항
+    - Leading underscore 금지.
+    - prefix letters 금지:  defaultTimeout (O)    kDefaultTimeout (X)
+    - 한 줄에  80자가 넘는 코드. (URl or file path or Multi-line strings 예외)
+
+- Import 순서
+    - import: dart → package → related imports
+    - all imports → export section
+    - 알파벳순 정렬.
+        - Good Example
+
+            import 'dart:async';
+
+            import 'dart:html';
+
+            import 'package:bar/bar.dart';
+
+            import 'package:foo/foo.dart';
+
+            import 'foo.dart';
+
+            import 'foo/foo.dart';
+
+            import 'src/error.dart';
+
+            import 'src/foo_bar.dart';
+
+            export 'package:bar/bar.dart';
+
+            export 'src/foo_bar.dart';
+
+- Documentation(주석)
+
+     [https://dart.dev/guides/language/effective-dart/documentation](https://dart.dev/guides/language/effective-dart/documentation) 
+
+    - 최대한 한 문장으로, 간결하고 완성된 문장으로 작성
+    - 문단인 경우, 첫 문장은 분리 및 요약.
+        - Good Example
+
+            /// A는 이렇게 해줘.
+
+            ///
+
+            /// 무슨 말이냐면 A에서 D를 넣고, C에서는 굳이 d가 필요 없
+            /// 을 것 같아. 그러니까 A에서만 가져오자.
+
+    - 블록 x. 줄 주석. (// 이용.     /**/ 이용 금지)
+
+    - Document member를 위한 코멘트나 types에 대한 건 /// 사용
+
+    - Variable, getter, setter, 함수, 함수의 역할 등 주체가 되는 명확한 대상으로 주석이 시작하면 이해하기 쉽다. 특히, library나 type이 무엇인지가 있으면 좋음.
+        - Good Example
+
+            /// Returns 'true' if every element satisfies the [predicate].
+
+            bool all(bool predicate(T element)) ⇒ ...
+
+            /// **The number** of checked buttons on the page
+
+            int get checkedCount ⇒ ...
+
+    - [ ] 활용 할 것. [ ] 안에는 예상되는 값이나 전달자의 종류가 포함된다.  →     /// Throws a [StateError] if ...
+
+    - metadata annotations 전에 주석을 넣어라.
+
+        ///여기에 주석 넣을것
+
+        @Component(selector: 'toggle')
+
+        ///여기에 주석 넣지 말고
+
+        class ToggleComponent {}
+
+    - 코드 주석은 backtick으로 분리.
+
+        ///이건 그냥 주석
+
+        /// 
+
+        /// ``` 
+
+        /// var example = CodeBlockExample();
+
+        /// print(example); // ALPACA
+
+        /// ```
+
+- Usage [https://dart.dev/guides/language/effective-dart/usage](https://dart.dev/guides/language/effective-dart/usage)
+    - Null
+        - Dart는 변수가 nullable일때, 기본적으로 null로 시작. 따라서 null임을 굳이 명시해 줄 필요 없다.
+        - null 값을 ??를 이용해 boolean으로 사용 가능하다
+
+            null을 false로 쓰길 원한다면: if (someThing?.isEnabled ?? false) { function}
+
+    - Strings
+        - 인접한 string은 그냥 작성. + 불필요. → function('string 1' 'string 2')
+        - value가 섞인다면 + 대신 $ 사용, 함수가 아닌 simple identifier라면 {}불필요 → 'Hi, $name Today is ${A-B}'
+
+        - Collections
+            - Iterable.forEach() 대신,  그냥 for(var A in b ) 사용.
+            - 결과의 type을 바꿀 게 아니라면, List.from(collection) 대신 collection.toList() 사용.
+            - type으로 필터링할 때에는 whereType() 사용.
+            - cast() 사용 피해라.
+
+    - Collections
+        - Iterable.forEach() 대신,  그냥 for(var A in b ) 사용.
+        - 결과의 type을 바꿀 게 아니라면, List.from(collection) 대신 collection.toList() 사용.
+        - type으로 필터링할 때에는 whereType() 사용.
+        - cast() 사용 피해라.
+
+    - Function
+        - 함수 정의 (void)를 사용해라. var 말고.
+        - 매개변수의 초기값은 : 대신 =로 설정해라.
+
+    - Variables
+        - var & final은 일관된 규칙에 따라 사용해라.
+            - var로 정의되지 않은 local variables에서만 final을 쓴다거나,
+            - 모든 local variables에서 var만 사용하고 final은 쓰지 않는다거나.
+
+        - 너도 할 수 있는 계산을 컴퓨터 시키지 마라.
+
+    - Constructors
+        - 변수 지정 간략화
+            - Example
+
+                class Point{
+
+                double x,y;
+
+                Point(double x, double y): x=x, y=y;     → bad
+
+                Point(this.x, this.y); → good
+
+                }
+
+        - 빈 body에는 {} 대신 ; 사용 → Point(this x, this y){}   (X)
+
+        - 불필요한 new, late 사용 X.
+
+        - 반복적인 const 사용 X.
+
+            const primaryColors = const[const Color('red', const[255,0,0]),];     (X)
+
+            const primaryColors = [Color('red', [255,0,0]),];   (O)
+
+- Design [https://dart.dev/guides/language/effective-dart/design](https://dart.dev/guides/language/effective-dart/design)
+    - Names
+        - 일정하고, 명확하고, 모두가 아는 용어 사용. 약어는 피해라.
+
+            pageCount   updatePageCount    Point  → good.
+
+            renumberPages   convertToSomething     Cartesian   → bad.
+
+        - boolean or variable은 positive하게.
+
+            isConnected     hasData   → good.
+
+            isDisconnected    isEmpty   → bad.
+
+        - get으로 시작하는 method 이름은 피해라.
+
+         
+
+        - 어떤 object의 state를 새 object로 옮긴다면 to__()  : list.toSet()    stacTrace.toString()     dateTime.toLocal()
+
+        - 원래의 object에서 다른 것을 얻어온다면 as__() :
+
+            var map = table.asMap();
+
+            var list = bytes.asFloat32List();
+
+            var future = subscription.asFuture();
+
+        - 매개변수 이름은 사용하지 마라
+
+            list.addElement(element)   →    list.add(element)
+
+            map.removeKey(key)   →    map.remove(key)
+
+    - Type : 모든 변수의 type을 알 수 있게 적되, 반복해서 적진 말아라.
+        - mixin type 정의를 위해서는 mixin을 사용해라.
+        - 변수 정의시 initializer 대신 type을 사용해라. : var parameters → List<AstNode> parameters
+            - 그러나 반복정의를 할 필요는 없다. (앞선 const 남발금지와 같은 맥락. 위에서 type 정했으면 그냥 var로 정의해라)
+
+        - 함수와 그 매개변수 정의시, return값의 type을 명시해라.
+            - 매개변수 이름이 type과 같다면, 반복해서 언급하지 말아라.
+            - 함수 내에서, 이미 위에서 언급된 type을 또 언급하지 말아라.
+
+                class Point {
+
+                double x, y;
+
+                Point(double this.x, double this.y);    →    Point(this.x, this.y);
+
+                }
+
+        - 빈 변수에 들어갈 값이 언급되지 않았다면 명시해두라.
+
+            var playerScores = {};   →   var playerScores = <String, int> {};
+
+            - 언급되었다면 반복언급 x.
+
+                final Completer<String> response = Completer<String> ();
+
+                →   final Completer<String> response = Completer();
+
+        - Setter는 항상 void를 return하므로, type을 명시하지 말아라.
+
+            void set foo(Foo value)    →    set foo(Foo value)
 
