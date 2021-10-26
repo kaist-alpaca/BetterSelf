@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
+import 'src/app.dart';
+import 'src/controller/image_crop_controller.dart';
+import 'src/controller/profile_controller.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-
-import 'betterme/login/functions/SyncFB.dart';
-import 'functions/Controllers/image_crop_controller.dart';
-import 'functions/Controllers/profile_controller.dart';
 
 // void main() => runApp(new MyApp());
 void main() {
