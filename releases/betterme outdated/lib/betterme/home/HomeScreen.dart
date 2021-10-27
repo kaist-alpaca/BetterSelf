@@ -20,10 +20,6 @@ class _HomeScreen extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
-
-    final bgColor = Color(0xff0B202A); //배경색
-    final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
-    final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     double defaultSize = valWidth * 0.0025;
     return GetBuilder<ProfileController>(builder: (controller) {
       return Container(
@@ -38,9 +34,8 @@ class _HomeScreen extends State<HomeScreen> {
           ),
         ),
         child: Scaffold(
-          backgroundColor: bgColor,
+          backgroundColor: Colors.transparent,
           appBar: AppBar(
-            backgroundColor: bgColor,
             title: Text(controller.date.month.toString() +
                 "월 " +
                 controller.date.day.toString() +

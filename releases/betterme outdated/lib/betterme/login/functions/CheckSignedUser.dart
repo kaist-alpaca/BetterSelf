@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
 import 'package:betterme/functions/Server/ServerConnectionMethods.dart';
 
-import '../initialsetting/InitialSettingScreen.dart';
+import 'InitialSettingScreen.dart';
 
 class CheckSignedUser extends StatelessWidget {
   final String uid;

@@ -6,7 +6,7 @@ import 'package:betterme/functions/Firestore/DatabaseMethods.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'functions/Chatroom.dart';
+import 'chatroom/Chatroom.dart';
 import 'functions/Widgets.dart';
 
 class CommunicationScreen extends StatefulWidget {
@@ -110,7 +110,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  Chatroom(SearchedUserName[index])));
+                                  ChatroomScreen(SearchedUserName[index])));
                     },
                     child: ListTile(
                       leading: Image.network(SearchedUserImg[index]),
@@ -131,9 +131,19 @@ class _CommunicationScreen extends State<CommunicationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final valHeight = MediaQuery.of(context).size.height; //화면 높이
+    final valWidth = MediaQuery.of(context).size.width; //화면 너비
+    final bgColor = Color(0xff0B202A); //배경색
+    final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
+    final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     return Scaffold(
+      backgroundColor: bgColor,
       appBar: AppBar(
-        title: Text('Chatroom'),
+        backgroundColor: bgColor,
+        title: Text(
+          'Chatroom',
+          style: TextStyle(color: txtColor),
+        ),
       ),
       body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),

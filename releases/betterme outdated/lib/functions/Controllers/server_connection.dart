@@ -8,7 +8,7 @@ class ServerConnection {
   static Future<UserModel?> findUserByUid(String uid) async {
     var userModel;
     final response = await http.get(Uri.parse(
-        "http://kaistuser.iptime.org:8080/check_signed_user.php?uid=" + uid));
+        "http://kaistuser.iptime.org:8080/find_user_by_uid.php?uid=" + uid));
     var responseBody = utf8.decode(response.bodyBytes);
     // List<dynamic> list = jsonDecode(responseBody);
     // var list = jsonDecode(response.body);
@@ -33,7 +33,7 @@ class ServerConnection {
 
   static Future<void> uploadProfileImage(String uid, String photoURL) async {
     await http.get(Uri.parse(
-        "http://kaistuser.iptime.org:8080/upload_image.php?uid=" +
+        "http://kaistuser.iptime.org:8080/profile_image_upload.php?uid=" +
             uid +
             "&photoURL=" +
             photoURL));
@@ -45,7 +45,7 @@ class ServerConnection {
     String userName,
   ) async {
     await http.get(Uri.parse(
-        "http://kaistuser.iptime.org:8080/create_user_info.php?uid=" +
+        "http://kaistuser.iptime.org:8080/create_user.php?uid=" +
             uid +
             "&email=" +
             email +
@@ -55,7 +55,7 @@ class ServerConnection {
 
   static Future<String> AuthSignedUser(String uid) async {
     final response = await http.get(Uri.parse(
-        "http://kaistuser.iptime.org:8080/check_user_by_uid.php?uid=" + uid));
+        "http://kaistuser.iptime.org:8080/check_signed_user.php?uid=" + uid));
     print("check user");
     print(json.decode(response.body));
     return json.decode(response.body).toString();
