@@ -52,6 +52,7 @@ https://www.notion.so/32b60f03d650463aab1e504b236c8cb0
             - 참고한 사이트 링크와 관련 설명
     - written
         - 개발을 위해 작성된 문서들이 존재하는 곳.
+    - resources
 
 - README.md
     - 앱 목적, 각 기능, 요구조건, 예시 시나리오 등에 대해 세부적으로 작성
@@ -107,6 +108,7 @@ https://www.notion.so/32b60f03d650463aab1e504b236c8cb0
         style: 코드 스타일 혹은 포맷 등에 관한 커밋
         refactor:  코드 리팩토링에 대한 커밋
         restructure: 폴더 및 파일 재구성에 관한 커밋 
+        resources: UI & 아이콘 관한 커밋 
 
     - OOOO | 세부설명
         - 제목과 본문을 빈 행으로 구분한다
