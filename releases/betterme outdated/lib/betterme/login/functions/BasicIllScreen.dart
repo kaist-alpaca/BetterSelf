@@ -22,6 +22,9 @@ class BasicIllScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ProfileController>(builder: (controller) {
+      final bgColor = Color(0xff0B202A); //배경색
+      final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
+      final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
       return Scaffold(
           appBar: AppBar(
             title: Text('질병기초정보'),
