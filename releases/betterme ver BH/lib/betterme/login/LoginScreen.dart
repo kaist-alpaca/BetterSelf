@@ -57,6 +57,7 @@ class _LoginScreen extends State<LoginScreen> {
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
+    double defaultSize = valWidth * 0.0025; //폰트사이즈용
     return Scaffold(
       backgroundColor: bgColor,
       body: Center(
@@ -64,15 +65,14 @@ class _LoginScreen extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(
-            height: valHeight * 0.15,
+            height: valHeight * 0.27,
           ), // 가장 위 빈 공간
-          Container(
-            color: Colors.grey,
-            height: valHeight * 0.15,
-            width: valHeight * 0.15,
+          CircleAvatar(
+            radius: valWidth * 0.12,
+            backgroundColor: Colors.grey, //나중 여기에 앱아이콘
           ),
           SizedBox(
-            height: valHeight * 0.2,
+            height: valHeight * 0.18,
           ),
           GestureDetector(
             onTap: () {
@@ -88,14 +88,22 @@ class _LoginScreen extends State<LoginScreen> {
                       MaterialPageRoute(builder: (context) => AppMain()));*/ //바로 홈페이지로 이동하는 코드
             },
             child: Container(
-                height: valHeight * 0.08,
-                width: valWidth * 0.7,
-                color: Colors.grey,
-                child: Text("Google 계정으로 로그인") //구글 계정 로그인 버튼
+                height: valHeight * 0.048,
+                width: valWidth * 0.73,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(valWidth * 0.015),
+                  color: Color(0xff333C47),
+                ),
+                child: Text(
+                  "Google 계정으로 로그인",
+                  style: TextStyle(
+                      color: txtColor, fontSize: defaultSize * 15, height: 1.8),
+                  textAlign: TextAlign.center,
+                ) //구글 계정 로그인 버튼
                 ),
           ),
           SizedBox(
-            height: valHeight * 0.1,
+            height: valHeight * 0.07,
           ),
           Container(
             // 개인정보 처리방침 및 이용약관
@@ -111,9 +119,16 @@ class _LoginScreen extends State<LoginScreen> {
                     //         builder: (context) => AgreementScreen()));
                   },
                   child: Container(
-                      width: valWidth * 0.75,
+                      width: valWidth * 0.55,
                       // height: valHeight * 0.06,
-                      child: Text("개인정보 처리방침 및 이용약관")),
+                      child: Text(
+                        "개인정보 처리방침 및 이용약관",
+                        style: TextStyle(
+                          color: txtColor,
+                          fontSize: defaultSize * 14,
+                        ),
+                        textAlign: TextAlign.center,
+                      )),
                 ),
                 // Checkbox(
                 //   value: _isChecked,
@@ -126,18 +141,26 @@ class _LoginScreen extends State<LoginScreen> {
                 GestureDetector(
                   onTap: () {}, // 여기 누르면 동의에 체크되고, 로그인 가능해야함.
                   child: Container(
-                    width: valWidth * 0.2,
+                    width: valWidth * 0.21,
                     height: valHeight * 0.06,
                     child: Row(
                       children: [
-                        Text("동의"),
-                        Checkbox(
-                          value: _isChecked,
-                          onChanged: (value) {
-                            setState(() {
-                              _isChecked = value!;
-                            });
-                          },
+                        Text(
+                          "동의",
+                          style: TextStyle(
+                              color: txtColor, fontSize: defaultSize * 14),
+                        ),
+                        Theme(
+                          data: ThemeData(
+                              unselectedWidgetColor: Color(0xff333C47)),
+                          child: Checkbox(
+                            value: _isChecked,
+                            onChanged: (value) {
+                              setState(() {
+                                _isChecked = value!;
+                              });
+                            },
+                          ),
                         ),
                       ],
                     ),
