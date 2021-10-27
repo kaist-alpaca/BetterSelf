@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "686202723932-ki90asb9a35cihi1tsfs4vke50va5724.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.betterme",
+            "certificate_hash": "1e86a1fd20ec6f313c5f833c094cedc08135b661"
+          }
+        },
+        {
           "client_id": "686202723932-moga8lp81jseevc08v9ko3o78muh60i4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

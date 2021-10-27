@@ -1,4 +1,4 @@
-import 'package:betterme/betterme/login/functions/BasicIllScreen.dart';
+import 'package:betterme/betterme/login/basicillscreen/BasicIllScreen.dart';
 import 'package:betterme/betterme/login/functions/SettingBar.dart';
 
 import 'package:betterme/functions/Controllers/profile_controller.dart';

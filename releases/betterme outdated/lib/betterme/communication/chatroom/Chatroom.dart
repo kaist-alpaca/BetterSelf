@@ -8,15 +8,15 @@ import 'package:betterme/functions/Firestore/DatabaseMethods.dart';
 
 import '../CommunicationScreen.dart';
 
-class Chatroom extends StatefulWidget {
+class ChatroomScreen extends StatefulWidget {
   final String userchatwith;
-  const Chatroom(this.userchatwith);
+  const ChatroomScreen(this.userchatwith);
 
   @override
-  _ChatroomState createState() => _ChatroomState();
+  _ChatroomScreen createState() => _ChatroomScreen();
 }
 
-class _ChatroomState extends State<Chatroom> {
+class _ChatroomScreen extends State<ChatroomScreen> {
   var user = AuthMethods()
       .auth
       .currentUser!

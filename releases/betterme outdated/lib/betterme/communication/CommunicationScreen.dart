@@ -6,7 +6,7 @@ import 'package:betterme/functions/Firestore/DatabaseMethods.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'functions/Chatroom.dart';
+import 'chatroom/Chatroom.dart';
 import 'functions/Widgets.dart';
 
 class CommunicationScreen extends StatefulWidget {
@@ -110,7 +110,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  Chatroom(SearchedUserName[index])));
+                                  ChatroomScreen(SearchedUserName[index])));
                     },
                     child: ListTile(
                       leading: Image.network(SearchedUserImg[index]),
