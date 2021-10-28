@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-Widget DividewithObj(BuildContext context, Widget CenterObj, double Rratio, double Lratio) {
-
+Widget DividewithObj(
+    BuildContext context, Widget CenterObj, double Rratio, double Lratio) {
   final valWidth = MediaQuery.of(context).size.width;
 
   return Row(
@@ -10,7 +10,7 @@ Widget DividewithObj(BuildContext context, Widget CenterObj, double Rratio, doub
         width: valWidth * Rratio,
         child: Divider(
           color: Colors.pink[100],
-          thickness: 1.0,
+          thickness: 0.6,
         ),
       ),
       CenterObj,
@@ -18,7 +18,7 @@ Widget DividewithObj(BuildContext context, Widget CenterObj, double Rratio, doub
         width: valWidth * Lratio,
         child: Divider(
           color: Colors.pink[100],
-          thickness: 1.0,
+          thickness: 0.6,
         ),
       ),
     ],
