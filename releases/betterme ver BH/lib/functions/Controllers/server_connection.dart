@@ -8,7 +8,7 @@ class ServerConnection {
   static Future<UserModel?> findUserByUid(String uid) async {
     var userModel;
     final response = await http.get(Uri.parse(
-        "http://kaistuser.iptime.org:8080/check_signed_user.php?uid=" + uid));
+        "http://kaistuser.iptime.org:8080/find_user_by_uid.php?uid=" + uid));
     var responseBody = utf8.decode(response.bodyBytes);
     // List<dynamic> list = jsonDecode(responseBody);
     // var list = jsonDecode(response.body);

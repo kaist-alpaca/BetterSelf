@@ -54,8 +54,10 @@ class ServerConnectionMethods {
   }
 
   static Future<String> AuthSignedUser(String uid) async {
+    // final response = await http.get(Uri.parse(
+    //     "http://kaistuser.iptime.org:8080/check_signed_user.php?uid=" + uid));
     final response = await http.get(Uri.parse(
-        "http://kaistuser.iptime.org:8080/check_signed_user.php?uid=" + uid));
+        "http://kaistuser.iptime.org:8080/check_user_by_uid.php?uid=" + uid));
     print("check user");
     print(json.decode(response.body));
     return json.decode(response.body).toString();

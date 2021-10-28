@@ -1,4 +1,4 @@
-package com.example.kakao_sample_profile
+package com.example.betterme
 
 import io.flutter.embedding.android.FlutterActivity
 
