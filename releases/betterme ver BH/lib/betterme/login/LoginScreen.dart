@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 // import '../pages/login_page/agreement_screen.dart'; // 이용약관 스크린
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
+import 'package:get/get.dart';
+import '../home/HomeScreen.dart';
+import '../login/agreementScreen/AgreementScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -76,14 +80,13 @@ class _LoginScreen extends State<LoginScreen> {
           ),
           GestureDetector(
             onTap: () {
-              print(_isChecked);
-              if (_isChecked) {
-                signInWithGoogle();
-              }
+              // print(_isChecked);
+              // if (_isChecked) {
+              //   signInWithGoogle();
+              // }
               //터치하면 여기에 구글 로그인 구현.
               // 한 번 초기정보 설정했으면(초기정보가 저장되어있으면 바로 홈페이지로 이동 구현)
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => BasicInfoScreen()));
+              Get.offAll(() => ConstructTabBar());
               /*Navigator.push(context,
                       MaterialPageRoute(builder: (context) => AppMain()));*/ //바로 홈페이지로 이동하는 코드
             },
@@ -113,10 +116,10 @@ class _LoginScreen extends State<LoginScreen> {
                 GestureDetector(
                   //여기 누르면 개인정보 처리방침 및 이용약관으로
                   onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => AgreementScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AgreementScreen()));
                   },
                   child: Container(
                       width: valWidth * 0.55,
