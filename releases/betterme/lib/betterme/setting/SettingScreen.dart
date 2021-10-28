@@ -209,10 +209,11 @@ class SettingScreen extends StatelessWidget {
                             },
                             onSubmit: (index) {
                               print(genderList[index].data);
-                              controller.gender = genderList[index].data;
+                              controller.genderSelected(
+                                  genderList[index].data.toString()
+                              );
                             },
-                            bottomPickerTheme:
-                            BOTTOM_PICKER_THEME.PLUM_PLATE, ).show(context);
+                            bottomPickerTheme: BOTTOM_PICKER_THEME.PLUM_PLATE).show(context);
                         },
                         child: Container(
                           //생년월일 입력란
@@ -231,7 +232,8 @@ class SettingScreen extends StatelessWidget {
                                   : controller.gender.toString(),
                               style:
                               TextStyle(color: txtColor, fontSize: defaultSize * 15),
-                            )),
+                            )
+                        ),
                       ),//margin
                       Container(
                         width: valWidth * 0.2,
@@ -326,6 +328,7 @@ class SettingScreen extends StatelessWidget {
                             keyboardType: TextInputType.number,
                             focusNode: _nodeText1,
                             decoration: InputDecoration(
+                              hintText: controller.height,
                               hintStyle: TextStyle(color: txtColor, fontSize: defaultSize * 15)
                             ),
                             onChanged: (text) {
@@ -472,7 +475,7 @@ class SettingScreen extends StatelessWidget {
                     onTap: () {
                       FirebaseAuth.instance.signOut();
                       // Restart.restartApp(webOrigin: '');
-                      Phoenix.rebirth(context);
+                      //Phoenix.rebirth(context);
                       // return Home();
                     }, //여기에 로그아웃 기능 구현
                     child: Column(
