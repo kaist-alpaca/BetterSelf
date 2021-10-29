@@ -134,7 +134,7 @@ class _BioTabs extends State<BioTabs> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      '수면 시간',
+                      '수면',
                       style: TextStyle(
                           fontSize: defaultSize * 14, color: txtColor),
                     ),
