@@ -210,7 +210,6 @@ class _ReportScreen extends State<ReportScreen> {
                               boxShadow: [
                                 BoxShadow(color: shadowColor, blurRadius: 2.2),
                               ]),
-                          child: GradientChart(scores: _scores),
                         ),
                       ),
                       SizedBox(width: valWidth * 0.04),
