@@ -1,7 +1,9 @@
 import 'package:betterme/betterme/login/basicillscreen/BasicIllScreen.dart';
 import 'package:betterme/betterme/login/functions/SettingBar.dart';
+import 'package:betterme/betterme/login/functions/SyncFB.dart';
 
 import 'package:betterme/functions/Controllers/profile_controller.dart';
+import 'package:betterme/main.dart';
 
 import 'package:flutter/material.dart';
 
@@ -356,7 +358,12 @@ class SettingScreen extends StatelessWidget {
                     onTap: () {
                       FirebaseAuth.instance.signOut();
                       // Restart.restartApp(webOrigin: '');
+                      // Get.offAll(() => main());
+                      // Get.deleteAll();
+                      Get.reset();
                       Phoenix.rebirth(context);
+                      // BetterMe();?
+                      // Get.offAll(() => SyncFB());
                       // return Home();
                     }, //여기에 로그아웃 기능 구현
                     child: Container(

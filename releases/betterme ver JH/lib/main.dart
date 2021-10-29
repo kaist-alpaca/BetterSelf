@@ -11,10 +11,11 @@ import 'functions/Controllers/profile_controller.dart';
 // void main() => runApp(new MyApp());
 void main() {
   runApp(
-    /// 1. Wrap your App widget in the Phoenix widget
+    // 1. Wrap your App widget in the Phoenix widget
     Phoenix(
       child: BetterMe(),
     ),
+    // BetterMe(),
   );
 }
 

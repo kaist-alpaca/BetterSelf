@@ -15,7 +15,7 @@ class DetectAuthStateChange extends GetView<ProfileController> {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, snapshot) {
           // print(FirebaseAuth.instance.currentUser!.displayName);
-          ProfileController.to.authStateChanges(snapshot.data);
+          // ProfileController.to.authStateChanges(snapshot.data);
           if (snapshot.hasData) {
             // user is authorozed hence redirect to home screen
             // return Profile();
