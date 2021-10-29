@@ -50,6 +50,7 @@ class _ConstructTabBar extends State<ConstructTabBar> {
             ? <Widget>[
                 // 정상 로그인시 홈스크린 보인다.
                 HomeScreen(),
+
                 ReportScreen(),
                 CommunicationScreen(),
                 SettingScreen(),
@@ -61,6 +62,7 @@ class _ConstructTabBar extends State<ConstructTabBar> {
             : <Widget>[
                 // 정상 로그인시 홈스크린 보인다.
                 ReportScreen(),
+
                 HomeScreen(),
                 CommunicationScreen(),
                 SettingScreen(),
@@ -72,8 +74,8 @@ class _ConstructTabBar extends State<ConstructTabBar> {
         currentIndex: getPageIndex,
         onTap: onTapChangePage,
         activeColor: Colors.white,
-        inactiveColor: Colors.grey,
-        backgroundColor: Colors.black,
+        inactiveColor: Color(0xff6E6572),
+        backgroundColor: Color(0xff0B202A),
         items: [
           BottomNavigationBarItem(icon: Icon(CustomIcons.report)),
           BottomNavigationBarItem(icon: Icon(Icons.home)),
