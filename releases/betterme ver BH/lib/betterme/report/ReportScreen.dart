@@ -3,8 +3,12 @@ import 'dart:math';
 import 'package:betterme/functions/Graphs/gradient_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:betterme/functions/Graphs/line_chart.dart';
+
+import 'package:betterme/functions/Controllers/profile_controller.dart';
+import '../../functions/Widgets/DividewithObj.dart';
 
 import 'bio_report/BioScreen.dart';
 import 'exercise_report/ExerciseScreen.dart';
@@ -52,105 +56,195 @@ class _ReportScreen extends State<ReportScreen> {
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
+    final shadowColor = Color(0xffD2ABBA);
     double defaultSize = valWidth * 0.0025;
-    return Scaffold(
-      backgroundColor: bgColor,
-      appBar: AppBar(
-        backgroundColor: bgColor,
-        title: Text(
-          "Report",
-          style: TextStyle(color: txtColor),
-        ),
-      ),
-      body: ListView(children: [
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: Text(
-                  '코칭',
-                  style: TextStyle(fontSize: defaultSize * 12),
-                ),
-                height: valHeight * 0.05,
-                margin: EdgeInsets.only(
-                    left: valWidth * 0.14, top: valHeight * 0.03),
-              ),
-              Container(
-                child: Text('여기에는 코칭 내용이 들어갈 예정입니다.'),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 3)),
-                width: valWidth * 0.84,
-                margin: EdgeInsets.only(left: valWidth * 0.08),
-                height: valHeight * 0.23,
-              ),
-              Container(
-                child: Text(
-                  '데이터',
-                  style: TextStyle(fontSize: defaultSize * 12),
-                ),
-                height: valHeight * 0.05,
-                margin: EdgeInsets.only(
-                    left: valWidth * 0.14, top: valHeight * 0.03),
-              ),
-              GestureDetector(
-                //여기를 누르면 인바디 및 기타등등으로 넘어감. (pages-> reportpage 참조.)
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => BioScreen()));
+    return GetBuilder<ProfileController>(builder: (controller) {
+      return Container(
+        color: bgColor,
+        child: Scaffold(
+          backgroundColor: bgColor,
+          appBar: AppBar(
+            backgroundColor: bgColor,
+            title: Text(
+                controller.date.month.toString() +
+                    "월 " +
+                    controller.date.day.toString() +
+                    "일",
+                style: TextStyle(fontSize: defaultSize * 17, color: txtColor),
+                textAlign: TextAlign.center),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                controller.dateMinus(controller.date);
+              },
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.arrow_forward_ios),
+                onPressed: () {
+                  controller.datePlus(controller.date);
                 },
-                child: Container(
-                  color: Colors.grey,
-                  height: 0.2 * valHeight,
-                  width: valWidth * 0.84,
-                  margin: EdgeInsets.only(left: valWidth * 0.08),
-                  child: MadeLineChart(scores: _scores),
-                ),
               ),
-              SizedBox(height: valHeight * 0.02),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+            ],
+          ),
+          body: ListView(children: [
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: <Widget>[
+                  DividewithObj(
+                      context,
+                      Container(
+                        width: valWidth * 0.25,
+                        child: Text(
+                          '최근 코칭',
+                          style: TextStyle(
+                              fontSize: defaultSize * 14, color: linetxtColor),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      0.15,
+                      0.6),
+                  Container(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Color(0xff53525E),
+                              borderRadius:
+                                  BorderRadius.circular(valWidth * 0.015),
+                            ),
+                            margin: EdgeInsets.only(
+                                top: defaultSize * 10, bottom: defaultSize * 8),
+                            padding: EdgeInsets.fromLTRB(
+                                defaultSize * 5,
+                                defaultSize * 3,
+                                defaultSize * 5,
+                                defaultSize * 3),
+                            child: Text(
+                              '[2021/MM/DD]]',
+                              style: TextStyle(
+                                  color: txtColor, fontSize: defaultSize * 12),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.fromLTRB(
+                                defaultSize * 15,
+                                defaultSize * 5,
+                                defaultSize * 15,
+                                defaultSize * 8),
+                            child: Text('여기에는 코칭 내용이 들어갈 예정입니다.',
+                                softWrap: true,
+                                style: TextStyle(
+                                    fontSize: defaultSize * 10,
+                                    color: txtColor)),
+                          ),
+                        ]),
+                    decoration: BoxDecoration(
+                        color: Color(0xff333C47),
+                        borderRadius: BorderRadius.circular(valWidth * 0.015)),
+                    width: valWidth * 0.84,
+                    margin: EdgeInsets.only(
+                        left: valWidth * 0.08, top: valHeight * 0.02),
+                    height: valHeight * 0.18,
+                  ),
+                  SizedBox(
+                    height: valHeight * 0.035,
+                  ),
+                  DividewithObj(
+                      context,
+                      Container(
+                        width: valWidth * 0.25,
+                        child: Text(
+                          '데이터',
+                          style: TextStyle(
+                              fontSize: defaultSize * 14, color: linetxtColor),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      0.15,
+                      0.6),
+                  SizedBox(
+                    height: valHeight * 0.02,
+                  ),
                   GestureDetector(
+                    //여기를 누르면 인바디 및 기타등등으로 넘어감. (pages-> reportpage 참조.)
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ExerciseScreen()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => BioScreen()));
                     },
                     child: Container(
-                      width: valWidth * 0.4,
-                      height: valHeight * 0.2,
-                      color: Colors.grey,
-                      child: GradientChart(scores: _scores),
+                      decoration: BoxDecoration(
+                          color: bgColor,
+                          borderRadius: BorderRadius.circular(valWidth * 0.015),
+                          boxShadow: [
+                            BoxShadow(color: shadowColor, blurRadius: 2.2),
+                          ]),
+                      height: valHeight * 0.35,
+                      width: valWidth * 0.84,
+                      margin: EdgeInsets.only(left: valWidth * 0.08),
+                      child: MadeLineChart(scores: _scores),
                     ),
                   ),
-                  SizedBox(width: valWidth * 0.04),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FoodScreen()));
-                    },
-                    child: Container(
-                      width: valWidth * 0.4,
-                      height: valHeight * 0.2,
-                      color: Colors.grey,
-                    ),
+                  SizedBox(height: valHeight * 0.02),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ExerciseScreen()));
+                        },
+                        child: Container(
+                          width: valWidth * 0.4,
+                          height: valHeight * 0.2,
+                          decoration: BoxDecoration(
+                              color: bgColor,
+                              borderRadius:
+                                  BorderRadius.circular(valWidth * 0.015),
+                              boxShadow: [
+                                BoxShadow(color: shadowColor, blurRadius: 2.2),
+                              ]),
+                          child: GradientChart(scores: _scores),
+                        ),
+                      ),
+                      SizedBox(width: valWidth * 0.04),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FoodScreen()));
+                        },
+                        child: Container(
+                          width: valWidth * 0.4,
+                          height: valHeight * 0.2,
+                          decoration: BoxDecoration(
+                              color: bgColor,
+                              borderRadius:
+                                  BorderRadius.circular(valWidth * 0.015),
+                              boxShadow: [
+                                BoxShadow(color: shadowColor, blurRadius: 2.2),
+                              ]),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: valHeight * 0.05,
                   )
                 ],
               ),
-              SizedBox(
-                height: valHeight * 0.05,
-              )
-            ],
-          ),
+            ),
+          ]),
         ),
-      ]),
-    );
+      );
+    });
   }
 }
 
