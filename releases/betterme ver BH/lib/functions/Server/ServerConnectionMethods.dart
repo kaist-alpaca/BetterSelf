@@ -33,7 +33,7 @@ class ServerConnectionMethods {
 
   static Future<void> uploadProfileImage(String uid, String photoURL) async {
     await http.get(Uri.parse(
-        "http://kaistuser.iptime.org:8080/upload_image.php?uid=" +
+        "http://kaistuser.iptime.org:8080/profile_image_upload.php?uid=" +
             uid +
             "&photoURL=" +
             photoURL));

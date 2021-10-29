@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:betterme/functions/Widgets/DividewithObj.dart';
+import '../Widgets/MiniBox.dart';
 
 int? buttonCase;
 
@@ -19,6 +21,9 @@ class _BioTabs extends State<BioTabs> {
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
+    final shadowColor = Color(0xffD2ABBA);
+    final graphBlur = 1.2;
+    final graphBorderRadius = valWidth * 0.015;
     double defaultSize = valWidth * 0.0025; //폰트사이즈용
     double graphWidth = valWidth * 0.86; // 그래프들 너비
 
@@ -30,79 +35,146 @@ class _BioTabs extends State<BioTabs> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-            Container(
-              height: valHeight * 0.05,
-              width: graphWidth,
-              margin: EdgeInsets.only(
-                  top: valHeight * 0.05, bottom: valHeight * 0.03),
-              child: Text(
-                '신체변화',
-                style: TextStyle(fontSize: defaultSize * 14),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: valWidth * 0.07,
+                ),
+                Container(
+                  height: valHeight * 0.037,
+                  width: valWidth * 0.2,
+                  margin: EdgeInsets.only(top: valHeight * 0.035),
+                  child: Text(
+                    '신체 변화',
+                    style:
+                        TextStyle(fontSize: defaultSize * 14, color: txtColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                MiniBox(context, txtColor, 0.03, 0.12, 12, '체중(kg)')
+              ],
             ),
             Container(
               height: valHeight * 0.34,
               width: graphWidth,
-              color: Colors.grey,
+              decoration: BoxDecoration(
+                  color: bgColor,
+                  boxShadow: [
+                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                  ],
+                  borderRadius: BorderRadius.circular(graphBorderRadius)),
               child: Text('여기에 7일짜리 신체변화 그래프 들어가야 함.'),
             ),
-            Container(
-              height: valHeight * 0.05,
-              width: graphWidth,
-              margin: EdgeInsets.only(
-                  top: valHeight * 0.05, bottom: valHeight * 0.03),
-              child: Text(
-                '스트레스',
-                style: TextStyle(fontSize: defaultSize * 14),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: valWidth * 0.07,
+                ),
+                Container(
+                  height: valHeight * 0.037,
+                  width: valWidth * 0.2,
+                  margin: EdgeInsets.only(top: valHeight * 0.035),
+                  child: Text(
+                    '스트레스',
+                    style:
+                        TextStyle(fontSize: defaultSize * 14, color: txtColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
             Container(
               height: valHeight * 0.34,
               width: graphWidth,
-              color: Colors.grey,
+              decoration: BoxDecoration(
+                  color: bgColor,
+                  boxShadow: [
+                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                  ],
+                  borderRadius: BorderRadius.circular(graphBorderRadius)),
               child: Text('여기에 7일짜리 스트레스 그래프 들어가야 함.'),
             ),
-            Container(
-              height: valHeight * 0.05,
-              width: graphWidth,
-              margin: EdgeInsets.only(
-                  top: valHeight * 0.05, bottom: valHeight * 0.03),
-              child: Text(
-                '수면 시간',
-                style: TextStyle(fontSize: defaultSize * 14),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: valWidth * 0.07,
+                ),
+                Container(
+                  height: valHeight * 0.037,
+                  width: valWidth * 0.2,
+                  margin: EdgeInsets.only(top: valHeight * 0.035),
+                  child: Text(
+                    '수면 시간',
+                    style:
+                        TextStyle(fontSize: defaultSize * 14, color: txtColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
             Container(
               height: valHeight * 0.34,
               width: graphWidth,
-              color: Colors.grey,
+              decoration: BoxDecoration(
+                  color: bgColor,
+                  boxShadow: [
+                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                  ],
+                  borderRadius: BorderRadius.circular(graphBorderRadius)),
               child: Text('여기에 7일짜리 수면 시간 그래프 들어가야 함.'),
             ),
-            Container(
-              height: valHeight * 0.05,
-              width: graphWidth,
-              margin: EdgeInsets.only(
-                  top: valHeight * 0.05, bottom: valHeight * 0.03),
-              child: Text(
-                '수면 시간대',
-                style: TextStyle(fontSize: defaultSize * 14),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: valWidth * 0.07,
+                ),
+                Container(
+                  height: valHeight * 0.037,
+                  width: valWidth * 0.2,
+                  margin: EdgeInsets.only(top: valHeight * 0.035),
+                  child: Text(
+                    '수면 시간대',
+                    style:
+                        TextStyle(fontSize: defaultSize * 14, color: txtColor),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
             Container(
               height: valHeight * 0.34,
               width: graphWidth,
-              color: Colors.grey,
+              decoration: BoxDecoration(
+                  color: bgColor,
+                  boxShadow: [
+                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                  ],
+                  borderRadius: BorderRadius.circular(graphBorderRadius)),
               child: Text('여기에 7일짜리 수면 시간대 그래프 들어가야 함.'),
             ),
-            Container(
-              height: valHeight * 0.05,
-              width: graphWidth,
-              margin: EdgeInsets.only(
-                  top: valHeight * 0.05, bottom: valHeight * 0.03),
-              child: Text(
-                '코칭',
-                style: TextStyle(fontSize: defaultSize * 14),
-              ),
+            SizedBox(
+              height: valHeight * 0.035,
+            ),
+            DividewithObj(
+                context,
+                Container(
+                  width: valWidth * 0.18,
+                  child: Text(
+                    '코칭',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: linetxtColor, fontSize: defaultSize * 14),
+                  ),
+                ),
+                0.12,
+                0.7),
+            SizedBox(
+              height: valHeight * 0.02,
             ),
             Row(
               //기간(날짜) 선택하는 bar.
@@ -155,78 +227,83 @@ class _BioTabs extends State<BioTabs> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
             Container(
-              height: valHeight * 0.05,
-              width: graphWidth,
-              margin: EdgeInsets.only(
-                  top: valHeight * 0.05, bottom: valHeight * 0.03),
+              height: valHeight * 0.037,
+              width: graphWidth - valWidth * 0.05,
+              margin: EdgeInsets.only(top: valHeight * 0.03),
               child: Text(
-                '신체변화',
-                style: TextStyle(fontSize: defaultSize * 14),
+                '신체 변화',
+                style: TextStyle(fontSize: defaultSize * 14, color: txtColor),
               ),
             ),
             Container(
               height: valHeight * 0.34,
               width: graphWidth,
-              color: Colors.blue,
-              child: Text('여기에 31일짜리 신체변화 그래프 들어가야 함.'),
+              decoration: BoxDecoration(
+                  color: bgColor,
+                  boxShadow: [
+                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                  ],
+                  borderRadius: BorderRadius.circular(graphBorderRadius)),
+              child: Text('여기 31일짜리 신체 변화 그래프 들어가야 함.'),
             ),
             Container(
-              height: valHeight * 0.05,
-              width: graphWidth,
-              margin: EdgeInsets.only(
-                  top: valHeight * 0.05, bottom: valHeight * 0.03),
+              height: valHeight * 0.037,
+              width: graphWidth - valWidth * 0.05,
+              margin: EdgeInsets.only(top: valHeight * 0.03),
               child: Text(
                 '스트레스',
-                style: TextStyle(fontSize: defaultSize * 14),
+                style: TextStyle(fontSize: defaultSize * 14, color: txtColor),
               ),
             ),
             Container(
               height: valHeight * 0.34,
               width: graphWidth,
-              color: Colors.grey,
+              decoration: BoxDecoration(
+                  color: bgColor,
+                  boxShadow: [
+                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                  ],
+                  borderRadius: BorderRadius.circular(graphBorderRadius)),
               child: Text('여기에 31일짜리 스트레스 그래프 들어가야 함.'),
             ),
             Container(
-              height: valHeight * 0.05,
-              width: graphWidth,
-              margin: EdgeInsets.only(
-                  top: valHeight * 0.05, bottom: valHeight * 0.03),
+              height: valHeight * 0.037,
+              width: graphWidth - valWidth * 0.05,
+              margin: EdgeInsets.only(top: valHeight * 0.03),
               child: Text(
-                '수면 시간',
-                style: TextStyle(fontSize: defaultSize * 14),
+                '수면',
+                style: TextStyle(fontSize: defaultSize * 14, color: txtColor),
               ),
             ),
             Container(
               height: valHeight * 0.34,
               width: graphWidth,
-              color: Colors.grey,
-              child: Text('여기에 31일짜리 수면 시간 그래프 들어가야 함.'),
+              decoration: BoxDecoration(
+                  color: bgColor,
+                  boxShadow: [
+                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                  ],
+                  borderRadius: BorderRadius.circular(graphBorderRadius)),
+              child: Text('여기에 31일짜리 수면 그래프 들어가야 함.'),
             ),
-            Container(
-              height: valHeight * 0.05,
-              width: graphWidth,
-              margin: EdgeInsets.only(
-                  top: valHeight * 0.05, bottom: valHeight * 0.03),
-              child: Text(
-                '수면 시간대',
-                style: TextStyle(fontSize: defaultSize * 14),
-              ),
+            SizedBox(
+              height: valHeight * 0.035,
             ),
-            Container(
-              height: valHeight * 0.34,
-              width: graphWidth,
-              color: Colors.grey,
-              child: Text('여기에 31일짜리 수면 시간대 그래프 들어가야 함.'),
-            ),
-            Container(
-              height: valHeight * 0.05,
-              width: graphWidth,
-              margin: EdgeInsets.only(
-                  top: valHeight * 0.05, bottom: valHeight * 0.03),
-              child: Text(
-                '코칭',
-                style: TextStyle(fontSize: defaultSize * 14),
-              ),
+            DividewithObj(
+                context,
+                Container(
+                  width: valWidth * 0.18,
+                  child: Text(
+                    '코칭',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: linetxtColor, fontSize: defaultSize * 14),
+                  ),
+                ),
+                0.12,
+                0.7),
+            SizedBox(
+              height: valHeight * 0.02,
             ),
             Row(
               //기간(월) 선택하는 bar.
