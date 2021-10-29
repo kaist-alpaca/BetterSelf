@@ -30,7 +30,7 @@ Widget CoachingTxtBox(BuildContext context, int type, String title,
         SizedBox(height: valHeight * 0.008),
         Container(
           height: miniHeight,
-          width: valWidth * 0.2,
+          width: valWidth * 0.22,
           decoration: BoxDecoration(
             color: Color(0xff53525E),
             borderRadius: BorderRadius.circular(valWidth * 0.015),
@@ -42,7 +42,7 @@ Widget CoachingTxtBox(BuildContext context, int type, String title,
                 style: TextStyle(fontSize: 10 * defaultSize, color: txtColor)),
           ),
         ),
-        SizedBox(height: valHeight * 0.008),
+        SizedBox(height: valHeight * 0.0025),
         Container(
           width: valWidth * 0.74,
           child: Divider(
