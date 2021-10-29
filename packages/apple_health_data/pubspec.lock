@@ -149,6 +149,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.1+1"
+  health_kit:
+    dependency: "direct main"
+    description:
+      name: health_kit
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   intl:
     dependency: transitive
     description:
