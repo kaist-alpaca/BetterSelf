@@ -62,16 +62,16 @@ class customeLineChartPainter extends CustomPainter {
   final linePaint = Paint()
     ..color = Colors.white
     ..style = PaintingStyle.stroke
-    ..strokeWidth = 1.0;
+    ..strokeWidth = 0.5;
 
   final dotPaintFill = Paint()
     ..color = Colors.white
     ..style = PaintingStyle.fill
     ..strokeWidth = 1.0;
 
-  final ylabelStyle = TextStyle(color: Colors.white38, fontSize: 14);
-  final xLabelStyle = TextStyle(
-      color: Colors.white38, fontSize: 16, fontWeight: FontWeight.bold);
+  final ylabelStyle = TextStyle(color: Colors.white, fontSize: 14);
+  final xLabelStyle =
+      TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold);
   static double border = 10.0;
   static double radius = 5.0;
   @override

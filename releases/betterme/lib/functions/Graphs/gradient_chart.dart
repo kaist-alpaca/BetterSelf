@@ -13,9 +13,9 @@ class GradientChart extends StatefulWidget {
 
 class _GradientChartState extends State<GradientChart> {
   final List<Color> _gradientColors = [
-    const Color(0xFF6FFF7C),
-    const Color(0xFF0087FF),
-    const Color(0xFF5620FF),
+    const Color(0xFFFB6E65),
+    const Color(0xFFFAD86D),
+    const Color(0xFFB6D87C),
   ];
   late double _min, _max;
   late List<double> _Y;
@@ -50,10 +50,8 @@ class _GradientChartState extends State<GradientChart> {
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
-    return Container(
-      child: LineChart(
-        mainChart(_X, _Y, _min, _max),
-      ),
+    return LineChart(
+      mainChart(_X, _Y, _min, _max),
     );
   }
 
@@ -82,9 +80,7 @@ class _GradientChartState extends State<GradientChart> {
           showTitles: true,
           reservedSize: 20,
           getTextStyles: (context, value) => const TextStyle(
-              color: Color(0xff68737d),
-              fontWeight: FontWeight.bold,
-              fontSize: 16),
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
           getTitles: (value) {
             // print('bottomTitles $value');
             // switch (value.toInt()) {
@@ -97,7 +93,7 @@ class _GradientChartState extends State<GradientChart> {
             // }
             // return '';
 
-            print(value);
+            // print(value);
             return value.toInt().toString();
           },
           // margin: 8,
@@ -111,7 +107,7 @@ class _GradientChartState extends State<GradientChart> {
         leftTitles: SideTitles(
           showTitles: false,
           getTextStyles: (context, value) => const TextStyle(
-            color: Color(0xff67727d),
+            color: Color(0xFF004D99),
             fontWeight: FontWeight.bold,
             fontSize: 15,
           ),
@@ -132,10 +128,16 @@ class _GradientChartState extends State<GradientChart> {
         ),
       ),
       borderData: FlBorderData(
-          show: false,
-          border: Border.all(color: const Color(0xff37434d), width: 1)),
-      minX: 18,
-      maxX: 24,
+        show: true,
+        border: Border(
+          bottom: BorderSide(
+            width: 2.0,
+            color: Color(0xFFFFFFFF),
+          ),
+        ),
+      ),
+      minX: 23,
+      maxX: 29,
       minY: 0,
       maxY: _max,
       lineBarsData: [
@@ -150,17 +152,35 @@ class _GradientChartState extends State<GradientChart> {
           //   FlSpot(11, 4),
           // ],
           spots: data,
-          colors: _gradientColors,
-          colorStops: const [0.25, 0.5, 0.75],
-          gradientFrom: const Offset(0.5, 0),
-          gradientTo: const Offset(0.5, 1),
-          barWidth: 2,
+          // colors: [
+          //   const Color(0xFF6FFF7C),
+          //   const Color(0xFF0087FF),
+          //   const Color(0xFF5620FF),
+          // ],
+          colors: [Color(0xFFFFFFFF)],
+          // shadow:
+          // colorStops: const [0.25, 0.5, 0.75],
+          // gradientFrom: const Offset(0.5, 0),
+          // gradientTo: const Offset(0.5, 1),
+          barWidth: 1,
+          // shadow: BoxShadow(
+          //   color: Colors.black,
+          //   spreadRadius: 10,
+          //   blurRadius: 3,
+          //   offset: Offset(0, 3),
+          //   spreadRadius = -9,
+          // ),
+          shadow: Shadow(
+            color: Colors.black,
+            offset: Offset(0, 3),
+            blurRadius: 2.2,
+          ),
           isStrokeCapRound: true,
           dotData: FlDotData(show: false),
           belowBarData: BarAreaData(
             show: true,
             colors:
-                _gradientColors.map((color) => color.withOpacity(0.3)).toList(),
+                _gradientColors.map((color) => color.withOpacity(1)).toList(),
             gradientColorStops: const [0.25, 0.5, 0.75],
             gradientFrom: const Offset(0.5, 0),
             gradientTo: const Offset(0.5, 1),

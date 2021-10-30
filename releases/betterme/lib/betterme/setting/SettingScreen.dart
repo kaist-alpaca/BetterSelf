@@ -435,6 +435,7 @@ class SettingScreen extends StatelessWidget {
                     onTap: () {
                       FirebaseAuth.instance.signOut();
                       // Restart.restartApp(webOrigin: '');
+                      Get.reset();
                       Phoenix.rebirth(context);
                       // return Home();
                     }, //여기에 로그아웃 기능 구현
