@@ -4,6 +4,7 @@ import 'package:betterme/functions/Graphs/bar_chart.dart';
 import 'package:betterme/functions/Graphs/gradient_chart.dart';
 import 'package:betterme/functions/Graphs/group_bar_three_chart.dart';
 import 'package:betterme/functions/Graphs/pie_chart.dart';
+import 'package:betterme/functions/Graphs/scatter_chart.dart';
 import 'package:betterme/functions/Graphs/single_bar.dart';
 import 'package:betterme/functions/Graphs/sliced_bar_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -59,6 +60,54 @@ class _ReportScreen extends State<ReportScreen> {
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
+    final _food = [
+      [
+        [27, 480, 1],
+        [27, 1000, 2],
+        [27, 0, 2],
+      ],
+      [
+        [28, 872, 3]
+      ],
+      [
+        [29, 128, 4]
+      ],
+      [
+        [30, 739, 1]
+      ],
+      [
+        [31, 836, 4]
+      ],
+      [
+        [9 / 1, 947, 2]
+      ],
+      [
+        [2, 931, 1]
+      ]
+    ];
+    final _sleep = [
+      [
+        [27, 480, 1000],
+      ],
+      [
+        [28, 872, 999]
+      ],
+      [
+        [29, 128, 555]
+      ],
+      [
+        [30, 739, 894]
+      ],
+      [
+        [31, 236, 384]
+      ],
+      [
+        [9 / 1, 347, 472]
+      ],
+      [
+        [2, 531, 763]
+      ]
+    ];
     double defaultSize = valWidth * 0.0025;
     return Scaffold(
       backgroundColor: bgColor,
@@ -208,13 +257,7 @@ class _ReportScreen extends State<ReportScreen> {
                       width: valWidth * 0.4,
                       height: valHeight * 0.2,
                       color: Colors.grey,
-                      child: CustomPaint(
-                        size: Size(150, 150),
-                        painter: MadePieChart(
-                            percentage: 45,
-                            textScaleFactor: 1.5,
-                            textColor: Colors.blueGrey),
-                      ),
+                      child: MadeScatterChart(food: _food),
                       // child: CustomPaint(
                       //   // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
                       //   size: Size(
