@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import '../Widgets/MiniBox.dart';
+import '../Widgets/CoachingTxtBox.dart';
 
 int? buttonCase;
 
@@ -466,10 +467,15 @@ class _BioTabs extends State<BioTabs> {
               height: valHeight * 0.5,
               width: graphWidth,
               color: Colors.grey,
-              child: Text('여기에 해당 달의 코칭'),
+              child: Text('여기에 해당 달의 달력'),
             ),
             SizedBox(
-              height: valHeight * 0.1,
+              height: valHeight * 0.02,
+            ),
+            CoachingTxtBox(
+                context, 0, '생체 데이터 코칭\n' + '[2021/MM/dd]', '코칭 내용', 0.25),
+            SizedBox(
+              height: valHeight * 0.08,
             )
           ])));
     } else if (buttonCase == 2) {
@@ -650,10 +656,15 @@ class _BioTabs extends State<BioTabs> {
               height: valHeight * 0.5,
               width: graphWidth,
               color: Colors.grey,
-              child: Text('여기에 해당 월? 년?의 코칭'),
+              child: Text('여기에 해당 달의 달력'),
             ),
             SizedBox(
-              height: valHeight * 0.1,
+              height: valHeight * 0.02,
+            ),
+            CoachingTxtBox(
+                context, 0, '생체 데이터 코칭\n' + '[2021/MM/dd]', '코칭 내용', 0.25),
+            SizedBox(
+              height: valHeight * 0.08,
             )
           ])));
     } else {
