@@ -16,6 +16,15 @@ class ExerciseTabs extends StatefulWidget {
 }
 
 class _ExerciseTabs extends State<ExerciseTabs> {
+  Color dayButton1Color = Color(0xff0B202A);
+  Color dayButton2Color = Color(0xff0B202A);
+  Color dayButton3Color = Color(0xff474A55);
+  Color dayButton4Color = Color(0xff0B202A);
+  Color dayButton5Color = Color(0xff0B202A);
+  Color dayButton6Color = Color(0xff0B202A);
+  Color dayButton7Color = Color(0xff0B202A);
+  int dayButtonCase = 0;
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -26,6 +35,10 @@ class _ExerciseTabs extends State<ExerciseTabs> {
     final shadowColor = Color(0xffD2ABBA);
     final graphBlur = 1.2;
     final graphBorderRadius = valWidth * 0.015;
+
+    double dayButtonHeight = valHeight * 0.06;
+    double dayButtonWidth = valWidth * 0.124; //버튼크기
+    double blankBetweenButton = valHeight * 0.005; //버튼사이 여백
 
     double miniBoxSize = 0.015;
     double defaultSize = valWidth * 0.0025; //폰트사이즈용
@@ -154,10 +167,338 @@ class _ExerciseTabs extends State<ExerciseTabs> {
           height: valHeight * 0.03,
         ),
         Container(
-          height: valHeight * 0.5,
+          height: 7 * dayButtonHeight + 6 * blankBetweenButton,
           width: graphWidth,
-          color: Colors.grey,
-          child: Text('여기에 해당 주간의 일주일 코칭'),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            //여기에 좌측 버튼
+            children: [
+              Container(
+                height: 7 * dayButtonHeight + 6 * blankBetweenButton,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: dayButtonHeight,
+                      width: dayButtonWidth,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(color: Color(0xffD2ABBA), blurRadius: 0.8),
+                        ],
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(valWidth * 0.04),
+                            bottomLeft: Radius.circular(valWidth * 0.04)),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(valWidth * 0.04),
+                                  bottomLeft: Radius.circular(valWidth * 0.04)),
+                            ),
+                            primary: dayButton1Color,
+                            minimumSize: Size(dayButtonWidth, dayButtonHeight)),
+                        child: Text(
+                          '2',
+                          style: TextStyle(
+                            color: txtColor,
+                            fontSize: defaultSize * 12,
+                          ),
+                        ),
+                        onPressed: () {
+                          dayButtonCase = 0;
+                          setState(() {
+                            dayButton1Color = Color(0xff474A55);
+                            dayButton2Color = Color(0xff0B202A);
+                            dayButton3Color = Color(0xff0B202A);
+                            dayButton4Color = Color(0xff0B202A);
+                            dayButton5Color = Color(0xff0B202A);
+                            dayButton6Color = Color(0xff0B202A);
+                            dayButton7Color = Color(0xff0B202A);
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(height: blankBetweenButton),
+                    Container(
+                      height: dayButtonHeight,
+                      width: dayButtonWidth,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(color: Color(0xffD2ABBA), blurRadius: 0.4),
+                        ],
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(valWidth * 0.04),
+                            bottomLeft: Radius.circular(valWidth * 0.04)),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(valWidth * 0.04),
+                                  bottomLeft: Radius.circular(valWidth * 0.04)),
+                            ),
+                            primary: dayButton2Color,
+                            minimumSize: Size(dayButtonWidth, dayButtonHeight)),
+                        child: Text(
+                          '30',
+                          style: TextStyle(
+                            color: txtColor,
+                            fontSize: defaultSize * 12,
+                          ),
+                        ),
+                        onPressed: () {
+                          dayButtonCase = 1;
+                          setState(() {
+                            dayButton2Color = Color(0xff474A55);
+                            dayButton1Color = Color(0xff0B202A);
+                            dayButton3Color = Color(0xff0B202A);
+                            dayButton4Color = Color(0xff0B202A);
+                            dayButton5Color = Color(0xff0B202A);
+                            dayButton6Color = Color(0xff0B202A);
+                            dayButton7Color = Color(0xff0B202A);
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(height: blankBetweenButton),
+                    Container(
+                      height: dayButtonHeight,
+                      width: dayButtonWidth,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(color: Color(0xffD2ABBA), blurRadius: 0.8),
+                        ],
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(valWidth * 0.04),
+                            bottomLeft: Radius.circular(valWidth * 0.04)),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(valWidth * 0.04),
+                                  bottomLeft: Radius.circular(valWidth * 0.04)),
+                            ),
+                            primary: dayButton3Color,
+                            minimumSize: Size(dayButtonWidth, dayButtonHeight)),
+                        child: Text(
+                          '31',
+                          style: TextStyle(
+                            color: txtColor,
+                            fontSize: defaultSize * 12,
+                          ),
+                        ),
+                        onPressed: () {
+                          dayButtonCase = 0;
+                          setState(() {
+                            dayButton3Color = Color(0xff474A55);
+                            dayButton2Color = Color(0xff0B202A);
+                            dayButton1Color = Color(0xff0B202A);
+                            dayButton4Color = Color(0xff0B202A);
+                            dayButton5Color = Color(0xff0B202A);
+                            dayButton6Color = Color(0xff0B202A);
+                            dayButton7Color = Color(0xff0B202A);
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(height: blankBetweenButton),
+                    Container(
+                      height: dayButtonHeight,
+                      width: dayButtonWidth,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(color: Color(0xffD2ABBA), blurRadius: 0.8),
+                        ],
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(valWidth * 0.04),
+                            bottomLeft: Radius.circular(valWidth * 0.04)),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(valWidth * 0.04),
+                                  bottomLeft: Radius.circular(valWidth * 0.04)),
+                            ),
+                            primary: dayButton4Color,
+                            minimumSize: Size(dayButtonWidth, dayButtonHeight)),
+                        child: Text(
+                          '44',
+                          style: TextStyle(
+                            color: txtColor,
+                            fontSize: defaultSize * 12,
+                          ),
+                        ),
+                        onPressed: () {
+                          dayButtonCase = 0;
+                          setState(() {
+                            dayButton4Color = Color(0xff474A55);
+                            dayButton2Color = Color(0xff0B202A);
+                            dayButton1Color = Color(0xff0B202A);
+                            dayButton3Color = Color(0xff0B202A);
+                            dayButton5Color = Color(0xff0B202A);
+                            dayButton6Color = Color(0xff0B202A);
+                            dayButton7Color = Color(0xff0B202A);
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(height: blankBetweenButton),
+                    Container(
+                      height: dayButtonHeight,
+                      width: dayButtonWidth,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(color: Color(0xffD2ABBA), blurRadius: 0.8),
+                        ],
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(valWidth * 0.04),
+                            bottomLeft: Radius.circular(valWidth * 0.04)),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(valWidth * 0.04),
+                                  bottomLeft: Radius.circular(valWidth * 0.04)),
+                            ),
+                            primary: dayButton5Color,
+                            minimumSize: Size(dayButtonWidth, dayButtonHeight)),
+                        child: Text(
+                          '55',
+                          style: TextStyle(
+                            color: txtColor,
+                            fontSize: defaultSize * 12,
+                          ),
+                        ),
+                        onPressed: () {
+                          dayButtonCase = 0;
+                          setState(() {
+                            dayButton5Color = Color(0xff474A55);
+                            dayButton2Color = Color(0xff0B202A);
+                            dayButton1Color = Color(0xff0B202A);
+                            dayButton4Color = Color(0xff0B202A);
+                            dayButton3Color = Color(0xff0B202A);
+                            dayButton6Color = Color(0xff0B202A);
+                            dayButton7Color = Color(0xff0B202A);
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(height: blankBetweenButton),
+                    Container(
+                      height: dayButtonHeight,
+                      width: dayButtonWidth,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(color: Color(0xffD2ABBA), blurRadius: 0.8),
+                        ],
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(valWidth * 0.04),
+                            bottomLeft: Radius.circular(valWidth * 0.04)),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(valWidth * 0.04),
+                                  bottomLeft: Radius.circular(valWidth * 0.04)),
+                            ),
+                            primary: dayButton6Color,
+                            minimumSize: Size(dayButtonWidth, dayButtonHeight)),
+                        child: Text(
+                          '66',
+                          style: TextStyle(
+                            color: txtColor,
+                            fontSize: defaultSize * 12,
+                          ),
+                        ),
+                        onPressed: () {
+                          dayButtonCase = 0;
+                          setState(() {
+                            dayButton6Color = Color(0xff474A55);
+                            dayButton2Color = Color(0xff0B202A);
+                            dayButton1Color = Color(0xff0B202A);
+                            dayButton4Color = Color(0xff0B202A);
+                            dayButton5Color = Color(0xff0B202A);
+                            dayButton3Color = Color(0xff0B202A);
+                            dayButton7Color = Color(0xff0B202A);
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(height: blankBetweenButton),
+                    Container(
+                      height: dayButtonHeight,
+                      width: dayButtonWidth,
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(color: Color(0xffD2ABBA), blurRadius: 0.8),
+                        ],
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(valWidth * 0.04),
+                            bottomLeft: Radius.circular(valWidth * 0.04)),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(valWidth * 0.04),
+                                  bottomLeft: Radius.circular(valWidth * 0.04)),
+                            ),
+                            primary: dayButton7Color,
+                            minimumSize: Size(dayButtonWidth, dayButtonHeight)),
+                        child: Text(
+                          '77',
+                          style: TextStyle(
+                            color: txtColor,
+                            fontSize: defaultSize * 12,
+                          ),
+                        ),
+                        onPressed: () {
+                          dayButtonCase = 0;
+                          setState(() {
+                            dayButton7Color = Color(0xff474A55);
+                            dayButton2Color = Color(0xff0B202A);
+                            dayButton1Color = Color(0xff0B202A);
+                            dayButton4Color = Color(0xff0B202A);
+                            dayButton5Color = Color(0xff0B202A);
+                            dayButton6Color = Color(0xff0B202A);
+                            dayButton3Color = Color(0xff0B202A);
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: valWidth * 0.015),
+              Container(
+                //여기에 코칭 텍스트 들어감.
+                height: dayButtonHeight * 7 + blankBetweenButton * 6,
+                width: graphWidth - dayButtonWidth - valWidth * 0.015,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(valWidth * 0.02),
+                      bottomRight: Radius.circular(valWidth * 0.02)),
+                  color: Color(0xff333C47),
+                  boxShadow: [
+                    BoxShadow(color: Color(0xffD2ABBA), blurRadius: 0.4),
+                  ],
+                ),
+                padding: EdgeInsets.fromLTRB(valWidth * 0.033,
+                    valHeight * 0.035, valWidth * 0.033, valHeight * 0.35),
+                child: Text(
+                  '여기에 코칭 내용adfadfasdfㅁㄴㅇㄻㅇㄹㄴㅁㅇㄻㄴㅇㄹㄴ',
+                  softWrap: true,
+                  style: TextStyle(color: txtColor, fontSize: defaultSize * 12),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
         ),
         SizedBox(
           height: valHeight * 0.1,
