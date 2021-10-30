@@ -109,27 +109,23 @@ class _HomeScreen extends State<HomeScreen> {
                       children: [
                         Row(
                           children: [
-                            SleepGraph(context, gridHeight * 2, gridWidth * 2),
-                            ActivityGraph(
-                                context, gridHeight * 2, gridWidth * 4),
+                            SleepGraph(gridHeight * 2, gridWidth * 2),
+                            ActivityGraph(gridHeight * 2, gridWidth * 4),
                           ],
                         ),
                         Row(
                           children: [
-                            StressGraph(context, gridHeight * 2, gridWidth * 3),
-                            SleepTimeGraph(
-                                context, gridHeight * 2, gridWidth * 3),
+                            StressGraph(gridHeight * 2, gridWidth * 3),
+                            SleepTimeGraph(gridHeight * 2, gridWidth * 3),
                           ],
                         ),
                         Row(
                           children: [
-                            FoodDaily(context, gridHeight * 2, gridWidth * 6)
+                            FoodDaily(gridHeight * 2, gridWidth * 6),
                           ],
                         ),
                         Row(
-                          children: [
-                            SleepGraph(context, gridHeight * 2, gridWidth * 2)
-                          ],
+                          children: [Coaching(gridHeight * 2, gridWidth * 2)],
                         ),
                       ]),
                 )
