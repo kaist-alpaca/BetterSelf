@@ -64,13 +64,12 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD);
     final redtxtColor = Color(0xffD2363A);
-    final txtFeildColor = Color(0xff333C47);//텍스트
+    final txtFeildColor = Color(0xff333C47); //텍스트
     final txtFeildBorderColor = Color(0xff999CA2);
 
     final genderList = [Text("남"), Text("여"), Text("선택안함")];
@@ -84,11 +83,14 @@ class SettingScreen extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: bgColor,
             centerTitle: true,
-            title: Text('계정 설정', style: TextStyle(color: txtColor, fontSize: defaultSize * 15)),
+            title: Text('계정 설정',
+                style: TextStyle(color: txtColor, fontSize: defaultSize * 15)),
           ),
           body: Center(
             child: ListView(children: [
-              SizedBox(height: 40,),
+              SizedBox(
+                height: 40,
+              ),
               DividewithObj(
                   context,
                   Container(
@@ -108,10 +110,10 @@ class SettingScreen extends StatelessWidget {
                                 print(save);
                               },
                               child: Obx(
-                                    () => Container(
-                                  //여기에 아마도 프사설정
-                                    width: valHeight * 0.13,
-                                    height: valHeight * 0.13,
+                                () => Container(
+                                    //여기에 아마도 프사설정
+                                    width: valWidth * 0.25,
+                                    height: valWidth * 0.25,
                                     // color: Colors.grey,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(100),
@@ -119,22 +121,25 @@ class SettingScreen extends StatelessWidget {
                                         width: 100,
                                         height: 100,
                                         child: controller.myProfile.value
-                                            .profileImage ==
-                                            null
+                                                    .profileImage ==
+                                                null
                                             ? Image.network(
-                                          controller
-                                              .myProfile.value.profileUrl!,
-                                          fit: BoxFit.cover,
-                                        )
+                                                controller.myProfile.value
+                                                    .profileUrl!,
+                                                fit: BoxFit.cover,
+                                              )
                                             : Image.file(
-                                          controller.myProfile.value
-                                              .profileImage!,
-                                          fit: BoxFit.cover,
-                                        ),
+                                                controller.myProfile.value
+                                                    .profileImage!,
+                                                fit: BoxFit.cover,
+                                              ),
                                       ),
                                     ),
-                                    margin: EdgeInsets.fromLTRB(valWidth * 0.025,
-                                        0, valWidth * 0.025, 0)),
+                                    margin: EdgeInsets.fromLTRB(
+                                        valWidth * 0.025,
+                                        0,
+                                        valWidth * 0.025,
+                                        0)),
                               ),
                             ),
                           ],
@@ -142,43 +147,56 @@ class SettingScreen extends StatelessWidget {
                       ],
                     ), //ProfileImage
                   ),
-                  0.35, 0.35
-              ),//ProfileImage
+                  0.35,
+                  0.35), //ProfileImage
 
-              SizedBox(height: 25,),
+              SizedBox(
+                height: 25,
+              ),
 
               Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('ID', style: TextStyle(color: txtColor, fontSize: defaultSize * 15),),
-                    SizedBox(height: 7,),
-                    GestureDetector(
-                      onTap: () { // 에딧기능추가해주세요
-                        // _openDatePicker(context);
-                        BottomPicker.date(
-                            title: "생년월일",
-                            titleStyle: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                                color: Colors.blue),
-                            onChange: (index) {
-                              print(index);
-                            },
-                            onSubmit: (index) {
-                              print(index);
-                              controller.birthdaySelected(index
-                                  .toString()
-                                  .substring(0, 10));
-                            },
-                            bottomPickerTheme:
-                            BOTTOM_PICKER_THEME.PLUM_PLATE)
-                            .show(context);
-                      },
-                      child: Text('edit', style: TextStyle(color: redtxtColor, fontSize: defaultSize * 12),),
-                    )
-                  ],
-              ),//ID and Edit // 에딧기능 넣어주세요
-              SizedBox(height: 30,),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'ID',
+                    style:
+                        TextStyle(color: txtColor, fontSize: defaultSize * 15),
+                  ),
+                  SizedBox(
+                    height: 7,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // 에딧기능추가해주세요
+                      // _openDatePicker(context);
+                      BottomPicker.date(
+                              title: "생년월일",
+                              titleStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.blue),
+                              onChange: (index) {
+                                print(index);
+                              },
+                              onSubmit: (index) {
+                                print(index);
+                                controller.birthdaySelected(
+                                    index.toString().substring(0, 10));
+                              },
+                              bottomPickerTheme: BOTTOM_PICKER_THEME.PLUM_PLATE)
+                          .show(context);
+                    },
+                    child: Text(
+                      'edit',
+                      style: TextStyle(
+                          color: redtxtColor, fontSize: defaultSize * 12),
+                    ),
+                  )
+                ],
+              ), //ID and Edit // 에딧기능 넣어주세요
+              SizedBox(
+                height: 30,
+              ),
 
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -189,134 +207,130 @@ class SettingScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                                width: valWidth * 0.25,
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                child: Text(
-                                  "성별",
-                                  style: TextStyle(color: txtColor, fontSize: defaultSize * 14),
-                                  textAlign: TextAlign.center
-                                )
-                              ),
+                          width: valWidth * 0.25,
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          child: Text("성별",
+                              style: TextStyle(
+                                  color: txtColor, fontSize: defaultSize * 14),
+                              textAlign: TextAlign.center)),
                       GestureDetector(
                         onTap: () {
                           // _openDatePicker(context);
                           BottomPicker(
-                            items: genderList,
-                            title: "성별",
-                            titleStyle: TextStyle(color: txtColor, fontSize: defaultSize * 15),
-                            onChange: (index) {
-                              print(index);
-                            },
-                            onSubmit: (index) {
-                              print(genderList[index].data);
-                              controller.genderSelected(
-                                  genderList[index].data.toString()
-                              );
-                            },
-                            bottomPickerTheme: BOTTOM_PICKER_THEME.PLUM_PLATE).show(context);
+                                  items: genderList,
+                                  title: "성별",
+                                  titleStyle: TextStyle(
+                                      color: txtColor,
+                                      fontSize: defaultSize * 15),
+                                  onChange: (index) {
+                                    print(index);
+                                  },
+                                  onSubmit: (index) {
+                                    print(genderList[index].data);
+                                    controller.genderSelected(
+                                        genderList[index].data.toString());
+                                  },
+                                  bottomPickerTheme:
+                                      BOTTOM_PICKER_THEME.PLUM_PLATE)
+                              .show(context);
                         },
                         child: Container(
-                          //생년월일 입력란
+                            //생년월일 입력란
                             width: valWidth * 0.3,
-                            height: TextfieldSize,//valHeight * 0.06,
+                            height: TextfieldSize, //valHeight * 0.06,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: txtFeildColor,
-                                borderRadius: BorderRadius.all(Radius.circular(3))
-                            ),
-                            margin: EdgeInsets.fromLTRB(valWidth * 0.02,
-                                0, valWidth * 0.02, valWidth * 0.015),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(3))),
+                            margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
+                                valWidth * 0.02, valWidth * 0.015),
                             child: Text(
                               controller.gender == null
                                   ? ""
                                   : controller.gender.toString(),
-                              style:
-                              TextStyle(color: txtColor, fontSize: defaultSize * 15),
-                            )
-                        ),
-                      ),//margin
+                              style: TextStyle(
+                                  color: txtColor, fontSize: defaultSize * 15),
+                            )),
+                      ), //margin
                       Container(
                         width: valWidth * 0.2,
                       ),
                     ],
-                  ),//gender
+                  ), //gender
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                         width: valWidth * 0.25,
+                          width: valWidth * 0.25,
                           padding: EdgeInsets.fromLTRB(0, 3, 0, 10),
-                          child: Text(
-                              "생년월일",
-                              style: TextStyle(color: txtColor, fontSize: defaultSize * 14),
-                              textAlign: TextAlign.center
-                          )
-                      ),
+                          child: Text("생년월일",
+                              style: TextStyle(
+                                  color: txtColor, fontSize: defaultSize * 14),
+                              textAlign: TextAlign.center)),
                       GestureDetector(
-                                onTap: () {
-                                  // _openDatePicker(context);
-                                  BottomPicker.date(
-                                          title: "생년월일",
-                                          titleStyle: TextStyle(color: txtColor, fontSize: defaultSize * 15),
-                                          onChange: (index) {
-                                            print(index);
-                                          },
-                                          onSubmit: (index) {
-                                            print(index);
-                                            controller.birthdaySelected(index
-                                                .toString()
-                                                .substring(0, 10));
-                                          },
-                                          bottomPickerTheme:
-                                              BOTTOM_PICKER_THEME.PLUM_PLATE)
-                                      .show(context);
-                                },
-                                child: Container(
-                                    //생년월일 입력란
-                                    width: valWidth * 0.3,
-                                    height: TextfieldSize,//valHeight * 0.06,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        color: txtFeildColor,
-                                        borderRadius: BorderRadius.all(Radius.circular(3))
-                                    ),
-                                    margin: EdgeInsets.fromLTRB(valWidth * 0.02,
-                                        0, valWidth * 0.02, valWidth * 0.015),
-                                    child: Text(
-                                      controller.birthday == null
-                                          ? ""
-                                          : controller.birthday.toString(),
-                                      style:
-                                        TextStyle(color: txtColor, fontSize: defaultSize * 15),
-                                    )),
-                              ),
+                        onTap: () {
+                          // _openDatePicker(context);
+                          BottomPicker.date(
+                                  title: "생년월일",
+                                  titleStyle: TextStyle(
+                                      color: txtColor,
+                                      fontSize: defaultSize * 15),
+                                  onChange: (index) {
+                                    print(index);
+                                  },
+                                  onSubmit: (index) {
+                                    print(index);
+                                    controller.birthdaySelected(
+                                        index.toString().substring(0, 10));
+                                  },
+                                  bottomPickerTheme:
+                                      BOTTOM_PICKER_THEME.PLUM_PLATE)
+                              .show(context);
+                        },
+                        child: Container(
+                            //생년월일 입력란
+                            width: valWidth * 0.3,
+                            height: TextfieldSize, //valHeight * 0.06,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                color: txtFeildColor,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(3))),
+                            margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
+                                valWidth * 0.02, valWidth * 0.015),
+                            child: Text(
+                              controller.birthday == null
+                                  ? ""
+                                  : controller.birthday.toString(),
+                              style: TextStyle(
+                                  color: txtColor, fontSize: defaultSize * 15),
+                            )),
+                      ),
                       Container(
                         width: valWidth * 0.2,
-                      ),//margin
+                      ), //margin
                     ],
-                  ),//birthday
+                  ), //birthday
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                                  width: valWidth * 0.25,
-                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                  child: Text(
-                                    "키",
-                                    style: TextStyle(color: txtColor, fontSize: defaultSize * 14),
-                                    textAlign: TextAlign.center
-                                  )
-                              ),
+                          width: valWidth * 0.25,
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          child: Text("키",
+                              style: TextStyle(
+                                  color: txtColor, fontSize: defaultSize * 14),
+                              textAlign: TextAlign.center)),
                       Container(
                         //키 입력란
                         width: valWidth * 0.3,
-                        height: TextfieldSize,//valHeight * 0.06,
+                        height: TextfieldSize, //valHeight * 0.06,
                         decoration: BoxDecoration(
                             color: txtFeildColor,
-                            borderRadius: BorderRadius.all(Radius.circular(3))
-                        ),
+                            borderRadius: BorderRadius.all(Radius.circular(3))),
                         margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
                             valWidth * 0.02, valWidth * 0.015),
                         child: KeyboardActions(
@@ -324,13 +338,15 @@ class SettingScreen extends StatelessWidget {
                           config: _buildConfig(context),
                           child: TextField(
                             textAlign: TextAlign.center,
-                            style: TextStyle(color: txtColor, fontSize: defaultSize * 15),
+                            style: TextStyle(
+                                color: txtColor, fontSize: defaultSize * 15),
                             keyboardType: TextInputType.number,
                             focusNode: _nodeText1,
                             decoration: InputDecoration(
-                              hintText: controller.height,
-                              hintStyle: TextStyle(color: txtColor, fontSize: defaultSize * 15)
-                            ),
+                                hintText: controller.height,
+                                hintStyle: TextStyle(
+                                    color: txtColor,
+                                    fontSize: defaultSize * 15)),
                             onChanged: (text) {
                               controller.heightSelected(text);
                             },
@@ -338,97 +354,93 @@ class SettingScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: valWidth * 0.2,
-                        child : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-
-                          ]
-                        )
-                      ),//margin
+                          width: valWidth * 0.2,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [])), //margin
                     ],
-                  ),//height
+                  ), //height
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                                  width: valWidth * 0.25,
-                                  padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                                  child: Text(
-                                    "체중",
-                                    style: TextStyle(color: txtColor, fontSize: defaultSize * 14),
-                                    textAlign: TextAlign.center
-                                  )
-                              ),
+                          width: valWidth * 0.25,
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                          child: Text("체중",
+                              style: TextStyle(
+                                  color: txtColor, fontSize: defaultSize * 14),
+                              textAlign: TextAlign.center)),
                       Container(
-                                //체중 입력란
-                                height: TextfieldSize, //valHeight * 0.06,
-                                width: valWidth * 0.3,
-                                decoration: BoxDecoration(
-                                    color: txtFeildColor,
-                                    borderRadius: BorderRadius.all(Radius.circular(3))
-                                ),
-                                margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
-                                    valWidth * 0.02, valWidth * 0.03),
-                                child: KeyboardActions(
-                                  disableScroll: true,
-                                  config: _buildConfig(context),
-                                  child: TextField(
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(color: txtColor, fontSize: defaultSize * 15),
-                                    keyboardType: TextInputType.number,
-                                    focusNode: _nodeText2,
-                                    decoration: InputDecoration(
-                                        hintStyle: TextStyle(color: txtColor, fontSize: defaultSize * 15)
-                                    ),
-                                    onChanged: (text) {
-                                      controller.weightSelected(text);
-                                    },
-                                  ),
-                                ),
-                              ),
+                        //체중 입력란
+                        height: TextfieldSize, //valHeight * 0.06,
+                        width: valWidth * 0.3,
+                        decoration: BoxDecoration(
+                            color: txtFeildColor,
+                            borderRadius: BorderRadius.all(Radius.circular(3))),
+                        margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
+                            valWidth * 0.02, valWidth * 0.03),
+                        child: KeyboardActions(
+                          disableScroll: true,
+                          config: _buildConfig(context),
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: txtColor, fontSize: defaultSize * 15),
+                            keyboardType: TextInputType.number,
+                            focusNode: _nodeText2,
+                            decoration: InputDecoration(
+                                hintStyle: TextStyle(
+                                    color: txtColor,
+                                    fontSize: defaultSize * 15)),
+                            onChanged: (text) {
+                              controller.weightSelected(text);
+                            },
+                          ),
+                        ),
+                      ),
                       Container(
                         width: valWidth * 0.2,
-                      ),//margin
+                      ), //margin
                     ],
-                  ),//weight
+                  ), //weight
 
-                  SizedBox(height: 25,),
+                  SizedBox(
+                    height: 25,
+                  ),
 
                   Container(
                     height: valWidth * 0.1,
                     width: valWidth * 0.7,
                     decoration: BoxDecoration(
                         color: txtFeildColor,
-                        borderRadius: BorderRadius.all(Radius.circular(3))
-                    ),
+                        borderRadius: BorderRadius.all(Radius.circular(3))),
                     child: KeyboardActions(
                       disableScroll: true,
                       config: _buildConfig(context),
                       child: TextField(
                         textAlign: TextAlign.center,
-                        style: TextStyle(color: txtColor, fontSize: defaultSize * 15),
+                        style: TextStyle(
+                            color: txtColor, fontSize: defaultSize * 15),
                         keyboardType: TextInputType.number,
                         focusNode: _nodeText3,
                         decoration: InputDecoration(
-                          hintText: controller.disease == null ||
-                              controller.disease == ""
-                              ? "   질병기초정보 입력"
-                              : controller.disease,
-                          hintStyle: TextStyle(
-                            fontSize: defaultSize * 15,
-                            color: txtColor
-                          )
-                        ),
+                            hintText: controller.disease == null ||
+                                    controller.disease == ""
+                                ? "   질병기초정보 입력"
+                                : controller.disease,
+                            hintStyle: TextStyle(
+                                fontSize: defaultSize * 15, color: txtColor)),
                         onChanged: (text) {
                           controller.diseaseSelected(text);
                         },
                       ),
                     ),
-                  ),//disease
-                  SizedBox(height: 40,),
+                  ), //disease
+                  SizedBox(
+                    height: 40,
+                  ),
 
                   GestureDetector(
                     // 저장기능 추가해주세요
@@ -452,24 +464,22 @@ class SettingScreen extends StatelessWidget {
                                 color: txtFeildBorderColor,
                               ),
                               color: txtFeildColor,
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
                           child: Align(
                               alignment: FractionalOffset(0.5, 0.5),
-                              child: Text(
-                                  "저장",
+                              child: Text("저장",
                                   style: TextStyle(
                                       fontSize: defaultSize * 15,
-                                      color: txtColor
-                                  ),
-                                  textAlign: TextAlign.center
-                              )
-                          ),
+                                      color: txtColor),
+                                  textAlign: TextAlign.center)),
                         ),
                       ],
                     ),
-                  ),//저장기능_추가해주세요
-                  SizedBox(height: 60,),
+                  ), //저장기능_추가해주세요
+                  SizedBox(
+                    height: 60,
+                  ),
 
                   GestureDetector(
                     // 저장 후 다음 페이지로 넘어감.
@@ -487,28 +497,24 @@ class SettingScreen extends StatelessWidget {
                           width: valWidth * 0.3,
                           height: 30,
                           decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 1,
-                              color: txtFeildBorderColor,
-                            ),
-                            color: txtFeildColor,
-                            borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
+                              border: Border.all(
+                                width: 1,
+                                color: txtFeildBorderColor,
+                              ),
+                              color: txtFeildColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
                           child: Align(
-                            alignment: FractionalOffset(0.5, 0.5),
-                            child: Text(
-                                "로그아웃",
-                                style: TextStyle(
-                                  fontSize: defaultSize * 12,
-                                  color: txtColor
-                                ),
-                                textAlign: TextAlign.center
-                            )
-                          ),
+                              alignment: FractionalOffset(0.5, 0.5),
+                              child: Text("로그아웃",
+                                  style: TextStyle(
+                                      fontSize: defaultSize * 12,
+                                      color: txtColor),
+                                  textAlign: TextAlign.center)),
                         ),
                       ],
                     ),
-                  ),//logout
+                  ), //logout
                   SizedBox(
                     height: valHeight * 0.08,
                   )

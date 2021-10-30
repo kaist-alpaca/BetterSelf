@@ -20,6 +20,11 @@ class _HomeScreen extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
+    final screenHeight = valHeight * 0.78;
+    final scrrenWidth = valWidth * 0.9;
+
+    final gridHeight = valHeight / 8;
+    final gridWidth = valWidth / 6;
 
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
@@ -39,229 +44,44 @@ class _HomeScreen extends State<HomeScreen> {
         ),
         child: Scaffold(
           backgroundColor: bgColor,
-          appBar: AppBar(
-            backgroundColor: bgColor,
-            title: Text(controller.date.month.toString() +
-                "월 " +
-                controller.date.day.toString() +
-                "일"),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                controller.dateMinus(controller.date);
-              },
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.arrow_forward_ios),
-                onPressed: () {
-                  controller.datePlus(controller.date);
-                },
-              ),
-            ],
-          ),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
                 SizedBox(
-                  height: 10,
+                  height: valHeight * 0.08,
                 ),
                 Row(
                   children: [
                     Container(
-                      width: valWidth * 0.15,
+                      width: valWidth * 0.08,
                       child: Divider(
-                        color: Colors.pink[100],
-                        thickness: 1.0,
+                        color: Color(0xffD2ABBA),
+                        thickness: 0.6,
                       ),
                     ),
                     Container(
-                      width: valWidth * 0.3,
+                      width: valWidth * 0.38,
                       child: Text(
-                        '오늘의 데이터',
+                        'Hi, ' + 'Name' + '!',
                         style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.pink[100],
+                          fontSize: defaultSize * 19,
+                          color: Color(0xffFFFDFD),
                         ),
                         textAlign: TextAlign.center,
                       ),
                     ),
                     Container(
-                      width: valWidth * 0.55,
+                      width: valWidth * 0.54,
                       child: Divider(
-                        color: Colors.pink[100],
+                        color: Color(0xffD2ABBA),
                         thickness: 1.0,
                       ),
                     ),
                   ],
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 20),
-                  width: valWidth * 0.8,
-                  height: 180,
-                  decoration: BoxDecoration(
-                    color: Colors.black38,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
                 ),
                 SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  children: [
-                    Container(
-                      width: valWidth * 0.15,
-                      child: Divider(
-                        color: Colors.pink[100],
-                        thickness: 1.0,
-                      ),
-                    ),
-                    Container(
-                      width: valWidth * 0.3,
-                      child: Text(
-                        '타임라인',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.pink[100],
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Container(
-                      width: valWidth * 0.55,
-                      child: Divider(
-                        color: Colors.pink[100],
-                        thickness: 1.0,
-                      ),
-                    ),
-                  ],
-                ),
-                TimelineTile(
-                  alignment: TimelineAlign.manual,
-                  lineXY: 0.2,
-                  isFirst: true,
-                  indicatorStyle: IndicatorStyle(
-                    width: 40,
-                    height: 40,
-                    indicator: SvgPicture.asset('images/home_1.svg'),
-                    drawGap: true,
-                  ),
-                  endChild: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '8:33',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: 20),
-                            width: 180,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              color: Colors.black38,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                TimelineTile(
-                  alignment: TimelineAlign.manual,
-                  lineXY: 0.2,
-                  indicatorStyle: IndicatorStyle(
-                    width: 40,
-                    height: 40,
-                    indicator: SvgPicture.asset('images/home_4.svg'),
-                    drawGap: true,
-                  ),
-                ),
-                TimelineTile(
-                  alignment: TimelineAlign.manual,
-                  lineXY: 0.2,
-                  indicatorStyle: IndicatorStyle(
-                    width: 40,
-                    height: 40,
-                    indicator: SvgPicture.asset('images/home_1.svg'),
-                    drawGap: true,
-                  ),
-                  endChild: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        '12:48',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 50,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              showCupertinoModalPopup(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    CupertinoActionSheet(
-                                  title: const Text('Choose Options'),
-                                  message: const Text('Your options are '),
-                                  actions: <Widget>[
-                                    CupertinoActionSheetAction(
-                                      child: const Text('One'),
-                                      onPressed: () {
-                                        Navigator.pop(context, 'Cancel');
-                                        Get.to(() => homeAdd1());
-                                      },
-                                    ),
-                                    CupertinoActionSheetAction(
-                                      child: const Text('Two'),
-                                      onPressed: () {
-                                        Navigator.pop(context, 'Cancel');
-                                        Get.to(() => homeAdd2());
-                                      },
-                                    )
-                                  ],
-                                  cancelButton: CupertinoActionSheetAction(
-                                    child: const Text('Cancel'),
-                                    isDefaultAction: true,
-                                    onPressed: () {
-                                      Navigator.pop(context, 'Cancel');
-                                    },
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(left: 20),
-                              width: 180,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                color: Colors.black38,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  height: valHeight * 0.025,
                 ),
               ],
             ),
