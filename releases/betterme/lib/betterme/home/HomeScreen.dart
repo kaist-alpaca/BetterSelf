@@ -109,6 +109,23 @@ class _HomeScreen extends State<HomeScreen> {
                       children: [
                         Row(
                           children: [
+                            SleepGraph(context, gridHeight * 2, gridWidth * 2),
+                            SleepGraph(context, gridHeight * 2, gridWidth * 2),
+                            SleepGraph(context, gridHeight * 2, gridWidth * 2)
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SleepGraph(context, gridHeight * 2, gridWidth * 2)
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SleepGraph(context, gridHeight * 2, gridWidth * 2)
+                          ],
+                        ),
+                        Row(
+                          children: [
                             SleepGraph(context, gridHeight * 2, gridWidth * 2)
                           ],
                         ),
