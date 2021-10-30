@@ -125,7 +125,7 @@ class _HomeScreen extends State<HomeScreen> {
                           ],
                         ),
                         Row(
-                          children: [Coaching(gridHeight * 2, gridWidth * 2)],
+                          children: [Coaching(gridHeight * 2, gridWidth * 6)],
                         ),
                       ]),
                 )

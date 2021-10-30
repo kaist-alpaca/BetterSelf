@@ -5,17 +5,17 @@ double? widgetHeight2;
 double? widgetWidth2;
 int? type; //type이 0: 아직 기록 전, type이1: 이미 기록됨
 
-class FoodDailyMenu extends StatefulWidget {
-  FoodDailyMenu(int type1, double widgetHeight1, double widgetWidth1) {
+class FoodDailyMenu2 extends StatefulWidget {
+  FoodDailyMenu2(int type1, double widgetHeight1, double widgetWidth1) {
     widgetHeight2 = widgetHeight1;
     widgetWidth2 = widgetWidth1;
     type = type1;
   }
   @override
-  _FoodDailyMenu createState() => _FoodDailyMenu();
+  _FoodDailyMenu2 createState() => _FoodDailyMenu2();
 }
 
-class _FoodDailyMenu extends State<FoodDailyMenu> {
+class _FoodDailyMenu2 extends State<FoodDailyMenu2> {
   @override
   Widget build(BuildContext context) {
     double widgetWidth = widgetWidth2!;
@@ -69,7 +69,7 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
               )
             ],
           ));
-    } else {
+    } else if (type == 1) {
       return Container(
           height: widgetHeight,
           width: widgetWidth,
@@ -107,6 +107,8 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
               )
             ],
           ));
+    } else {
+      return Container();
     }
   }
 }
