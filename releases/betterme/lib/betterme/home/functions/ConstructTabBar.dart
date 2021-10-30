@@ -51,8 +51,8 @@ class _ConstructTabBar extends State<ConstructTabBar> {
                 // 정상 로그인시 홈스크린 보인다.
                 HomeScreen(),
 
-                ReportScreen(),
                 CommunicationScreen(),
+                ReportScreen(),
                 SettingScreen(),
                 // ReportScreen(),
                 // ReportScreen(),
@@ -61,10 +61,11 @@ class _ConstructTabBar extends State<ConstructTabBar> {
               ]
             : <Widget>[
                 // 정상 로그인시 홈스크린 보인다.
-                ReportScreen(),
+                CommunicationScreen(),
 
                 HomeScreen(),
-                CommunicationScreen(),
+
+                ReportScreen(),
                 SettingScreen(),
               ],
         controller: pageController, // controller를 지정해주면 각 페이지별 인덱스로 컨트롤 가능
@@ -77,10 +78,12 @@ class _ConstructTabBar extends State<ConstructTabBar> {
         inactiveColor: Color(0xff6E6572),
         backgroundColor: Color(0xff0B202A),
         items: [
-          BottomNavigationBarItem(icon: Icon(CustomIcons.report)),
+          BottomNavigationBarItem(
+              icon: Image.asset('images/communication_icon.png')),
           BottomNavigationBarItem(icon: Icon(Icons.home)),
-          BottomNavigationBarItem(icon: Icon(CustomIcons.communication)),
-          BottomNavigationBarItem(icon: Icon(CustomIcons.setting)),
+          BottomNavigationBarItem(icon: Image.asset('images/report_icon.png')),
+          BottomNavigationBarItem(
+              icon: Image.asset('images/setting_icon1.png')),
         ],
       ),
     );
