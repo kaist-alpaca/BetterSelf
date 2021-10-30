@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +8,7 @@ import 'package:betterme/functions/Firestore/DatabaseMethods.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'chatroom/Chatroom.dart';
+import 'chatroom/ChatroomScreen.dart';
 import 'functions/Widgets.dart';
 
 class CommunicationScreen extends StatefulWidget {
@@ -17,12 +19,14 @@ class CommunicationScreen extends StatefulWidget {
 }
 
 class _CommunicationScreen extends State<CommunicationScreen> {
-  bool isSearching = false;
+  // ignore: non_constant_identifier_names
+  var TrainerName = [];
+  // ignore: non_constant_identifier_names
+  var TrainerImg = [];
 
-  // ignore: non_constant_identifier_names
-  var SearchedUserName = [];
-  // ignore: non_constant_identifier_names
-  var SearchedUserImg = [];
+  var TrainerUserName = [];
+
+  bool isSearching = false;
 
   TextEditingController searching = TextEditingController();
 
@@ -33,32 +37,6 @@ class _CommunicationScreen extends State<CommunicationScreen> {
       .toString()
       .replaceAll("@gmail.com", "");
 
-  onSearchBtnClick() async {
-    SearchedUserName = [];
-    SearchedUserImg = [];
-
-    var usersStream = FirebaseFirestore.instance.collection('users').get();
-
-    var currentuser = AuthMethods().auth.currentUser!.email.toString();
-
-    print('\ncurrentuser : ${currentuser.replaceAll("@gmail.com", "")}\n');
-    print('\nquey : ${searching.text}\n\n');
-
-    usersStream.then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        if (doc["username"].toString().contains(searching.text)) {
-          setState(() {});
-          SearchedUserName.add(doc["username"]);
-          SearchedUserImg.add(doc["imgUrl"]);
-          print('\nname : ${doc["username"]!.toString()}');
-          print('\nimg  : ${doc["imgUrl"]!.toString()}\n\n');
-        }
-      });
-    });
-
-    return FirebaseFirestore.instance.collection('users').get();
-  }
-
   getchatroomid(String a, String b) {
     if (a.compareTo(b) < 0) {
       return "$b\_$a";
@@ -67,30 +45,24 @@ class _CommunicationScreen extends State<CommunicationScreen> {
     }
   }
 
-  // Widget searchUsersList(){
-  //   return StreamBuilder<QuerySnapshot>(
-  //       stream: onSearchBtnClick()!,
-  //       builder: (context, snapshot){
-  //         if (snapshot.hasData) {
-  //           return ListView.builder(
-  //             itemCount: snapshot.data!.docs.length,
-  //             shrinkWrap: true,
-  //             itemBuilder: (context, index){
-  //               DocumentSnapshot ds = snapshot.data!.docs[index];
-  //               return (ds.data().toString().contains("imgUrl") ? Image.network(ds.get("imgUrl")) : Text("None"));
-  //             },);
-  //         } else {
-  //           return const Center(
-  //             child: CircularProgressIndicator(),
-  //           );
-  //         }
-  //       });
-  // }
+  awaitCall(usersStream) async{
+    return usersStream.then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        TrainerName.add(doc["name"]);
+        TrainerImg.add(doc["imgUrl"]);
+        TrainerUserName.add(doc["username"]);
+        print('\nname : ${doc["username"]!.toString()}');
+        print('\nimg  : ${doc["imgUrl"]!.toString()}\n\n');
+      });
+      //setState(() {});
+    });
+  }
 
-  Widget SearchUsersList() {
+  Widget TrainersList() {
     return ListView.builder(
-        itemCount: SearchedUserName.length,
+        itemCount: TrainerName.length,
         itemBuilder: (context, index) {
+          print("debug : trainer card");
           return Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 1.0, horizontal: 20.0),
@@ -99,9 +71,9 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                 child: InkWell(
                     onTap: () {
                       var chatroomId =
-                          getchatroomid(user, SearchedUserName[index]);
+                          getchatroomid(user, TrainerUserName[index]);
                       Map<String, dynamic> chatroomInfo = {
-                        "users": [user, SearchedUserName[index]]
+                        "users": [user, TrainerName[index]]
                       };
 
                       DatabaseMethos().createChatroom(chatroomId, chatroomInfo);
@@ -110,12 +82,12 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  ChatroomScreen(SearchedUserName[index])));
+                                  ChatroomScreen(TrainerUserName[index])));
                     },
                     child: ListTile(
-                      leading: Image.network(SearchedUserImg[index]),
+                      leading: Image.network(TrainerImg[index]),
                       title: Text(
-                        SearchedUserName[index],
+                        TrainerName[index],
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -125,18 +97,30 @@ class _CommunicationScreen extends State<CommunicationScreen> {
         });
   }
 
-  Widget ChatRoomList() {
-    return Container();
-  }
-
   @override
   Widget build(BuildContext context) {
+
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
-    return Scaffold(
+    
+    var currentuser = AuthMethods().auth.currentUser!.uid;
+    
+    var usersStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentuser)
+        .collection('trainers')
+        .get();
+
+
+    awaitCall(usersStream);
+    setState(() {});
+
+    isSearching = (TrainerUserName.length == 0);
+
+    return isSearching ? Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
         backgroundColor: bgColor,
@@ -154,8 +138,8 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                     ? GestureDetector(
                         onTap: () {
                           isSearching = false;
-                          SearchedUserName = [];
-                          SearchedUserImg = [];
+                          TrainerName = [];
+                          TrainerImg = [];
                           searching.text = "";
                           setState(() {});
                         },
@@ -172,11 +156,10 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                   onTap: () {
                     if (searching.text != "") {
                       setState(() {
-                        SearchedUserName.clear();
-                        SearchedUserImg.clear();
+                        TrainerName.clear();
+                        TrainerImg.clear();
                       });
                       isSearching = true;
-                      onSearchBtnClick();
                     }
                   },
                   child: const Icon(Icons.search, color: Colors.black),
@@ -186,7 +169,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                 padding: EdgeInsets.symmetric(vertical: 7.0, horizontal: 20.0),
               ),
               isSearching
-                  ? SizedBox(height: 300, child: SearchUsersList())
+                  ? SizedBox(height: 300, child: TrainersList())
                   : Container(),
               // isSearching ? SizedBox(
               //   height : 500,
@@ -194,6 +177,23 @@ class _CommunicationScreen extends State<CommunicationScreen> {
               // ) : chatRoomList()
             ],
           )),
+    ) : Scaffold(
+      backgroundColor: bgColor,
+      appBar: AppBar(
+        backgroundColor: bgColor,
+        title: Text(
+          'Chatroom',
+          style: TextStyle(color: txtColor),
+        ),
+      ),
+      body: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            children: [
+              SizedBox(height: 300, child: TrainersList())
+            ],
+          )
+      ),
     );
   }
 }
