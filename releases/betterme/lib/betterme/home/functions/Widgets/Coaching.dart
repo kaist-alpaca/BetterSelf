@@ -41,11 +41,13 @@ class _Coaching extends State<Coaching> {
     double inWidgetWidth = widgetWidth - 2 * outLeftBlank;
     double inWidgetHeight = widgetHeight - 2 * outTopBlank;
 
-    double buttonHeight = inWidgetHeight * 0.18; //상단 버튼 크기
+    double buttonHeight = inWidgetHeight * 0.15; //상단 버튼 크기
     double buttonWidth = inWidgetWidth * 0.208;
 
     double dayButtonHeight = inWidgetHeight * 0.24; //좌측 버튼 크기
     double dayButtonWidth = inWidgetWidth * 0.15;
+
+    double blankBetweenButton = widgetHeight * 0.035; //버튼 간 간격
 
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
@@ -237,7 +239,7 @@ class _Coaching extends State<Coaching> {
                         },
                       ),
                     ),
-                    SizedBox(height: widgetHeight * 0.015),
+                    SizedBox(height: blankBetweenButton),
                     Container(
                       height: dayButtonHeight,
                       width: dayButtonWidth,
@@ -275,7 +277,7 @@ class _Coaching extends State<Coaching> {
                         },
                       ),
                     ),
-                    SizedBox(height: widgetHeight * 0.015),
+                    SizedBox(height: blankBetweenButton),
                     Container(
                       height: dayButtonHeight,
                       width: dayButtonWidth,
@@ -318,7 +320,7 @@ class _Coaching extends State<Coaching> {
                 SizedBox(width: widgetWidth * 0.015),
                 Container(
                     //여기에 코칭 텍스트 들어감.
-                    height: dayButtonHeight * 3 + widgetHeight * 0.03,
+                    height: dayButtonHeight * 3 + blankBetweenButton * 2,
                     width: buttonWidth * 4,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
