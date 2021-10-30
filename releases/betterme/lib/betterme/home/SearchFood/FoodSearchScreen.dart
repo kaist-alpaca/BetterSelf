@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'FoodNote.dart';
 
 class FoodSearchScreen extends StatefulWidget {
   @override
@@ -53,7 +54,12 @@ class _FoodSearchScreen extends State<FoodSearchScreen> {
               SizedBox(width: valWidth * 0.02),
               ElevatedButton(
                   //검색 버튼
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FoodNoteScreen()));
+                  },
                   style: ElevatedButton.styleFrom(
                       elevation: 0,
                       primary: blockColor,
