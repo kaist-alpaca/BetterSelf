@@ -4,11 +4,27 @@ import 'package:get/get.dart';
 
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 
-import 'functions/home_add_1.dart';
-import 'functions/home_add_2.dart';
+import 'functions/Widgets/ActivityGraph.dart';
+import 'functions/Widgets/Coaching.dart';
+import 'functions/Widgets/ExerciseDaily.dart';
+import 'functions/Widgets/ExerciseGraph.dart';
+import 'functions/Widgets/FoodDaily.dart';
+import 'functions/Widgets/FoodGraph.dart';
+import 'functions/Widgets/ExerciseGraph.dart';
+import 'functions/Widgets/FoodDaily.dart';
+import 'functions/Widgets/FoodGraph.dart';
+import 'functions/Widgets/InbodyGraph.dart';
+import 'functions/Widgets/Reminder.dart';
+import 'functions/Widgets/SleepGraph.dart';
+import 'functions/Widgets/SleepTimeGraph.dart';
+import 'functions/Widgets/StressDaily.dart';
+import 'functions/Widgets/StressGraph.dart';
 
-import 'package:timeline_tile/timeline_tile.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'functions/home_add_1.dart';
+// import 'functions/home_add_2.dart';
+
+// import 'package:timeline_tile/timeline_tile.dart';
+// import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -21,10 +37,10 @@ class _HomeScreen extends State<HomeScreen> {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     final screenHeight = valHeight * 0.78;
-    final scrrenWidth = valWidth * 0.9;
+    final screenWidth = valWidth * 0.9;
 
-    final gridHeight = valHeight / 8;
-    final gridWidth = valWidth / 6;
+    final gridHeight = screenHeight / 8;
+    final gridWidth = screenWidth / 6;
 
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
@@ -83,6 +99,21 @@ class _HomeScreen extends State<HomeScreen> {
                 SizedBox(
                   height: valHeight * 0.025,
                 ),
+                Container(
+                  //위젯들 구성하는 화면 여기부터
+                  height: screenHeight,
+                  width: screenWidth,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            SleepGraph(context, gridHeight * 2, gridWidth * 2)
+                          ],
+                        ),
+                      ]),
+                )
               ],
             ),
           ),
