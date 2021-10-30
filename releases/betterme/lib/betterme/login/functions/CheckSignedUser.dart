@@ -1,3 +1,4 @@
+import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
@@ -25,6 +26,7 @@ class CheckSignedUser extends StatelessWidget {
     return FutureBuilder<String>(
         future: ServerConnectionMethods.AuthSignedUser(uid),
         builder: (context, AsyncSnapshot<String> snapshot) {
+          ProfileController.to.authStateChanges(snapshot.data);
           if (snapshot.hasData) {
             print(snapshot.data!);
             if (snapshot.data! == "1") {
@@ -32,6 +34,7 @@ class CheckSignedUser extends StatelessWidget {
               return ConstructTabBar();
               // return InitialSettingScreen();
             } else {
+              // return ConstructTabBar();
               return InitialSettingScreen();
             }
             // return Text(snapshot.data!);

@@ -136,8 +136,8 @@ class _GradientChartState extends State<GradientChart> {
           ),
         ),
       ),
-      minX: 22,
-      maxX: 28,
+      minX: 23,
+      maxX: 29,
       minY: 0,
       maxY: _max,
       lineBarsData: [
