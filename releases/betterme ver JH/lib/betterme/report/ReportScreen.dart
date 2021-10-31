@@ -1,8 +1,11 @@
 import 'dart:math';
 
+import 'package:betterme/functions/Calendar/calendar.dart';
+import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Graphs/bar_chart.dart';
 import 'package:betterme/functions/Graphs/gradient_chart.dart';
 import 'package:betterme/functions/Graphs/group_bar_three_chart.dart';
+import 'package:betterme/functions/Graphs/horizontal_chart.dart';
 import 'package:betterme/functions/Graphs/pie_chart.dart';
 import 'package:betterme/functions/Graphs/scatter_chart.dart';
 import 'package:betterme/functions/Graphs/single_bar.dart';
@@ -12,12 +15,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:betterme/functions/Graphs/line_chart.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'bio_report/BioScreen.dart';
 import 'exercise_report/ExerciseScreen.dart';
 
 import 'food_report/FoodScreen.dart';
+
+import 'package:table_calendar/table_calendar.dart';
 
 class ReportScreen extends StatefulWidget {
   @override
@@ -29,6 +35,8 @@ const dayCount = 7;
 
 class _ReportScreen extends State<ReportScreen> {
   late List<Score> _scores;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay = DateTime.now();
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -109,176 +117,216 @@ class _ReportScreen extends State<ReportScreen> {
       ]
     ];
     double defaultSize = valWidth * 0.0025;
-    return Scaffold(
-      backgroundColor: bgColor,
-      appBar: AppBar(
+    CalendarFormat _calendarFormat = CalendarFormat.month;
+    return GetBuilder<ProfileController>(builder: (controller) {
+      return Scaffold(
         backgroundColor: bgColor,
-        title: Text(
-          "Report",
-          style: TextStyle(color: txtColor),
-        ),
-      ),
-      body: ListView(children: [
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: Text(
-                  '코칭',
-                  style: TextStyle(fontSize: defaultSize * 12),
-                ),
-                height: valHeight * 0.05,
-                margin: EdgeInsets.only(
-                    left: valWidth * 0.14, top: valHeight * 0.03),
-              ),
-              Container(
-                child: Text('여기에는 코칭 내용이 들어갈 예정입니다.'),
-                decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 3)),
-                width: valWidth * 0.84,
-                margin: EdgeInsets.only(left: valWidth * 0.08),
-                height: valHeight * 0.23,
-              ),
-              Container(
-                child: Text(
-                  '데이터',
-                  style: TextStyle(fontSize: defaultSize * 12),
-                ),
-                height: valHeight * 0.05,
-                margin: EdgeInsets.only(
-                    left: valWidth * 0.14, top: valHeight * 0.03),
-              ),
-              GestureDetector(
-                //여기를 누르면 인바디 및 기타등등으로 넘어감. (pages-> reportpage 참조.)
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => BioScreen()));
-                },
-                child: Container(
-                  color: Colors.grey,
-                  height: 0.2 * valHeight,
-                  width: valWidth * 0.84,
-                  margin: EdgeInsets.only(left: valWidth * 0.08),
-                  child: MadeLineChart(scores: _scores),
-                ),
-              ),
-              SizedBox(height: valHeight * 0.02),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ExerciseScreen()));
-                    },
-                    child: Container(
-                      width: valWidth * 0.4,
-                      height: valHeight * 0.2,
-                      color: Colors.grey,
-                      child: GradientChart(scores: _scores),
-                    ),
-                  ),
-                  SizedBox(width: valWidth * 0.04),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FoodScreen()));
-                    },
-                    child: Container(
-                      width: valWidth * 0.4,
-                      height: valHeight * 0.2,
-                      color: Colors.grey,
-                      child: SingleBar(scores: _scores),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: valHeight * 0.05,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: valWidth * 0.4,
-                      height: valHeight * 0.2,
-                      color: Colors.grey,
-                      child: GroupBarThreeChart(),
-                    ),
-                  ),
-                  SizedBox(width: valWidth * 0.04),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: valWidth * 0.4,
-                      height: valHeight * 0.2,
-                      color: Colors.grey,
-                      child: SlicededBarChart(scores: _scores),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: valHeight * 0.05,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: valWidth * 0.4,
-                      height: valHeight * 0.2,
-                      color: Colors.grey,
-                      child: CustomPaint(
-                        size: Size(150, 150),
-                        painter: MadePieChart(
-                            percentage: 45,
-                            textScaleFactor: 1.5,
-                            textColor: Colors.blueGrey),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: valWidth * 0.04),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      width: valWidth * 0.4,
-                      height: valHeight * 0.2,
-                      color: Colors.grey,
-                      child: MadeScatterChart(food: _food),
-                      // child: CustomPaint(
-                      //   // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
-                      //   size: Size(
-                      //       150, 150), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
-                      //   painter: MadePieChart(
-                      //       percentage: 50, // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
-                      //       textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
-                      //       textColor: Colors.blueGrey),
-                      // ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: valHeight * 0.05,
-              )
-            ],
+        appBar: AppBar(
+          backgroundColor: bgColor,
+          title: Text(
+            "Report",
+            style: TextStyle(color: txtColor),
           ),
         ),
-      ]),
-    );
+        body: ListView(children: [
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Calendar(),
+                Container(
+                  child: Text(
+                    '코칭',
+                    style: TextStyle(fontSize: defaultSize * 12),
+                  ),
+                  height: valHeight * 0.05,
+                  margin: EdgeInsets.only(
+                      left: valWidth * 0.14, top: valHeight * 0.03),
+                ),
+                Container(
+                  child: Text('여기에는 코칭 내용이 들어갈 예정입니다.'),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black, width: 3)),
+                  width: valWidth * 0.84,
+                  margin: EdgeInsets.only(left: valWidth * 0.08),
+                  height: valHeight * 0.23,
+                ),
+                Container(
+                  child: Text(
+                    '데이터',
+                    style: TextStyle(fontSize: defaultSize * 12),
+                  ),
+                  height: valHeight * 0.05,
+                  margin: EdgeInsets.only(
+                      left: valWidth * 0.14, top: valHeight * 0.03),
+                ),
+                GestureDetector(
+                  //여기를 누르면 인바디 및 기타등등으로 넘어감. (pages-> reportpage 참조.)
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => BioScreen()));
+                  },
+                  child: Container(
+                    color: Colors.grey,
+                    height: 0.2 * valHeight,
+                    width: valWidth * 0.84,
+                    margin: EdgeInsets.only(left: valWidth * 0.08),
+                    child: MadeLineChart(scores: _scores),
+                  ),
+                ),
+                SizedBox(height: valHeight * 0.02),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ExerciseScreen()));
+                      },
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        child: GradientChart(scores: _scores),
+                      ),
+                    ),
+                    SizedBox(width: valWidth * 0.04),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FoodScreen()));
+                      },
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        child: SingleBar(scores: _scores),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: valHeight * 0.05,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        child: GroupBarThreeChart(),
+                      ),
+                    ),
+                    SizedBox(width: valWidth * 0.04),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        child: SlicededBarChart(scores: _scores),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: valHeight * 0.05,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        child: CustomPaint(
+                          size: Size(150, 150),
+                          painter: MadePieChart(
+                              percentage: 45,
+                              textScaleFactor: 1.5,
+                              textColor: Colors.blueGrey),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: valWidth * 0.04),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        child: MadeScatterChart(food: _food),
+                        // child: CustomPaint(
+                        //   // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
+                        //   size: Size(
+                        //       150, 150), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
+                        //   painter: MadePieChart(
+                        //       percentage: 50, // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
+                        //       textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
+                        //       textColor: Colors.blueGrey),
+                        // ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: valHeight * 0.05,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        child: MadeHorizontalChart(sleep: _sleep),
+                      ),
+                    ),
+                    SizedBox(width: valWidth * 0.04),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        // child: CustomPaint(
+                        //   // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
+                        //   size: Size(
+                        //       150, 150), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
+                        //   painter: MadePieChart(
+                        //       percentage: 50, // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
+                        //       textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
+                        //       textColor: Colors.blueGrey),
+                        // ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: valHeight * 0.05,
+                )
+              ],
+            ),
+          ),
+        ]),
+      );
+    });
   }
 }
 

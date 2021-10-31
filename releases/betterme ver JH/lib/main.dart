@@ -8,6 +8,10 @@ import 'betterme/login/functions/SyncFB.dart';
 import 'functions/Controllers/image_crop_controller.dart';
 import 'functions/Controllers/profile_controller.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+// import ''
+
 // void main() => runApp(new MyApp());
 void main() {
   runApp(
@@ -29,6 +33,14 @@ class BetterMe extends StatelessWidget {
         Get.lazyPut<ProfileController>(() => ProfileController());
         Get.lazyPut<ImageCropController>(() => ImageCropController());
       }),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('ko', 'KR'),
+      ],
       home: SyncFB(),
     );
   }

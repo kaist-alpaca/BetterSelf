@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class MadeScatterChart extends StatefulWidget {
-  final food;
-  const MadeScatterChart({Key? key, required this.food}) : super(key: key);
+class MadeHorizontalChart extends StatefulWidget {
+  final sleep;
+  const MadeHorizontalChart({Key? key, required this.sleep}) : super(key: key);
 
   @override
-  _MadeScatterChart createState() => _MadeScatterChart();
+  _MadeHorizontalChart createState() => _MadeHorizontalChart();
 }
 
-class _MadeScatterChart extends State<MadeScatterChart> {
+class _MadeHorizontalChart extends State<MadeHorizontalChart> {
   @override
   void initState() {
     super.initState();
@@ -26,15 +26,15 @@ class _MadeScatterChart extends State<MadeScatterChart> {
     return Container(
       child: CustomPaint(
         child: Container(),
-        painter: CustomeScatterChartPainter(widget.food),
+        painter: CustomeScatterChartPainter(widget.sleep),
       ),
     );
   }
 }
 
 class CustomeScatterChartPainter extends CustomPainter {
-  final food;
-  CustomeScatterChartPainter(this.food);
+  final sleep;
+  CustomeScatterChartPainter(this.sleep);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -63,7 +63,7 @@ class CustomeScatterChartPainter extends CustomPainter {
     Paint paint = Paint() // Paint 클래스는 어떤 식으로 화면을 그릴지 정할 때 쓰임.
       ..color = Colors.white // 색은 보라색
       ..strokeCap = StrokeCap.round // 선의 끝은 둥글게 함.
-      ..strokeWidth = 1.0; // 선의 굵기는 4.0
+      ..strokeWidth = 10.0; // 선의 굵기는 4.0
     // TODO: implement paint
     final xLabelStyle = TextStyle(
         color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold);
@@ -72,39 +72,12 @@ class CustomeScatterChartPainter extends CustomPainter {
     const int dashWidth = 1;
     const int dashSpace = 5;
     double dash_x = border;
-    for (int i = 0; i <= 24; i += 4) {
-      drawTextCentered(canvas, c, i.toString(), xLabelStyle, xd);
-      // canvas.drawLine(c, c_x, paint);
-      double start_y = border + hd * 7;
-      while (start_y >= border) {
-        canvas.drawLine(Offset(dash_x, start_y),
-            Offset(dash_x, start_y - dashWidth), paint);
-        start_y -= dashSpace;
-      }
-      // startX =
-      c += Offset(xd, 0);
-      dash_x += xd;
-    }
     for (int i = 0; i < 7; i++) {
-      food[i].forEach((e) {
-        switch (e[2]) {
-          case 1:
-            canvas.drawCircle(
-                Offset(border + wd * e[1], border + hd * i), 5, dotPaintFill1);
-            break;
-          case 2:
-            canvas.drawCircle(
-                Offset(border + wd * e[1], border + hd * i), 5, dotPaintFill2);
-            break;
-          case 3:
-            canvas.drawCircle(
-                Offset(border + wd * e[1], border + hd * i), 5, dotPaintFill3);
-            break;
-          case 4:
-            canvas.drawCircle(
-                Offset(border + wd * e[1], border + hd * i), 5, dotPaintFill4);
-            break;
-        }
+      sleep[i].forEach((e) {
+        print(e);
+        print(e[2]);
+        canvas.drawLine(Offset(border + wd * e[1], border + hd * i),
+            Offset(border + wd * e[2], border + hd * i), paint);
       });
     }
   }
@@ -114,24 +87,5 @@ class CustomeScatterChartPainter extends CustomPainter {
     // TODO: implement shouldRepaint
     // throw UnimplementedError();
     return true;
-  }
-
-  TextPainter measureText(
-      String s, TextStyle style, double maxWidth, TextAlign align) {
-    final span = TextSpan(text: s, style: style);
-    final tp = TextPainter(
-        text: span, textAlign: align, textDirection: TextDirection.ltr);
-    tp.layout(minWidth: 0, maxWidth: maxWidth);
-    return tp;
-  }
-
-  Size drawTextCentered(
-      Canvas canvas, Offset c, String text, TextStyle style, double maxWidth) {
-    if (text.length == 1) text = '0' + text;
-    final tp = measureText(text, style, maxWidth, TextAlign.center);
-    final offset = c + Offset(-tp.width / 2.0, 0);
-    // final offset = c + Offset(-tp.width / 2.0, -tp.height / 2.0);
-    tp.paint(canvas, offset);
-    return tp.size;
   }
 }
