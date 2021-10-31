@@ -1,5 +1,11 @@
+import 'package:betterme/betterme/home/functions/Widgets/Coaching.dart';
 import 'package:flutter/material.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
+import 'package:betterme/functions/Firestore/AuthMethods.dart';
+
 import '../Widgets/MiniBox.dart';
 import '../Widgets/CoachingExerciseBox.dart';
 import '../Widgets/CoachingTxtBox.dart';
@@ -23,7 +29,52 @@ class _ExerciseTabs extends State<ExerciseTabs> {
   Color dayButton5Color = Color(0xff0B202A);
   Color dayButton6Color = Color(0xff0B202A);
   Color dayButton7Color = Color(0xff0B202A);
+
+  final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
+
   int dayButtonCase = 0;
+
+  var Coachingtexts = [];
+  var Coachingtimes = [];
+
+  var user = AuthMethods()
+      .auth
+      .currentUser!
+      .email
+      .toString()
+      .replaceAll("@gmail.com", "");
+
+  var currentuser = AuthMethods().auth.currentUser!.uid;
+
+  Widget InitCoaching(BuildContext context,) {
+    Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
+        .collection('users')
+        .doc(currentuser)
+        .collection('coaching_exercise')
+        .orderBy("time")
+        .snapshots();
+
+    return StreamBuilder<QuerySnapshot>(
+        stream: usersStream,
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          Coachingtexts = [];
+          Coachingtimes = [];
+          if (snapshot.hasData) {
+            List CoachingList = snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+              print("time : ${DateTime.parse(data['time'].toDate().toString())}");
+              Coachingtexts.add(data['message']);
+              Coachingtimes.add(DateTime.parse(data['time'].toDate().toString()));
+              return data['message'];
+            }).toList();
+            print("\n${CoachingList}\n");
+            return CoachingTxtBox(context, 1, '운동 코칭', Coachingtexts[0], 0.2);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        }
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +94,8 @@ class _ExerciseTabs extends State<ExerciseTabs> {
     double miniBoxSize = 0.015;
     double defaultSize = valWidth * 0.0025; //폰트사이즈용
     double graphWidth = valWidth * 0.88; // 그래프들 너비
+
+    InitCoaching(context);
 
     if (buttonCase == 0) {
       //7일로 선택되었을 때 표현될 위젯들은 여기에.
@@ -635,7 +688,7 @@ class _ExerciseTabs extends State<ExerciseTabs> {
         SizedBox(
           height: valHeight * 0.015,
         ),
-        CoachingExerciseBox(context, '운동\n' + '[2021/MM/dd]', '코칭 내용', 0.25),
+        CoachingExerciseBox(context, '운동\n' + '[2021/MM/dd]', '운동 내용', 0.25),
         SizedBox(
           height: valHeight * 0.015,
         ),
@@ -775,14 +828,14 @@ class _ExerciseTabs extends State<ExerciseTabs> {
         SizedBox(
           height: valHeight * 0.015,
         ),
-        CoachingExerciseBox(context, '운동\n' + '[2021/MM/dd]', '코칭 내용', 0.25),
+        CoachingExerciseBox(context, '운동\n' + '[2021/MM/dd]', '운동 내용', 0.25),
         SizedBox(
           height: valHeight * 0.015,
         ),
-        CoachingTxtBox(context, 1, '운동 코칭', '코칭 내용', 0.2),
+        InitCoaching(context,),
         SizedBox(
           height: valHeight * 0.03,
-        )
+        ),
       ])));
     } else {
       return Container();

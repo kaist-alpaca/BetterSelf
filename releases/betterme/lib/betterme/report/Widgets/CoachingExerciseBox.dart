@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 //운동 프로그램 코칭을 위한 위젯
+
 Widget CoachingExerciseBox(
-    BuildContext context, String title, String content, double heightRate) {
+  BuildContext context, String title, String content, double heightRate) {
+  
   final valWidth = MediaQuery.of(context).size.width;
   final valHeight = MediaQuery.of(context).size.height;
   double miniHeight = 0.04 * valHeight;

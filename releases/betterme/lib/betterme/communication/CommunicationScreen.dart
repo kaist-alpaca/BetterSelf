@@ -20,12 +20,6 @@ class CommunicationScreen extends StatefulWidget {
 }
 
 class _CommunicationScreen extends State<CommunicationScreen> {
-  // ignore: non_constant_identifier_names
-  var TrainerName = [];
-  // ignore: non_constant_identifier_names
-  var TrainerImg = [];
-
-  var TrainerUserName = [];
 
   bool isSearching = false;
 
@@ -47,9 +41,6 @@ class _CommunicationScreen extends State<CommunicationScreen> {
   }
 
   Widget TrainersList(BuildContext context, stream) {
-    TrainerName = [];
-    TrainerImg = [];
-    TrainerUserName = [];
 
     return StreamBuilder<QuerySnapshot>(
         stream: stream,
