@@ -9,8 +9,10 @@ import 'package:betterme/functions/Firestore/DatabaseMethods.dart';
 import '../CommunicationScreen.dart';
 
 class ChatroomScreen extends StatefulWidget {
-  final String userchatwith;
-  const ChatroomScreen(this.userchatwith);
+  final String namechatwith;
+  final String usernamechatwith;
+
+  const ChatroomScreen(this.namechatwith, this.usernamechatwith);
 
   @override
   _ChatroomScreen createState() => _ChatroomScreen();
@@ -56,7 +58,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
       };
 
       DatabaseMethos().addMessage(
-          getchatroomid(user, widget.userchatwith), messageId, messageInfo);
+          getchatroomid(user, widget.usernamechatwith), messageId, messageInfo);
 
       if (sendClicked) {
         textmessage.text = "";
@@ -69,7 +71,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
   Widget chatmessages(BuildContext context,) {
     Stream<QuerySnapshot> messagestream = FirebaseFirestore.instance
         .collection("Chatrooms")
-        .doc(getchatroomid(user, widget.userchatwith))
+        .doc(getchatroomid(user, widget.usernamechatwith))
         .collection("chats")
         .orderBy("time")
         .snapshots();
@@ -79,14 +81,10 @@ class _ChatroomScreen extends State<ChatroomScreen> {
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasData) {
             List<Widget> ChatList = snapshot.data!.docs.map((DocumentSnapshot document) {
-              print('debug2 : ${snapshot.data!.docs.length}');
               Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-              print('sendby : ${data['sendby'].toString()}');
-              print('user : ${user.toString()}');
               if (data['sendby'].toString().compareTo(user.toString()) == 0
                   ? true
                   : false) {
-                print('debug4: right');
                 return ListTile(
                     title: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -95,7 +93,6 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                               style: TextStyle(color: txtColor)),
                         ]));
               } else {
-                print('debug4: left');
                 return ListTile(
                     title: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -138,21 +135,18 @@ class _ChatroomScreen extends State<ChatroomScreen> {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
 
-    print('debug: ${getchatroomid(user, widget.userchatwith)}');
+    print('debug: ${getchatroomid(user, widget.usernamechatwith)}');
 
     return WillPopScope(
         onWillPop: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const CommunicationScreen()));
-          return Future.value(false);
+          Navigator.pop(context);
+          return Future.value(true);
         },
         child: Scaffold(
           backgroundColor: bgColor,
           appBar: AppBar(
             backgroundColor: bgColor,
-            title: Text('${widget.userchatwith} + $user'),
+            title: Text('${widget.namechatwith} + $user'),
           ),
           body: Container(
             child: Stack(
@@ -186,9 +180,6 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                           ),
                           GestureDetector(
                               onTap: () {
-                                print('debug: clicked');
-                                print(
-                                    "debug: textmessage_ ${textmessage.text}");
                                 constructMessage(true);
                                 _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
                                 setState(() {});

@@ -8,6 +8,7 @@ import 'package:betterme/functions/Firestore/DatabaseMethods.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'FindTrainerScreen/FindTrainerScreen.dart';
 import 'chatroom/ChatroomScreen.dart';
 import 'functions/Widgets.dart';
 
@@ -45,56 +46,46 @@ class _CommunicationScreen extends State<CommunicationScreen> {
     }
   }
 
-  awaitCall(usersStream) async{
-    return usersStream.then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        TrainerName.add(doc["name"]);
-        TrainerImg.add(doc["imgUrl"]);
-        TrainerUserName.add(doc["username"]);
-        print('\nname : ${doc["username"]!.toString()}');
-        print('\nimg  : ${doc["imgUrl"]!.toString()}\n\n');
-      });
-      //setState(() {});
-    });
-  }
+  Widget TrainersList(BuildContext context, stream) {
+    TrainerName = [];
+    TrainerImg = [];
+    TrainerUserName = [];
 
-  Widget TrainersList() {
-    return ListView.builder(
-        itemCount: TrainerName.length,
-        itemBuilder: (context, index) {
-          print("debug : trainer card");
-          return Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 1.0, horizontal: 20.0),
-              child: Card(
-                color: Colors.black12,
-                child: InkWell(
-                    onTap: () {
-                      var chatroomId =
-                          getchatroomid(user, TrainerUserName[index]);
-                      Map<String, dynamic> chatroomInfo = {
-                        "users": [user, TrainerName[index]]
-                      };
-
-                      DatabaseMethos().createChatroom(chatroomId, chatroomInfo);
-
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ChatroomScreen(TrainerUserName[index])));
-                    },
-                    child: ListTile(
-                      leading: Image.network(TrainerImg[index]),
-                      title: Text(
-                        TrainerName[index],
-                        style: TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                    )),
-              ));
-        });
+    return StreamBuilder<QuerySnapshot>(
+        stream: stream,
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          return snapshot.hasData? ListView(
+              children : snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 20.0),
+                  child: Card(
+                    color: Colors.black12,
+                    child: GestureDetector(
+                        onTap: () {
+                          var chatroomId = getchatroomid(user, data['username']);
+                          Map<String, dynamic> chatroomInfo = {
+                            "users": [user, data['name']]
+                          };
+                          DatabaseMethos().createChatroom(chatroomId, chatroomInfo);
+                          Navigator.push(context,MaterialPageRoute(builder: (context) => ChatroomScreen(data['name'], data['username'])));
+                        },
+                        child: ListTile(
+                          leading: Image.network(data['imgUrl']), // 사용자 이미지 불러오는 코드
+                          title: Text(
+                            data['name'],
+                            style: TextStyle(
+                            color: Colors.black,
+                            ),
+                          ),
+                        )
+                    ),
+                  )
+                );
+              }).toList(),
+          ) : Center(child: CircularProgressIndicator());
+        }
+    );
   }
 
   @override
@@ -107,20 +98,16 @@ class _CommunicationScreen extends State<CommunicationScreen> {
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     
     var currentuser = AuthMethods().auth.currentUser!.uid;
-    
+
+    print("\n currentuser : ${currentuser}\n");
+
     var usersStream = FirebaseFirestore.instance
         .collection('users')
         .doc(currentuser)
         .collection('trainers')
-        .get();
+        .snapshots();
 
-
-    awaitCall(usersStream);
-    setState(() {});
-
-    isSearching = (TrainerUserName.length == 0);
-
-    return isSearching ? Scaffold(
+    return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
         backgroundColor: bgColor,
@@ -128,72 +115,24 @@ class _CommunicationScreen extends State<CommunicationScreen> {
           'Chatroom',
           style: TextStyle(color: txtColor),
         ),
+        actions: [
+          Padding(
+              padding: EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context,MaterialPageRoute(builder: (context) => FindTrainerScreen()));
+                },
+                child: Icon(
+                    Icons.add
+                ),
+              )
+          ),
+        ],
       ),
       body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              Row(children: [
-                isSearching
-                    ? GestureDetector(
-                        onTap: () {
-                          isSearching = false;
-                          TrainerName = [];
-                          TrainerImg = [];
-                          searching.text = "";
-                          setState(() {});
-                        },
-                        child: const Padding(
-                            padding: EdgeInsets.only(right: 12),
-                            child: Icon(Icons.arrow_back, color: Colors.black)))
-                    : Container(),
-                Expanded(
-                    child: TextField(
-                        controller: searching,
-                        style: const TextStyle(color: Colors.black),
-                        decoration: textFieldInput("username"))),
-                GestureDetector(
-                  onTap: () {
-                    if (searching.text != "") {
-                      setState(() {
-                        TrainerName.clear();
-                        TrainerImg.clear();
-                      });
-                      isSearching = true;
-                    }
-                  },
-                  child: const Icon(Icons.search, color: Colors.black),
-                )
-              ]),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 7.0, horizontal: 20.0),
-              ),
-              isSearching
-                  ? SizedBox(height: 300, child: TrainersList())
-                  : Container(),
-              // isSearching ? SizedBox(
-              //   height : 500,
-              //   child : searchUsersList(),
-              // ) : chatRoomList()
-            ],
-          )),
-    ) : Scaffold(
-      backgroundColor: bgColor,
-      appBar: AppBar(
-        backgroundColor: bgColor,
-        title: Text(
-          'Chatroom',
-          style: TextStyle(color: txtColor),
-        ),
-      ),
-      body: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              SizedBox(height: 300, child: TrainersList())
-            ],
-          )
-      ),
+          child: TrainersList(context, usersStream)
+      )
     );
   }
 }
