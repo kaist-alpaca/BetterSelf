@@ -1,3 +1,4 @@
+import 'package:betterme/functions/Server/ServerConnectionMethods.dart';
 import 'package:flutter/material.dart';
 
 import 'package:betterme/functions/Controllers/profile_controller.dart';
@@ -337,9 +338,17 @@ class InitialSettingScreen extends StatelessWidget {
                     ),
                     GestureDetector(
                       // 저장 후 다음 페이지로 넘어감.
-                      onTap: () {
-                        Get.offAll(() => ConstructTabBar());
-                      }, //여기에 저장 기능 구현
+                      // onTap: () {
+                      //   Get.offAll(() => ConstructTabBar());
+                      // }, //여기에 저장 기능 구현
+                      onTap: () async {
+                        await ServerConnectionMethods.createUser(
+                          controller.myProfile.value.uid!,
+                          controller.myProfile.value.email!,
+                          controller.myProfile.value.name!,
+                        );
+                        Get.off(() => ConstructTabBar());
+                      },
                       child: Container(
                         width: valWidth * 0.7,
                         height: valHeight * 0.07,

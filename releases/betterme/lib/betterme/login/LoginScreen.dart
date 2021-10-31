@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import '../pages/login_page/agreement_screen.dart'; // 이용약관 스크린
 import 'package:google_sign_in/google_sign_in.dart';
+import 'agreementScreen/AgreementScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -113,10 +114,10 @@ class _LoginScreen extends State<LoginScreen> {
                 GestureDetector(
                   //여기 누르면 개인정보 처리방침 및 이용약관으로
                   onTap: () {
-                    // Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => AgreementScreen()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AgreementScreen()));
                   },
                   child: Container(
                       width: valWidth * 0.55,
