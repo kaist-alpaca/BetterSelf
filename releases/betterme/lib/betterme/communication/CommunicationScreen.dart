@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'FindTrainerScreen/FindTrainerScreen.dart';
 import 'chatroom/ChatroomScreen.dart';
 import 'functions/Widgets.dart';
+import 'package:betterme/functions/Widgets/DividewithObj.dart';
 
 class CommunicationScreen extends StatefulWidget {
   const CommunicationScreen({Key? key}) : super(key: key);
@@ -20,6 +21,12 @@ class CommunicationScreen extends StatefulWidget {
 }
 
 class _CommunicationScreen extends State<CommunicationScreen> {
+  // ignore: non_constant_identifier_names
+  var TrainerName = [];
+  // ignore: non_constant_identifier_names
+  var TrainerImg = [];
+
+  var TrainerUserName = [];
 
   bool isSearching = false;
 
@@ -41,53 +48,81 @@ class _CommunicationScreen extends State<CommunicationScreen> {
   }
 
   Widget TrainersList(BuildContext context, stream) {
+    final valHeight = MediaQuery.of(context).size.height; //화면 높이
+    final valWidth = MediaQuery.of(context).size.width; //화면 너비
+    final bgColor = Color(0xff0B202A); //배경색
+    final txtColor = Color(0xffFFFDFD);
+    final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
+    final blockColor = Color(0xff333C47); // 여러 블럭들 색
+    double defaultSize = valWidth * 0.0025;
+
+    TrainerName = [];
+    TrainerImg = [];
+    TrainerUserName = [];
 
     return StreamBuilder<QuerySnapshot>(
         stream: stream,
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          return snapshot.hasData? ListView(
-              children : snapshot.data!.docs.map((DocumentSnapshot document) {
-                Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 20.0),
-                  child: Card(
-                    color: Colors.black12,
-                    child: GestureDetector(
-                        onTap: () {
-                          var chatroomId = getchatroomid(user, data['username']);
-                          Map<String, dynamic> chatroomInfo = {
-                            "users": [user, data['name']]
-                          };
-                          DatabaseMethos().createChatroom(chatroomId, chatroomInfo);
-                          Navigator.push(context,MaterialPageRoute(builder: (context) => ChatroomScreen(data['name'], data['username'])));
-                        },
-                        child: ListTile(
-                          leading: Image.network(data['imgUrl']), // 사용자 이미지 불러오는 코드
-                          title: Text(
-                            data['name'],
-                            style: TextStyle(
-                            color: Colors.black,
-                            ),
-                          ),
-                        )
-                    ),
-                  )
-                );
-              }).toList(),
-          ) : Center(child: CircularProgressIndicator());
-        }
-    );
+          return snapshot.hasData
+              ? ListView(
+                  children:
+                      snapshot.data!.docs.map((DocumentSnapshot document) {
+                    Map<String, dynamic> data =
+                        document.data()! as Map<String, dynamic>;
+                    return Padding(
+                        ////여기 수정하면 됨.
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 1.0, horizontal: 20.0),
+                        child: Card(
+                          color: blockColor,
+                          child: GestureDetector(
+                              onTap: () {
+                                var chatroomId =
+                                    getchatroomid(user, data['username']);
+                                Map<String, dynamic> chatroomInfo = {
+                                  "users": [user, data['name']]
+                                };
+                                DatabaseMethos()
+                                    .createChatroom(chatroomId, chatroomInfo);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChatroomScreen(
+                                            data['name'], data['username'])));
+                              },
+                              child: ListTile(
+                                leading: Container(
+                                  height: valHeight * 0.2,
+                                  child: CircleAvatar(
+                                    radius: valHeight * 0.03,
+                                    child: Image.network(data['imgUrl']),
+                                  ),
+                                ), // 사용자 이미지 불러오는 코드
+                                title: Text(
+                                  data['name'],
+                                  style: TextStyle(
+                                    color: txtColor,
+                                    fontSize: defaultSize * 14,
+                                  ),
+                                ),
+                              )),
+                        ));
+                  }).toList(),
+                )
+              : Center(child: CircularProgressIndicator());
+        });
   }
 
   @override
   Widget build(BuildContext context) {
-
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
-    
+
+    double defaultSize = valWidth * 0.0025;
+
     var currentuser = AuthMethods().auth.currentUser!.uid;
 
     print("\n currentuser : ${currentuser}\n");
@@ -101,29 +136,27 @@ class _CommunicationScreen extends State<CommunicationScreen> {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: bgColor,
         title: Text(
-          'Chatroom',
-          style: TextStyle(color: txtColor),
+          '메시지',
+          style: TextStyle(color: txtColor, fontSize: defaultSize * 15),
         ),
         actions: [
           Padding(
               padding: EdgeInsets.only(right: 20.0),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,MaterialPageRoute(builder: (context) => FindTrainerScreen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => FindTrainerScreen()));
                 },
-                child: Icon(
-                    Icons.add
-                ),
-              )
-          ),
+                child: Icon(Icons.add),
+              )),
         ],
       ),
-      body: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
-          child: TrainersList(context, usersStream)
-      )
+      body: Container(child: TrainersList(context, usersStream)),
     );
   }
 }
