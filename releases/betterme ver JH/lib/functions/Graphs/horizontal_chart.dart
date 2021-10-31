@@ -43,27 +43,11 @@ class CustomeScatterChartPainter extends CustomPainter {
     final drawableWidth = size.width - 2.0 * border;
     final hd = drawableHeight / 7.0;
     final wd = drawableWidth / 24 / 60;
-    final xd = drawableWidth / 7;
-    final dotPaintFill1 = Paint()
-      ..color = Color(0XFF9BC3C1)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 5.0;
-    final dotPaintFill2 = Paint()
-      ..color = Color(0XFFF2D8A7)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 5.0;
-    final dotPaintFill3 = Paint()
-      ..color = Color(0XFFA0B1DF)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 5.0;
-    final dotPaintFill4 = Paint()
-      ..color = Color(0XFFDBB9C7)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 5.0;
+    final xd = drawableWidth / 6;
     Paint paint = Paint() // Paint 클래스는 어떤 식으로 화면을 그릴지 정할 때 쓰임.
       ..color = Colors.white // 색은 보라색
       ..strokeCap = StrokeCap.round // 선의 끝은 둥글게 함.
-      ..strokeWidth = 10.0; // 선의 굵기는 4.0
+      ..strokeWidth = 1.0; // 선의 굵기는 4.0
     // TODO: implement paint
     final xLabelStyle = TextStyle(
         color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold);
@@ -72,6 +56,20 @@ class CustomeScatterChartPainter extends CustomPainter {
     const int dashWidth = 1;
     const int dashSpace = 5;
     double dash_x = border;
+    for (int i = 0; i <= 24; i += 4) {
+      drawTextCentered(canvas, c, i.toString(), xLabelStyle, xd);
+      // canvas.drawLine(c, c_x, paint);
+      double start_y = border + hd * 7;
+      while (start_y >= border) {
+        canvas.drawLine(Offset(dash_x, start_y),
+            Offset(dash_x, start_y - dashWidth), paint);
+        start_y -= dashSpace;
+      }
+      // startX =
+      c += Offset(xd, 0);
+      dash_x += xd;
+    }
+    paint.strokeWidth = 10.0;
     for (int i = 0; i < 7; i++) {
       sleep[i].forEach((e) {
         print(e);
@@ -87,5 +85,24 @@ class CustomeScatterChartPainter extends CustomPainter {
     // TODO: implement shouldRepaint
     // throw UnimplementedError();
     return true;
+  }
+
+  TextPainter measureText(
+      String s, TextStyle style, double maxWidth, TextAlign align) {
+    final span = TextSpan(text: s, style: style);
+    final tp = TextPainter(
+        text: span, textAlign: align, textDirection: TextDirection.ltr);
+    tp.layout(minWidth: 0, maxWidth: maxWidth);
+    return tp;
+  }
+
+  Size drawTextCentered(
+      Canvas canvas, Offset c, String text, TextStyle style, double maxWidth) {
+    if (text.length == 1) text = '0' + text;
+    final tp = measureText(text, style, maxWidth, TextAlign.center);
+    final offset = c + Offset(-tp.width / 2.0, 0);
+    // final offset = c + Offset(-tp.width / 2.0, -tp.height / 2.0);
+    tp.paint(canvas, offset);
+    return tp.size;
   }
 }
