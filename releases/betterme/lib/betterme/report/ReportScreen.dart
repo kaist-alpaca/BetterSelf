@@ -113,74 +113,132 @@ class _ReportScreen extends State<ReportScreen> {
                   SizedBox(
                     height: valHeight * 0.02,
                   ),
-                  GestureDetector(
-                    //여기를 누르면 인바디 및 기타등등으로 넘어감. (pages-> reportpage 참조.)
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => BioScreen()));
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: bgColor,
-                          borderRadius: BorderRadius.circular(valWidth * 0.015),
-                          boxShadow: [
-                            BoxShadow(color: shadowColor, blurRadius: 2.2),
-                          ]),
-                      height: valHeight * 0.35,
-                      width: valWidth * 0.84,
-                      margin: EdgeInsets.only(left: valWidth * 0.08),
-                      child: MadeLineChart(scores: _scores),
-                    ),
+                  Container(
+                    //생체그래프
+                    decoration: BoxDecoration(
+                        color: bgColor,
+                        borderRadius: BorderRadius.circular(valWidth * 0.015),
+                        boxShadow: [
+                          BoxShadow(color: shadowColor, blurRadius: 2.2),
+                        ]),
+                    height: valHeight * 0.35,
+                    width: valWidth * 0.84,
+                    margin: EdgeInsets.only(left: valWidth * 0.08),
+                    child: MadeLineChart(scores: _scores),
+                  ),
+                  SizedBox(height: valHeight * 0.015),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BioScreen()));
+                        },
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            primary: Color(0xff333C47),
+                            minimumSize: Size(valWidth * 0.4, valHeight * 0.04),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(valWidth * 0.015),
+                              side: BorderSide(color: Color(0xff999CA2)),
+                            )),
+                        child: Text('생체 리포트',
+                            style: TextStyle(
+                                fontSize: defaultSize * 12, color: txtColor))),
                   ),
                   SizedBox(height: valHeight * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ExerciseScreen()));
-                        },
-                        child: Container(
-                          width: valWidth * 0.4,
-                          height: valHeight * 0.2,
-                          decoration: BoxDecoration(
-                              color: bgColor,
-                              borderRadius:
-                                  BorderRadius.circular(valWidth * 0.015),
-                              boxShadow: [
-                                BoxShadow(color: shadowColor, blurRadius: 2.2),
-                              ]),
-                        ),
+                      Column(
+                        children: [
+                          Container(
+                            //운동 그래프
+                            width: valWidth * 0.4,
+                            height: valHeight * 0.2,
+                            decoration: BoxDecoration(
+                                color: bgColor,
+                                borderRadius:
+                                    BorderRadius.circular(valWidth * 0.015),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: shadowColor, blurRadius: 2.2),
+                                ]),
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ExerciseScreen()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    primary: Color(0xff333C47),
+                                    minimumSize:
+                                        Size(valWidth * 0.4, valHeight * 0.04),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.015),
+                                      side:
+                                          BorderSide(color: Color(0xff999CA2)),
+                                    )),
+                                child: Text('운동 리포트',
+                                    style: TextStyle(
+                                        fontSize: defaultSize * 12,
+                                        color: txtColor))),
+                          ),
+                        ],
                       ),
                       SizedBox(width: valWidth * 0.04),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FoodScreen()));
-                        },
-                        child: Container(
-                          width: valWidth * 0.4,
-                          height: valHeight * 0.2,
-                          decoration: BoxDecoration(
-                              color: bgColor,
-                              borderRadius:
-                                  BorderRadius.circular(valWidth * 0.015),
-                              boxShadow: [
-                                BoxShadow(color: shadowColor, blurRadius: 2.2),
-                              ]),
-                        ),
+                      Column(
+                        children: [
+                          Container(
+                            //식단그래프
+                            width: valWidth * 0.4,
+                            height: valHeight * 0.2,
+                            decoration: BoxDecoration(
+                                color: bgColor,
+                                borderRadius:
+                                    BorderRadius.circular(valWidth * 0.015),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: shadowColor, blurRadius: 2.2),
+                                ]),
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => FoodScreen()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    primary: Color(0xff333C47),
+                                    minimumSize:
+                                        Size(valWidth * 0.4, valHeight * 0.04),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.015),
+                                      side:
+                                          BorderSide(color: Color(0xff999CA2)),
+                                    )),
+                                child: Text('식단 리포트',
+                                    style: TextStyle(
+                                        fontSize: defaultSize * 12,
+                                        color: txtColor))),
+                          ),
+                        ],
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: valHeight * 0.05,
-                  )
                 ],
               ),
             ),
