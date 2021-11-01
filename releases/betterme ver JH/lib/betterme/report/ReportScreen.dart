@@ -12,6 +12,7 @@ import 'package:betterme/functions/Graphs/pie_chart_hole.dart';
 import 'package:betterme/functions/Graphs/scatter_chart.dart';
 import 'package:betterme/functions/Graphs/single_bar.dart';
 import 'package:betterme/functions/Graphs/sliced_bar_chart.dart';
+import 'package:betterme/functions/Graphs/vertical_time_bar_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -117,6 +118,11 @@ class _ReportScreen extends State<ReportScreen> {
       [
         [2, 531, 763]
       ]
+    ];
+    final _activity = [
+      [0, 40],
+      [2, 50],
+      [12, 250],
     ];
     double defaultSize = valWidth * 0.0025;
     CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -346,6 +352,9 @@ class _ReportScreen extends State<ReportScreen> {
                         width: valWidth * 0.4,
                         height: valHeight * 0.2,
                         color: Colors.grey,
+                        child: VerticalTimeBarChart(
+                          activity: _activity,
+                        ),
                       ),
                     )
                   ],
