@@ -1,6 +1,10 @@
 import 'dart:math';
 
 import 'package:betterme/functions/Graphs/gradient_chart.dart';
+import 'package:betterme/functions/Graphs/single_bar.dart';
+import 'package:betterme/functions/Graphs/sliced_bar_chart.dart';
+import 'package:betterme/functions/Graphs/group_bar_three_chart.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +29,8 @@ const dayCount = 7;
 
 class _ReportScreen extends State<ReportScreen> {
   late List<Score> _scores;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay = DateTime.now();
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -114,18 +120,129 @@ class _ReportScreen extends State<ReportScreen> {
                     height: valHeight * 0.02,
                   ),
                   Container(
-                    //생체그래프
-                    decoration: BoxDecoration(
-                        color: bgColor,
-                        borderRadius: BorderRadius.circular(valWidth * 0.015),
-                        boxShadow: [
-                          BoxShadow(color: shadowColor, blurRadius: 2.2),
-                        ]),
-                    height: valHeight * 0.35,
-                    width: valWidth * 0.84,
-                    margin: EdgeInsets.only(left: valWidth * 0.08),
-                    child: MadeLineChart(scores: _scores),
-                  ),
+                      //생체그래프
+                      decoration: BoxDecoration(
+                          color: bgColor,
+                          borderRadius: BorderRadius.circular(valWidth * 0.015),
+                          boxShadow: [
+                            BoxShadow(color: shadowColor, blurRadius: 2.2),
+                          ]),
+                      height: valHeight * 0.35,
+                      width: valWidth * 0.84,
+                      margin: EdgeInsets.only(left: valWidth * 0.08),
+                      child: Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  // 좌측 상단 작은 박스
+                                  height: valHeight * 0.02,
+                                  width: valWidth * 0.25,
+                                  margin: EdgeInsets.only(
+                                      left: valWidth * 0.04,
+                                      top: valHeight * 0.01,
+                                      bottom: valHeight * 0.008),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xff333C47),
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.013)),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'InBody - 체중(kg)',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: txtColor,
+                                          fontSize: defaultSize * 10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                color: Colors.grey,
+                                width: valWidth * 0.85,
+                                height: valHeight * 0.15,
+                                child: MadeLineChart(scores: _scores),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Column(children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                    // 좌측 상단 작은 박스
+                                    height: valHeight * 0.02,
+                                    width: valWidth * 0.2,
+                                    margin: EdgeInsets.only(
+                                        left: valWidth * 0.04,
+                                        top: valHeight * 0.01,
+                                        bottom: valHeight * 0.008),
+                                    decoration: BoxDecoration(
+                                        color: Color(0xff333C47),
+                                        borderRadius: BorderRadius.circular(
+                                            valWidth * 0.013)),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '스트레스(%)',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: txtColor,
+                                            fontSize: defaultSize * 10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: valWidth * 0.1,
+                                  height: valHeight * 0.1,
+                                  color: Colors.grey,
+                                  child: GradientChart(scores: _scores),
+                                )
+                              ]),
+                              Column(children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                    // 좌측 상단 작은 박스
+                                    height: valHeight * 0.02,
+                                    width: valWidth * 0.2,
+                                    margin: EdgeInsets.only(
+                                        left: valWidth * 0.04,
+                                        top: valHeight * 0.01,
+                                        bottom: valHeight * 0.008),
+                                    decoration: BoxDecoration(
+                                        color: Color(0xff333C47),
+                                        borderRadius: BorderRadius.circular(
+                                            valWidth * 0.013)),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '수면(시간)',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: txtColor,
+                                            fontSize: defaultSize * 10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: valWidth * 0.1,
+                                  height: valHeight * 0.1,
+                                  color: Colors.grey,
+                                  child: MadeLineChart(scores: _scores),
+                                )
+                              ]),
+                            ],
+                          )
+                        ],
+                      )),
                   SizedBox(height: valHeight * 0.015),
                   Center(
                     child: ElevatedButton(
@@ -167,6 +284,39 @@ class _ReportScreen extends State<ReportScreen> {
                                   BoxShadow(
                                       color: shadowColor, blurRadius: 2.2),
                                 ]),
+                            child: Column(children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  // 좌측 상단 작은 박스
+                                  height: valHeight * 0.02,
+                                  width: valWidth * 0.2,
+                                  margin: EdgeInsets.only(
+                                      left: valWidth * 0.04,
+                                      top: valHeight * 0.01,
+                                      bottom: valHeight * 0.008),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xff333C47),
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.013)),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '운동(kcal)',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: txtColor,
+                                          fontSize: defaultSize * 10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: valWidth * 0.34,
+                                height: valHeight * 0.16,
+                                child: SingleBar(scores: _scores),
+                              )
+                            ]),
                           ),
                           Center(
                             child: ElevatedButton(
@@ -210,6 +360,39 @@ class _ReportScreen extends State<ReportScreen> {
                                   BoxShadow(
                                       color: shadowColor, blurRadius: 2.2),
                                 ]),
+                            child: Column(children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  // 좌측 상단 작은 박스
+                                  height: valHeight * 0.02,
+                                  width: valWidth * 0.2,
+                                  margin: EdgeInsets.only(
+                                      left: valWidth * 0.04,
+                                      top: valHeight * 0.01,
+                                      bottom: valHeight * 0.008),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xff333C47),
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.013)),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '식단(kcal)',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: txtColor,
+                                          fontSize: defaultSize * 10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: valWidth * 0.34,
+                                height: valHeight * 0.16,
+                                child: GroupBarThreeChart(),
+                              )
+                            ]),
                           ),
                           Center(
                             child: ElevatedButton(

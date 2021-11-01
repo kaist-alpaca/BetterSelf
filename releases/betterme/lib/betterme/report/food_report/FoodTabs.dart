@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
@@ -8,7 +10,13 @@ import '../Widgets/MiniCircle.dart';
 
 import '../Widgets/Calendars/FoodCalendar.dart';
 
+import 'package:betterme/functions/Graphs/line_chart.dart';
+import 'package:betterme/functions/Graphs/group_bar_three_chart.dart';
+import 'package:betterme/functions/Graphs/scatter_chart.dart';
+
 int? buttonCase;
+final rng = Random();
+const dayCount = 7;
 
 class FoodTabs extends StatefulWidget {
   FoodTabs(int a) {
@@ -31,6 +39,27 @@ class _FoodTabs extends State<FoodTabs> {
   Color dayButton7Color = Color(0xff0B202A);
   int dayButtonCase = 0;
 
+  late List<Score> _scores;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay = DateTime.now();
+  List<Color> gradientColors = [
+    const Color(0xff23b6e6),
+    const Color(0xff02d39a),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    final scores = List<Score>.generate(dayCount, (index) {
+      final y = rng.nextDouble() * 30.0;
+      final d = DateTime.now().add(Duration(days: -dayCount + index));
+      return Score(y, d);
+    });
+    setState(() {
+      _scores = scores;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -49,6 +78,33 @@ class _FoodTabs extends State<FoodTabs> {
     double miniBoxSize = 0.015;
     double defaultSize = valWidth * 0.0025; //폰트사이즈용
     double graphWidth = valWidth * 0.88; // 그래프들 너비
+
+    final _food = [
+      [
+        [27, 480, 1],
+        [27, 1000, 2],
+        [27, 0, 2],
+      ],
+      [
+        [28, 872, 3]
+      ],
+      [
+        [29, 128, 4]
+      ],
+      [
+        [30, 739, 1]
+      ],
+      [
+        [31, 836, 4]
+      ],
+      [
+        [9 / 1, 947, 2]
+      ],
+      [
+        [2, 931, 1]
+      ]
+    ];
+
     if (buttonCase == 0) {
       //7일로 선택되었을 때 표현될 위젯들은 여기에.
       return Container(
@@ -108,15 +164,39 @@ class _FoodTabs extends State<FoodTabs> {
           ],
         ),
         Container(
-          height: valHeight * 0.3,
-          width: graphWidth,
-          decoration: BoxDecoration(
-              color: bgColor,
-              boxShadow: [BoxShadow(color: shadowColor, blurRadius: graphBlur)],
-              borderRadius: BorderRadius.circular(graphBorderRadius)),
-          child: Text('여기에 7일짜리 섭취 칼로리 그래프 들어가야 함.',
-              style: TextStyle(color: Colors.white)),
-        ),
+            height: valHeight * 0.3,
+            width: graphWidth,
+            decoration: BoxDecoration(
+                color: bgColor,
+                boxShadow: [
+                  BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                ],
+                borderRadius: BorderRadius.circular(graphBorderRadius)),
+            child: Stack(
+              children: [
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: MadeLineChart(scores: _scores),
+                ),
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: MadeLineChart(scores: _scores),
+                ),
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: GroupBarThreeChart(),
+                ),
+              ],
+            )),
         SizedBox(height: valHeight * 0.02),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -167,8 +247,12 @@ class _FoodTabs extends State<FoodTabs> {
               color: bgColor,
               boxShadow: [BoxShadow(color: shadowColor, blurRadius: graphBlur)],
               borderRadius: BorderRadius.circular(graphBorderRadius)),
-          child: Text('여기에 7일짜리 식사 시간 그래프 들어가야 함.',
-              style: TextStyle(color: Colors.white)),
+          child: Center(
+              child: Container(
+            height: valHeight * 0.20,
+            width: valWidth * 0.84,
+            child: MadeScatterChart(food: _food),
+          )),
         ),
         SizedBox(
           height: valHeight * 0.05,
@@ -595,15 +679,32 @@ class _FoodTabs extends State<FoodTabs> {
           ],
         ),
         Container(
-          height: valHeight * 0.34,
-          width: graphWidth,
-          decoration: BoxDecoration(
-              color: bgColor,
-              boxShadow: [BoxShadow(color: shadowColor, blurRadius: graphBlur)],
-              borderRadius: BorderRadius.circular(graphBorderRadius)),
-          child: Text('여기에 31일짜리 섭취 칼로리 그래프 들어가야 함.',
-              style: TextStyle(color: txtColor)),
-        ),
+            height: valHeight * 0.34,
+            width: graphWidth,
+            decoration: BoxDecoration(
+                color: bgColor,
+                boxShadow: [
+                  BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                ],
+                borderRadius: BorderRadius.circular(graphBorderRadius)),
+            child: Stack(
+              children: [
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: MadeLineChart(scores: _scores),
+                ),
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: MadeLineChart(scores: _scores),
+                ),
+              ],
+            )),
         SizedBox(
           height: valHeight * 0.015,
         ),
@@ -651,8 +752,24 @@ class _FoodTabs extends State<FoodTabs> {
               color: bgColor,
               boxShadow: [BoxShadow(color: shadowColor, blurRadius: graphBlur)],
               borderRadius: BorderRadius.circular(graphBorderRadius)),
-          child: Text('여기에 12개월짜리 섭취 칼로리 그래프 들어가야 함.',
-              style: TextStyle(color: txtColor)),
+          child: Stack(
+            children: [
+              Container(
+                height: valHeight * 0.34,
+                width: graphWidth,
+                padding: EdgeInsets.symmetric(
+                    vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                child: MadeLineChart(scores: _scores),
+              ),
+              Container(
+                height: valHeight * 0.34,
+                width: graphWidth,
+                padding: EdgeInsets.symmetric(
+                    vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                child: MadeLineChart(scores: _scores),
+              ),
+            ],
+          ),
         ),
         SizedBox(
           height: valHeight * 0.015,
