@@ -26,9 +26,10 @@ class CheckSignedUser extends StatelessWidget {
     return FutureBuilder<String>(
         future: ServerConnectionMethods.AuthSignedUser(uid),
         builder: (context, AsyncSnapshot<String> snapshot) {
+          print("debug : ${snapshot.data}");
           ProfileController.to.authStateChanges(snapshot.data);
           if (snapshot.hasData) {
-            print(snapshot.data!);
+            print("\n\ndebug : accesing chkuser screen");
             if (snapshot.data! == "1") {
               print('good');
               return ConstructTabBar();
@@ -37,7 +38,7 @@ class CheckSignedUser extends StatelessWidget {
               // return ConstructTabBar();
               return InitialSettingScreen();
             }
-            // return Text(snapshot.data!);
+            return Text(snapshot.data!);
           } else {
             return CircularProgressIndicator();
           }
