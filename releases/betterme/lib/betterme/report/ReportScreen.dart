@@ -51,7 +51,6 @@ class _ReportScreen extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     final bgColor = Color(0xff0B202A); //배경색
@@ -95,63 +94,6 @@ class _ReportScreen extends State<ReportScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  DividewithObj(
-                      context,
-                      Container(
-                        width: valWidth * 0.25,
-                        child: Text(
-                          '최근 코칭',
-                          style: TextStyle(
-                              fontSize: defaultSize * 14, color: linetxtColor),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      0.15,
-                      0.6),
-                  Container(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xff53525E),
-                              borderRadius:
-                                  BorderRadius.circular(valWidth * 0.015),
-                            ),
-                            margin: EdgeInsets.only(
-                                top: defaultSize * 10, bottom: defaultSize * 8),
-                            padding: EdgeInsets.fromLTRB(
-                                defaultSize * 5,
-                                defaultSize * 3,
-                                defaultSize * 5,
-                                defaultSize * 3),
-                            child: Text(
-                              '[2021/MM/DD]]',
-                              style: TextStyle(
-                                  color: txtColor, fontSize: defaultSize * 12),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.fromLTRB(
-                                defaultSize * 15,
-                                defaultSize * 5,
-                                defaultSize * 15,
-                                defaultSize * 8),
-                            child: Text('여기에는 코칭 내용이 들어갈 예정입니다.',
-                                softWrap: true,
-                                style: TextStyle(
-                                    fontSize: defaultSize * 10,
-                                    color: txtColor)),
-                          ),
-                        ]),
-                    decoration: BoxDecoration(
-                        color: Color(0xff333C47),
-                        borderRadius: BorderRadius.circular(valWidth * 0.015)),
-                    width: valWidth * 0.84,
-                    margin: EdgeInsets.only(
-                        left: valWidth * 0.08, top: valHeight * 0.02),
-                    height: valHeight * 0.18,
-                  ),
                   SizedBox(
                     height: valHeight * 0.035,
                   ),

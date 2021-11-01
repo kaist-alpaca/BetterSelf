@@ -6,6 +6,8 @@ import '../Widgets/CoachingFoodBox.dart';
 import '../Widgets/MiniBox.dart';
 import '../Widgets/MiniCircle.dart';
 
+import '../Widgets/Calendars/FoodCalendar.dart';
+
 int? buttonCase;
 
 class FoodTabs extends StatefulWidget {
@@ -605,57 +607,7 @@ class _FoodTabs extends State<FoodTabs> {
         SizedBox(
           height: valHeight * 0.015,
         ),
-        Row(
-          //기간(날짜) 선택하는 bar.
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              //날짜 왼쪽으로 넘기는 버튼
-              onTap: () {},
-              child: Container(
-                width: valWidth * 0.1,
-                height: valHeight * 0.1,
-                child: Text('왼쪽버튼'),
-              ),
-            ),
-            Container(
-              width: valWidth * 0.8,
-              child: Text('보고 있는 날짜 범위'),
-            ),
-            GestureDetector(
-              //날짜 오른쪽으로 넘기는 버튼
-              onTap: () {},
-              child: Container(
-                width: valWidth * 0.1,
-                height: valHeight * 0.1,
-                child: Text('오른쪽버튼'),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: valHeight * 0.03,
-        ),
-        Container(
-          height: valHeight * 0.4,
-          width: graphWidth,
-          color: Colors.grey,
-          child: Text('여기에 해당 달의 달력'),
-          margin: EdgeInsets.only(bottom: valHeight * 0.01),
-        ),
-        SizedBox(
-          height: valHeight * 0.015,
-        ),
-        CoachingFoodBox(
-            context, '식단\n' + '[2021/MM/dd]', '코칭 내용\n\n\n\n\n', 0.4),
-        SizedBox(
-          height: valHeight * 0.0235,
-        ),
-        CoachingTxtBox(context, 1, '식단 코칭', '코칭 내용', 0.2),
-        SizedBox(
-          height: valHeight * 0.09,
-        )
+        FoodCalendar(),
       ])));
     } else if (buttonCase == 2) {
       //12개월로 선택되었을 때 표현될 위젯들은 여기에.
@@ -734,28 +686,7 @@ class _FoodTabs extends State<FoodTabs> {
             ),
           ],
         ),
-        SizedBox(
-          height: valHeight * 0.03,
-        ),
-        Container(
-          height: valHeight * 0.4,
-          width: graphWidth,
-          color: Colors.grey,
-          child: Text('여기에 해당 달의 달력'),
-          margin: EdgeInsets.only(bottom: valHeight * 0.01),
-        ),
-        SizedBox(
-          height: valHeight * 0.015,
-        ),
-        CoachingFoodBox(
-            context, '식단\n' + '[2021/MM/dd]', '코칭 내용\n\n\n\n\n', 0.4),
-        SizedBox(
-          height: valHeight * 0.0235,
-        ),
-        CoachingTxtBox(context, 1, '식단 코칭', '코칭 내용', 0.2),
-        SizedBox(
-          height: valHeight * 0.09,
-        )
+        FoodCalendar(),
       ])));
     } else {
       return Container();
