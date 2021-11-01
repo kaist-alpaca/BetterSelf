@@ -43,7 +43,7 @@ class CustomeScatterChartPainter extends CustomPainter {
     final drawableWidth = size.width - 2.0 * border;
     final hd = drawableHeight / 7.0;
     final wd = drawableWidth / 24 / 60;
-    final xd = drawableWidth / 7;
+    final xd = drawableWidth / 6;
     final dotPaintFill1 = Paint()
       ..color = Color(0XFF9BC3C1)
       ..style = PaintingStyle.fill
