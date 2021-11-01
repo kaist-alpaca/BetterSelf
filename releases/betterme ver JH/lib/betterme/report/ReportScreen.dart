@@ -6,6 +6,7 @@ import 'package:betterme/functions/Graphs/bar_chart.dart';
 import 'package:betterme/functions/Graphs/gradient_chart.dart';
 import 'package:betterme/functions/Graphs/group_bar_three_chart.dart';
 import 'package:betterme/functions/Graphs/horizontal_chart.dart';
+import 'package:betterme/functions/Graphs/horizontal_one_line.dart';
 import 'package:betterme/functions/Graphs/pie_chart.dart';
 import 'package:betterme/functions/Graphs/pie_chart_hole.dart';
 import 'package:betterme/functions/Graphs/scatter_chart.dart';
@@ -316,6 +317,35 @@ class _ReportScreen extends State<ReportScreen> {
                             text: "6시간 21분",
                           ),
                         ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: valHeight * 0.05,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        child: MadeHorizontalOneLineChart(
+                          percentage: 60,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: valWidth * 0.04),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
                       ),
                     )
                   ],
