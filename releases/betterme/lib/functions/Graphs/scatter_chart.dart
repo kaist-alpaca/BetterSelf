@@ -43,7 +43,7 @@ class CustomeScatterChartPainter extends CustomPainter {
     final drawableWidth = size.width - 2.0 * border;
     final hd = drawableHeight / 7.0;
     final wd = drawableWidth / 24 / 60;
-    final xd = drawableWidth / 7;
+    final xd = drawableWidth / 6;
     final dotPaintFill1 = Paint()
       ..color = Color(0XFF9BC3C1)
       ..style = PaintingStyle.fill
@@ -84,12 +84,9 @@ class CustomeScatterChartPainter extends CustomPainter {
       // startX =
       c += Offset(xd, 0);
       dash_x += xd;
-      print(i);
     }
     for (int i = 0; i < 7; i++) {
       food[i].forEach((e) {
-        print(e);
-        print(e[2]);
         switch (e[2]) {
           case 1:
             canvas.drawCircle(
@@ -135,7 +132,6 @@ class CustomeScatterChartPainter extends CustomPainter {
     final offset = c + Offset(-tp.width / 2.0, 0);
     // final offset = c + Offset(-tp.width / 2.0, -tp.height / 2.0);
     tp.paint(canvas, offset);
-    print(offset);
     return tp.size;
   }
 }

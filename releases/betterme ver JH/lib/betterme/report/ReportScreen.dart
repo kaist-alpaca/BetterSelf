@@ -6,10 +6,13 @@ import 'package:betterme/functions/Graphs/bar_chart.dart';
 import 'package:betterme/functions/Graphs/gradient_chart.dart';
 import 'package:betterme/functions/Graphs/group_bar_three_chart.dart';
 import 'package:betterme/functions/Graphs/horizontal_chart.dart';
+import 'package:betterme/functions/Graphs/horizontal_one_line.dart';
 import 'package:betterme/functions/Graphs/pie_chart.dart';
+import 'package:betterme/functions/Graphs/pie_chart_hole.dart';
 import 'package:betterme/functions/Graphs/scatter_chart.dart';
 import 'package:betterme/functions/Graphs/single_bar.dart';
 import 'package:betterme/functions/Graphs/sliced_bar_chart.dart';
+import 'package:betterme/functions/Graphs/vertical_time_bar_chart.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -115,6 +118,11 @@ class _ReportScreen extends State<ReportScreen> {
       [
         [2, 531, 763]
       ]
+    ];
+    final _activity = [
+      [0, 40],
+      [2, 50],
+      [12, 250],
     ];
     double defaultSize = valWidth * 0.0025;
     CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -305,15 +313,48 @@ class _ReportScreen extends State<ReportScreen> {
                         width: valWidth * 0.4,
                         height: valHeight * 0.2,
                         color: Colors.grey,
-                        // child: CustomPaint(
-                        //   // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
-                        //   size: Size(
-                        //       150, 150), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
-                        //   painter: MadePieChart(
-                        //       percentage: 50, // 파이 차트가 얼마나 칠해져 있는지 정하는 변수입니다.
-                        //       textScaleFactor: 1.0, // 파이 차트에 들어갈 텍스트 크기를 정합니다.
-                        //       textColor: Colors.blueGrey),
-                        // ),
+                        child: CustomPaint(
+                          // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
+                          size: Size(150,
+                              150), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
+                          painter: MadePieChartHole(
+                            percentage1: 60,
+                            percentage2: 20,
+                            text: "6시간 21분",
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: valHeight * 0.05,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        child: MadeHorizontalOneLineChart(
+                          percentage: 60,
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: valWidth * 0.04),
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: valWidth * 0.4,
+                        height: valHeight * 0.2,
+                        color: Colors.grey,
+                        child: VerticalTimeBarChart(
+                          activity: _activity,
+                        ),
                       ),
                     )
                   ],

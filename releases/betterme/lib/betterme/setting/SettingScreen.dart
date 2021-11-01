@@ -1,5 +1,4 @@
-import 'package:betterme/betterme/login/basicillscreen/BasicIllScreen.dart';
-import 'package:betterme/betterme/login/functions/SettingBar.dart';
+import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
 
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
@@ -18,6 +17,7 @@ import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 
 import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:restart_app/restart_app.dart';
 
 import 'Functions/AgreementScreen.dart';
 
@@ -445,10 +445,7 @@ class SettingScreen extends StatelessWidget {
                   GestureDetector(
                     // 저장기능 추가해주세요
                     onTap: () {
-                      FirebaseAuth.instance.signOut();
-                      // Restart.restartApp(webOrigin: '');
-                      Get.reset();
-                      Phoenix.rebirth(context);
+                      Get.to(() => ConstructTabBar());
                       // return Home();
                     }, //여기에 로그아웃 기능 구현
                     child: Column(
@@ -482,11 +479,13 @@ class SettingScreen extends StatelessWidget {
                   ),
 
                   GestureDetector(
-                    // 저장 후 다음 페이지로 넘어감.
+                    // 로그아웃
                     onTap: () {
                       FirebaseAuth.instance.signOut();
-                      // Restart.restartApp(webOrigin: '');
+                      //Restart.restartApp(webOrigin: '');
                       //Phoenix.rebirth(context);
+                      Get.reset();
+                      Phoenix.rebirth(context);
                       // return Home();
                     }, //여기에 로그아웃 기능 구현
                     child: Column(
