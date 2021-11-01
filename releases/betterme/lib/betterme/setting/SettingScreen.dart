@@ -444,7 +444,7 @@ class SettingScreen extends StatelessWidget {
 
                   GestureDetector(
                     // 저장기능 추가해주세요
-                    onTap: (){
+                    onTap: () {
                       Get.to(() => ConstructTabBar());
                       // return Home();
                     }, //여기에 로그아웃 기능 구현
@@ -484,6 +484,8 @@ class SettingScreen extends StatelessWidget {
                       FirebaseAuth.instance.signOut();
                       //Restart.restartApp(webOrigin: '');
                       //Phoenix.rebirth(context);
+                      Get.reset();
+                      Phoenix.rebirth(context);
                       // return Home();
                     }, //여기에 로그아웃 기능 구현
                     child: Column(

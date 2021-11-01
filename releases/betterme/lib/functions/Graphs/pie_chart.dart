@@ -39,32 +39,9 @@ class MadePieChart extends CustomPainter {
     canvas.drawLine(center, center + Offset(x, y), middle);
     middle..strokeCap = StrokeCap.butt;
     Path path = Path();
-    // Moves starting point to the center of the screen
     path.moveTo(size.width / 2, size.height / 2);
-    // canvas.drawPath(path, paint1);
-    // path.lineTo(size.width, size.height);
-    // path.lineTo(size.width / 2, size.height);
     path.lineTo(size.width / 2 + x, size.width / 2 + y);
-    print("sdfjdsojfdsjofjdfsoods");
-    print(size.width / 2);
-    print(x);
-    print(size.width / 2 + x);
-    // canvas.drawPath(path, paint1);
-    // canvas.drawShadow(path, Colors.grey.withAlpha(50), 4.0, false);
-    // canvas.drawShadow(path, color, elevation, transparentOccluder)
-    // canvas.drawLine(Offset(x1, y1), Offset(x2, y2), middle);
-    // drawArc(paint, middle, canvas, center, radius);
-    // drawText(canvas, size, "$percentage / 100");
   }
-
-  // void drawArc(Paint paint, Paint middle, Canvas canvas, Offset center,
-  //     double radius, dou) {
-  //   paint..color = Color(0xFFDBB9C7);
-  //   canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -pi / 2,
-  //       arcAngle, true, paint);
-  //   // canvas.drawArc(Rect.fromCircle(center: center, radius: radius),
-  //   //     -pi / 2 + arcAngle, arcAngle2, true, middle);
-  // }
 
   void drawText(Canvas canvas, Size size, String text) {
     double fontSize = getFontSize(size, text);

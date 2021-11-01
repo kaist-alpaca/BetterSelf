@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class MadeScatterChart extends StatefulWidget {
-  final food;
-  const MadeScatterChart({Key? key, required this.food}) : super(key: key);
+class MadeHorizontalChart extends StatefulWidget {
+  final sleep;
+  const MadeHorizontalChart({Key? key, required this.sleep}) : super(key: key);
 
   @override
-  _MadeScatterChart createState() => _MadeScatterChart();
+  _MadeHorizontalChart createState() => _MadeHorizontalChart();
 }
 
-class _MadeScatterChart extends State<MadeScatterChart> {
+class _MadeHorizontalChart extends State<MadeHorizontalChart> {
   @override
   void initState() {
     super.initState();
@@ -26,15 +26,15 @@ class _MadeScatterChart extends State<MadeScatterChart> {
     return Container(
       child: CustomPaint(
         child: Container(),
-        painter: CustomeScatterChartPainter(widget.food),
+        painter: CustomeScatterChartPainter(widget.sleep),
       ),
     );
   }
 }
 
 class CustomeScatterChartPainter extends CustomPainter {
-  final food;
-  CustomeScatterChartPainter(this.food);
+  final sleep;
+  CustomeScatterChartPainter(this.sleep);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -44,22 +44,6 @@ class CustomeScatterChartPainter extends CustomPainter {
     final hd = drawableHeight / 7.0;
     final wd = drawableWidth / 24 / 60;
     final xd = drawableWidth / 6;
-    final dotPaintFill1 = Paint()
-      ..color = Color(0XFF9BC3C1)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 5.0;
-    final dotPaintFill2 = Paint()
-      ..color = Color(0XFFF2D8A7)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 5.0;
-    final dotPaintFill3 = Paint()
-      ..color = Color(0XFFA0B1DF)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 5.0;
-    final dotPaintFill4 = Paint()
-      ..color = Color(0XFFDBB9C7)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 5.0;
     Paint paint = Paint() // Paint 클래스는 어떤 식으로 화면을 그릴지 정할 때 쓰임.
       ..color = Colors.white // 색은 보라색
       ..strokeCap = StrokeCap.round // 선의 끝은 둥글게 함.
@@ -85,26 +69,13 @@ class CustomeScatterChartPainter extends CustomPainter {
       c += Offset(xd, 0);
       dash_x += xd;
     }
+    paint.strokeWidth = 10.0;
     for (int i = 0; i < 7; i++) {
-      food[i].forEach((e) {
-        switch (e[2]) {
-          case 1:
-            canvas.drawCircle(
-                Offset(border + wd * e[1], border + hd * i), 5, dotPaintFill1);
-            break;
-          case 2:
-            canvas.drawCircle(
-                Offset(border + wd * e[1], border + hd * i), 5, dotPaintFill2);
-            break;
-          case 3:
-            canvas.drawCircle(
-                Offset(border + wd * e[1], border + hd * i), 5, dotPaintFill3);
-            break;
-          case 4:
-            canvas.drawCircle(
-                Offset(border + wd * e[1], border + hd * i), 5, dotPaintFill4);
-            break;
-        }
+      sleep[i].forEach((e) {
+        print(e);
+        print(e[2]);
+        canvas.drawLine(Offset(border + wd * e[1], border + hd * i),
+            Offset(border + wd * e[2], border + hd * i), paint);
       });
     }
   }

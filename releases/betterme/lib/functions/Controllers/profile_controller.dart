@@ -21,7 +21,20 @@ class ProfileController extends GetxController {
   UserModel originMyProfile = UserModel();
   Rx<UserModel> myProfile = UserModel().obs;
 
+  DateTime focusedDay = DateTime.now();
+  DateTime selectedDay = DateTime.now();
+
   DateTime date = DateTime.now();
+
+  void updatefocusedDay(DateTime value) {
+    focusedDay = value;
+    update();
+  }
+
+  void updateselectedDay(DateTime value) {
+    selectedDay = value;
+    update();
+  }
 
   void dateMinus(DateTime value) {
     date = date.subtract(Duration(days: 1));
