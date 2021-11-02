@@ -151,7 +151,7 @@ class SettingScreen extends StatelessWidget {
                                     height: valWidth * 0.25,
                                     // color: Colors.grey,
                                     child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(50),
+                                      borderRadius: BorderRadius.circular(100),
                                       child: Container(
                                         width: 100,
                                         height: 100,

@@ -8,6 +8,10 @@ import 'package:betterme/betterme/setting/SettingScreen.dart';
 import '../HomeScreen.dart';
 import 'CustomIcons.dart';
 
+import 'package:get/get.dart';
+
+import 'package:betterme/functions/Controllers/profile_controller.dart';
+
 class ConstructTabBar extends StatefulWidget {
   const ConstructTabBar({Key? key}) : super(key: key);
 

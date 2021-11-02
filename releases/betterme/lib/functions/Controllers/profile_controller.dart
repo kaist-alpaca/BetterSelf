@@ -103,6 +103,15 @@ class ProfileController extends GetxController {
     return DateTime(date.year, date.month, date.day + 5 - (date.weekday - 1));
   }
 
+  // 홈화면용 어제/그제 구하기
+  DateTime YYDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - 2);
+  }
+
+  DateTime YDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - 1);
+  }
+
   String? gender;
   String? birthday;
   String? height;
