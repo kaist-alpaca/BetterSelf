@@ -93,9 +93,13 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                               child: ListTile(
                                 leading: Container(
                                   height: valHeight * 0.2,
-                                  child: CircleAvatar(
-                                    radius: valHeight * 0.03,
-                                    child: Image.network(data['imgUrl']),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Container(
+                                      width: 30,
+                                      height: 30,
+                                      child: Image.network(data['imgUrl']),
+                                    )
                                   ),
                                 ), // 사용자 이미지 불러오는 코드
                                 title: Text(

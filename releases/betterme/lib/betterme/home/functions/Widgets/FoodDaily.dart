@@ -1,5 +1,5 @@
+import 'package:betterme/betterme/home/functions/Widgets/FoodDailyMenu.dart';
 import 'package:flutter/material.dart';
-import '../../SearchFood/FoodSearchScreen.dart';
 
 import 'FoodDailyMenu1.dart';
 import 'FoodDailyMenu2.dart';
@@ -58,17 +58,32 @@ class _FoodDaily extends State<FoodDaily> {
                 Container(
                   height: menuHeight,
                   width: menuWidth,
-                  child: FoodDailyMenu1(1, menuHeight, menuWidth),
+                  child: FoodDailyMenu(
+                    type: 1,
+                    widgetHeight: menuHeight,
+                    widgetWidth: menuWidth,
+                    index: 1,
+                  ),
                 ),
                 Container(
                   height: menuHeight,
                   width: menuWidth,
-                  child: FoodDailyMenu2(0, menuHeight, menuWidth),
+                  child: FoodDailyMenu(
+                    type: 1,
+                    widgetHeight: menuHeight,
+                    widgetWidth: menuWidth,
+                    index: 2,
+                  ),
                 ),
                 Container(
                   height: menuHeight,
                   width: menuWidth,
-                  child: FoodDailyMenu3(0, menuHeight, menuWidth),
+                  child: FoodDailyMenu(
+                    type: 0,
+                    widgetHeight: menuHeight,
+                    widgetWidth: menuWidth,
+                    index: 3,
+                  ),
                 ),
               ]),
         ));

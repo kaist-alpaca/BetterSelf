@@ -169,45 +169,9 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                           style: TextStyle(
                               fontSize: defaultSize * 15, color: txtColor)))
                 ]),
-                // Row(children: [
-                //   isSearching
-                //       ? GestureDetector(
-                //           onTap: () {
-                //             isSearching = false;
-                //             searching.text = "";
-                //             setState(() {});
-                //           },
-                //           child: const Padding(
-                //               padding: EdgeInsets.only(right: 12),
-                //               child: Icon(Icons.arrow_back,
-                //                   color: Colors.black)))
-                //       : Container(),
-                //   Expanded(
-                //       child: TextField(
-                //           controller: searching,
-                //           style: const TextStyle(color: Colors.black),
-                //           decoration: textFieldInput("username"))),
-                //   GestureDetector(
-                //     onTap: () {
-                //       if (searching.text != "") {
-                //         setState(() {});
-                //         isSearching = true;
-                //       }
-                //     },
-                //     child: const Icon(Icons.search, color: Colors.black),
-                //   )
-                // ]),
-                // const Padding(
-                //   padding:
-                //       EdgeInsets.symmetric(vertical: 7.0, horizontal: 20.0),
-                // ),
                 Container(
                     height: 0.6 * valHeight,
                     child: TrainerList(context, userlistStream)!),
-                // isSearching ? SizedBox(
-                //   height : 500,
-                //   child : searchUsersList(),
-                // ) : chatRoomList()
               ],
             )),
           ),

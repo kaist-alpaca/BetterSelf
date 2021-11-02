@@ -45,12 +45,31 @@ Widget InitCoaching(BuildContext context, DateTime selectedDate) {
             Coachingtimes.add(DateTime.parse(data['time'].toDate().toString()));
             return data['message'];
           }).toList();
-          print("\n${CoachingList}\n");
 
-          DateTime checkingDate = Coachingtimes[0];
-          bool coachingExists = true;
-          while (selectedDate.difference(checkingDate).isNegative) {}
-          return CoachingTxtBox(context, 1, '운동 코칭', Coachingtexts[1], 0.2);
+          int checkTime = Coachingtimes.length - 1;
+          // DateFormat('y/M/d').format(controller.selectedDay)
+
+          while (checkTime >= 0) {
+            // Coachingtimes[checkTime]-selectedDate]
+            int date1 = int.parse(
+                DateFormat('yyyyMMdd').format(Coachingtimes[checkTime]));
+            int date2 = int.parse(DateFormat('yyyyMMdd').format(selectedDate));
+            int DiffDays = date1 - date2;
+
+            print(selectedDate.toString());
+            if (DiffDays == 0) {
+              print('$checkTime and ' + Coachingtexts[checkTime]);
+              return CoachingTxtBox(
+                  context, 1, '운동 코칭', Coachingtexts[checkTime], 0.2);
+            } else if (DiffDays < 0) {
+              return CoachingTxtBox(
+                  context, 1, '운동 코칭', '아직 해당 날짜의 운동 코칭이 없습니다.', 0.2);
+            }
+            checkTime = checkTime - 1;
+          }
+          print('out of While');
+          return CoachingTxtBox(
+              context, 1, '운동 코칭', '아직 해당 날짜의 운동 코칭이 없습니다.', 0.2);
         } else {
           return Center(child: CircularProgressIndicator());
         }
@@ -125,19 +144,12 @@ class _ExerciseCalendarState extends State<ExerciseCalendar> {
             print(controller.selectedDay);
             setState(() {
               formattedDate =
-                  DateFormat('y/M/d').format(controller.selectedDay);
+                  DateFormat('y/M/dd').format(controller.selectedDay);
             });
           },
           locale: 'ko-KR',
         ),
-        Container(
-          child: Text(
-            controller.selectedDay.toString(),
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
+        SizedBox(height: valHeight * 0.025),
         CoachingExerciseBox(
             context, '운동\n' + '[$formattedDate]', '운동 내용', 0.25),
         SizedBox(

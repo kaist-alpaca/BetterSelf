@@ -73,23 +73,27 @@ class _ReportScreen extends State<ReportScreen> {
           appBar: AppBar(
             backgroundColor: bgColor,
             title: Text(
-                controller.date.month.toString() +
+                controller.startDate(controller.date).month.toString() +
                     "월 " +
-                    controller.date.day.toString() +
+                    controller.startDate(controller.date).day.toString() +
+                    "일 - " +
+                    controller.endDate(controller.date).month.toString() +
+                    "월 " +
+                    controller.endDate(controller.date).day.toString() +
                     "일",
                 style: TextStyle(fontSize: defaultSize * 17, color: txtColor),
                 textAlign: TextAlign.center),
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
-                controller.dateMinus(controller.date);
+                controller.dateMinus7(controller.date);
               },
             ),
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.arrow_forward_ios),
                 onPressed: () {
-                  controller.datePlus(controller.date);
+                  controller.datePlus7(controller.date);
                 },
               ),
             ],
@@ -247,6 +251,8 @@ class _ReportScreen extends State<ReportScreen> {
                   Center(
                     child: ElevatedButton(
                         onPressed: () {
+                          controller.dateReset(controller.date);
+                          controller.reportDayReset(controller.reportDay);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -321,6 +327,9 @@ class _ReportScreen extends State<ReportScreen> {
                           Center(
                             child: ElevatedButton(
                                 onPressed: () {
+                                  controller.dateReset(controller.date);
+                                  controller
+                                      .reportDayReset(controller.reportDay);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -397,6 +406,9 @@ class _ReportScreen extends State<ReportScreen> {
                           Center(
                             child: ElevatedButton(
                                 onPressed: () {
+                                  controller.dateReset(controller.date);
+                                  controller
+                                      .reportDayReset(controller.reportDay);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
