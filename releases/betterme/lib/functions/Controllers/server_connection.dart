@@ -39,6 +39,43 @@ class ServerConnection {
             photoURL));
   }
 
+  // Future<void> uploadFoodImage({String uid, String index, File file}) async {
+  //   var stream = new http.ByteStream(DelegatingStream.typed(file!.openRead()));
+  //   var length = await originMyProfile.profileImage!.length();
+
+  //   var uri = Uri.parse("http://kaistuser.iptime.org:8080/profile.php?uid=" +
+  //       originMyProfile.uid! +
+  //       "&type=profile");
+
+  //   var request = new http.MultipartRequest("POST", uri);
+  //   var multipartFile = new http.MultipartFile('imgFile', stream, length,
+  //       filename: basename(originMyProfile.profileImage!.path));
+
+  //   request.files.add(multipartFile);
+  //   var response = await request.send();
+  //   // print(response.statusCode);
+  //   // print(originMyProfile.uid!);
+  //   // print(originMyProfile.profileImage!.length());
+  //   // String tmp = "@@@";
+  //   // response.stream.transform(utf8.decoder).listen((value) {
+  //   //   print("!!!!!!!!!");
+  //   //   print(value);
+  //   //   tmp = value;
+  //   // });
+
+  //   // await http.get(Uri.parse(
+  //   //     "http://kaistuser.iptime.org:8080/upload_food_image.php?uid=" +
+  //   //         uid +
+  //   //         "&photoURL=" +
+  //   //         DateTime.now().year.toString() +
+  //   //         '_' +
+  //   //         DateTime.now().month.toString() +
+  //   //         '_' +
+  //   //         DateTime.now().day.toString() +
+  //   //         '_' +
+  //   //         index));
+  // }
+
   static Future<void> createUser(
     String uid,
     String email,

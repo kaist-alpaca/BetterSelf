@@ -26,6 +26,8 @@ class ProfileController extends GetxController {
 
   DateTime date = DateTime.now();
 
+  File? food;
+
   void updatefocusedDay(DateTime value) {
     focusedDay = value;
     update();
@@ -122,10 +124,21 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
-  Future<void> pickImage() async {
-    File? file = await ImageCropController.to.selectImage();
-    if (file == null) return;
-    myProfile.update((my) => my?.profileImage = file);
+  Future<void> pickImage({required String type, required String use}) async {
+    File? file = type == "gallery"
+        ? await ImageCropController.to.selectImage(type: 'gallery')
+        : await ImageCropController.to.selectImage(type: 'camera');
+    food = null;
+    if (file == null) {
+      update();
+      return;
+    }
+    if (use == "profile") {
+      myProfile.update((my) => my?.profileImage = file);
+    } else {
+      food = file;
+      update();
+    }
   }
 
   void _updateProfileImageUrl(String downloadUrl) {
@@ -167,5 +180,41 @@ class ProfileController extends GetxController {
           ".jpg");
     }
     return 123121;
+  }
+
+  Future<void> uploadFoodImage(
+      {required String uid, required String index, required File file}) async {
+    print("food start");
+    var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
+    var length = await file.length();
+    print(length);
+    var uri = Uri.parse(
+        "http://kaistuser.iptime.org:8080/upload_food_image.php?uid=" +
+            uid +
+            "&index=" +
+            index +
+            "&photoURL=" +
+            DateTime.now().year.toString() +
+            '_' +
+            DateTime.now().month.toString() +
+            '_' +
+            DateTime.now().day.toString() +
+            '_' +
+            index);
+
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('imgFile', stream, length,
+        filename: basename(file.path));
+
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+
+    String tmp = "@@@";
+    response.stream.transform(utf8.decoder).listen((value) {
+      print("!!!!!!!!!");
+      print(value);
+      tmp = value;
+    });
   }
 }
