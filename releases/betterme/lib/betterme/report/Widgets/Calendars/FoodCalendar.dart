@@ -5,7 +5,74 @@ import 'package:intl/intl.dart';
 import '../CoachingFoodBox.dart';
 import '../CoachingTxtBox.dart';
 
+import 'package:betterme/functions/Firestore/AuthMethods.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 // import 'package:intl/intl_browser.dart';
+
+var Coachingtexts = [];
+var Coachingtimes = [];
+
+var user = AuthMethods()
+    .auth
+    .currentUser!
+    .email
+    .toString()
+    .replaceAll("@gmail.com", "");
+
+var currentuser = AuthMethods().auth.currentUser!.uid;
+
+Widget InitCoaching(BuildContext context, DateTime selectedDate) {
+  Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
+      .collection('users')
+      .doc(currentuser)
+      .collection('coaching_diet')
+      .orderBy("time")
+      .snapshots();
+
+  return StreamBuilder<QuerySnapshot>(
+      stream: usersStream,
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        Coachingtexts = [];
+        Coachingtimes = [];
+        if (snapshot.hasData) {
+          List CoachingList =
+              snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            print("time : ${DateTime.parse(data['time'].toDate().toString())}");
+            Coachingtexts.add(data['message']);
+            Coachingtimes.add(DateTime.parse(data['time'].toDate().toString()));
+            return data['message'];
+          }).toList();
+
+          int checkTime = Coachingtimes.length - 1;
+          // DateFormat('y/M/d').format(controller.selectedDay)
+
+          while (checkTime >= 0) {
+            // Coachingtimes[checkTime]-selectedDate]
+            int date1 = int.parse(
+                DateFormat('yyyyMMdd').format(Coachingtimes[checkTime]));
+            int date2 = int.parse(DateFormat('yyyyMMdd').format(selectedDate));
+            int DiffDays = date1 - date2;
+
+            if (DiffDays == 0) {
+              return CoachingTxtBox(
+                  context, 1, '식단 코칭', Coachingtexts[checkTime], 0.2);
+            } else if (DiffDays < 0) {
+              return CoachingTxtBox(
+                  context, 1, '식단 코칭', '아직 해당 날짜의 식단 코칭이 없습니다.', 0.2);
+            }
+            checkTime = checkTime - 1;
+          }
+          print('out of While');
+          return CoachingTxtBox(
+              context, 1, '식단 코칭', '아직 해당 날짜의 식단 코칭이 없습니다.', 0.2);
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      });
+}
 
 class FoodCalendar extends StatefulWidget {
   const FoodCalendar({Key? key}) : super(key: key);
@@ -79,23 +146,13 @@ class _FoodCalendarState extends State<FoodCalendar> {
           },
           locale: 'ko-KR',
         ),
-        Container(
-          child: Text(
-            controller.selectedDay.toString(),
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: valHeight * 0.015,
-        ),
+        SizedBox(height: valHeight * 0.025),
         CoachingFoodBox(
             context, '식단\n' + '[$formattedDate]', '코칭 내용\n\n\n\n\n', 0.4),
         SizedBox(
           height: valHeight * 0.0235,
         ),
-        CoachingTxtBox(context, 1, '식단 코칭', '코칭 내용', 0.2),
+        InitCoaching(context, controller.selectedDay),
         SizedBox(
           height: valHeight * 0.09,
         )
