@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:betterme/betterme/home/functions/Widgets/Coaching.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +12,16 @@ import '../Widgets/MiniBox.dart';
 import '../Widgets/CoachingExerciseBox.dart';
 import '../Widgets/CoachingTxtBox.dart';
 
+import 'package:betterme/functions/Calendar/calendar.dart';
+import '../Widgets/Calendars/ExerciseCalendar.dart';
+
+import 'package:betterme/functions/Graphs/line_chart.dart';
+import 'package:betterme/functions/Graphs/single_bar.dart';
+import 'package:betterme/functions/Graphs/pie_chart.dart';
+
 int? buttonCase;
+final rng = Random();
+const dayCount = 7;
 
 class ExerciseTabs extends StatefulWidget {
   ExerciseTabs(int a) {
@@ -22,6 +33,13 @@ class ExerciseTabs extends StatefulWidget {
 }
 
 class _ExerciseTabs extends State<ExerciseTabs> {
+  late List<Score> _scores;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay = DateTime.now();
+  List<Color> gradientColors = [
+    const Color(0xff23b6e6),
+    const Color(0xff02d39a),
+  ];
   Color dayButton1Color = Color(0xff0B202A);
   Color dayButton2Color = Color(0xff0B202A);
   Color dayButton3Color = Color(0xff474A55);
@@ -46,7 +64,9 @@ class _ExerciseTabs extends State<ExerciseTabs> {
 
   var currentuser = AuthMethods().auth.currentUser!.uid;
 
-  Widget InitCoaching(BuildContext context,) {
+  Widget InitCoaching(
+    BuildContext context,
+  ) {
     Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
         .collection('users')
         .doc(currentuser)
@@ -60,11 +80,15 @@ class _ExerciseTabs extends State<ExerciseTabs> {
           Coachingtexts = [];
           Coachingtimes = [];
           if (snapshot.hasData) {
-            List CoachingList = snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-              print("time : ${DateTime.parse(data['time'].toDate().toString())}");
+            List CoachingList =
+                snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+              print(
+                  "time : ${DateTime.parse(data['time'].toDate().toString())}");
               Coachingtexts.add(data['message']);
-              Coachingtimes.add(DateTime.parse(data['time'].toDate().toString()));
+              Coachingtimes.add(
+                  DateTime.parse(data['time'].toDate().toString()));
               return data['message'];
             }).toList();
             print("\n${CoachingList}\n");
@@ -72,8 +96,20 @@ class _ExerciseTabs extends State<ExerciseTabs> {
           } else {
             return Center(child: CircularProgressIndicator());
           }
-        }
-    );
+        });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    final scores = List<Score>.generate(dayCount, (index) {
+      final y = rng.nextDouble() * 30.0;
+      final d = DateTime.now().add(Duration(days: -dayCount + index));
+      return Score(y, d);
+    });
+    setState(() {
+      _scores = scores;
+    });
   }
 
   @override
@@ -148,26 +184,111 @@ class _ExerciseTabs extends State<ExerciseTabs> {
           ],
         ),
         Container(
-          height: valHeight * 0.34,
-          width: graphWidth,
-          decoration: BoxDecoration(
-              color: bgColor,
-              boxShadow: [BoxShadow(color: shadowColor, blurRadius: graphBlur)],
-              borderRadius: BorderRadius.circular(graphBorderRadius)),
-          child: Text('여기에 7일짜리 소모 칼로리(막대,꺾은선) 그래프 들어가야 함.',
-              style: TextStyle(color: Colors.white)),
-        ),
+            height: valHeight * 0.34,
+            width: graphWidth,
+            decoration: BoxDecoration(
+                color: bgColor,
+                boxShadow: [
+                  BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                ],
+                borderRadius: BorderRadius.circular(graphBorderRadius)),
+            child: Stack(
+              children: [
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: MadeLineChart(scores: _scores),
+                ),
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: SingleBar(scores: _scores),
+                ),
+              ],
+            )),
         SizedBox(height: valHeight * 0.02),
         Container(
-          height: valHeight * 0.16,
-          width: graphWidth,
-          decoration: BoxDecoration(
-              color: bgColor,
-              boxShadow: [BoxShadow(color: shadowColor, blurRadius: graphBlur)],
-              borderRadius: BorderRadius.circular(graphBorderRadius)),
-          child: Text('여기에 7일짜리 소모 칼로리(파이) 그래프 들어가야 함.',
-              style: TextStyle(color: Colors.white)),
-        ),
+            //소모 칼로리 파이 그래프들.
+            height: valHeight * 0.16,
+            width: graphWidth,
+            decoration: BoxDecoration(
+                color: bgColor,
+                boxShadow: [
+                  BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                ],
+                borderRadius: BorderRadius.circular(graphBorderRadius)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+              ],
+            )),
         SizedBox(
           height: valHeight * 0.05,
         ),
@@ -608,26 +729,111 @@ class _ExerciseTabs extends State<ExerciseTabs> {
           ],
         ),
         Container(
-          height: valHeight * 0.34,
-          width: graphWidth,
-          decoration: BoxDecoration(
-              color: bgColor,
-              boxShadow: [BoxShadow(color: shadowColor, blurRadius: graphBlur)],
-              borderRadius: BorderRadius.circular(graphBorderRadius)),
-          child: Text('여기에 31일짜리 소모 칼로리(막대,꺾은선) 그래프 들어가야 함.',
-              style: TextStyle(color: Colors.white)),
-        ),
+            height: valHeight * 0.34,
+            width: graphWidth,
+            decoration: BoxDecoration(
+                color: bgColor,
+                boxShadow: [
+                  BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                ],
+                borderRadius: BorderRadius.circular(graphBorderRadius)),
+            child: Stack(
+              children: [
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: MadeLineChart(scores: _scores),
+                ),
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: SingleBar(scores: _scores),
+                ),
+              ],
+            )),
         SizedBox(height: valHeight * 0.02),
         Container(
-          height: valHeight * 0.16,
-          width: graphWidth,
-          decoration: BoxDecoration(
-              color: bgColor,
-              boxShadow: [BoxShadow(color: shadowColor, blurRadius: graphBlur)],
-              borderRadius: BorderRadius.circular(graphBorderRadius)),
-          child: Text('여기에 31일짜리 소모 칼로리(파이) 그래프 들어가야 함.',
-              style: TextStyle(color: Colors.white)),
-        ),
+            //소모 칼로리 파이 그래프들.
+            height: valHeight * 0.16,
+            width: graphWidth,
+            decoration: BoxDecoration(
+                color: bgColor,
+                boxShadow: [
+                  BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                ],
+                borderRadius: BorderRadius.circular(graphBorderRadius)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+              ],
+            )),
         SizedBox(
           height: valHeight * 0.05,
         ),
@@ -647,55 +853,7 @@ class _ExerciseTabs extends State<ExerciseTabs> {
         SizedBox(
           height: valHeight * 0.02,
         ),
-        Row(
-          //기간(날짜) 선택하는 bar.
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              //날짜 왼쪽으로 넘기는 버튼
-              onTap: () {},
-              child: Container(
-                width: valWidth * 0.1,
-                height: valHeight * 0.1,
-                child: Text('왼쪽버튼'),
-              ),
-            ),
-            Container(
-              width: valWidth * 0.8,
-              child: Text('보고 있는 날짜 범위'),
-            ),
-            GestureDetector(
-              //날짜 오른쪽으로 넘기는 버튼
-              onTap: () {},
-              child: Container(
-                width: valWidth * 0.1,
-                height: valHeight * 0.1,
-                child: Text('오른쪽버튼'),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: valHeight * 0.03,
-        ),
-        Container(
-          height: valHeight * 0.5,
-          width: graphWidth,
-          color: Colors.grey,
-          child: Text('여기에 달력'),
-        ),
-        SizedBox(
-          height: valHeight * 0.015,
-        ),
-        CoachingExerciseBox(context, '운동\n' + '[2021/MM/dd]', '운동 내용', 0.25),
-        SizedBox(
-          height: valHeight * 0.015,
-        ),
-        CoachingTxtBox(context, 1, '운동 코칭', '코칭 내용', 0.2),
-        SizedBox(
-          height: valHeight * 0.03,
-        )
+        ExerciseCalendar(),
       ])));
     } else if (buttonCase == 2) {
       //12개월로 선택되었을 때 표현될 위젯들은 여기에.
@@ -748,26 +906,111 @@ class _ExerciseTabs extends State<ExerciseTabs> {
           ],
         ),
         Container(
-          height: valHeight * 0.34,
-          width: graphWidth,
-          decoration: BoxDecoration(
-              color: bgColor,
-              boxShadow: [BoxShadow(color: shadowColor, blurRadius: graphBlur)],
-              borderRadius: BorderRadius.circular(graphBorderRadius)),
-          child: Text('여기에 12개월짜리 소모 칼로리(막대,꺾은선) 그래프 들어가야 함.',
-              style: TextStyle(color: Colors.white)),
-        ),
+            height: valHeight * 0.34,
+            width: graphWidth,
+            decoration: BoxDecoration(
+                color: bgColor,
+                boxShadow: [
+                  BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                ],
+                borderRadius: BorderRadius.circular(graphBorderRadius)),
+            child: Stack(
+              children: [
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: MadeLineChart(scores: _scores),
+                ),
+                Container(
+                  height: valHeight * 0.34,
+                  width: graphWidth,
+                  padding: EdgeInsets.symmetric(
+                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                  child: SingleBar(scores: _scores),
+                ),
+              ],
+            )),
         SizedBox(height: valHeight * 0.02),
         Container(
-          height: valHeight * 0.16,
-          width: graphWidth,
-          decoration: BoxDecoration(
-              color: bgColor,
-              boxShadow: [BoxShadow(color: shadowColor, blurRadius: graphBlur)],
-              borderRadius: BorderRadius.circular(graphBorderRadius)),
-          child: Text('여기에 12개월짜리 소모 칼로리(파이) 그래프 들어가야 함.',
-              style: TextStyle(color: Colors.white)),
-        ),
+            //소모 칼로리 파이 그래프들.
+            height: valHeight * 0.16,
+            width: graphWidth,
+            decoration: BoxDecoration(
+                color: bgColor,
+                boxShadow: [
+                  BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                ],
+                borderRadius: BorderRadius.circular(graphBorderRadius)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+                Container(
+                    height: valHeight * 0.11,
+                    width: valWidth * 0.11,
+                    margin: EdgeInsets.symmetric(horizontal: valWidth * 0.005),
+                    child: CustomPaint(
+                        painter: MadePieChart(
+                            percentage: 45,
+                            textScaleFactor: 1.5,
+                            textColor: txtColor))),
+              ],
+            )),
         SizedBox(
           height: valHeight * 0.05,
         ),
@@ -787,55 +1030,7 @@ class _ExerciseTabs extends State<ExerciseTabs> {
         SizedBox(
           height: valHeight * 0.02,
         ),
-        Row(
-          //기간(날짜) 선택하는 bar.
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              //날짜 왼쪽으로 넘기는 버튼
-              onTap: () {},
-              child: Container(
-                width: valWidth * 0.1,
-                height: valHeight * 0.1,
-                child: Text('왼쪽버튼'),
-              ),
-            ),
-            Container(
-              width: valWidth * 0.8,
-              child: Text('보고 있는 날짜 범위'),
-            ),
-            GestureDetector(
-              //날짜 오른쪽으로 넘기는 버튼
-              onTap: () {},
-              child: Container(
-                width: valWidth * 0.1,
-                height: valHeight * 0.1,
-                child: Text('오른쪽버튼'),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: valHeight * 0.03,
-        ),
-        Container(
-          height: valHeight * 0.5,
-          width: graphWidth,
-          color: Colors.grey,
-          child: Text('여기에 달력'),
-        ),
-        SizedBox(
-          height: valHeight * 0.015,
-        ),
-        CoachingExerciseBox(context, '운동\n' + '[2021/MM/dd]', '운동 내용', 0.25),
-        SizedBox(
-          height: valHeight * 0.015,
-        ),
-        InitCoaching(context,),
-        SizedBox(
-          height: valHeight * 0.03,
-        ),
+        ExerciseCalendar(),
       ])));
     } else {
       return Container();

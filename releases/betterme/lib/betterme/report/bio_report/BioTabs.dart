@@ -3,6 +3,8 @@ import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import '../Widgets/MiniBox.dart';
 import '../Widgets/CoachingTxtBox.dart';
 
+import '../Widgets/Calendars/BioCalendar.dart';
+
 int? buttonCase;
 
 class BioTabs extends StatefulWidget {
@@ -795,52 +797,10 @@ class _BioTabs extends State<BioTabs> {
             SizedBox(
               height: valHeight * 0.02,
             ),
-            Row(
-              //기간(월) 선택하는 bar.
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  //날짜 왼쪽으로 넘기는 버튼
-                  onTap: () {},
-                  child: Container(
-                    width: valWidth * 0.1,
-                    height: valHeight * 0.1,
-                    child: Text('왼쪽버튼'),
-                  ),
-                ),
-                Container(
-                  width: valWidth * 0.8,
-                  child: Text('보고 있는 날짜 범위'),
-                ),
-                GestureDetector(
-                  //날짜 오른쪽으로 넘기는 버튼
-                  onTap: () {},
-                  child: Container(
-                    width: valWidth * 0.1,
-                    height: valHeight * 0.1,
-                    child: Text('오른쪽버튼'),
-                  ),
-                ),
-              ],
-            ),
             SizedBox(
               height: valHeight * 0.03,
             ),
-            Container(
-              height: valHeight * 0.5,
-              width: graphWidth,
-              color: Colors.grey,
-              child: Text('여기에 해당 달의 달력'),
-            ),
-            SizedBox(
-              height: valHeight * 0.02,
-            ),
-            CoachingTxtBox(
-                context, 0, '생체 데이터 코칭\n' + '[2021/MM/dd]', '코칭 내용', 0.25),
-            SizedBox(
-              height: valHeight * 0.08,
-            )
+            BioCalendar(),
           ])));
     } else if (buttonCase == 2) {
       //12개월로 선택되었을 때 표현될 위젯들은 여기에.///////////////////////
@@ -985,52 +945,7 @@ class _BioTabs extends State<BioTabs> {
                 ),
                 0.12,
                 0.7),
-            Row(
-              //기간(날짜) 선택하는 bar.
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                GestureDetector(
-                  //날짜 왼쪽으로 넘기는 버튼
-                  onTap: () {},
-                  child: Container(
-                    width: valWidth * 0.1,
-                    height: valHeight * 0.1,
-                    child: Text('왼쪽버튼'),
-                  ),
-                ),
-                Container(
-                  width: valWidth * 0.8,
-                  child: Text('보고 있는 날짜 범위'),
-                ),
-                GestureDetector(
-                  //날짜 오른쪽으로 넘기는 버튼
-                  onTap: () {},
-                  child: Container(
-                    width: valWidth * 0.1,
-                    height: valHeight * 0.1,
-                    child: Text('오른쪽버튼'),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: valHeight * 0.03,
-            ),
-            Container(
-              height: valHeight * 0.5,
-              width: graphWidth,
-              color: Colors.grey,
-              child: Text('여기에 해당 달의 달력'),
-            ),
-            SizedBox(
-              height: valHeight * 0.02,
-            ),
-            CoachingTxtBox(
-                context, 0, '생체 데이터 코칭\n' + '[2021/MM/dd]', '코칭 내용', 0.25),
-            SizedBox(
-              height: valHeight * 0.08,
-            )
+            BioCalendar(),
           ])));
     } else {
       return Container();

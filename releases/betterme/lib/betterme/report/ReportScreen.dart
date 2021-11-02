@@ -1,6 +1,10 @@
 import 'dart:math';
 
 import 'package:betterme/functions/Graphs/gradient_chart.dart';
+import 'package:betterme/functions/Graphs/single_bar.dart';
+import 'package:betterme/functions/Graphs/sliced_bar_chart.dart';
+import 'package:betterme/functions/Graphs/group_bar_three_chart.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,6 +29,8 @@ const dayCount = 7;
 
 class _ReportScreen extends State<ReportScreen> {
   late List<Score> _scores;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay = DateTime.now();
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -51,7 +57,6 @@ class _ReportScreen extends State<ReportScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     final bgColor = Color(0xff0B202A); //배경색
@@ -95,63 +100,6 @@ class _ReportScreen extends State<ReportScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  DividewithObj(
-                      context,
-                      Container(
-                        width: valWidth * 0.25,
-                        child: Text(
-                          '최근 코칭',
-                          style: TextStyle(
-                              fontSize: defaultSize * 14, color: linetxtColor),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      0.15,
-                      0.6),
-                  Container(
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Color(0xff53525E),
-                              borderRadius:
-                                  BorderRadius.circular(valWidth * 0.015),
-                            ),
-                            margin: EdgeInsets.only(
-                                top: defaultSize * 10, bottom: defaultSize * 8),
-                            padding: EdgeInsets.fromLTRB(
-                                defaultSize * 5,
-                                defaultSize * 3,
-                                defaultSize * 5,
-                                defaultSize * 3),
-                            child: Text(
-                              '[2021/MM/DD]]',
-                              style: TextStyle(
-                                  color: txtColor, fontSize: defaultSize * 12),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.fromLTRB(
-                                defaultSize * 15,
-                                defaultSize * 5,
-                                defaultSize * 15,
-                                defaultSize * 8),
-                            child: Text('여기에는 코칭 내용이 들어갈 예정입니다.',
-                                softWrap: true,
-                                style: TextStyle(
-                                    fontSize: defaultSize * 10,
-                                    color: txtColor)),
-                          ),
-                        ]),
-                    decoration: BoxDecoration(
-                        color: Color(0xff333C47),
-                        borderRadius: BorderRadius.circular(valWidth * 0.015)),
-                    width: valWidth * 0.84,
-                    margin: EdgeInsets.only(
-                        left: valWidth * 0.08, top: valHeight * 0.02),
-                    height: valHeight * 0.18,
-                  ),
                   SizedBox(
                     height: valHeight * 0.035,
                   ),
@@ -171,13 +119,8 @@ class _ReportScreen extends State<ReportScreen> {
                   SizedBox(
                     height: valHeight * 0.02,
                   ),
-                  GestureDetector(
-                    //여기를 누르면 인바디 및 기타등등으로 넘어감. (pages-> reportpage 참조.)
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => BioScreen()));
-                    },
-                    child: Container(
+                  Container(
+                      //생체그래프
                       decoration: BoxDecoration(
                           color: bgColor,
                           borderRadius: BorderRadius.circular(valWidth * 0.015),
@@ -187,58 +130,298 @@ class _ReportScreen extends State<ReportScreen> {
                       height: valHeight * 0.35,
                       width: valWidth * 0.84,
                       margin: EdgeInsets.only(left: valWidth * 0.08),
-                      child: MadeLineChart(scores: _scores),
-                    ),
+                      child: Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  // 좌측 상단 작은 박스
+                                  height: valHeight * 0.02,
+                                  width: valWidth * 0.25,
+                                  margin: EdgeInsets.only(
+                                      left: valWidth * 0.04,
+                                      top: valHeight * 0.01,
+                                      bottom: valHeight * 0.008),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xff333C47),
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.013)),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      'InBody - 체중(kg)',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: txtColor,
+                                          fontSize: defaultSize * 10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                color: Colors.grey,
+                                width: valWidth * 0.85,
+                                height: valHeight * 0.15,
+                                child: MadeLineChart(scores: _scores),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Column(children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                    // 좌측 상단 작은 박스
+                                    height: valHeight * 0.02,
+                                    width: valWidth * 0.2,
+                                    margin: EdgeInsets.only(
+                                        left: valWidth * 0.04,
+                                        top: valHeight * 0.01,
+                                        bottom: valHeight * 0.008),
+                                    decoration: BoxDecoration(
+                                        color: Color(0xff333C47),
+                                        borderRadius: BorderRadius.circular(
+                                            valWidth * 0.013)),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '스트레스(%)',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: txtColor,
+                                            fontSize: defaultSize * 10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: valWidth * 0.1,
+                                  height: valHeight * 0.1,
+                                  color: Colors.grey,
+                                  child: GradientChart(scores: _scores),
+                                )
+                              ]),
+                              Column(children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Container(
+                                    // 좌측 상단 작은 박스
+                                    height: valHeight * 0.02,
+                                    width: valWidth * 0.2,
+                                    margin: EdgeInsets.only(
+                                        left: valWidth * 0.04,
+                                        top: valHeight * 0.01,
+                                        bottom: valHeight * 0.008),
+                                    decoration: BoxDecoration(
+                                        color: Color(0xff333C47),
+                                        borderRadius: BorderRadius.circular(
+                                            valWidth * 0.013)),
+                                    child: Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '수면(시간)',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: txtColor,
+                                            fontSize: defaultSize * 10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: valWidth * 0.1,
+                                  height: valHeight * 0.1,
+                                  color: Colors.grey,
+                                  child: MadeLineChart(scores: _scores),
+                                )
+                              ]),
+                            ],
+                          )
+                        ],
+                      )),
+                  SizedBox(height: valHeight * 0.015),
+                  Center(
+                    child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BioScreen()));
+                        },
+                        style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            primary: Color(0xff333C47),
+                            minimumSize: Size(valWidth * 0.4, valHeight * 0.04),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(valWidth * 0.015),
+                              side: BorderSide(color: Color(0xff999CA2)),
+                            )),
+                        child: Text('생체 리포트',
+                            style: TextStyle(
+                                fontSize: defaultSize * 12, color: txtColor))),
                   ),
                   SizedBox(height: valHeight * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ExerciseScreen()));
-                        },
-                        child: Container(
-                          width: valWidth * 0.4,
-                          height: valHeight * 0.2,
-                          decoration: BoxDecoration(
-                              color: bgColor,
-                              borderRadius:
-                                  BorderRadius.circular(valWidth * 0.015),
-                              boxShadow: [
-                                BoxShadow(color: shadowColor, blurRadius: 2.2),
-                              ]),
-                        ),
+                      Column(
+                        children: [
+                          Container(
+                            //운동 그래프
+                            width: valWidth * 0.4,
+                            height: valHeight * 0.2,
+                            decoration: BoxDecoration(
+                                color: bgColor,
+                                borderRadius:
+                                    BorderRadius.circular(valWidth * 0.015),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: shadowColor, blurRadius: 2.2),
+                                ]),
+                            child: Column(children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  // 좌측 상단 작은 박스
+                                  height: valHeight * 0.02,
+                                  width: valWidth * 0.2,
+                                  margin: EdgeInsets.only(
+                                      left: valWidth * 0.04,
+                                      top: valHeight * 0.01,
+                                      bottom: valHeight * 0.008),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xff333C47),
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.013)),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '운동(kcal)',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: txtColor,
+                                          fontSize: defaultSize * 10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: valWidth * 0.34,
+                                height: valHeight * 0.16,
+                                child: SingleBar(scores: _scores),
+                              )
+                            ]),
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ExerciseScreen()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    primary: Color(0xff333C47),
+                                    minimumSize:
+                                        Size(valWidth * 0.4, valHeight * 0.04),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.015),
+                                      side:
+                                          BorderSide(color: Color(0xff999CA2)),
+                                    )),
+                                child: Text('운동 리포트',
+                                    style: TextStyle(
+                                        fontSize: defaultSize * 12,
+                                        color: txtColor))),
+                          ),
+                        ],
                       ),
                       SizedBox(width: valWidth * 0.04),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FoodScreen()));
-                        },
-                        child: Container(
-                          width: valWidth * 0.4,
-                          height: valHeight * 0.2,
-                          decoration: BoxDecoration(
-                              color: bgColor,
-                              borderRadius:
-                                  BorderRadius.circular(valWidth * 0.015),
-                              boxShadow: [
-                                BoxShadow(color: shadowColor, blurRadius: 2.2),
-                              ]),
-                        ),
+                      Column(
+                        children: [
+                          Container(
+                            //식단그래프
+                            width: valWidth * 0.4,
+                            height: valHeight * 0.2,
+                            decoration: BoxDecoration(
+                                color: bgColor,
+                                borderRadius:
+                                    BorderRadius.circular(valWidth * 0.015),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: shadowColor, blurRadius: 2.2),
+                                ]),
+                            child: Column(children: [
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: Container(
+                                  // 좌측 상단 작은 박스
+                                  height: valHeight * 0.02,
+                                  width: valWidth * 0.2,
+                                  margin: EdgeInsets.only(
+                                      left: valWidth * 0.04,
+                                      top: valHeight * 0.01,
+                                      bottom: valHeight * 0.008),
+                                  decoration: BoxDecoration(
+                                      color: Color(0xff333C47),
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.013)),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '식단(kcal)',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          color: txtColor,
+                                          fontSize: defaultSize * 10),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: valWidth * 0.34,
+                                height: valHeight * 0.16,
+                                child: GroupBarThreeChart(),
+                              )
+                            ]),
+                          ),
+                          Center(
+                            child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => FoodScreen()));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    primary: Color(0xff333C47),
+                                    minimumSize:
+                                        Size(valWidth * 0.4, valHeight * 0.04),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.015),
+                                      side:
+                                          BorderSide(color: Color(0xff999CA2)),
+                                    )),
+                                child: Text('식단 리포트',
+                                    style: TextStyle(
+                                        fontSize: defaultSize * 12,
+                                        color: txtColor))),
+                          ),
+                        ],
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: valHeight * 0.05,
-                  )
                 ],
               ),
             ),

@@ -276,7 +276,7 @@ class _ReportScreen extends State<ReportScreen> {
                         width: valWidth * 0.4,
                         height: valHeight * 0.2,
                         color: Colors.grey,
-                        child: MadeScatterChart(food: _food),
+                        child: MadeChart(food: _food),
                         // child: CustomPaint(
                         //   // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
                         //   size: Size(
