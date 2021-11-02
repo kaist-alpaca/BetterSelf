@@ -5,7 +5,57 @@ import 'package:intl/intl.dart';
 import '../CoachingExerciseBox.dart';
 import '../CoachingTxtBox.dart';
 
+import 'package:betterme/functions/Firestore/AuthMethods.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 // import 'package:intl/intl_browser.dart';
+
+var Coachingtexts = [];
+var Coachingtimes = [];
+
+var user = AuthMethods()
+    .auth
+    .currentUser!
+    .email
+    .toString()
+    .replaceAll("@gmail.com", "");
+
+var currentuser = AuthMethods().auth.currentUser!.uid;
+
+Widget InitCoaching(BuildContext context, DateTime selectedDate) {
+  Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
+      .collection('users')
+      .doc(currentuser)
+      .collection('coaching_exercise')
+      .orderBy("time")
+      .snapshots();
+
+  return StreamBuilder<QuerySnapshot>(
+      stream: usersStream,
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        Coachingtexts = [];
+        Coachingtimes = [];
+        if (snapshot.hasData) {
+          List CoachingList =
+              snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            print("time : ${DateTime.parse(data['time'].toDate().toString())}");
+            Coachingtexts.add(data['message']);
+            Coachingtimes.add(DateTime.parse(data['time'].toDate().toString()));
+            return data['message'];
+          }).toList();
+          print("\n${CoachingList}\n");
+
+          DateTime checkingDate = Coachingtimes[0];
+          bool coachingExists = true;
+          while (selectedDate.difference(checkingDate).isNegative) {}
+          return CoachingTxtBox(context, 1, '운동 코칭', Coachingtexts[1], 0.2);
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      });
+}
 
 class ExerciseCalendar extends StatefulWidget {
   const ExerciseCalendar({Key? key}) : super(key: key);
@@ -25,6 +75,7 @@ class _ExerciseCalendarState extends State<ExerciseCalendar> {
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
+
     return Column(
       children: [
         TableCalendar(
@@ -92,7 +143,7 @@ class _ExerciseCalendarState extends State<ExerciseCalendar> {
         SizedBox(
           height: valHeight * 0.015,
         ),
-        CoachingTxtBox(context, 1, '운동 코칭', '코칭 내용', 0.2),
+        InitCoaching(context, controller.selectedDay),
         SizedBox(
           height: valHeight * 0.03,
         )
