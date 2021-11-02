@@ -21,16 +21,86 @@ class ProfileController extends GetxController {
   UserModel originMyProfile = UserModel();
   Rx<UserModel> myProfile = UserModel().obs;
 
+  DateTime focusedDay = DateTime.now();
+  DateTime selectedDay = DateTime.now();
+  DateTime reportDay = DateTime.now();
+
   DateTime date = DateTime.now();
+
+  File? food;
+
+  void updatefocusedDay(DateTime value) {
+    focusedDay = value;
+    update();
+  }
+
+  void updateselectedDay(DateTime value) {
+    selectedDay = value;
+    update();
+  }
 
   void dateMinus(DateTime value) {
     date = date.subtract(Duration(days: 1));
     update();
   }
 
+  void dateMinus7(DateTime value) {
+    date = date.subtract(Duration(days: 7));
+    update();
+  }
+
   void datePlus(DateTime value) {
     date = date.add(Duration(days: 1));
     update();
+  }
+
+  void datePlus7(DateTime value) {
+    date = date.add(Duration(days: 7));
+    update();
+  }
+
+  void dateReset(DateTime value) {
+    date = DateTime.now();
+    update();
+  }
+
+  void reportDayReset(DateTime value) {
+    reportDay = DateTime.now();
+    update();
+  }
+
+  void updateReport(DateTime value) {
+    reportDay = value;
+    update();
+  }
+
+//일주일구하기
+  DateTime startDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - (date.weekday - 1));
+  }
+
+  DateTime endDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + (7 - date.weekday));
+  }
+
+  DateTime TueDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + 1 - (date.weekday - 1));
+  }
+
+  DateTime WedDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + 2 - (date.weekday - 1));
+  }
+
+  DateTime ThuDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + 3 - (date.weekday - 1));
+  }
+
+  DateTime FriDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + 4 - (date.weekday - 1));
+  }
+
+  DateTime SatDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + 5 - (date.weekday - 1));
   }
 
   String? gender;
@@ -109,10 +179,21 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 
-  Future<void> pickImage() async {
-    File? file = await ImageCropController.to.selectImage();
-    if (file == null) return;
-    myProfile.update((my) => my?.profileImage = file);
+  Future<void> pickImage({required String type, required String use}) async {
+    File? file = type == "gallery"
+        ? await ImageCropController.to.selectImage(type: 'gallery')
+        : await ImageCropController.to.selectImage(type: 'camera');
+    food = null;
+    if (file == null) {
+      update();
+      return;
+    }
+    if (use == "profile") {
+      myProfile.update((my) => my?.profileImage = file);
+    } else {
+      food = file;
+      update();
+    }
   }
 
   void _updateProfileImageUrl(String downloadUrl) {
@@ -154,5 +235,41 @@ class ProfileController extends GetxController {
           ".jpg");
     }
     return 123121;
+  }
+
+  Future<void> uploadFoodImage(
+      {required String uid, required String index, required File file}) async {
+    print("food start");
+    var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
+    var length = await file.length();
+    print(length);
+    var uri = Uri.parse(
+        "http://kaistuser.iptime.org:8080/upload_food_image.php?uid=" +
+            uid +
+            "&index=" +
+            index +
+            "&photoURL=" +
+            DateTime.now().year.toString() +
+            '_' +
+            DateTime.now().month.toString() +
+            '_' +
+            DateTime.now().day.toString() +
+            '_' +
+            index);
+
+    var request = new http.MultipartRequest("POST", uri);
+    var multipartFile = new http.MultipartFile('imgFile', stream, length,
+        filename: basename(file.path));
+
+    request.files.add(multipartFile);
+    var response = await request.send();
+    print(response.statusCode);
+
+    String tmp = "@@@";
+    response.stream.transform(utf8.decoder).listen((value) {
+      print("!!!!!!!!!");
+      print(value);
+      tmp = value;
+    });
   }
 }

@@ -7,9 +7,10 @@ import 'package:image_cropper/image_cropper.dart';
 class ImageCropController extends GetxController {
   static ImageCropController get to => Get.find();
 
-  Future<File?> selectImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+  Future<File?> selectImage({required String type}) async {
+    final pickedFile = type == "gallery"
+        ? await ImagePicker().pickImage(source: ImageSource.gallery)
+        : await ImagePicker().pickImage(source: ImageSource.camera);
     if (pickedFile == null) return null;
     return await _cropImage(File(pickedFile.path));
     // return pickedFile != null ? File(pickedFile.path) : null;

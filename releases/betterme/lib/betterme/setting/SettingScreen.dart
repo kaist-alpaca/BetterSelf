@@ -104,10 +104,45 @@ class SettingScreen extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () async {
-                                await controller.pickImage();
-                                print("change image");
-                                var save = await controller.save();
-                                print(save);
+                                showCupertinoModalPopup(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      CupertinoActionSheet(
+                                    title: const Text('프로필 이미지 수정'),
+                                    message: const Text('Your options are '),
+                                    actions: <Widget>[
+                                      CupertinoActionSheetAction(
+                                        child: const Text('사진 촬영'),
+                                        onPressed: () async {
+                                          await controller.pickImage(
+                                              type: 'camera', use: 'profile');
+                                          print("change image");
+                                          Navigator.pop(context, 'Cancel');
+                                          var save = await controller.save();
+                                          print(save);
+                                        },
+                                      ),
+                                      CupertinoActionSheetAction(
+                                        child: const Text('갤러리에서 사진 선택'),
+                                        onPressed: () async {
+                                          await controller.pickImage(
+                                              type: 'gallery', use: 'profile');
+                                          print("change image");
+                                          Navigator.pop(context, 'Cancel');
+                                          var save = await controller.save();
+                                          print(save);
+                                        },
+                                      )
+                                    ],
+                                    cancelButton: CupertinoActionSheetAction(
+                                      child: const Text('취소'),
+                                      isDefaultAction: true,
+                                      onPressed: () {
+                                        Navigator.pop(context, 'Cancel');
+                                      },
+                                    ),
+                                  ),
+                                );
                               },
                               child: Obx(
                                 () => Container(
@@ -444,7 +479,7 @@ class SettingScreen extends StatelessWidget {
 
                   GestureDetector(
                     // 저장기능 추가해주세요
-                    onTap: (){
+                    onTap: () {
                       Get.to(() => ConstructTabBar());
                       // return Home();
                     }, //여기에 로그아웃 기능 구현
@@ -484,6 +519,8 @@ class SettingScreen extends StatelessWidget {
                       FirebaseAuth.instance.signOut();
                       //Restart.restartApp(webOrigin: '');
                       //Phoenix.rebirth(context);
+                      Get.reset();
+                      Phoenix.rebirth(context);
                       // return Home();
                     }, //여기에 로그아웃 기능 구현
                     child: Column(

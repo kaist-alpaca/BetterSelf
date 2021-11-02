@@ -1,5 +1,6 @@
 import 'package:betterme/functions/Server/ServerConnectionMethods.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:betterme/functions/Controllers/profile_controller.dart';
@@ -17,7 +18,6 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 import '../basicillscreen/BasicIllScreen.dart';
 
 class InitialSettingScreen extends StatelessWidget {
-
   final FocusNode _nodeText1 = FocusNode();
   final FocusNode _nodeText2 = FocusNode();
   final FocusNode _nodeText3 = FocusNode();
@@ -36,7 +36,6 @@ class InitialSettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     print("\n\ndebug : accesing initset screen");
 
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -79,15 +78,48 @@ class InitialSettingScreen extends StatelessWidget {
                         Column(
                           children: [
                             GestureDetector(
-                              onTap: () async {
-                                await controller.pickImage();
-                                print("change image");
-                                var save = await controller.save();
-                                print(save);
+                              onTap: () {
+                                showCupertinoModalPopup(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      CupertinoActionSheet(
+                                    title: const Text('프로필 이미지 선택'),
+                                    message: const Text('Your options are '),
+                                    actions: <Widget>[
+                                      CupertinoActionSheetAction(
+                                        child: const Text('사진 촬영'),
+                                        onPressed: () async {
+                                          await controller.pickImage(
+                                              type: 'camera', use: 'profile');
+                                          print("change image");
+                                          var save = await controller.save();
+                                          print(save);
+                                        },
+                                      ),
+                                      CupertinoActionSheetAction(
+                                        child: const Text('갤러리에서 사진 선택'),
+                                        onPressed: () async {
+                                          await controller.pickImage(
+                                              type: 'gallery', use: 'profile');
+                                          print("change image");
+                                          var save = await controller.save();
+                                          print(save);
+                                        },
+                                      )
+                                    ],
+                                    cancelButton: CupertinoActionSheetAction(
+                                      child: const Text('취소'),
+                                      isDefaultAction: true,
+                                      onPressed: () {
+                                        Navigator.pop(context, 'Cancel');
+                                      },
+                                    ),
+                                  ),
+                                );
                               },
                               child: Obx(
-                                    () => Container(
-                                  //여기에 아마도 프사설정
+                                () => Container(
+                                    //여기에 아마도 프사설정
                                     width: valWidth * 0.25,
                                     height: valWidth * 0.25,
                                     // color: Colors.grey,
@@ -97,18 +129,18 @@ class InitialSettingScreen extends StatelessWidget {
                                         width: 100,
                                         height: 100,
                                         child: controller.myProfile.value
-                                            .profileImage ==
-                                            null
+                                                    .profileImage ==
+                                                null
                                             ? Image.network(
-                                          controller.myProfile.value
-                                              .profileUrl!,
-                                          fit: BoxFit.cover,
-                                        )
+                                                controller.myProfile.value
+                                                    .profileUrl!,
+                                                fit: BoxFit.cover,
+                                              )
                                             : Image.file(
-                                          controller.myProfile.value
-                                              .profileImage!,
-                                          fit: BoxFit.cover,
-                                        ),
+                                                controller.myProfile.value
+                                                    .profileImage!,
+                                                fit: BoxFit.cover,
+                                              ),
                                       ),
                                     ),
                                     margin: EdgeInsets.fromLTRB(
@@ -136,7 +168,7 @@ class InitialSettingScreen extends StatelessWidget {
                   Text(
                     'ID',
                     style:
-                    TextStyle(color: txtColor, fontSize: defaultSize * 15),
+                        TextStyle(color: txtColor, fontSize: defaultSize * 15),
                   ),
                   SizedBox(
                     height: 7,
@@ -146,20 +178,20 @@ class InitialSettingScreen extends StatelessWidget {
                       // 에딧기능추가해주세요
                       // _openDatePicker(context);
                       BottomPicker.date(
-                          title: "생년월일",
-                          titleStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                              color: Colors.blue),
-                          onChange: (index) {
-                            print(index);
-                          },
-                          onSubmit: (index) {
-                            print(index);
-                            controller.birthdaySelected(
-                                index.toString().substring(0, 10));
-                          },
-                          bottomPickerTheme: BOTTOM_PICKER_THEME.PLUM_PLATE)
+                              title: "생년월일",
+                              titleStyle: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                  color: Colors.blue),
+                              onChange: (index) {
+                                print(index);
+                              },
+                              onSubmit: (index) {
+                                print(index);
+                                controller.birthdaySelected(
+                                    index.toString().substring(0, 10));
+                              },
+                              bottomPickerTheme: BOTTOM_PICKER_THEME.PLUM_PLATE)
                           .show(context);
                     },
                     child: Text(
@@ -193,32 +225,32 @@ class InitialSettingScreen extends StatelessWidget {
                         onTap: () {
                           // _openDatePicker(context);
                           BottomPicker(
-                              items: genderList,
-                              title: "성별",
-                              titleStyle: TextStyle(
-                                  color: txtColor,
-                                  fontSize: defaultSize * 15),
-                              onChange: (index) {
-                                print(index);
-                              },
-                              onSubmit: (index) {
-                                print(genderList[index].data);
-                                controller.genderSelected(
-                                    genderList[index].data.toString());
-                              },
-                              bottomPickerTheme:
-                              BOTTOM_PICKER_THEME.PLUM_PLATE)
+                                  items: genderList,
+                                  title: "성별",
+                                  titleStyle: TextStyle(
+                                      color: txtColor,
+                                      fontSize: defaultSize * 15),
+                                  onChange: (index) {
+                                    print(index);
+                                  },
+                                  onSubmit: (index) {
+                                    print(genderList[index].data);
+                                    controller.genderSelected(
+                                        genderList[index].data.toString());
+                                  },
+                                  bottomPickerTheme:
+                                      BOTTOM_PICKER_THEME.PLUM_PLATE)
                               .show(context);
                         },
                         child: Container(
-                          //생년월일 입력란
+                            //생년월일 입력란
                             width: valWidth * 0.3,
                             height: TextfieldSize, //valHeight * 0.06,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: txtFeildColor,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(3))),
+                                    BorderRadius.all(Radius.circular(3))),
                             margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
                                 valWidth * 0.02, valWidth * 0.015),
                             child: Text(
@@ -249,31 +281,31 @@ class InitialSettingScreen extends StatelessWidget {
                         onTap: () {
                           // _openDatePicker(context);
                           BottomPicker.date(
-                              title: "생년월일",
-                              titleStyle: TextStyle(
-                                  color: txtColor,
-                                  fontSize: defaultSize * 15),
-                              onChange: (index) {
-                                print(index);
-                              },
-                              onSubmit: (index) {
-                                print(index);
-                                controller.birthdaySelected(
-                                    index.toString().substring(0, 10));
-                              },
-                              bottomPickerTheme:
-                              BOTTOM_PICKER_THEME.PLUM_PLATE)
+                                  title: "생년월일",
+                                  titleStyle: TextStyle(
+                                      color: txtColor,
+                                      fontSize: defaultSize * 15),
+                                  onChange: (index) {
+                                    print(index);
+                                  },
+                                  onSubmit: (index) {
+                                    print(index);
+                                    controller.birthdaySelected(
+                                        index.toString().substring(0, 10));
+                                  },
+                                  bottomPickerTheme:
+                                      BOTTOM_PICKER_THEME.PLUM_PLATE)
                               .show(context);
                         },
                         child: Container(
-                          //생년월일 입력란
+                            //생년월일 입력란
                             width: valWidth * 0.3,
                             height: TextfieldSize, //valHeight * 0.06,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: txtFeildColor,
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(3))),
+                                    BorderRadius.all(Radius.circular(3))),
                             margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
                                 valWidth * 0.02, valWidth * 0.015),
                             child: Text(
@@ -399,11 +431,11 @@ class InitialSettingScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: txtColor, fontSize: defaultSize * 15),
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         focusNode: _nodeText3,
                         decoration: InputDecoration(
                             hintText: controller.disease == null ||
-                                controller.disease == ""
+                                    controller.disease == ""
                                 ? "   질병기초정보 입력"
                                 : controller.disease,
                             hintStyle: TextStyle(
@@ -438,7 +470,7 @@ class InitialSettingScreen extends StatelessWidget {
                               ),
                               color: txtFeildColor,
                               borderRadius:
-                              BorderRadius.all(Radius.circular(10))),
+                                  BorderRadius.all(Radius.circular(10))),
                           child: Align(
                               alignment: FractionalOffset(0.5, 0.5),
                               child: Text("저장",

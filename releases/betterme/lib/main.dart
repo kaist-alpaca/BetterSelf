@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'betterme/login/functions/SyncFB.dart';
 import 'functions/Controllers/image_crop_controller.dart';
 import 'functions/Controllers/profile_controller.dart';
@@ -28,6 +30,11 @@ class BetterMe extends StatelessWidget {
         Get.lazyPut<ProfileController>(() => ProfileController());
         Get.lazyPut<ImageCropController>(() => ImageCropController());
       }),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       home: SyncFB(),
     );
   }
