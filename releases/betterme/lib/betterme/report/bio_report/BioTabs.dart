@@ -8,6 +8,9 @@ import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import 'package:betterme/functions/Firestore/AuthMethods.dart';
 import '../Widgets/MiniBox.dart';
 import '../Widgets/CoachingTxtBox.dart';
+import '../Widgets/SevenDaysCoaching.dart';
+
+import 'package:intl/intl.dart';
 
 import '../Widgets/Calendars/BioCalendar.dart';
 
@@ -17,6 +20,88 @@ import 'package:betterme/functions/Graphs/horizontal_chart.dart';
 
 import 'package:get/get.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
+
+var Coachingtexts = [];
+var Coachingtimes = [];
+
+var user = AuthMethods()
+    .auth
+    .currentUser!
+    .email
+    .toString()
+    .replaceAll("@gmail.com", "");
+
+var currentuser = AuthMethods().auth.currentUser!.uid;
+
+Widget InitCoaching(
+    BuildContext context,
+    DateTime selectedDate,
+    double dayButtonHeight,
+    double dayButtonWidth,
+    double blankBetweenButton,
+    double graphWidth) {
+  Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
+      .collection('users')
+      .doc(currentuser)
+      .collection('coaching_bio')
+      .orderBy("time")
+      .snapshots();
+
+  return StreamBuilder<QuerySnapshot>(
+      stream: usersStream,
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        Coachingtexts = [];
+        Coachingtimes = [];
+        if (snapshot.hasData) {
+          List CoachingList =
+              snapshot.data!.docs.map((DocumentSnapshot document) {
+            Map<String, dynamic> data =
+                document.data()! as Map<String, dynamic>;
+            print("time : ${DateTime.parse(data['time'].toDate().toString())}");
+            Coachingtexts.add(data['message']);
+            Coachingtimes.add(DateTime.parse(data['time'].toDate().toString()));
+            return data['message'];
+          }).toList();
+
+          int checkTime = Coachingtimes.length - 1;
+          // DateFormat('y/M/d').format(controller.selectedDay)
+
+          while (checkTime >= 0) {
+            // Coachingtimes[checkTime]-selectedDate]
+            int date1 = int.parse(
+                DateFormat('yyyyMMdd').format(Coachingtimes[checkTime]));
+            int date2 = int.parse(DateFormat('yyyyMMdd').format(selectedDate));
+            int DiffDays = date1 - date2;
+
+            print(selectedDate.toString());
+            if (DiffDays == 0) {
+              print('$checkTime and ' + Coachingtexts[checkTime]);
+              return SevenDaysCoaching(
+                  context,
+                  Coachingtexts[checkTime],
+                  dayButtonHeight,
+                  dayButtonWidth,
+                  blankBetweenButton,
+                  graphWidth);
+            } else if (DiffDays < 0) {
+              return SevenDaysCoaching(
+                  context,
+                  '아직 해당 날짜의 생체 데이터 코칭이 없습니다.',
+                  dayButtonHeight,
+                  dayButtonWidth,
+                  blankBetweenButton,
+                  graphWidth);
+            }
+            checkTime = checkTime - 1;
+          }
+          print('out of While');
+          return SevenDaysCoaching(context, '아직 해당 날짜의 생체 데이터 코칭이 없습니다.',
+              dayButtonHeight, dayButtonWidth, blankBetweenButton, graphWidth);
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      });
+}
 
 int? buttonCase;
 final rng = Random();
@@ -34,7 +119,7 @@ class BioTabs extends StatefulWidget {
 class _BioTabs extends State<BioTabs> {
   Color dayButton1Color = Color(0xff0B202A);
   Color dayButton2Color = Color(0xff0B202A);
-  Color dayButton3Color = Color(0xff474A55);
+  Color dayButton3Color = Color(0xff0B202A);
   Color dayButton4Color = Color(0xff0B202A);
   Color dayButton5Color = Color(0xff0B202A);
   Color dayButton6Color = Color(0xff0B202A);
@@ -51,6 +136,22 @@ class _BioTabs extends State<BioTabs> {
 
   @override
   void initState() {
+    if (DateTime.now().weekday == 1) {
+      dayButton1Color = Color(0xff474A55);
+    } else if (DateTime.now().weekday == 7) {
+      dayButton7Color = Color(0xff474A55);
+    } else if (DateTime.now().weekday == 2) {
+      dayButton2Color = Color(0xff474A55);
+    } else if (DateTime.now().weekday == 3) {
+      dayButton3Color = Color(0xff474A55);
+    } else if (DateTime.now().weekday == 4) {
+      dayButton4Color = Color(0xff474A55);
+    } else if (DateTime.now().weekday == 5) {
+      dayButton5Color = Color(0xff474A55);
+    } else if (DateTime.now().weekday == 6) {
+      dayButton6Color = Color(0xff474A55);
+    }
+
     super.initState();
     final scores = List<Score>.generate(dayCount, (index) {
       final y = rng.nextDouble() * 30.0;
@@ -108,6 +209,20 @@ class _BioTabs extends State<BioTabs> {
     if (buttonCase == 0) {
       //7일로 선택되었을 때 표현될 위젯들은 여기에.
       return GetBuilder<ProfileController>(builder: (controller) {
+        String dayButton1txt =
+            controller.startDate(controller.date).day.toString();
+        String dayButton2txt =
+            controller.TueDate(controller.date).day.toString();
+        String dayButton3txt =
+            controller.WedDate(controller.date).day.toString();
+        String dayButton4txt =
+            controller.ThuDate(controller.date).day.toString();
+        String dayButton5txt =
+            controller.FriDate(controller.date).day.toString();
+        String dayButton6txt =
+            controller.SatDate(controller.date).day.toString();
+        String dayButton7txt =
+            controller.endDate(controller.date).day.toString();
         return Container(
             child: Center(
                 child: Column(
@@ -481,7 +596,7 @@ class _BioTabs extends State<BioTabs> {
                                   minimumSize:
                                       Size(dayButtonWidth, dayButtonHeight)),
                               child: Text(
-                                '2',
+                                dayButton1txt,
                                 style: TextStyle(
                                   color: txtColor,
                                   fontSize: defaultSize * 12,
@@ -498,6 +613,8 @@ class _BioTabs extends State<BioTabs> {
                                   dayButton6Color = Color(0xff0B202A);
                                   dayButton7Color = Color(0xff0B202A);
                                 });
+                                controller.updateReport(
+                                    controller.startDate(controller.date));
                               },
                             ),
                           ),
@@ -527,7 +644,7 @@ class _BioTabs extends State<BioTabs> {
                                   minimumSize:
                                       Size(dayButtonWidth, dayButtonHeight)),
                               child: Text(
-                                '30',
+                                dayButton2txt,
                                 style: TextStyle(
                                   color: txtColor,
                                   fontSize: defaultSize * 12,
@@ -544,6 +661,8 @@ class _BioTabs extends State<BioTabs> {
                                   dayButton6Color = Color(0xff0B202A);
                                   dayButton7Color = Color(0xff0B202A);
                                 });
+                                controller.updateReport(
+                                    controller.TueDate(controller.date));
                               },
                             ),
                           ),
@@ -573,7 +692,7 @@ class _BioTabs extends State<BioTabs> {
                                   minimumSize:
                                       Size(dayButtonWidth, dayButtonHeight)),
                               child: Text(
-                                '31',
+                                dayButton3txt,
                                 style: TextStyle(
                                   color: txtColor,
                                   fontSize: defaultSize * 12,
@@ -590,6 +709,8 @@ class _BioTabs extends State<BioTabs> {
                                   dayButton6Color = Color(0xff0B202A);
                                   dayButton7Color = Color(0xff0B202A);
                                 });
+                                controller.updateReport(
+                                    controller.WedDate(controller.date));
                               },
                             ),
                           ),
@@ -619,7 +740,7 @@ class _BioTabs extends State<BioTabs> {
                                   minimumSize:
                                       Size(dayButtonWidth, dayButtonHeight)),
                               child: Text(
-                                '44',
+                                dayButton4txt,
                                 style: TextStyle(
                                   color: txtColor,
                                   fontSize: defaultSize * 12,
@@ -636,6 +757,8 @@ class _BioTabs extends State<BioTabs> {
                                   dayButton6Color = Color(0xff0B202A);
                                   dayButton7Color = Color(0xff0B202A);
                                 });
+                                controller.updateReport(
+                                    controller.ThuDate(controller.date));
                               },
                             ),
                           ),
@@ -665,7 +788,7 @@ class _BioTabs extends State<BioTabs> {
                                   minimumSize:
                                       Size(dayButtonWidth, dayButtonHeight)),
                               child: Text(
-                                '55',
+                                dayButton5txt,
                                 style: TextStyle(
                                   color: txtColor,
                                   fontSize: defaultSize * 12,
@@ -682,6 +805,8 @@ class _BioTabs extends State<BioTabs> {
                                   dayButton6Color = Color(0xff0B202A);
                                   dayButton7Color = Color(0xff0B202A);
                                 });
+                                controller.updateReport(
+                                    controller.FriDate(controller.date));
                               },
                             ),
                           ),
@@ -711,7 +836,7 @@ class _BioTabs extends State<BioTabs> {
                                   minimumSize:
                                       Size(dayButtonWidth, dayButtonHeight)),
                               child: Text(
-                                '66',
+                                dayButton5txt,
                                 style: TextStyle(
                                   color: txtColor,
                                   fontSize: defaultSize * 12,
@@ -728,6 +853,8 @@ class _BioTabs extends State<BioTabs> {
                                   dayButton3Color = Color(0xff0B202A);
                                   dayButton7Color = Color(0xff0B202A);
                                 });
+                                controller.updateReport(
+                                    controller.SatDate(controller.date));
                               },
                             ),
                           ),
@@ -757,7 +884,7 @@ class _BioTabs extends State<BioTabs> {
                                   minimumSize:
                                       Size(dayButtonWidth, dayButtonHeight)),
                               child: Text(
-                                '77',
+                                dayButton7txt,
                                 style: TextStyle(
                                   color: txtColor,
                                   fontSize: defaultSize * 12,
@@ -774,6 +901,8 @@ class _BioTabs extends State<BioTabs> {
                                   dayButton6Color = Color(0xff0B202A);
                                   dayButton3Color = Color(0xff0B202A);
                                 });
+                                controller.updateReport(
+                                    controller.endDate(controller.date));
                               },
                             ),
                           ),
@@ -781,32 +910,8 @@ class _BioTabs extends State<BioTabs> {
                       ),
                     ),
                     SizedBox(width: valWidth * 0.015),
-                    Container(
-                      //여기에 코칭 텍스트 들어감.
-                      height: dayButtonHeight * 7 + blankBetweenButton * 6,
-                      width: graphWidth - dayButtonWidth - valWidth * 0.015,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(valWidth * 0.02),
-                            bottomRight: Radius.circular(valWidth * 0.02)),
-                        color: Color(0xff333C47),
-                        boxShadow: [
-                          BoxShadow(color: Color(0xffD2ABBA), blurRadius: 0.4),
-                        ],
-                      ),
-                      padding: EdgeInsets.fromLTRB(
-                          valWidth * 0.033,
-                          valHeight * 0.035,
-                          valWidth * 0.033,
-                          valHeight * 0.35),
-                      child: Text(
-                        '여기에 코칭 내용adfadfasdfㅁㄴㅇㄻㅇㄹㄴㅁㅇㄻㄴㅇㄹㄴ',
-                        softWrap: true,
-                        style: TextStyle(
-                            color: txtColor, fontSize: defaultSize * 12),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+                    InitCoaching(context, controller.reportDay, dayButtonHeight,
+                        dayButtonWidth, blankBetweenButton, graphWidth)
                   ],
                 ),
               ),
