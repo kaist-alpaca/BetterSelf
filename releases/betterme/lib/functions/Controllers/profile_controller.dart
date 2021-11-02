@@ -41,9 +41,27 @@ class ProfileController extends GetxController {
     update();
   }
 
+  void dateMinus7(DateTime value) {
+    date = date.subtract(Duration(days: 7));
+    update();
+  }
+
   void datePlus(DateTime value) {
     date = date.add(Duration(days: 1));
     update();
+  }
+
+  void datePlus7(DateTime value) {
+    date = date.add(Duration(days: 7));
+    update();
+  }
+
+  DateTime startDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - (date.weekday - 1));
+  }
+
+  DateTime endDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + (7 - date.weekday));
   }
 
   String? gender;
