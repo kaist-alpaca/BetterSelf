@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-int buttonCase = 0; // 상단 버튼 상태 확인용.
+int buttonCase = 1; // 상단 버튼 상태 확인용.
 //0: 전반  1: 운동  2: 식단  3: 생체
 
 int dayButtonCase = 0; //왼쪽 버튼 상태 확인용.
@@ -20,7 +20,7 @@ class Coaching extends StatefulWidget {
 
 class _Coaching extends State<Coaching> {
   Color button1Color = Color(0xff827380); //상단 버튼 색상
-  Color button2Color = Color(0xff0B202A);
+  Color button2Color = Color(0xff827380);
   Color button3Color = Color(0xff0B202A);
   Color button4Color = Color(0xff0B202A);
 
@@ -42,7 +42,7 @@ class _Coaching extends State<Coaching> {
     double inWidgetHeight = widgetHeight - 2 * outTopBlank;
 
     double buttonHeight = inWidgetHeight * 0.15; //상단 버튼 크기
-    double buttonWidth = inWidgetWidth * 0.208;
+    double buttonWidth = inWidgetWidth * 0.27;
 
     double dayButtonHeight = inWidgetHeight * 0.24; //좌측 버튼 크기
     double dayButtonWidth = inWidgetWidth * 0.15;
@@ -66,7 +66,7 @@ class _Coaching extends State<Coaching> {
               children: [
                 SizedBox(width: inWidgetWidth * 0.165),
                 Container(
-                  width: buttonWidth * 4,
+                  width: buttonWidth * 3,
                   height: buttonHeight,
                   decoration: BoxDecoration(
                       color: bgColor,
@@ -79,31 +79,6 @@ class _Coaching extends State<Coaching> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(valWidth * 0.015),
-                            ),
-                            primary: button1Color,
-                            minimumSize: Size(buttonWidth, buttonHeight)),
-                        child: Text(
-                          '전반',
-                          style: TextStyle(
-                            color: txtColor,
-                            fontSize: defaultSize * 14,
-                          ),
-                        ),
-                        onPressed: () {
-                          buttonCase = 0;
-                          setState(() {
-                            button1Color = Color(0xff827380);
-                            button2Color = Color(0xff0B202A);
-                            button3Color = Color(0xff0B202A);
-                            button4Color = Color(0xff0B202A);
-                          });
-                        },
-                      ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
@@ -321,7 +296,7 @@ class _Coaching extends State<Coaching> {
                 Container(
                     //여기에 코칭 텍스트 들어감.
                     height: dayButtonHeight * 3 + blankBetweenButton * 2,
-                    width: buttonWidth * 4,
+                    width: buttonWidth * 3,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(valWidth * 0.02),
