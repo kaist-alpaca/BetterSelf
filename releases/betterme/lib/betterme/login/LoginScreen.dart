@@ -73,7 +73,7 @@ class _LoginScreen extends State<LoginScreen> {
             backgroundColor: Colors.grey, //나중 여기에 앱아이콘
           ),
           SizedBox(
-            height: valHeight * 0.18,
+            height: valHeight * 0.14,
           ),
           GestureDetector(
             onTap: () {
@@ -89,22 +89,27 @@ class _LoginScreen extends State<LoginScreen> {
                       MaterialPageRoute(builder: (context) => AppMain()));*/ //바로 홈페이지로 이동하는 코드
             },
             child: Container(
-                height: valHeight * 0.048,
-                width: valWidth * 0.73,
+                height: valHeight * 0.046,
+                width: valWidth * 0.72,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(valWidth * 0.015),
+                  borderRadius: BorderRadius.circular(valWidth * 0.028),
                   color: Color(0xff333C47),
                 ),
-                child: Text(
-                  "Google 계정으로 로그인",
-                  style: TextStyle(
-                      color: txtColor, fontSize: defaultSize * 15, height: 1.8),
-                  textAlign: TextAlign.center,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Google 계정으로 로그인",
+                      style: TextStyle(
+                          color: txtColor, fontSize: defaultSize * 15),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ) //구글 계정 로그인 버튼
                 ),
           ),
           SizedBox(
-            height: valHeight * 0.07,
+            height: valHeight * 0.035,
           ),
           Container(
             // 개인정보 처리방침 및 이용약관
@@ -126,7 +131,7 @@ class _LoginScreen extends State<LoginScreen> {
                         "개인정보 처리방침 및 이용약관",
                         style: TextStyle(
                           color: txtColor,
-                          fontSize: defaultSize * 14,
+                          fontSize: defaultSize * 15,
                         ),
                         textAlign: TextAlign.center,
                       )),
@@ -149,13 +154,15 @@ class _LoginScreen extends State<LoginScreen> {
                         Text(
                           "동의",
                           style: TextStyle(
-                              color: txtColor, fontSize: defaultSize * 14),
+                              color: txtColor, fontSize: defaultSize * 15),
                         ),
                         Theme(
                           data: ThemeData(
                               unselectedWidgetColor: Color(0xff333C47)),
                           child: Checkbox(
                             value: _isChecked,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5)),
                             onChanged: (value) {
                               setState(() {
                                 _isChecked = value!;
