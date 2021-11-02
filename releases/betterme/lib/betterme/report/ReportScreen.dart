@@ -325,6 +325,9 @@ class _ReportScreen extends State<ReportScreen> {
                           Center(
                             child: ElevatedButton(
                                 onPressed: () {
+                                  controller.dateReset(controller.date);
+                                  controller
+                                      .reportDayReset(controller.reportDay);
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

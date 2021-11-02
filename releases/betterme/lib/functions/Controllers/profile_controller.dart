@@ -23,6 +23,7 @@ class ProfileController extends GetxController {
 
   DateTime focusedDay = DateTime.now();
   DateTime selectedDay = DateTime.now();
+  DateTime reportDay = DateTime.now();
 
   DateTime date = DateTime.now();
 
@@ -56,12 +57,48 @@ class ProfileController extends GetxController {
     update();
   }
 
+  void dateReset(DateTime value) {
+    date = DateTime.now();
+    update();
+  }
+
+  void reportDayReset(DateTime value) {
+    reportDay = DateTime.now();
+    update();
+  }
+
+  void updateReport(DateTime value) {
+    reportDay = value;
+    update();
+  }
+
+//일주일구하기
   DateTime startDate(DateTime value) {
     return DateTime(date.year, date.month, date.day - (date.weekday - 1));
   }
 
   DateTime endDate(DateTime value) {
     return DateTime(date.year, date.month, date.day + (7 - date.weekday));
+  }
+
+  DateTime TueDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + 1 - (date.weekday - 1));
+  }
+
+  DateTime WedDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + 2 - (date.weekday - 1));
+  }
+
+  DateTime ThuDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + 3 - (date.weekday - 1));
+  }
+
+  DateTime FriDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + 4 - (date.weekday - 1));
+  }
+
+  DateTime SatDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day + 5 - (date.weekday - 1));
   }
 
   String? gender;
