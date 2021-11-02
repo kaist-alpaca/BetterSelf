@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../SearchFood/FoodSearchScreen.dart';
 
 import 'FoodDailyMenu1.dart';
 import 'FoodDailyMenu2.dart';
@@ -63,6 +62,7 @@ class _FoodDaily extends State<FoodDaily> {
                 Container(
                   height: menuHeight,
                   width: menuWidth,
+
                   child: FoodDailyMenu2(0, menuHeight, menuWidth),
                 ),
                 Container(
