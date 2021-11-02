@@ -1,11 +1,23 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
+import 'package:betterme/functions/Firestore/AuthMethods.dart';
 import '../Widgets/MiniBox.dart';
 import '../Widgets/CoachingTxtBox.dart';
 
 import '../Widgets/Calendars/BioCalendar.dart';
 
+import 'package:betterme/functions/Graphs/line_chart.dart';
+import 'package:betterme/functions/Graphs/sliced_bar_chart.dart';
+import 'package:betterme/functions/Graphs/horizontal_chart.dart';
+
 int? buttonCase;
+final rng = Random();
+const dayCount = 7;
 
 class BioTabs extends StatefulWidget {
   BioTabs(int a) {
@@ -26,6 +38,27 @@ class _BioTabs extends State<BioTabs> {
   Color dayButton7Color = Color(0xff0B202A);
   int dayButtonCase = 0;
 
+  late List<Score> _scores;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay = DateTime.now();
+  List<Color> gradientColors = [
+    const Color(0xff23b6e6),
+    const Color(0xff02d39a),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    final scores = List<Score>.generate(dayCount, (index) {
+      final y = rng.nextDouble() * 30.0;
+      final d = DateTime.now().add(Duration(days: -dayCount + index));
+      return Score(y, d);
+    });
+    setState(() {
+      _scores = scores;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -44,6 +77,30 @@ class _BioTabs extends State<BioTabs> {
     double miniBoxSize = 0.015;
     double defaultSize = valWidth * 0.0025; //폰트사이즈용
     double graphWidth = valWidth * 0.88; // 그래프들 너비
+
+    final _sleep = [
+      [
+        [27, 480, 1000],
+      ],
+      [
+        [28, 872, 999]
+      ],
+      [
+        [29, 128, 555]
+      ],
+      [
+        [30, 739, 894]
+      ],
+      [
+        [31, 236, 384]
+      ],
+      [
+        [9 / 1, 347, 472]
+      ],
+      [
+        [2, 531, 763]
+      ]
+    ];
 
     if (buttonCase == 0) {
       //7일로 선택되었을 때 표현될 위젯들은 여기에.
@@ -92,16 +149,33 @@ class _BioTabs extends State<BioTabs> {
               ],
             ),
             Container(
-              height: valHeight * 0.34,
-              width: graphWidth,
-              decoration: BoxDecoration(
-                  color: bgColor,
-                  boxShadow: [
-                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                height: valHeight * 0.34,
+                width: graphWidth,
+                decoration: BoxDecoration(
+                    color: bgColor,
+                    boxShadow: [
+                      BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                    ],
+                    borderRadius: BorderRadius.circular(graphBorderRadius)),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: valHeight * 0.34,
+                      width: graphWidth,
+                      padding: EdgeInsets.symmetric(
+                          vertical: valHeight * 0.008,
+                          horizontal: valWidth * 0.01),
+                      child: MadeLineChart(scores: _scores),
+                    ),
+                    Container(
+                        height: valHeight * 0.34,
+                        width: graphWidth,
+                        padding: EdgeInsets.symmetric(
+                            vertical: valHeight * 0.008,
+                            horizontal: valWidth * 0.01),
+                        child: Text('여기 두줄짜리 그래프도 필요함.')),
                   ],
-                  borderRadius: BorderRadius.circular(graphBorderRadius)),
-              child: Text('여기에 7일짜리 신체변화 그래프 들어가야 함.'),
-            ),
+                )),
             SizedBox(
               height: valHeight * 0.015,
             ),
@@ -126,16 +200,33 @@ class _BioTabs extends State<BioTabs> {
               ],
             ),
             Container(
-              height: valHeight * 0.34,
-              width: graphWidth,
-              decoration: BoxDecoration(
-                  color: bgColor,
-                  boxShadow: [
-                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                height: valHeight * 0.34,
+                width: graphWidth,
+                decoration: BoxDecoration(
+                    color: bgColor,
+                    boxShadow: [
+                      BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                    ],
+                    borderRadius: BorderRadius.circular(graphBorderRadius)),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: valHeight * 0.34,
+                      width: graphWidth,
+                      padding: EdgeInsets.symmetric(
+                          vertical: valHeight * 0.008,
+                          horizontal: valWidth * 0.01),
+                      child: MadeLineChart(scores: _scores),
+                    ),
+                    Container(
+                        height: valHeight * 0.34,
+                        width: graphWidth,
+                        padding: EdgeInsets.symmetric(
+                            vertical: valHeight * 0.008,
+                            horizontal: valWidth * 0.01),
+                        child: Text('여기 그라데이션 그래프도 필요함.')),
                   ],
-                  borderRadius: BorderRadius.circular(graphBorderRadius)),
-              child: Text('여기에 7일짜리 스트레스 그래프 들어가야 함.'),
-            ),
+                )),
             SizedBox(
               height: valHeight * 0.015,
             ),
@@ -176,16 +267,34 @@ class _BioTabs extends State<BioTabs> {
               ],
             ),
             Container(
-              height: valHeight * 0.34,
-              width: graphWidth,
-              decoration: BoxDecoration(
-                  color: bgColor,
-                  boxShadow: [
-                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                height: valHeight * 0.34,
+                width: graphWidth,
+                decoration: BoxDecoration(
+                    color: bgColor,
+                    boxShadow: [
+                      BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                    ],
+                    borderRadius: BorderRadius.circular(graphBorderRadius)),
+                child: Stack(
+                  children: [
+                    Container(
+                      height: valHeight * 0.34,
+                      width: graphWidth,
+                      padding: EdgeInsets.symmetric(
+                          vertical: valHeight * 0.008,
+                          horizontal: valWidth * 0.01),
+                      child: MadeLineChart(scores: _scores),
+                    ),
+                    Container(
+                      height: valHeight * 0.34,
+                      width: graphWidth,
+                      padding: EdgeInsets.symmetric(
+                          vertical: valHeight * 0.008,
+                          horizontal: valWidth * 0.01),
+                      child: SlicededBarChart(scores: _scores),
+                    ),
                   ],
-                  borderRadius: BorderRadius.circular(graphBorderRadius)),
-              child: Text('여기에 7일짜리 수면 시간 그래프 들어가야 함.'),
-            ),
+                )),
             SizedBox(
               height: valHeight * 0.015,
             ),
@@ -239,7 +348,13 @@ class _BioTabs extends State<BioTabs> {
                     BoxShadow(color: shadowColor, blurRadius: graphBlur)
                   ],
                   borderRadius: BorderRadius.circular(graphBorderRadius)),
-              child: Text('여기에 7일짜리 수면 시간대 그래프 들어가야 함.'),
+              child: Container(
+                height: valHeight * 0.34,
+                width: graphWidth,
+                padding: EdgeInsets.symmetric(
+                    vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                child: MadeHorizontalChart(sleep: _sleep),
+              ),
             ),
             SizedBox(
               height: valHeight * 0.05,
@@ -700,6 +815,7 @@ class _BioTabs extends State<BioTabs> {
               ],
             ),
             Container(
+              //여기 31일짜리 신체변화 그래프
               height: valHeight * 0.34,
               width: graphWidth,
               decoration: BoxDecoration(
@@ -708,7 +824,34 @@ class _BioTabs extends State<BioTabs> {
                     BoxShadow(color: shadowColor, blurRadius: graphBlur)
                   ],
                   borderRadius: BorderRadius.circular(graphBorderRadius)),
-              child: Text('여기에 31일짜리 신체변화 그래프 들어가야 함.'),
+              child: Stack(
+                children: [
+                  Container(
+                    height: valHeight * 0.34,
+                    width: graphWidth,
+                    padding: EdgeInsets.symmetric(
+                        vertical: valHeight * 0.008,
+                        horizontal: valWidth * 0.01),
+                    child: MadeLineChart(scores: _scores),
+                  ),
+                  Container(
+                    height: valHeight * 0.34,
+                    width: graphWidth,
+                    padding: EdgeInsets.symmetric(
+                        vertical: valHeight * 0.008,
+                        horizontal: valWidth * 0.01),
+                    child: MadeLineChart(scores: _scores),
+                  ),
+                  Container(
+                    height: valHeight * 0.34,
+                    width: graphWidth,
+                    padding: EdgeInsets.symmetric(
+                        vertical: valHeight * 0.008,
+                        horizontal: valWidth * 0.01),
+                    child: MadeLineChart(scores: _scores),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: valHeight * 0.015,
@@ -734,16 +877,34 @@ class _BioTabs extends State<BioTabs> {
               ],
             ),
             Container(
-              height: valHeight * 0.34,
-              width: graphWidth,
-              decoration: BoxDecoration(
-                  color: bgColor,
-                  boxShadow: [
-                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                height: valHeight * 0.34,
+                width: graphWidth,
+                decoration: BoxDecoration(
+                    color: bgColor,
+                    boxShadow: [
+                      BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                    ],
+                    borderRadius: BorderRadius.circular(graphBorderRadius)),
+                child: Stack(
+                  //여기 31일짜리 그라데이션 그래프
+                  children: [
+                    Container(
+                      height: valHeight * 0.34,
+                      width: graphWidth,
+                      padding: EdgeInsets.symmetric(
+                          vertical: valHeight * 0.008,
+                          horizontal: valWidth * 0.01),
+                      child: MadeLineChart(scores: _scores),
+                    ),
+                    Container(
+                        height: valHeight * 0.34,
+                        width: graphWidth,
+                        padding: EdgeInsets.symmetric(
+                            vertical: valHeight * 0.008,
+                            horizontal: valWidth * 0.01),
+                        child: Text('여기 그라데이션 그래프도 필요함.')),
                   ],
-                  borderRadius: BorderRadius.circular(graphBorderRadius)),
-              child: Text('여기에 31일짜리 스트레스 그래프 들어가야 함.'),
-            ),
+                )),
             SizedBox(
               height: valHeight * 0.015,
             ),
@@ -776,7 +937,13 @@ class _BioTabs extends State<BioTabs> {
                     BoxShadow(color: shadowColor, blurRadius: graphBlur)
                   ],
                   borderRadius: BorderRadius.circular(graphBorderRadius)),
-              child: Text('여기에 31일짜리 수면 그래프 들어가야 함.'),
+              child: Container(
+                height: valHeight * 0.34,
+                width: graphWidth,
+                padding: EdgeInsets.symmetric(
+                    vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                child: MadeLineChart(scores: _scores),
+              ),
             ),
             SizedBox(
               height: valHeight * 0.05,
@@ -858,8 +1025,35 @@ class _BioTabs extends State<BioTabs> {
                     BoxShadow(color: shadowColor, blurRadius: graphBlur)
                   ],
                   borderRadius: BorderRadius.circular(graphBorderRadius)),
-              child: Text('여기에 12개월짜리 신체변화 그래프 들어가야 함.',
-                  style: TextStyle(color: Colors.white)),
+              child: Stack(
+                //여기 12개월짜리 신체변화 그래프
+                children: [
+                  Container(
+                    height: valHeight * 0.34,
+                    width: graphWidth,
+                    padding: EdgeInsets.symmetric(
+                        vertical: valHeight * 0.008,
+                        horizontal: valWidth * 0.01),
+                    child: MadeLineChart(scores: _scores),
+                  ),
+                  Container(
+                    height: valHeight * 0.34,
+                    width: graphWidth,
+                    padding: EdgeInsets.symmetric(
+                        vertical: valHeight * 0.008,
+                        horizontal: valWidth * 0.01),
+                    child: MadeLineChart(scores: _scores),
+                  ),
+                  Container(
+                    height: valHeight * 0.34,
+                    width: graphWidth,
+                    padding: EdgeInsets.symmetric(
+                        vertical: valHeight * 0.008,
+                        horizontal: valWidth * 0.01),
+                    child: MadeLineChart(scores: _scores),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: valHeight * 0.015,
@@ -885,16 +1079,34 @@ class _BioTabs extends State<BioTabs> {
               ],
             ),
             Container(
-              height: valHeight * 0.34,
-              width: graphWidth,
-              decoration: BoxDecoration(
-                  color: bgColor,
-                  boxShadow: [
-                    BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                height: valHeight * 0.34,
+                width: graphWidth,
+                decoration: BoxDecoration(
+                    color: bgColor,
+                    boxShadow: [
+                      BoxShadow(color: shadowColor, blurRadius: graphBlur)
+                    ],
+                    borderRadius: BorderRadius.circular(graphBorderRadius)),
+                child: Stack(
+                  //여기 12개월 스트레스 그래프
+                  children: [
+                    Container(
+                      height: valHeight * 0.34,
+                      width: graphWidth,
+                      padding: EdgeInsets.symmetric(
+                          vertical: valHeight * 0.008,
+                          horizontal: valWidth * 0.01),
+                      child: MadeLineChart(scores: _scores),
+                    ),
+                    Container(
+                        height: valHeight * 0.34,
+                        width: graphWidth,
+                        padding: EdgeInsets.symmetric(
+                            vertical: valHeight * 0.008,
+                            horizontal: valWidth * 0.01),
+                        child: Text('여기 그라데이션 그래프도 필요함.')),
                   ],
-                  borderRadius: BorderRadius.circular(graphBorderRadius)),
-              child: Text('여기에 12개월짜리 스트레스 그래프 들어가야 함.'),
-            ),
+                )),
             SizedBox(
               height: valHeight * 0.015,
             ),
@@ -927,7 +1139,13 @@ class _BioTabs extends State<BioTabs> {
                     BoxShadow(color: shadowColor, blurRadius: graphBlur)
                   ],
                   borderRadius: BorderRadius.circular(graphBorderRadius)),
-              child: Text('여기에 12개월짜리 수면 그래프 들어가야 함.'),
+              child: Container(
+                height: valHeight * 0.34,
+                width: graphWidth,
+                padding: EdgeInsets.symmetric(
+                    vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                child: MadeLineChart(scores: _scores),
+              ),
             ),
             SizedBox(
               height: valHeight * 0.05,
