@@ -1,9 +1,9 @@
+import 'package:betterme/betterme/home/SearchFoodScreen/SearchFoodScreen.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../SearchFood/FoodSearchScreen.dart';
 
 class FoodDailyMenu extends StatefulWidget {
   final double widgetHeight;
@@ -84,7 +84,7 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                FoodSearchScreen()));
+                                                SearchFoodScreen()));
                                   }
                                 },
                               ),
@@ -103,7 +103,7 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                FoodSearchScreen()));
+                                                SearchFoodScreen()));
                                   }
                                 },
                               )
@@ -201,7 +201,7 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => FoodSearchScreen()));
+                          builder: (context) => SearchFoodScreen()));
                 },
                 child: Container(
                   //사진 들어가는 박스
