@@ -88,7 +88,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ChatroomScreen(
-                                            data['name'], data['username'])));
+                                            data['name'], data['username'], data['imgUrl'])));
                               },
                               child: ListTile(
                                 leading: Container(
