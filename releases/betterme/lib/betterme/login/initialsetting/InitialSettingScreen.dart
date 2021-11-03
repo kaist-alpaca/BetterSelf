@@ -217,7 +217,8 @@ class InitialSettingScreen extends StatelessWidget {
                     children: [
                       Container(
                           width: valWidth * 0.25,
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          padding:
+                              EdgeInsets.fromLTRB(0, 0, 0, valHeight * 0.045),
                           child: Text("성별",
                               style: TextStyle(
                                   color: txtColor, fontSize: defaultSize * 14),
