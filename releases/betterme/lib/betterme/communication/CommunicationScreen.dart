@@ -92,14 +92,18 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                                             data['imgUrl'])));
                               },
                               child: ListTile(
-                                leading: Container(
-                                  height: valHeight * 0.2,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: NetworkImage(data['imgUrl']),
+                                tileColor: blockColor,
+                                leading: SizedBox(
+                                  height: 50,
+                                  width: 50,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(data['imgUrl']),
+                                      ),
                                     ),
                                   ),
                                 ), // 사용자 이미지 불러오는 코드
@@ -162,10 +166,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
               )),
         ],
       ),
-      body: Container(
-          height: valHeight * 0.7,
-          width: valWidth * 0.8,
-          child: TrainersList(context, usersStream)),
+      body: Container(child: TrainersList(context, usersStream)),
     );
   }
 }
