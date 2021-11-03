@@ -4,6 +4,7 @@ import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '/betterme/home/SearchFoodScreen/SearchFoodScreen.dart';
 
 class FoodDailyMenu extends StatefulWidget {
   final double widgetHeight;
