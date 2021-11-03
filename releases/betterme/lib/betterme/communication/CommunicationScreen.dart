@@ -70,59 +70,64 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                     Map<String, dynamic> data =
                         document.data()! as Map<String, dynamic>;
                     return Padding(
-                        ////여기 수정하면 됨.
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 1.0, horizontal: 20.0),
-                        child: Card(
-                          child: GestureDetector(
-                            onTap: () {
-                              var chatroomId =
-                                  getchatroomid(user, data['username']);
-                              Map<String, dynamic> chatroomInfo = {
-                                "users": [user, data['name']]
-                              };
-                              DatabaseMethos()
-                                  .createChatroom(chatroomId, chatroomInfo);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ChatroomScreen(
-                                          data['name'],
-                                          data['username'],
-                                          data['imgUrl'])));
-                            },
-                            child: ListTile(
-                              tileColor: blockColor,
-                              leading: SizedBox(
-                                height: 60,
-                                width: 45,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.white,
-                                    image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: NetworkImage(data['imgUrl']),
-                                    ),
+                      ////여기 수정하면 됨.
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 1.0, horizontal: 20.0),
+                      child: Card(
+                        color: bgColor,
+                        child: GestureDetector(
+                          onTap: () {
+                            var chatroomId =
+                                getchatroomid(user, data['username']);
+                            Map<String, dynamic> chatroomInfo = {
+                              "users": [user, data['name']]
+                            };
+                            DatabaseMethos()
+                                .createChatroom(chatroomId, chatroomInfo);
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ChatroomScreen(
+                                        data['name'],
+                                        data['username'],
+                                        data['imgUrl'])));
+                          },
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(10)), //테두리 둥글게
+                            tileColor: blockColor,
+                            leading: SizedBox(
+                              height: 60,
+                              width: 45,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: bgColor,
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: NetworkImage(data['imgUrl']),
                                   ),
                                 ),
-                              ), // 사용자 이미지 불러오는 코드
-                              title: Container(
-                                height: 60,
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    data['name'],
-                                    style: TextStyle(
-                                      color: txtColor,
-                                      fontSize: defaultSize * 15,
-                                    ),
+                              ),
+                            ), // 사용자 이미지 불러오는 코드
+                            title: Container(
+                              height: 60,
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  data['name'],
+                                  style: TextStyle(
+                                    color: txtColor,
+                                    fontSize: defaultSize * 15,
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ));
+                        ),
+                      ),
+                    );
                   }).toList(),
                 )
               : Center(child: CircularProgressIndicator());
