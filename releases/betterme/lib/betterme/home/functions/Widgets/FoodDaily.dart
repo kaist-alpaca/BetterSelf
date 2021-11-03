@@ -60,7 +60,6 @@ class _FoodDaily extends State<FoodDaily> {
                   height: menuHeight,
                   width: menuWidth,
                   child: FoodDailyMenu(
-                    type: 1,
                     widgetHeight: menuHeight,
                     widgetWidth: menuWidth,
                     index: 1,
@@ -70,7 +69,6 @@ class _FoodDaily extends State<FoodDaily> {
                   height: menuHeight,
                   width: menuWidth,
                   child: FoodDailyMenu(
-                    type: 1,
                     widgetHeight: menuHeight,
                     widgetWidth: menuWidth,
                     index: 2,
@@ -80,7 +78,6 @@ class _FoodDaily extends State<FoodDaily> {
                   height: menuHeight,
                   width: menuWidth,
                   child: FoodDailyMenu(
-                    type: 0,
                     widgetHeight: menuHeight,
                     widgetWidth: menuWidth,
                     index: 3,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:betterme/functions/Controllers/TypeUserModel.dart';
 
@@ -57,6 +58,17 @@ class ServerConnectionMethods {
     final response = await http.get(Uri.parse(
         "http://kaistuser.iptime.org:8080/check_signed_user.php?uid=" + uid));
     print("check user");
+    print(json.decode(response.body));
+    return json.decode(response.body).toString();
+  }
+
+  static Future<String> checkFoodPhoto(String uid, String photoURL) async {
+    final response = await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/check_food_uid.php?uid=" +
+            uid +
+            "&photoURL=" +
+            photoURL));
+    print("checkfoodphto !!!!!!!!!!!!!!");
     print(json.decode(response.body));
     return json.decode(response.body).toString();
   }

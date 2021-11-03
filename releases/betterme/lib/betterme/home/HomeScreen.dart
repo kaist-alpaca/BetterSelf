@@ -107,18 +107,18 @@ class _HomeScreen extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            SleepGraph(gridHeight * 2, gridWidth * 2),
-                            ActivityGraph(gridHeight * 2, gridWidth * 4),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            StressGraph(gridHeight * 2, gridWidth * 3),
-                            SleepTimeGraph(gridHeight * 2, gridWidth * 3),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     SleepGraph(gridHeight * 2, gridWidth * 2),
+                        //     ActivityGraph(gridHeight * 2, gridWidth * 4),
+                        //   ],
+                        // ),
+                        // Row(
+                        //   children: [
+                        //     StressGraph(gridHeight * 2, gridWidth * 3),
+                        //     SleepTimeGraph(gridHeight * 2, gridWidth * 3),
+                        //   ],
+                        // ),
                         Row(
                           children: [
                             FoodDaily(gridHeight * 2, gridWidth * 6),
