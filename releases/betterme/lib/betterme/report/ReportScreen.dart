@@ -372,7 +372,7 @@ class _ReportScreen extends State<ReportScreen> {
                               )
                             ]),
                           ),
-                          SizedBox(height: valHeight * 0.01),
+                          SizedBox(height: valHeight * 0.015),
                           Center(
                             child: ElevatedButton(
                               onPressed: () {
@@ -476,7 +476,7 @@ class _ReportScreen extends State<ReportScreen> {
                               )
                             ]),
                           ),
-                          SizedBox(height: valHeight * 0.01),
+                          SizedBox(height: valHeight * 0.015),
                           Center(
                             child: ElevatedButton(
                               onPressed: () {
