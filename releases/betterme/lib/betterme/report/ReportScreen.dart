@@ -75,6 +75,7 @@ class _ReportScreen extends State<ReportScreen> {
             preferredSize: Size.fromHeight(valHeight * 0.08),
             child: AppBar(
               backgroundColor: bgColor,
+              elevation: 0.0,
               title: Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -126,7 +127,7 @@ class _ReportScreen extends State<ReportScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(
-                    height: valHeight * 0.035,
+                    height: valHeight * 0.005,
                   ),
                   DividewithObj(
                       context,
@@ -142,7 +143,7 @@ class _ReportScreen extends State<ReportScreen> {
                       0.15,
                       0.6),
                   SizedBox(
-                    height: valHeight * 0.02,
+                    height: valHeight * 0.032,
                   ),
                   Container(
                       //생체그래프
@@ -268,31 +269,30 @@ class _ReportScreen extends State<ReportScreen> {
                           )
                         ],
                       )),
-                  SizedBox(height: valHeight * 0.015),
+                  SizedBox(height: valHeight * 0.01),
                   Center(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          controller.dateReset(controller.date);
-                          controller.reportDayReset(controller.reportDay);
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BioScreen()));
-                        },
-                        style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            primary: Color(0xff333C47),
-                            minimumSize: Size(valWidth * 0.4, valHeight * 0.04),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(valWidth * 0.015),
-                              side: BorderSide(color: Color(0xff999CA2)),
-                            )),
-                        child: Text('생체 리포트',
-                            style: TextStyle(
-                                fontSize: defaultSize * 12, color: txtColor))),
-                  ),
-                  SizedBox(height: valHeight * 0.02),
+                      child: ElevatedButton(
+                    onPressed: () {
+                      controller.dateReset(controller.date);
+                      controller.reportDayReset(controller.reportDay);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => BioScreen()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        primary: Color(0xff333C47),
+                        minimumSize: Size(valWidth * 0.35, valHeight * 0.038),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(valWidth * 0.02),
+                          side: BorderSide(
+                              color: Color(0xff999CA2),
+                              width: defaultSize * 0.7),
+                        )),
+                    child: Text('생체 데이터',
+                        style: TextStyle(
+                            fontSize: defaultSize * 12, color: txtColor)),
+                  )),
+                  SizedBox(height: valHeight * 0.025),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -349,6 +349,7 @@ class _ReportScreen extends State<ReportScreen> {
                               )
                             ]),
                           ),
+                          SizedBox(height: valHeight * 0.01),
                           Center(
                             child: ElevatedButton(
                                 onPressed: () {
@@ -364,22 +365,23 @@ class _ReportScreen extends State<ReportScreen> {
                                 style: ElevatedButton.styleFrom(
                                     elevation: 0,
                                     primary: Color(0xff333C47),
-                                    minimumSize:
-                                        Size(valWidth * 0.4, valHeight * 0.04),
+                                    minimumSize: Size(
+                                        valWidth * 0.35, valHeight * 0.038),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
-                                          valWidth * 0.015),
-                                      side:
-                                          BorderSide(color: Color(0xff999CA2)),
+                                          valWidth * 0.02),
+                                      side: BorderSide(
+                                          color: Color(0xff999CA2),
+                                          width: defaultSize * 0.7),
                                     )),
-                                child: Text('운동 리포트',
+                                child: Text('운동 데이터',
                                     style: TextStyle(
                                         fontSize: defaultSize * 12,
                                         color: txtColor))),
                           ),
                         ],
                       ),
-                      SizedBox(width: valWidth * 0.04),
+                      SizedBox(width: valWidth * 0.06),
                       Column(
                         children: [
                           Container(
@@ -428,6 +430,7 @@ class _ReportScreen extends State<ReportScreen> {
                               )
                             ]),
                           ),
+                          SizedBox(height: valHeight * 0.01),
                           Center(
                             child: ElevatedButton(
                                 onPressed: () {
@@ -442,15 +445,16 @@ class _ReportScreen extends State<ReportScreen> {
                                 style: ElevatedButton.styleFrom(
                                     elevation: 0,
                                     primary: Color(0xff333C47),
-                                    minimumSize:
-                                        Size(valWidth * 0.4, valHeight * 0.04),
+                                    minimumSize: Size(
+                                        valWidth * 0.35, valHeight * 0.038),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
-                                          valWidth * 0.015),
-                                      side:
-                                          BorderSide(color: Color(0xff999CA2)),
+                                          valWidth * 0.02),
+                                      side: BorderSide(
+                                          color: Color(0xff999CA2),
+                                          width: defaultSize * 0.7),
                                     )),
-                                child: Text('식단 리포트',
+                                child: Text('식단 데이터',
                                     style: TextStyle(
                                         fontSize: defaultSize * 12,
                                         color: txtColor))),
