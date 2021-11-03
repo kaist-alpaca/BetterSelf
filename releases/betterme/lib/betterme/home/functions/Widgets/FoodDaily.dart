@@ -1,6 +1,5 @@
 import 'package:betterme/betterme/home/functions/Widgets/FoodDailyMenu.dart';
 import 'package:flutter/material.dart';
-import '../../SearchFood/FoodSearchScreen.dart';
 
 import 'FoodDailyMenu1.dart';
 import 'FoodDailyMenu2.dart';
