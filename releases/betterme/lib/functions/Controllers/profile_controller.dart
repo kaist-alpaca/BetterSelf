@@ -49,6 +49,11 @@ class ProfileController extends GetxController {
     update();
   }
 
+  void rdateMinus7(DateTime value) {
+    reportDay = reportDay.subtract(Duration(days: 7));
+    update();
+  }
+
   void datePlus(DateTime value) {
     date = date.add(Duration(days: 1));
     update();
@@ -56,6 +61,11 @@ class ProfileController extends GetxController {
 
   void datePlus7(DateTime value) {
     date = date.add(Duration(days: 7));
+    update();
+  }
+
+  void rdatePlus7(DateTime value) {
+    reportDay = reportDay.add(Duration(days: 7));
     update();
   }
 

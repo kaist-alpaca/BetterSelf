@@ -412,6 +412,7 @@ class _ExerciseTabs extends State<ExerciseTabs> {
                   icon: Icon(Icons.arrow_back_ios),
                   onPressed: () {
                     controller.dateMinus7(controller.date);
+                    controller.rdateMinus7(controller.reportDay);
                   },
                 ),
               ),
@@ -444,6 +445,7 @@ class _ExerciseTabs extends State<ExerciseTabs> {
                   icon: Icon(Icons.arrow_forward_ios),
                   onPressed: () {
                     controller.datePlus7(controller.date);
+                    controller.rdatePlus7(controller.reportDay);
                   },
                 ),
               ),
