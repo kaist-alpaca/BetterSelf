@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:betterme/betterme/communication/CommunicationScreen.dart';
 import 'package:betterme/betterme/report/ReportScreen.dart';
@@ -83,11 +84,13 @@ class _ConstructTabBar extends State<ConstructTabBar> {
         backgroundColor: Color(0xff0B202A),
         items: [
           BottomNavigationBarItem(
-              icon: Image.asset('images/communication_icon.png')),
+            icon: SvgPicture.asset('images/communication_icon.svg'),
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.home)),
-          BottomNavigationBarItem(icon: Image.asset('images/report_icon.png')),
           BottomNavigationBarItem(
-              icon: Image.asset('images/setting_icon1.png')),
+              icon: SvgPicture.asset('images/report_icon.svg')),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset('images/setting_icon1.svg')),
         ],
       ),
     );

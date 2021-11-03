@@ -110,49 +110,28 @@ class _HomeScreen extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Row(
-                        //   children: [
-                        //     SleepGraph(gridHeight * 2, gridWidth * 2),
-                        //     ActivityGraph(gridHeight * 2, gridWidth * 4),
-                        //   ],
-                        // ),
-                        // Row(
-                        //   children: [
-                        //     StressGraph(gridHeight * 2, gridWidth * 3),
-                        //     SleepTimeGraph(gridHeight * 2, gridWidth * 3),
-                        //   ],
-                        // ),
+                        Row(
+                          children: [
+                            SleepGraph(gridHeight * 2, gridWidth * 2),
+                            ActivityGraph(gridHeight * 2, gridWidth * 4),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            StressGraph(gridHeight * 2, gridWidth * 3),
+                            SleepTimeGraph(gridHeight * 2, gridWidth * 3),
+                          ],
+                        ),
+                        Row(
+                          children: [Coaching(gridHeight * 2, gridWidth * 6)],
+                        ),
                         Row(
                           children: [
                             FoodDaily(gridHeight * 2, gridWidth * 6),
                           ],
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        InitialSettingScreen()));
-                          },
-                          child: Container(
-                            height: 100,
-                            width: 100,
-                            color: Colors.grey,
-                          ),
-                        )
-                        // Row(
-                        //   children: [Coaching(gridHeight * 2, gridWidth * 6)],
-                        // ),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          InitialSettingScreen()));
-                            },
-                            child: Container())
+                        
+                        
                       ]),
                 )
               ],
