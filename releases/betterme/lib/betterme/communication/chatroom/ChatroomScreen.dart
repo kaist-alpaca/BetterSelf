@@ -115,12 +115,12 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                 chatmessages(context),
                 Container(child: Text(" ")),
                 Container(child: Text(" ")),
-                Container(
+                SafeArea(child: Container(
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       color: bgColor,
                       padding:
-                          EdgeInsets.symmetric(horizontal: valWidth * 0.03),
+                      EdgeInsets.symmetric(horizontal: valWidth * 0.03),
                       child: Row(
                         children: [
                           Container(
@@ -153,6 +153,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                         ],
                       ),
                     ))
+                ),
               ],
             ),
           ),
