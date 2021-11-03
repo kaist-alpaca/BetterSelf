@@ -124,9 +124,9 @@ class _HomeScreen extends State<HomeScreen> {
                             FoodDaily(gridHeight * 2, gridWidth * 6),
                           ],
                         ),
-                        Row(
-                          children: [Coaching(gridHeight * 2, gridWidth * 6)],
-                        ),
+                        // Row(
+                        //   children: [Coaching(gridHeight * 2, gridWidth * 6)],
+                        // ),
                       ]),
                 )
               ],

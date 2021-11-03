@@ -44,8 +44,13 @@ class ServerConnection {
     String email,
     String userName,
   ) async {
-    await http
-        .get(Uri.parse(uid + "&email=" + email + "&user_name=" + userName));
+    await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/create_user.php?uid=" +
+            uid +
+            "&email=" +
+            email +
+            "&user_name=" +
+            userName));
   }
 
   static Future<String> AuthSignedUser(String uid) async {

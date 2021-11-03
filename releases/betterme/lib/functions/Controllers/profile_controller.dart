@@ -155,6 +155,7 @@ class ProfileController extends GetxController {
 
   Future<String> authStateChanges(Object? firebaseUser) async {
     print("authStateChanges working");
+    String tmp = "0";
     if (firebaseUser != null) {
       UserModel? userModel = await ServerConnection.findUserByUid(
           FirebaseAuth.instance.currentUser!.uid);
@@ -162,6 +163,7 @@ class ProfileController extends GetxController {
         print("usermodel is not null");
         originMyProfile = userModel;
       } else {
+        tmp = "1";
         print("usermodel is null");
         await ServerConnection.uploadProfileImage(
           FirebaseAuth.instance.currentUser!.uid,
@@ -188,9 +190,10 @@ class ProfileController extends GetxController {
       }
     }
     myProfile(UserModel.clone(originMyProfile));
-    return FirebaseAuth.instance.currentUser == null
-        ? ''
-        : FirebaseAuth.instance.currentUser!.uid;
+    // return FirebaseAuth.instance.currentUser == null
+    //     ? ''
+    //     : FirebaseAuth.instance.currentUser!.uid;
+    return tmp;
   }
 
   @override
