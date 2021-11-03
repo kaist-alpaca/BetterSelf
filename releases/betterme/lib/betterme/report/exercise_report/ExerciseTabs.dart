@@ -289,7 +289,11 @@ class _ExerciseTabs extends State<ExerciseTabs> {
                     padding: EdgeInsets.symmetric(
                         vertical: valHeight * 0.008,
                         horizontal: valWidth * 0.01),
-                    child: SingleBar(scores: _scores),
+                    child: SingleBar(
+                        scores: _scores,
+                        Values: true,
+                        LastValueOnly: false,
+                        ShowYaxis: true),
                   ),
                 ],
               )),
@@ -881,7 +885,11 @@ class _ExerciseTabs extends State<ExerciseTabs> {
                   width: graphWidth,
                   padding: EdgeInsets.symmetric(
                       vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
-                  child: SingleBar(scores: _scores),
+                  child: SingleBar(
+                      scores: _scores,
+                      Values: true,
+                      LastValueOnly: false,
+                      ShowYaxis: true),
                 ),
               ],
             )),
@@ -1058,7 +1066,11 @@ class _ExerciseTabs extends State<ExerciseTabs> {
                   width: graphWidth,
                   padding: EdgeInsets.symmetric(
                       vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
-                  child: SingleBar(scores: _scores),
+                  child: SingleBar(
+                      scores: _scores,
+                      Values: true,
+                      LastValueOnly: false,
+                      ShowYaxis: true),
                 ),
               ],
             )),

@@ -13,7 +13,6 @@ class _VerticalTimeBarChart extends State<VerticalTimeBarChart> {
   @override
   void initState() {
     super.initState();
-
     setState(() {});
   }
 

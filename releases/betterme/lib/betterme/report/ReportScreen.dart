@@ -340,7 +340,11 @@ class _ReportScreen extends State<ReportScreen> {
                               Container(
                                 width: valWidth * 0.34,
                                 height: valHeight * 0.16,
-                                child: SingleBar(scores: _scores),
+                                child: SingleBar(
+                                    scores: _scores,
+                                    Values: true,
+                                    LastValueOnly: true,
+                                    ShowYaxis: false),
                               )
                             ]),
                           ),
