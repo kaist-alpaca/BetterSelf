@@ -1,5 +1,6 @@
 import 'package:betterme/betterme/communication/functions/Widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:random_string/random_string.dart';
@@ -37,12 +38,20 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                       snapshot.data!.docs.map((DocumentSnapshot document) {
                     Map<String, dynamic> data =
                         document.data()! as Map<String, dynamic>;
+                    final valHeight =
+                        MediaQuery.of(context).size.height; //화면 높이
+                    final valWidth = MediaQuery.of(context).size.width; //화면 너비
+                    final bgColor = Color(0xff0B202A); //배경색
+                    final txtColor = Color(0xffFFFDFD);
+                    final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
+                    final blockColor = Color(0xff333C47); // 여러 블럭들 색
+                    double defaultSize = valWidth * 0.0025;
                     if (data['email'].toString().contains(searching.text)) {
                       return Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 1.0, horizontal: 20.0),
                           child: Card(
-                            color: Colors.black12,
+                            color: bgColor,
                             child: GestureDetector(
                                 onTap: () {
                                   showDialog<String>(
@@ -67,11 +76,34 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                                   );
                                 },
                                 child: ListTile(
-                                  leading: Image.network(data['imgUrl']),
-                                  title: Text(
-                                    data['email'],
-                                    style: TextStyle(
-                                      color: txtColor,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  tileColor: blockColor,
+                                  leading: SizedBox(
+                                    height: 60,
+                                    width: 45,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: bgColor,
+                                        image: DecorationImage(
+                                          fit: BoxFit.fill,
+                                          image: NetworkImage(data['imgUrl']),
+                                        ),
+                                      ),
+                                    ),
+                                  ), // 사용자 이미지 불러오는 코드
+                                  title: Container(
+                                    height: 60,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        data['email'],
+                                        style: TextStyle(
+                                          color: txtColor,
+                                          fontSize: defaultSize * 15,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 )),
@@ -106,9 +138,36 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
         },
         child: Scaffold(
           backgroundColor: bgColor,
-          appBar: AppBar(
-            backgroundColor: bgColor,
-            title: Text('트레이너 추가'),
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(valHeight * 0.08),
+            child: AppBar(
+              backgroundColor: bgColor,
+              elevation: 0.0,
+              title: Container(
+                height: valHeight * 0.08,
+                padding: EdgeInsets.only(top: valHeight * 0.02),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Text('트레이너 추가',
+                      style: TextStyle(
+                          color: txtColor, fontSize: defaultSize * 17),
+                      textAlign: TextAlign.center),
+                ),
+              ),
+              leading: Container(
+                  height: valHeight * 0.08,
+                  width: valWidth * 0.1,
+                  padding: EdgeInsets.only(top: valHeight * 0.022),
+                  margin: EdgeInsets.only(left: valWidth * 0.05),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon:
+                        SvgPicture.asset('images/arrow towards left_icon.svg'),
+                  )),
+              actions: [Container(width: valWidth * 0.15)],
+            ),
           ),
           body: SingleChildScrollView(
             child: Container(
@@ -202,7 +261,7 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                 //       EdgeInsets.symmetric(vertical: 7.0, horizontal: 20.0),
                 // ),
                 Container(
-                    height: 0.6 * valHeight,
+                    height: 0.7 * valHeight, // 트레이너 보이는 범위
                     child: TrainerList(context, userlistStream)!),
                 // isSearching ? SizedBox(
                 //   height : 500,

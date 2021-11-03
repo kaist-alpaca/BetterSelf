@@ -116,7 +116,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  data['name'],
+                                  data['email'],
                                   style: TextStyle(
                                     color: txtColor,
                                     fontSize: defaultSize * 15,
