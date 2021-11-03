@@ -18,6 +18,7 @@ import 'package:bottom_picker/resources/arrays.dart';
 
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:restart_app/restart_app.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'Functions/AgreementScreen.dart';
 
@@ -74,7 +75,7 @@ class SettingScreen extends StatelessWidget {
 
     final genderList = [Text("남"), Text("여"), Text("선택안함")];
 
-    final double TextfieldSize = 28;
+    final double TextfieldSize = valHeight * 0.04;
     double defaultSize = valWidth * 0.0025;
 
     return GetBuilder<ProfileController>(builder: (controller) {
@@ -87,7 +88,7 @@ class SettingScreen extends StatelessWidget {
                 style: TextStyle(color: txtColor, fontSize: defaultSize * 15)),
           ),
           body: Center(
-            child: ListView(children: [
+            child: Column(children: [
               SizedBox(
                 height: 40,
               ),
@@ -147,14 +148,14 @@ class SettingScreen extends StatelessWidget {
                               child: Obx(
                                 () => Container(
                                     //여기에 아마도 프사설정
-                                    width: valWidth * 0.25,
-                                    height: valWidth * 0.25,
+                                    width: valWidth * 0.18,
+                                    height: valWidth * 0.18,
                                     // color: Colors.grey,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(100),
                                       child: Container(
-                                        width: 100,
-                                        height: 100,
+                                        width: valWidth * 0.18,
+                                        height: valWidth * 0.18,
                                         child: controller.myProfile.value
                                                     .profileImage ==
                                                 null
@@ -198,7 +199,7 @@ class SettingScreen extends StatelessWidget {
                         TextStyle(color: txtColor, fontSize: defaultSize * 15),
                   ),
                   SizedBox(
-                    height: 7,
+                    height: valHeight * 0.01,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -230,7 +231,7 @@ class SettingScreen extends StatelessWidget {
                 ],
               ), //ID and Edit // 에딧기능 넣어주세요
               SizedBox(
-                height: 30,
+                height: valHeight * 0.035,
               ),
 
               Column(
@@ -243,7 +244,7 @@ class SettingScreen extends StatelessWidget {
                     children: [
                       Container(
                           width: valWidth * 0.25,
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                           child: Text("성별",
                               style: TextStyle(
                                   color: txtColor, fontSize: defaultSize * 14),
@@ -271,13 +272,13 @@ class SettingScreen extends StatelessWidget {
                         },
                         child: Container(
                             //생년월일 입력란
-                            width: valWidth * 0.3,
+                            width: valWidth * 0.35,
                             height: TextfieldSize, //valHeight * 0.06,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: txtFeildColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(3))),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(valWidth * 0.015))),
                             margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
                                 valWidth * 0.02, valWidth * 0.015),
                             child: Text(
@@ -289,10 +290,11 @@ class SettingScreen extends StatelessWidget {
                             )),
                       ), //margin
                       Container(
-                        width: valWidth * 0.2,
+                        width: valWidth * 0.15,
                       ),
                     ],
                   ), //gender
+                  SizedBox(height: valHeight * 0.02),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -326,13 +328,13 @@ class SettingScreen extends StatelessWidget {
                         },
                         child: Container(
                             //생년월일 입력란
-                            width: valWidth * 0.3,
+                            width: valWidth * 0.35,
                             height: TextfieldSize, //valHeight * 0.06,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: txtFeildColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(3))),
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(valWidth * 0.015))),
                             margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
                                 valWidth * 0.02, valWidth * 0.015),
                             child: Text(
@@ -344,10 +346,11 @@ class SettingScreen extends StatelessWidget {
                             )),
                       ),
                       Container(
-                        width: valWidth * 0.2,
+                        width: valWidth * 0.15,
                       ), //margin
                     ],
-                  ), //birthday
+                  ),
+                  SizedBox(height: valHeight * 0.02), //birthday
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -361,11 +364,12 @@ class SettingScreen extends StatelessWidget {
                               textAlign: TextAlign.center)),
                       Container(
                         //키 입력란
-                        width: valWidth * 0.3,
+                        width: valWidth * 0.35,
                         height: TextfieldSize, //valHeight * 0.06,
                         decoration: BoxDecoration(
                             color: txtFeildColor,
-                            borderRadius: BorderRadius.all(Radius.circular(3))),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(valWidth * 0.015))),
                         margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
                             valWidth * 0.02, valWidth * 0.015),
                         child: KeyboardActions(
@@ -389,13 +393,14 @@ class SettingScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                          width: valWidth * 0.2,
+                          width: valWidth * 0.15,
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [])), //margin
                     ],
-                  ), //height
+                  ),
+                  SizedBox(height: valHeight * 0.02), //height
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -410,10 +415,11 @@ class SettingScreen extends StatelessWidget {
                       Container(
                         //체중 입력란
                         height: TextfieldSize, //valHeight * 0.06,
-                        width: valWidth * 0.3,
+                        width: valWidth * 0.35,
                         decoration: BoxDecoration(
                             color: txtFeildColor,
-                            borderRadius: BorderRadius.all(Radius.circular(3))),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(valWidth * 0.015))),
                         margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
                             valWidth * 0.02, valWidth * 0.03),
                         child: KeyboardActions(
@@ -436,21 +442,23 @@ class SettingScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: valWidth * 0.2,
+                        width: valWidth * 0.15,
                       ), //margin
                     ],
-                  ), //weight
+                  ), // weight
 
                   SizedBox(
-                    height: 25,
+                    height: valHeight * 0.035,
                   ),
 
                   Container(
-                    height: valWidth * 0.1,
-                    width: valWidth * 0.7,
+                    height: valWidth * 0.11,
+                    width: valWidth * 0.75,
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: txtFeildColor,
-                        borderRadius: BorderRadius.all(Radius.circular(3))),
+                        borderRadius:
+                            BorderRadius.all(Radius.circular(valWidth * 0.02))),
                     child: KeyboardActions(
                       disableScroll: true,
                       config: _buildConfig(context),
@@ -458,12 +466,12 @@ class SettingScreen extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: txtColor, fontSize: defaultSize * 15),
-                        keyboardType: TextInputType.number,
+                        keyboardType: TextInputType.text,
                         focusNode: _nodeText3,
                         decoration: InputDecoration(
                             hintText: controller.disease == null ||
                                     controller.disease == ""
-                                ? "   질병기초정보 입력"
+                                ? "   질병기초 정보 입력"
                                 : controller.disease,
                             hintStyle: TextStyle(
                                 fontSize: defaultSize * 15, color: txtColor)),
@@ -474,7 +482,7 @@ class SettingScreen extends StatelessWidget {
                     ),
                   ), //disease
                   SizedBox(
-                    height: 40,
+                    height: valHeight * 0.04,
                   ),
 
                   GestureDetector(
@@ -488,16 +496,16 @@ class SettingScreen extends StatelessWidget {
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          width: valWidth * 0.6,
-                          height: 30,
+                          width: valWidth * 0.5,
+                          height: valHeight * 0.042,
                           decoration: BoxDecoration(
                               border: Border.all(
                                 width: 1,
                                 color: txtFeildBorderColor,
                               ),
                               color: txtFeildColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(valWidth * 0.025))),
                           child: Align(
                               alignment: FractionalOffset(0.5, 0.5),
                               child: Text("저장",
@@ -510,7 +518,7 @@ class SettingScreen extends StatelessWidget {
                     ),
                   ), //저장기능_추가해주세요
                   SizedBox(
-                    height: 60,
+                    height: valHeight * 0.025,
                   ),
 
                   GestureDetector(
@@ -528,30 +536,27 @@ class SettingScreen extends StatelessWidget {
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          width: valWidth * 0.3,
-                          height: 30,
+                          width: valWidth * 0.5,
+                          height: valHeight * 0.042,
                           decoration: BoxDecoration(
                               border: Border.all(
                                 width: 1,
                                 color: txtFeildBorderColor,
                               ),
                               color: txtFeildColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(valWidth * 0.025))),
                           child: Align(
                               alignment: FractionalOffset(0.5, 0.5),
                               child: Text("로그아웃",
                                   style: TextStyle(
-                                      fontSize: defaultSize * 12,
-                                      color: txtColor),
+                                      fontSize: defaultSize * 15,
+                                      color: Color(0xffD2363A)),
                                   textAlign: TextAlign.center)),
                         ),
                       ],
                     ),
                   ), //logout
-                  SizedBox(
-                    height: valHeight * 0.08,
-                  )
                 ],
               ),
             ]),
