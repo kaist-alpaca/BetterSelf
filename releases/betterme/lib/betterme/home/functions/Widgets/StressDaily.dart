@@ -39,7 +39,7 @@ class _StressDaily extends State<StressDaily> {
         child: Container(
             decoration: BoxDecoration(
               color: Color(0xff333C47),
-              borderRadius: BorderRadius.circular(valWidth * 0.015),
+              borderRadius: BorderRadius.circular(valWidth * 0.03),
             ),
             padding: EdgeInsets.fromLTRB(
                 inLeftBlank, inTopBlank, inLeftBlank, inTopBlank), //안쪽 여백

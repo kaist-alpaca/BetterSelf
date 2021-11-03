@@ -45,7 +45,7 @@ class _FoodDaily extends State<FoodDaily> {
               inLeftBlank, inTopBlank, inLeftBlank, inTopBlank),
           decoration: BoxDecoration(
             color: Color(0xff333C47),
-            borderRadius: BorderRadius.circular(valWidth * 0.015),
+            borderRadius: BorderRadius.circular(valWidth * 0.03),
           ),
           child: Row(
               mainAxisAlignment: MainAxisAlignment.start,

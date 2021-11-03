@@ -95,7 +95,7 @@ class _Coaching extends State<Coaching> {
                         color: bgColor,
                         borderRadius: BorderRadius.circular(valWidth * 0.015),
                         boxShadow: [
-                          BoxShadow(color: Color(0xffD2ABBA), blurRadius: 1.2),
+                          BoxShadow(color: Color(0xffD2ABBA), blurRadius: 0.1),
                         ]),
                     child: Row(
                       // 여기서부터 버튼
@@ -202,7 +202,7 @@ class _Coaching extends State<Coaching> {
                     children: [
                       Container(
                         height: dayButtonHeight,
-                        width: dayButtonWidth,
+                        width: dayButtonWidth * 0.95,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -243,7 +243,7 @@ class _Coaching extends State<Coaching> {
                       SizedBox(height: blankBetweenButton),
                       Container(
                         height: dayButtonHeight,
-                        width: dayButtonWidth,
+                        width: dayButtonWidth * 0.95,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -284,7 +284,7 @@ class _Coaching extends State<Coaching> {
                       SizedBox(height: blankBetweenButton),
                       Container(
                         height: dayButtonHeight,
-                        width: dayButtonWidth,
+                        width: dayButtonWidth * 0.95,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
