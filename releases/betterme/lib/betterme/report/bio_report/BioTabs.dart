@@ -845,7 +845,7 @@ class _BioTabs extends State<BioTabs> {
                                   minimumSize:
                                       Size(dayButtonWidth, dayButtonHeight)),
                               child: Text(
-                                dayButton5txt,
+                                dayButton6txt,
                                 style: TextStyle(
                                   color: txtColor,
                                   fontSize: defaultSize * 12,

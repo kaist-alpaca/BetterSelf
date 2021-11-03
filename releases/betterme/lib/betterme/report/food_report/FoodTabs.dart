@@ -728,7 +728,7 @@ class _FoodTabs extends State<FoodTabs> {
                               minimumSize:
                                   Size(dayButtonWidth, dayButtonHeight)),
                           child: Text(
-                            dayButton5txt,
+                            dayButton6txt,
                             style: TextStyle(
                               color: txtColor,
                               fontSize: defaultSize * 12,
