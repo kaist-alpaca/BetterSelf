@@ -281,16 +281,39 @@ class _ReportScreen extends State<ReportScreen> {
                     style: ElevatedButton.styleFrom(
                         elevation: 0,
                         primary: Color(0xff333C47),
-                        minimumSize: Size(valWidth * 0.35, valHeight * 0.038),
+                        minimumSize: Size(valWidth * 0.2, valHeight * 0.038),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(valWidth * 0.02),
                           side: BorderSide(
                               color: Color(0xff999CA2),
                               width: defaultSize * 0.7),
                         )),
-                    child: Text('생체 데이터',
-                        style: TextStyle(
-                            fontSize: defaultSize * 12, color: txtColor)),
+                    child: Container(
+                      height: valHeight * 0.042,
+                      width: valWidth * 0.27,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: valWidth * 0.25,
+                            padding: EdgeInsets.only(right: valWidth * 0.02),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                '생체 데이터',
+                                style: TextStyle(
+                                    fontSize: defaultSize * 12,
+                                    color: txtColor),
+                              ),
+                            ),
+                          ),
+                          Center(
+                              child: SvgPicture.asset(
+                                  'images/arrow towards right_icon.svg',
+                                  width: valWidth * 0.01,
+                                  height: valHeight * 0.016))
+                        ],
+                      ),
+                    ),
                   )),
                   SizedBox(height: valHeight * 0.025),
                   Row(
@@ -352,33 +375,56 @@ class _ReportScreen extends State<ReportScreen> {
                           SizedBox(height: valHeight * 0.01),
                           Center(
                             child: ElevatedButton(
-                                onPressed: () {
-                                  controller.dateReset(controller.date);
-                                  controller
-                                      .reportDayReset(controller.reportDay);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ExerciseScreen()));
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    primary: Color(0xff333C47),
-                                    minimumSize: Size(
-                                        valWidth * 0.35, valHeight * 0.038),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          valWidth * 0.02),
-                                      side: BorderSide(
-                                          color: Color(0xff999CA2),
-                                          width: defaultSize * 0.7),
-                                    )),
-                                child: Text('운동 데이터',
-                                    style: TextStyle(
-                                        fontSize: defaultSize * 12,
-                                        color: txtColor))),
-                          ),
+                              onPressed: () {
+                                controller.dateReset(controller.date);
+                                controller.reportDayReset(controller.reportDay);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ExerciseScreen()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  primary: Color(0xff333C47),
+                                  minimumSize:
+                                      Size(valWidth * 0.2, valHeight * 0.038),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(valWidth * 0.02),
+                                    side: BorderSide(
+                                        color: Color(0xff999CA2),
+                                        width: defaultSize * 0.7),
+                                  )),
+                              child: Container(
+                                height: valHeight * 0.042,
+                                width: valWidth * 0.27,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: valWidth * 0.25,
+                                      padding: EdgeInsets.only(
+                                          right: valWidth * 0.02),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '운동 데이터',
+                                          style: TextStyle(
+                                              fontSize: defaultSize * 12,
+                                              color: txtColor),
+                                        ),
+                                      ),
+                                    ),
+                                    Center(
+                                        child: SvgPicture.asset(
+                                            'images/arrow towards right_icon.svg',
+                                            width: valWidth * 0.01,
+                                            height: valHeight * 0.016))
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
                         ],
                       ),
                       SizedBox(width: valWidth * 0.06),
@@ -433,31 +479,54 @@ class _ReportScreen extends State<ReportScreen> {
                           SizedBox(height: valHeight * 0.01),
                           Center(
                             child: ElevatedButton(
-                                onPressed: () {
-                                  controller.dateReset(controller.date);
-                                  controller
-                                      .reportDayReset(controller.reportDay);
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => FoodScreen()));
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    primary: Color(0xff333C47),
-                                    minimumSize: Size(
-                                        valWidth * 0.35, valHeight * 0.038),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          valWidth * 0.02),
-                                      side: BorderSide(
-                                          color: Color(0xff999CA2),
-                                          width: defaultSize * 0.7),
-                                    )),
-                                child: Text('식단 데이터',
-                                    style: TextStyle(
-                                        fontSize: defaultSize * 12,
-                                        color: txtColor))),
+                              onPressed: () {
+                                controller.dateReset(controller.date);
+                                controller.reportDayReset(controller.reportDay);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FoodScreen()));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 0,
+                                  primary: Color(0xff333C47),
+                                  minimumSize:
+                                      Size(valWidth * 0.35, valHeight * 0.038),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(valWidth * 0.02),
+                                    side: BorderSide(
+                                        color: Color(0xff999CA2),
+                                        width: defaultSize * 0.7),
+                                  )),
+                              child: Container(
+                                height: valHeight * 0.042,
+                                width: valWidth * 0.27,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: valWidth * 0.25,
+                                      padding: EdgeInsets.only(
+                                          right: valWidth * 0.02),
+                                      child: Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '식단 데이터',
+                                          style: TextStyle(
+                                              fontSize: defaultSize * 12,
+                                              color: txtColor),
+                                        ),
+                                      ),
+                                    ),
+                                    Center(
+                                        child: SvgPicture.asset(
+                                            'images/arrow towards right_icon.svg',
+                                            width: valWidth * 0.01,
+                                            height: valHeight * 0.016))
+                                  ],
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       )

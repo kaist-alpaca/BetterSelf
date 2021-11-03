@@ -506,9 +506,8 @@ class _BioTabs extends State<BioTabs> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: valWidth * 0.1,
+                    width: valWidth * 0.17,
                     height: valHeight * 0.055,
-                    margin: EdgeInsets.only(left: valWidth * 0.05),
                     child: IconButton(
                       icon: SvgPicture.asset(
                           'images/arrow towards left_icon.svg'),
@@ -520,7 +519,7 @@ class _BioTabs extends State<BioTabs> {
                   ),
 
                   Container(
-                    width: valWidth * 0.7,
+                    width: valWidth * 0.66,
                     height: valHeight * 0.05,
                     child: Align(
                       alignment: Alignment.center,
@@ -553,9 +552,8 @@ class _BioTabs extends State<BioTabs> {
 
                   //날짜 오른쪽으로 넘기는 버튼
                   Container(
-                    width: valWidth * 0.1,
+                    width: valWidth * 0.17,
                     height: valHeight * 0.05,
-                    margin: EdgeInsets.only(right: valWidth * 0.05),
                     child: IconButton(
                       icon: SvgPicture.asset(
                           'images/arrow towards right_icon.svg'),

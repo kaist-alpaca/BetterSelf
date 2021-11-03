@@ -411,9 +411,8 @@ class _ExerciseTabs extends State<ExerciseTabs> {
               //날짜 왼쪽으로 넘기는 버튼
 
               Container(
-                width: valWidth * 0.1,
+                width: valWidth * 0.17,
                 height: valHeight * 0.05,
-                margin: EdgeInsets.only(right: valWidth * 0.05),
                 child: IconButton(
                   icon: SvgPicture.asset('images/arrow towards left_icon.svg'),
                   onPressed: () {
@@ -424,7 +423,7 @@ class _ExerciseTabs extends State<ExerciseTabs> {
               ),
 
               Container(
-                width: valWidth * 0.7,
+                width: valWidth * 0.66,
                 height: valHeight * 0.05,
                 child: Align(
                   alignment: Alignment.center,
@@ -445,9 +444,8 @@ class _ExerciseTabs extends State<ExerciseTabs> {
 
               //날짜 오른쪽으로 넘기는 버튼
               Container(
-                width: valWidth * 0.1,
+                width: valWidth * 0.17,
                 height: valHeight * 0.05,
-                margin: EdgeInsets.only(bottom: valWidth * 0.05),
                 child: IconButton(
                   icon: SvgPicture.asset('images/arrow towards right_icon.svg'),
                   onPressed: () {
