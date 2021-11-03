@@ -75,7 +75,7 @@ class CustomeScatterChartPainter extends CustomPainter {
     for (int i = 0; i <= 24; i += 4) {
       drawTextCentered(canvas, c, i.toString(), xLabelStyle, xd);
       // canvas.drawLine(c, c_x, paint);
-      double start_y = border + hd * 7;
+      double start_y = border + hd * 6.5;
       while (start_y >= border) {
         canvas.drawLine(Offset(dash_x, start_y),
             Offset(dash_x, start_y - dashWidth), paint);
@@ -107,6 +107,15 @@ class CustomeScatterChartPainter extends CustomPainter {
         }
       });
     }
+
+    Paint paint2 = Paint()
+      ..color = Colors.white
+      ..strokeCap = StrokeCap.square
+      ..strokeWidth = 0.8;
+
+    //아래 가로줄
+    double start_y = border + hd * 6.5; //아래로 시작점
+    canvas.drawLine(Offset(0, start_y), Offset(size.width, start_y), paint2);
   }
 
   @override
