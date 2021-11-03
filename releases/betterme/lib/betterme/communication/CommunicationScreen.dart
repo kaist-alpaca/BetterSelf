@@ -94,13 +94,8 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                               child: ListTile(
                                 tileColor: blockColor,
                                 leading: SizedBox(
-<<<<<<< Updated upstream
-                                  height: 70,
-                                  width: 40,
-=======
                                   height: 50,
                                   width: valWidth * 0.12,
->>>>>>> Stashed changes
                                   child: Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
@@ -113,11 +108,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                                   ),
                                 ), // 사용자 이미지 불러오는 코드
                                 title: Container(
-<<<<<<< Updated upstream
-                                  height: 70,
-=======
                                   height: 50,
->>>>>>> Stashed changes
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
