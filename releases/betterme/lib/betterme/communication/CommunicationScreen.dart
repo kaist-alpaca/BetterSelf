@@ -74,7 +74,6 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                         padding: const EdgeInsets.symmetric(
                             vertical: 1.0, horizontal: 20.0),
                         child: Card(
-                          color: blockColor,
                           child: GestureDetector(
                               onTap: () {
                                 var chatroomId =
@@ -95,9 +94,13 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                               child: ListTile(
                                 leading: Container(
                                   height: valHeight * 0.2,
-                                  child: CircleAvatar(
-                                    radius: valHeight * 0.03,
-                                    child: Image.network(data['imgUrl']),
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(data['imgUrl']),
+                                    ),
                                   ),
                                 ), // 사용자 이미지 불러오는 코드
                                 title: Text(
@@ -139,6 +142,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
       backgroundColor: bgColor,
       appBar: AppBar(
         centerTitle: true,
+        elevation: 0.0,
         backgroundColor: bgColor,
         title: Text(
           '메시지',
@@ -158,7 +162,10 @@ class _CommunicationScreen extends State<CommunicationScreen> {
               )),
         ],
       ),
-      body: Container(child: TrainersList(context, usersStream)),
+      body: Container(
+          height: valHeight * 0.7,
+          width: valWidth * 0.8,
+          child: TrainersList(context, usersStream)),
     );
   }
 }

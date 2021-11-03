@@ -19,6 +19,7 @@ import 'functions/Widgets/SleepGraph.dart';
 import 'functions/Widgets/SleepTimeGraph.dart';
 import 'functions/Widgets/StressDaily.dart';
 import 'functions/Widgets/StressGraph.dart';
+import 'package:betterme/betterme/login/initialsetting/InitialSettingScreen.dart';
 
 // import 'functions/home_add_1.dart';
 // import 'functions/home_add_2.dart';
@@ -124,6 +125,20 @@ class _HomeScreen extends State<HomeScreen> {
                             FoodDaily(gridHeight * 2, gridWidth * 6),
                           ],
                         ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        InitialSettingScreen()));
+                          },
+                          child: Container(
+                            height: 100,
+                            width: 100,
+                            color: Colors.grey,
+                          ),
+                        )
                         // Row(
                         //   children: [Coaching(gridHeight * 2, gridWidth * 6)],
                         // ),
