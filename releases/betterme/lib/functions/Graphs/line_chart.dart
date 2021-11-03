@@ -44,6 +44,7 @@ class _MadeLineChartState extends State<MadeLineChart> {
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
+
     return Container(
       child: CustomPaint(
         child: Container(),
@@ -69,9 +70,8 @@ class customeLineChartPainter extends CustomPainter {
     ..style = PaintingStyle.fill
     ..strokeWidth = 1.0;
 
-  final ylabelStyle = TextStyle(color: Colors.white, fontSize: 14);
-  final xLabelStyle =
-      TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold);
+  final ylabelStyle = TextStyle(color: Colors.white, fontSize: 11);
+  final xLabelStyle = TextStyle(color: Colors.white, fontSize: 12);
   static double border = 10.0;
   static double radius = 5.0;
   @override
