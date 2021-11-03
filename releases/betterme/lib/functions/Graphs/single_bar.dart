@@ -5,7 +5,16 @@ import 'line_chart.dart';
 
 class SingleBar extends StatefulWidget {
   final List<Score> scores;
-  SingleBar({Key? key, required this.scores}) : super(key: key);
+  final bool Values;
+  final bool LastValueOnly;
+  final bool ShowYaxis;
+  SingleBar(
+      {Key? key,
+      required this.scores,
+      required this.Values,
+      required this.LastValueOnly,
+      required this.ShowYaxis})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _SingleBar();
@@ -45,16 +54,40 @@ class _SingleBar extends State<SingleBar> {
 
   @override
   Widget build(BuildContext context) {
-    return BarChart(
-      BarChartData(
-          barTouchData: barTouchData,
-          titlesData: titlesData,
-          borderData: borderData,
-          barGroups: barlist,
-          alignment: BarChartAlignment.spaceAround,
-          maxY: _max,
-          gridData: FlGridData(show: false)),
-    );
+    if (widget.Values == true && widget.LastValueOnly == true) {
+      return BarChart(
+        BarChartData(
+            barTouchData: barTouchData,
+            titlesData: titlesData,
+            borderData: borderData,
+            barGroups: barlist,
+            alignment: BarChartAlignment.spaceAround,
+            maxY: _max,
+            gridData: FlGridData(show: false)),
+      );
+    } else if (widget.Values == true && widget.LastValueOnly == false) {
+      return BarChart(
+        BarChartData(
+            barTouchData: barTouchData,
+            titlesData: titlesData,
+            borderData: borderData,
+            barGroups: barlist,
+            alignment: BarChartAlignment.spaceAround,
+            maxY: _max,
+            gridData: FlGridData(show: false)),
+      );
+    } else {
+      return BarChart(
+        BarChartData(
+            barTouchData: barTouchData,
+            titlesData: titlesData,
+            borderData: borderData,
+            barGroups: barlist,
+            alignment: BarChartAlignment.spaceAround,
+            maxY: _max,
+            gridData: FlGridData(show: false)),
+      );
+    }
   }
 
   BarTouchData get barTouchData => BarTouchData(
