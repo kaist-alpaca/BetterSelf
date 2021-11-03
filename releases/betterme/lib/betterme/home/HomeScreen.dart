@@ -100,7 +100,7 @@ class _HomeScreen extends State<HomeScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: valHeight * 0.025,
+                  height: valHeight * 0.015,
                 ),
                 Container(
                   //위젯들 구성하는 화면 여기부터

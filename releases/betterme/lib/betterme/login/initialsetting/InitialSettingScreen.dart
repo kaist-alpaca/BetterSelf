@@ -483,7 +483,7 @@ class InitialSettingScreen extends StatelessWidget {
                             height: valHeight * 0.042,
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                  width: 1,
+                                  width: 0.7,
                                   color: txtFeildBorderColor,
                                 ),
                                 color: txtFeildColor,
