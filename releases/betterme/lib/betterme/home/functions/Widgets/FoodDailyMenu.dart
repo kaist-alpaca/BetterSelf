@@ -44,14 +44,14 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
             children: [
               Container(
                 //사진 들어가는 박스
-                height: widget.widgetHeight * 0.55,
+                height: widget.widgetHeight * 0.7,
                 width: widget.widgetWidth * 0.9,
                 decoration: BoxDecoration(
                   color: Color(0xff373B42),
-                  borderRadius: BorderRadius.circular(valWidth * 0.015),
+                  borderRadius: BorderRadius.circular(valWidth * 0.02),
                 ),
                 padding:
-                    EdgeInsets.all(widget.widgetHeight * 0.08), // 안 버튼 크기 조절
+                    EdgeInsets.all(widget.widgetHeight * 0.15), // 안 버튼 크기 조절
 
                 child: ElevatedButton(
                   onPressed: () {
