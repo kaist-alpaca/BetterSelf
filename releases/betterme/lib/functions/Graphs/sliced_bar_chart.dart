@@ -26,7 +26,8 @@ class _SlicededBarChart extends State<SlicededBarChart> {
     var max = -double.maxFinite;
     widget.scores.forEach((e) {
       barlist.add(
-        BarChartGroupData(x: e.time.day,
+        BarChartGroupData(
+          x: e.time.day,
           barRods: [
             BarChartRodData(
               y: e.value,
@@ -61,15 +62,15 @@ class _SlicededBarChart extends State<SlicededBarChart> {
             tooltipPadding: const EdgeInsets.all(0),
             tooltipMargin: 8,
             getTooltipItem: (
-                BarChartGroupData group,
-                int groupIndex,
-                BarChartRodData rod,
-                int rodIndex,
-                ) {
+              BarChartGroupData group,
+              int groupIndex,
+              BarChartRodData rod,
+              int rodIndex,
+            ) {
               return BarTooltipItem(
                 rod.y.round().toString(),
                 const TextStyle(
-                  fontSize: 12,
+                  fontSize: 9,
                   color: Color(0xFFFFFDFD),
                 ),
               );
@@ -140,86 +141,74 @@ class _SlicededBarChart extends State<SlicededBarChart> {
 
   List<BarChartGroupData> getData() {
     return [
-      BarChartGroupData(
-        x: 0,
-        barsSpace: 1,
-        barRods: [
-          BarChartRodData(
-            y: 17000000000,
-            width: 15,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(4),
-              topRight: Radius.circular(4),
-            ),
-            rodStackItems: [
-              BarChartRodStackItem(0, 2000000000, dark),
-              BarChartRodStackItem(2000000000, 12000000000, normal),
-              BarChartRodStackItem(12000000000, 17000000000, light),
-            ],
+      BarChartGroupData(x: 0, barsSpace: 1, barRods: [
+        BarChartRodData(
+          y: 17000000000,
+          width: 15,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
           ),
-        ],
-        showingTooltipIndicators: [0]
-      ),
-      BarChartGroupData(
-        x: 1,
-        barsSpace: 1,
-        barRods: [
-          BarChartRodData(
-            y: 31000000000,
-            width: 15,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(4),
-              topRight: Radius.circular(4),
-            ),
-            rodStackItems: [
-              BarChartRodStackItem(0, 11000000000, dark),
-              BarChartRodStackItem(11000000000, 18000000000, normal),
-              BarChartRodStackItem(18000000000, 31000000000, light),
-            ],
-          )
-        ],
-        showingTooltipIndicators: [0]
-      ),
-      BarChartGroupData(
-        x: 2,
-        barsSpace: 1,
-        barRods: [
-          BarChartRodData(
-            y: 34000000000,
-            width: 15,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(4),
-              topRight: Radius.circular(4),
-            ),
-            rodStackItems: [
-              BarChartRodStackItem(0, 6000000000, dark),
-              BarChartRodStackItem(6000000000, 23000000000, normal),
-              BarChartRodStackItem(23000000000, 34000000000, light),
-            ],
-          )
-        ],
-        showingTooltipIndicators: [0]
-      ),
-      BarChartGroupData(
-        x: 3,
-        barsSpace: 1,
-        barRods: [
-          BarChartRodData(
-            y: 14000000000,
-            width: 15,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(4),
-              topRight: Radius.circular(4),
-            ),
-            rodStackItems: [
-              BarChartRodStackItem(0, 1000000000.5, dark),
-              BarChartRodStackItem(1000000000.5, 12000000000, normal),
-              BarChartRodStackItem(12000000000, 14000000000, light),
-            ],
-          )
-        ],
-        showingTooltipIndicators: [0]
-      ),
+          rodStackItems: [
+            BarChartRodStackItem(0, 2000000000, dark),
+            BarChartRodStackItem(2000000000, 12000000000, normal),
+            BarChartRodStackItem(12000000000, 17000000000, light),
+          ],
+        ),
+      ], showingTooltipIndicators: [
+        0
+      ]),
+      BarChartGroupData(x: 1, barsSpace: 1, barRods: [
+        BarChartRodData(
+          y: 31000000000,
+          width: 15,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
+          ),
+          rodStackItems: [
+            BarChartRodStackItem(0, 11000000000, dark),
+            BarChartRodStackItem(11000000000, 18000000000, normal),
+            BarChartRodStackItem(18000000000, 31000000000, light),
+          ],
+        )
+      ], showingTooltipIndicators: [
+        0
+      ]),
+      BarChartGroupData(x: 2, barsSpace: 1, barRods: [
+        BarChartRodData(
+          y: 34000000000,
+          width: 15,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
+          ),
+          rodStackItems: [
+            BarChartRodStackItem(0, 6000000000, dark),
+            BarChartRodStackItem(6000000000, 23000000000, normal),
+            BarChartRodStackItem(23000000000, 34000000000, light),
+          ],
+        )
+      ], showingTooltipIndicators: [
+        0
+      ]),
+      BarChartGroupData(x: 3, barsSpace: 1, barRods: [
+        BarChartRodData(
+          y: 14000000000,
+          width: 15,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(4),
+            topRight: Radius.circular(4),
+          ),
+          rodStackItems: [
+            BarChartRodStackItem(0, 1000000000.5, dark),
+            BarChartRodStackItem(1000000000.5, 12000000000, normal),
+            BarChartRodStackItem(12000000000, 14000000000, light),
+          ],
+        )
+      ], showingTooltipIndicators: [
+        0
+      ]),
     ];
   }
 }
