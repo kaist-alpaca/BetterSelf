@@ -57,6 +57,7 @@ class InitialSettingScreen extends StatelessWidget {
           backgroundColor: bgColor,
           appBar: AppBar(
             backgroundColor: bgColor,
+            elevation: 0.0,
             centerTitle: true,
             title: Text('계정 설정',
                 style: TextStyle(color: txtColor, fontSize: defaultSize * 15)),
@@ -120,14 +121,14 @@ class InitialSettingScreen extends StatelessWidget {
                               child: Obx(
                                 () => Container(
                                     //여기에 아마도 프사설정
-                                    width: valWidth * 0.25,
-                                    height: valWidth * 0.25,
+                                    width: valWidth * 0.18,
+                                    height: valWidth * 0.18,
                                     // color: Colors.grey,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(100),
                                       child: Container(
-                                        width: 50,
-                                        height: 50,
+                                        width: valWidth * 0.18,
+                                        height: valWidth * 0.18,
                                         child: controller.myProfile.value
                                                     .profileImage ==
                                                 null
@@ -171,7 +172,7 @@ class InitialSettingScreen extends StatelessWidget {
                         TextStyle(color: txtColor, fontSize: defaultSize * 15),
                   ),
                   SizedBox(
-                    height: 7,
+                    height: 20,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -203,7 +204,7 @@ class InitialSettingScreen extends StatelessWidget {
                 ],
               ), //ID and Edit // 에딧기능 넣어주세요
               SizedBox(
-                height: 30,
+                height: valHeight * 0.045,
               ),
 
               Column(
