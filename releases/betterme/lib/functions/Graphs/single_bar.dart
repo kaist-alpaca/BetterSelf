@@ -73,7 +73,6 @@ class _SingleBar extends State<SingleBar> {
               rod.y.round().toString(),
               const TextStyle(
                 color: Colors.white,
-                fontWeight: FontWeight.bold,
               ),
             );
           },
@@ -86,8 +85,7 @@ class _SingleBar extends State<SingleBar> {
           showTitles: true,
           getTextStyles: (context, value) => const TextStyle(
             color: Color(0xFFFFFFFF),
-            fontWeight: FontWeight.bold,
-            fontSize: 14,
+            fontSize: 12,
           ),
           margin: 10,
           getTitles: (double value) {
@@ -104,7 +102,7 @@ class _SingleBar extends State<SingleBar> {
         show: true,
         border: Border(
           bottom: BorderSide(
-            width: 2.0,
+            width: 1.0,
             color: Color(0xFFFFFFFF),
           ),
         ),
