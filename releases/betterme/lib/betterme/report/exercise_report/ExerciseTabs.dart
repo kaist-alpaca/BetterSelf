@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:betterme/betterme/home/functions/Widgets/Coaching.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -423,10 +424,10 @@ class _ExerciseTabs extends State<ExerciseTabs> {
               //날짜 왼쪽으로 넘기는 버튼
 
               Container(
-                width: valWidth * 0.1,
-                height: valHeight * 0.055,
+                width: valWidth * 0.17,
+                height: valHeight * 0.05,
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
+                  icon: SvgPicture.asset('images/arrow towards left_icon.svg'),
                   onPressed: () {
                     controller.dateMinus7(controller.date);
                     controller.rdateMinus7(controller.reportDay);
@@ -435,7 +436,7 @@ class _ExerciseTabs extends State<ExerciseTabs> {
               ),
 
               Container(
-                width: valWidth * 0.8,
+                width: valWidth * 0.66,
                 height: valHeight * 0.05,
                 child: Align(
                   alignment: Alignment.center,
@@ -456,10 +457,10 @@ class _ExerciseTabs extends State<ExerciseTabs> {
 
               //날짜 오른쪽으로 넘기는 버튼
               Container(
-                width: valWidth * 0.1,
+                width: valWidth * 0.17,
                 height: valHeight * 0.05,
                 child: IconButton(
-                  icon: Icon(Icons.arrow_forward_ios),
+                  icon: SvgPicture.asset('images/arrow towards right_icon.svg'),
                   onPressed: () {
                     controller.datePlus7(controller.date);
                     controller.rdatePlus7(controller.reportDay);
