@@ -118,8 +118,8 @@ class _HomeScreen extends State<HomeScreen> {
                         ),
                         Row(
                           children: [
+                            InbodyGraph(gridHeight * 2, gridWidth * 3),
                             StressGraph(gridHeight * 2, gridWidth * 3),
-                            SleepTimeGraph(gridHeight * 2, gridWidth * 3),
                           ],
                         ),
                         Row(
