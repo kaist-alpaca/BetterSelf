@@ -48,7 +48,7 @@ class InitialSettingScreen extends StatelessWidget {
 
     final genderList = [Text("남"), Text("여"), Text("선택안함")];
 
-    final double TextfieldSize = 28;
+    final double TextfieldSize = valHeight * 0.04;
 
     double defaultSize = valWidth * 0.0025;
 
@@ -62,434 +62,451 @@ class InitialSettingScreen extends StatelessWidget {
             title: Text('계정 설정',
                 style: TextStyle(color: txtColor, fontSize: defaultSize * 15)),
           ),
-          body: Center(
-            child: ListView(children: [
-              SizedBox(
-                height: 40,
-              ),
-              DividewithObj(
-                  context,
-                  Container(
-                    width: valWidth * 0.3,
-                    child: Row(
-                      //내 정보 설정
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                showCupertinoModalPopup(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      CupertinoActionSheet(
-                                    title: const Text('프로필 이미지 선택'),
-                                    message: const Text('Your options are '),
-                                    actions: <Widget>[
-                                      CupertinoActionSheetAction(
-                                        child: const Text('사진 촬영'),
-                                        onPressed: () async {
-                                          await controller.pickImage(
-                                              type: 'camera', use: 'profile');
-                                          print("change image");
-                                          var save = await controller.save();
-                                          print(save);
+          body: SingleChildScrollView(
+            child: Center(
+              child: Column(children: [
+                SizedBox(
+                  height: 40,
+                ),
+                DividewithObj(
+                    context,
+                    Container(
+                      width: valWidth * 0.3,
+                      child: Row(
+                        //내 정보 설정
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  showCupertinoModalPopup(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        CupertinoActionSheet(
+                                      title: const Text('프로필 이미지 선택'),
+                                      message: const Text('Your options are '),
+                                      actions: <Widget>[
+                                        CupertinoActionSheetAction(
+                                          child: const Text('사진 촬영'),
+                                          onPressed: () async {
+                                            await controller.pickImage(
+                                                type: 'camera', use: 'profile');
+                                            print("change image");
+                                            var save = await controller.save();
+                                            print(save);
+                                          },
+                                        ),
+                                        CupertinoActionSheetAction(
+                                          child: const Text('갤러리에서 사진 선택'),
+                                          onPressed: () async {
+                                            await controller.pickImage(
+                                                type: 'gallery',
+                                                use: 'profile');
+                                            print("change image");
+                                            var save = await controller.save();
+                                            print(save);
+                                          },
+                                        )
+                                      ],
+                                      cancelButton: CupertinoActionSheetAction(
+                                        child: const Text('취소'),
+                                        isDefaultAction: true,
+                                        onPressed: () {
+                                          Navigator.pop(context, 'Cancel');
                                         },
                                       ),
-                                      CupertinoActionSheetAction(
-                                        child: const Text('갤러리에서 사진 선택'),
-                                        onPressed: () async {
-                                          await controller.pickImage(
-                                              type: 'gallery', use: 'profile');
-                                          print("change image");
-                                          var save = await controller.save();
-                                          print(save);
-                                        },
-                                      )
-                                    ],
-                                    cancelButton: CupertinoActionSheetAction(
-                                      child: const Text('취소'),
-                                      isDefaultAction: true,
-                                      onPressed: () {
-                                        Navigator.pop(context, 'Cancel');
-                                      },
                                     ),
-                                  ),
-                                );
-                              },
-                              child: Obx(
-                                () => Container(
-                                    //여기에 아마도 프사설정
-                                    width: valWidth * 0.18,
-                                    height: valWidth * 0.18,
-                                    // color: Colors.grey,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(100),
-                                      child: Container(
-                                        width: valWidth * 0.18,
-                                        height: valWidth * 0.18,
-                                        child: controller.myProfile.value
-                                                    .profileImage ==
-                                                null
-                                            ? Image.network(
-                                                controller.myProfile.value
-                                                    .profileUrl!,
-                                                fit: BoxFit.cover,
-                                              )
-                                            : Image.file(
-                                                controller.myProfile.value
-                                                    .profileImage!,
-                                                fit: BoxFit.cover,
-                                              ),
+                                  );
+                                },
+                                child: Obx(
+                                  () => Container(
+                                      //여기에 아마도 프사설정
+                                      width: valWidth * 0.18,
+                                      height: valWidth * 0.18,
+                                      // color: Colors.grey,
+                                      child: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                        child: Container(
+                                          width: valWidth * 0.18,
+                                          height: valWidth * 0.18,
+                                          child: controller.myProfile.value
+                                                      .profileImage ==
+                                                  null
+                                              ? Image.network(
+                                                  controller.myProfile.value
+                                                      .profileUrl!,
+                                                  fit: BoxFit.cover,
+                                                )
+                                              : Image.file(
+                                                  controller.myProfile.value
+                                                      .profileImage!,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                        ),
                                       ),
-                                    ),
-                                    margin: EdgeInsets.fromLTRB(
-                                        valWidth * 0.025,
-                                        0,
-                                        valWidth * 0.025,
-                                        0)),
+                                      margin: EdgeInsets.fromLTRB(
+                                          valWidth * 0.025,
+                                          0,
+                                          valWidth * 0.025,
+                                          0)),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ), //ProfileImage
-                  ),
-                  0.35,
-                  0.35), //ProfileImage
+                            ],
+                          ),
+                        ],
+                      ), //ProfileImage
+                    ),
+                    0.35,
+                    0.35), //ProfileImage
 
-              SizedBox(
-                height: 25,
-              ),
+                SizedBox(
+                  height: 25,
+                ),
 
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'ID',
-                    style:
-                        TextStyle(color: txtColor, fontSize: defaultSize * 15),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      // 에딧기능추가해주세요
-                      // _openDatePicker(context);
-                      BottomPicker.date(
-                              title: "생년월일",
-                              titleStyle: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                  color: Colors.blue),
-                              onChange: (index) {
-                                print(index);
-                              },
-                              onSubmit: (index) {
-                                print(index);
-                                controller.birthdaySelected(
-                                    index.toString().substring(0, 10));
-                              },
-                              bottomPickerTheme: BOTTOM_PICKER_THEME.PLUM_PLATE)
-                          .show(context);
-                    },
-                    child: Text(
-                      'edit',
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'ID',
                       style: TextStyle(
-                          color: redtxtColor, fontSize: defaultSize * 12),
+                          color: txtColor, fontSize: defaultSize * 15),
                     ),
-                  )
-                ],
-              ), //ID and Edit // 에딧기능 넣어주세요
-              SizedBox(
-                height: valHeight * 0.045,
-              ),
-
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: valWidth * 0.25,
-                          padding:
-                              EdgeInsets.fromLTRB(0, 0, 0, valHeight * 0.045),
-                          child: Text("성별",
-                              style: TextStyle(
-                                  color: txtColor, fontSize: defaultSize * 14),
-                              textAlign: TextAlign.center)),
-                      GestureDetector(
-                        onTap: () {
-                          // _openDatePicker(context);
-                          BottomPicker(
-                                  items: genderList,
-                                  title: "성별",
-                                  titleStyle: TextStyle(
-                                      color: txtColor,
-                                      fontSize: defaultSize * 15),
-                                  onChange: (index) {
-                                    print(index);
-                                  },
-                                  onSubmit: (index) {
-                                    print(genderList[index].data);
-                                    controller.genderSelected(
-                                        genderList[index].data.toString());
-                                  },
-                                  bottomPickerTheme:
-                                      BOTTOM_PICKER_THEME.PLUM_PLATE)
-                              .show(context);
-                        },
-                        child: Container(
-                            //생년월일 입력란
-                            width: valWidth * 0.3,
-                            height: TextfieldSize, //valHeight * 0.06,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: txtFeildColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(3))),
-                            margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
-                                valWidth * 0.02, valWidth * 0.015),
-                            child: Text(
-                              controller.gender == null
-                                  ? ""
-                                  : controller.gender.toString(),
-                              style: TextStyle(
-                                  color: txtColor, fontSize: defaultSize * 15),
-                            )),
-                      ), //margin
-                      Container(
-                        width: valWidth * 0.2,
-                      ),
-                    ],
-                  ), //gender
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: valWidth * 0.25,
-                          padding: EdgeInsets.fromLTRB(0, 3, 0, 10),
-                          child: Text("생년월일",
-                              style: TextStyle(
-                                  color: txtColor, fontSize: defaultSize * 14),
-                              textAlign: TextAlign.center)),
-                      GestureDetector(
-                        onTap: () {
-                          // _openDatePicker(context);
-                          BottomPicker.date(
-                                  title: "생년월일",
-                                  titleStyle: TextStyle(
-                                      color: txtColor,
-                                      fontSize: defaultSize * 15),
-                                  onChange: (index) {
-                                    print(index);
-                                  },
-                                  onSubmit: (index) {
-                                    print(index);
-                                    controller.birthdaySelected(
-                                        index.toString().substring(0, 10));
-                                  },
-                                  bottomPickerTheme:
-                                      BOTTOM_PICKER_THEME.PLUM_PLATE)
-                              .show(context);
-                        },
-                        child: Container(
-                            //생년월일 입력란
-                            width: valWidth * 0.3,
-                            height: TextfieldSize, //valHeight * 0.06,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: txtFeildColor,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(3))),
-                            margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
-                                valWidth * 0.02, valWidth * 0.015),
-                            child: Text(
-                              controller.birthday == null
-                                  ? ""
-                                  : controller.birthday.toString(),
-                              style: TextStyle(
-                                  color: txtColor, fontSize: defaultSize * 15),
-                            )),
-                      ),
-                      Container(
-                        width: valWidth * 0.2,
-                      ), //margin
-                    ],
-                  ), //birthday
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: valWidth * 0.25,
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                          child: Text("키",
-                              style: TextStyle(
-                                  color: txtColor, fontSize: defaultSize * 14),
-                              textAlign: TextAlign.center)),
-                      Container(
-                        //키 입력란
-                        width: valWidth * 0.3,
-                        height: TextfieldSize, //valHeight * 0.06,
-                        decoration: BoxDecoration(
-                            color: txtFeildColor,
-                            borderRadius: BorderRadius.all(Radius.circular(3))),
-                        margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
-                            valWidth * 0.02, valWidth * 0.015),
-                        child: KeyboardActions(
-                          disableScroll: true,
-                          config: _buildConfig(context),
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: txtColor, fontSize: defaultSize * 15),
-                            keyboardType: TextInputType.number,
-                            focusNode: _nodeText1,
-                            decoration: InputDecoration(
-                                hintText: controller.height,
-                                hintStyle: TextStyle(
-                                    color: txtColor,
-                                    fontSize: defaultSize * 15)),
-                            onChanged: (text) {
-                              controller.heightSelected(text);
-                            },
-                          ),
-                        ),
-                      ),
-                      Container(
-                          width: valWidth * 0.2,
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [])), //margin
-                    ],
-                  ), //height
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: valWidth * 0.25,
-                          padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-                          child: Text("체중",
-                              style: TextStyle(
-                                  color: txtColor, fontSize: defaultSize * 14),
-                              textAlign: TextAlign.center)),
-                      Container(
-                        //체중 입력란
-                        height: TextfieldSize, //valHeight * 0.06,
-                        width: valWidth * 0.3,
-                        decoration: BoxDecoration(
-                            color: txtFeildColor,
-                            borderRadius: BorderRadius.all(Radius.circular(3))),
-                        margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
-                            valWidth * 0.02, valWidth * 0.03),
-                        child: KeyboardActions(
-                          disableScroll: true,
-                          config: _buildConfig(context),
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: txtColor, fontSize: defaultSize * 15),
-                            keyboardType: TextInputType.number,
-                            focusNode: _nodeText2,
-                            decoration: InputDecoration(
-                                hintStyle: TextStyle(
-                                    color: txtColor,
-                                    fontSize: defaultSize * 15)),
-                            onChanged: (text) {
-                              controller.weightSelected(text);
-                            },
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: valWidth * 0.2,
-                      ), //margin
-                    ],
-                  ), //weight
-
-                  SizedBox(
-                    height: 25,
-                  ),
-
-                  Container(
-                    height: valWidth * 0.1,
-                    width: valWidth * 0.7,
-                    decoration: BoxDecoration(
-                        color: txtFeildColor,
-                        borderRadius: BorderRadius.all(Radius.circular(3))),
-                    child: KeyboardActions(
-                      disableScroll: true,
-                      config: _buildConfig(context),
-                      child: TextField(
-                        textAlign: TextAlign.center,
+                    SizedBox(
+                      height: valHeight * 0.01,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        // 에딧기능추가해주세요
+                        // _openDatePicker(context);
+                        BottomPicker.date(
+                                title: "생년월일",
+                                titleStyle: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                    color: Colors.blue),
+                                onChange: (index) {
+                                  print(index);
+                                },
+                                onSubmit: (index) {
+                                  print(index);
+                                  controller.birthdaySelected(
+                                      index.toString().substring(0, 10));
+                                },
+                                bottomPickerTheme:
+                                    BOTTOM_PICKER_THEME.PLUM_PLATE)
+                            .show(context);
+                      },
+                      child: Text(
+                        'Edit',
                         style: TextStyle(
-                            color: txtColor, fontSize: defaultSize * 15),
-                        keyboardType: TextInputType.text,
-                        focusNode: _nodeText3,
-                        decoration: InputDecoration(
-                            hintText: controller.disease == null ||
-                                    controller.disease == ""
-                                ? "   질병기초정보 입력"
-                                : controller.disease,
-                            hintStyle: TextStyle(
-                                fontSize: defaultSize * 15, color: txtColor)),
-                        onChanged: (text) {
-                          controller.diseaseSelected(text);
-                        },
+                            color: redtxtColor, fontSize: defaultSize * 12),
                       ),
-                    ),
-                  ), //disease
-                  SizedBox(
-                    height: 40,
-                  ),
+                    )
+                  ],
+                ), //ID and Edit // 에딧기능 넣어주세요
+                SizedBox(
+                  height: valHeight * 0.045,
+                ),
 
-                  GestureDetector(
-                    // 저장기능 추가해주세요
-                    onTap: () {
-                      Get.off(() => ConstructTabBar());
-                      // return Home();
-                    }, //여기에 로그아웃 기능 구현
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.end,
-                      // crossAxisAlignment: CrossAxisAlignment.center,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          width: valWidth * 0.6,
-                          height: 30,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 1,
-                                color: txtFeildBorderColor,
-                              ),
-                              color: txtFeildColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: Align(
-                              alignment: FractionalOffset(0.5, 0.5),
-                              child: Text("저장",
-                                  style: TextStyle(
-                                      fontSize: defaultSize * 15,
-                                      color: txtColor),
-                                  textAlign: TextAlign.center)),
+                            width: valWidth * 0.25,
+                            child: Text("성별",
+                                style: TextStyle(
+                                    color: txtColor,
+                                    fontSize: defaultSize * 14),
+                                textAlign: TextAlign.center)),
+                        GestureDetector(
+                          onTap: () {
+                            // _openDatePicker(context);
+                            BottomPicker(
+                                    items: genderList,
+                                    title: "성별",
+                                    titleStyle: TextStyle(
+                                        color: txtColor,
+                                        fontSize: defaultSize * 15),
+                                    onChange: (index) {
+                                      print(index);
+                                    },
+                                    onSubmit: (index) {
+                                      print(genderList[index].data);
+                                      controller.genderSelected(
+                                          genderList[index].data.toString());
+                                    },
+                                    bottomPickerTheme:
+                                        BOTTOM_PICKER_THEME.PLUM_PLATE)
+                                .show(context);
+                          },
+                          child: Container(
+                              //생년월일 입력란
+                              width: valWidth * 0.35,
+                              height: TextfieldSize, //valHeight * 0.06,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: txtFeildColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(valWidth * 0.015))),
+                              margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
+                                  valWidth * 0.02, valWidth * 0.015),
+                              child: Text(
+                                controller.gender == null
+                                    ? ""
+                                    : controller.gender.toString(),
+                                style: TextStyle(
+                                    color: txtColor,
+                                    fontSize: defaultSize * 15),
+                              )),
+                        ), //margin
+                        Container(
+                          width: valWidth * 0.15,
                         ),
                       ],
+                    ), //gender
+                    SizedBox(
+                      height: valHeight * 0.03,
                     ),
-                  ), //저장기능_추가해주세요
-                  SizedBox(
-                    height: 60,
-                  ),
-                ],
-              ),
-            ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: valWidth * 0.25,
+                            padding: EdgeInsets.fromLTRB(0, 3, 0, 10),
+                            child: Text("생년월일",
+                                style: TextStyle(
+                                    color: txtColor,
+                                    fontSize: defaultSize * 14),
+                                textAlign: TextAlign.center)),
+                        GestureDetector(
+                          onTap: () {
+                            // _openDatePicker(context);
+                            BottomPicker.date(
+                                    title: "생년월일",
+                                    titleStyle: TextStyle(
+                                        color: txtColor,
+                                        fontSize: defaultSize * 15),
+                                    onChange: (index) {
+                                      print(index);
+                                    },
+                                    onSubmit: (index) {
+                                      print(index);
+                                      controller.birthdaySelected(
+                                          index.toString().substring(0, 10));
+                                    },
+                                    bottomPickerTheme:
+                                        BOTTOM_PICKER_THEME.PLUM_PLATE)
+                                .show(context);
+                          },
+                          child: Container(
+                              //생년월일 입력란
+                              width: valWidth * 0.35,
+                              height: TextfieldSize, //valHeight * 0.06,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: txtFeildColor,
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(valWidth * 0.015))),
+                              margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
+                                  valWidth * 0.02, valWidth * 0.015),
+                              child: Text(
+                                controller.birthday == null
+                                    ? ""
+                                    : controller.birthday.toString(),
+                                style: TextStyle(
+                                    color: txtColor,
+                                    fontSize: defaultSize * 15),
+                              )),
+                        ),
+                        Container(
+                          width: valWidth * 0.15,
+                        ), //margin
+                      ],
+                    ), //birthday
+                    SizedBox(height: valHeight * 0.03),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: valWidth * 0.25,
+                            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                            child: Text("키",
+                                style: TextStyle(
+                                    color: txtColor,
+                                    fontSize: defaultSize * 14),
+                                textAlign: TextAlign.center)),
+                        Container(
+                          //키 입력란
+                          width: valWidth * 0.35,
+                          height: TextfieldSize, //valHeight * 0.06,
+                          decoration: BoxDecoration(
+                              color: txtFeildColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(3))),
+                          margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
+                              valWidth * 0.02, valWidth * 0.015),
+                          child: KeyboardActions(
+                            disableScroll: true,
+                            config: _buildConfig(context),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: txtColor, fontSize: defaultSize * 15),
+                              keyboardType: TextInputType.number,
+                              focusNode: _nodeText1,
+                              decoration: InputDecoration(
+                                  hintText: controller.height,
+                                  hintStyle: TextStyle(
+                                      color: txtColor,
+                                      fontSize: defaultSize * 15)),
+                              onChanged: (text) {
+                                controller.heightSelected(text);
+                              },
+                            ),
+                          ),
+                        ),
+                        Container(
+                            width: valWidth * 0.15,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [])), //margin
+                      ],
+                    ), //height
+                    SizedBox(height: valHeight * 0.03),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                            width: valWidth * 0.25,
+                            padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
+                            child: Text("체중",
+                                style: TextStyle(
+                                    color: txtColor,
+                                    fontSize: defaultSize * 14),
+                                textAlign: TextAlign.center)),
+                        Container(
+                          //체중 입력란
+                          height: TextfieldSize, //valHeight * 0.06,
+                          width: valWidth * 0.34,
+                          decoration: BoxDecoration(
+                              color: txtFeildColor,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(valWidth * 0.015))),
+                          margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
+                              valWidth * 0.02, valWidth * 0.03),
+                          child: KeyboardActions(
+                            disableScroll: true,
+                            config: _buildConfig(context),
+                            child: TextField(
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: txtColor, fontSize: defaultSize * 15),
+                              keyboardType: TextInputType.number,
+                              focusNode: _nodeText2,
+                              decoration: InputDecoration(
+                                  hintStyle: TextStyle(
+                                      color: txtColor,
+                                      fontSize: defaultSize * 15)),
+                              onChanged: (text) {
+                                controller.weightSelected(text);
+                              },
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: valWidth * 0.15,
+                        ), //margin
+                      ],
+                    ), //weight
+
+                    SizedBox(
+                      height: valHeight * 0.065,
+                    ),
+
+                    Container(
+                      height: valWidth * 0.11,
+                      width: valWidth * 0.75,
+                      decoration: BoxDecoration(
+                          color: txtFeildColor,
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(valWidth * 0.02))),
+                      child: KeyboardActions(
+                        disableScroll: true,
+                        config: _buildConfig(context),
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: txtColor, fontSize: defaultSize * 15),
+                          keyboardType: TextInputType.text,
+                          focusNode: _nodeText3,
+                          decoration: InputDecoration(
+                              hintText: controller.disease == null ||
+                                      controller.disease == ""
+                                  ? "   질병기초정보 입력"
+                                  : controller.disease,
+                              hintStyle: TextStyle(
+                                  fontSize: defaultSize * 14, color: txtColor)),
+                          onChanged: (text) {
+                            controller.diseaseSelected(text);
+                          },
+                        ),
+                      ),
+                    ), //disease
+                    SizedBox(
+                      height: valHeight * 0.07,
+                    ),
+
+                    GestureDetector(
+                      // 저장기능 추가해주세요
+                      onTap: () {
+                        Get.off(() => ConstructTabBar());
+                        // return Home();
+                      }, //여기에 로그아웃 기능 구현
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.end,
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: valWidth * 0.5,
+                            height: valHeight * 0.042,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  width: 1,
+                                  color: txtFeildBorderColor,
+                                ),
+                                color: txtFeildColor,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(valWidth * 0.025))),
+                            child: Align(
+                                alignment: FractionalOffset(0.5, 0.5),
+                                child: Text("저장",
+                                    style: TextStyle(
+                                        fontSize: defaultSize * 15,
+                                        color: txtColor),
+                                    textAlign: TextAlign.center)),
+                          ),
+                        ],
+                      ),
+                    ), //저장기능_추가해주세요
+                    SizedBox(
+                      height: valHeight * 0.025,
+                    ),
+                  ],
+                ),
+              ]),
+            ),
           ));
     });
   }

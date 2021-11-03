@@ -20,6 +20,8 @@ import 'functions/Widgets/SleepTimeGraph.dart';
 import 'functions/Widgets/StressDaily.dart';
 import 'functions/Widgets/StressGraph.dart';
 
+import 'package:betterme/betterme/login/initialsetting/InitialSettingScreen.dart';
+
 // import 'functions/home_add_1.dart';
 // import 'functions/home_add_2.dart';
 
@@ -127,6 +129,15 @@ class _HomeScreen extends State<HomeScreen> {
                         // Row(
                         //   children: [Coaching(gridHeight * 2, gridWidth * 6)],
                         // ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          InitialSettingScreen()));
+                            },
+                            child: Container())
                       ]),
                 )
               ],
