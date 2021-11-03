@@ -179,9 +179,9 @@ class _FoodTabs extends State<FoodTabs> {
     final graphBlur = 1.2;
     final graphBorderRadius = valWidth * 0.015;
 
-    double dayButtonHeight = valHeight * 0.06;
-    double dayButtonWidth = valWidth * 0.124; //버튼크기
-    double blankBetweenButton = valHeight * 0.005; //버튼사이 여백
+    double dayButtonHeight = valHeight * 0.075;
+    double dayButtonWidth = valWidth * 0.12; //버튼크기
+    double blankBetweenButton = valHeight * 0.01; //버튼사이 여백
 
     double miniBoxSize = 0.015;
     double defaultSize = valWidth * 0.0025; //폰트사이즈용
@@ -401,7 +401,7 @@ class _FoodTabs extends State<FoodTabs> {
               0.12,
               0.7),
           SizedBox(
-            height: valHeight * 0.02,
+            height: valHeight * 0.01,
           ),
           Row(
             //기간(날짜) 선택하는 bar.
@@ -455,7 +455,7 @@ class _FoodTabs extends State<FoodTabs> {
             ],
           ),
           SizedBox(
-            height: valHeight * 0.03,
+            height: valHeight * 0.01,
           ),
           Container(
             height: 7 * dayButtonHeight + 6 * blankBetweenButton,
@@ -807,7 +807,7 @@ class _FoodTabs extends State<FoodTabs> {
             ),
           ),
           SizedBox(
-            height: valHeight * 0.1,
+            height: valHeight * 0.02,
           )
         ])));
       });
