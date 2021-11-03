@@ -1,10 +1,10 @@
 import 'dart:io';
 
 class UserModel {
-  String? uid;
+  String? uid = "";
   String? name = "";
   String? email = "";
-  String? profileUrl;
+  String? profileUrl = "";
   File? profileImage;
 
   UserModel({
