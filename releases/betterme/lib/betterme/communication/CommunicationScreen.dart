@@ -94,8 +94,8 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                               child: ListTile(
                                 tileColor: blockColor,
                                 leading: SizedBox(
-                                  height: 70,
-                                  width: 40,
+                                  height: 50,
+                                  width: valWidth * 0.12,
                                   child: Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
@@ -108,7 +108,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                                   ),
                                 ), // 사용자 이미지 불러오는 코드
                                 title: Container(
-                                  height: 70,
+                                  height: 50,
                                   child: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
