@@ -94,13 +94,8 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                               child: ListTile(
                                 tileColor: blockColor,
                                 leading: SizedBox(
-<<<<<<< Updated upstream
-                                  height: 40,
-                                  width: 40,
-=======
                                   height: valHeight * 0.1,
                                   width: valWidth * 0.12,
->>>>>>> Stashed changes
                                   child: Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
