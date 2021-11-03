@@ -83,6 +83,7 @@ class SettingScreen extends StatelessWidget {
           backgroundColor: bgColor,
           appBar: AppBar(
             backgroundColor: bgColor,
+            elevation: 0.0,
             centerTitle: true,
             title: Text('계정 설정',
                 style: TextStyle(color: txtColor, fontSize: defaultSize * 15)),
@@ -91,7 +92,7 @@ class SettingScreen extends StatelessWidget {
             child: Center(
               child: Column(children: [
                 SizedBox(
-                  height: 40,
+                  height: valHeight * 0.015,
                 ),
                 DividewithObj(
                     context,
@@ -190,7 +191,7 @@ class SettingScreen extends StatelessWidget {
                     0.35), //ProfileImage
 
                 SizedBox(
-                  height: 25,
+                  height: valHeight * 0.015,
                 ),
 
                 Column(
@@ -457,7 +458,7 @@ class SettingScreen extends StatelessWidget {
                     ), // weight
 
                     SizedBox(
-                      height: valHeight * 0.035,
+                      height: valHeight * 0.04,
                     ),
 
                     Container(
@@ -509,7 +510,7 @@ class SettingScreen extends StatelessWidget {
                             height: valHeight * 0.042,
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                  width: 1,
+                                  width: 0.7,
                                   color: txtFeildBorderColor,
                                 ),
                                 color: txtFeildColor,
@@ -549,7 +550,7 @@ class SettingScreen extends StatelessWidget {
                             height: valHeight * 0.042,
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                  width: 1,
+                                  width: 0.7,
                                   color: txtFeildBorderColor,
                                 ),
                                 color: txtFeildColor,
