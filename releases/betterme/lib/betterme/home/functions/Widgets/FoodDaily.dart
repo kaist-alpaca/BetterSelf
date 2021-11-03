@@ -1,10 +1,6 @@
 import 'package:betterme/betterme/home/functions/Widgets/FoodDailyMenu.dart';
 import 'package:flutter/material.dart';
 
-import 'FoodDailyMenu1.dart';
-import 'FoodDailyMenu2.dart';
-import 'FoodDailyMenu3.dart';
-
 double? widgetHeight2;
 double? widgetWidth2;
 
