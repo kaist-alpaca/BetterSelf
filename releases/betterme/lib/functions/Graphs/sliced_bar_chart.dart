@@ -26,17 +26,19 @@ class _SlicededBarChart extends State<SlicededBarChart> {
     var max = -double.maxFinite;
     widget.scores.forEach((e) {
       barlist.add(
-        BarChartGroupData(x: e.time.day, barRods: [
-          BarChartRodData(
-            y: e.value,
-            colors: [Color(0xffF2D8A7)],
-            width: 15,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(4),
-              topRight: Radius.circular(4),
+        BarChartGroupData(x: e.time.day,
+          barRods: [
+            BarChartRodData(
+              y: e.value,
+              colors: [Color(0xffF2D8A7)],
+              width: 15,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4),
+                topRight: Radius.circular(4),
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
       );
       min = min > e.value ? e.value : min;
       max = max < e.value ? e.value : max;
@@ -54,6 +56,25 @@ class _SlicededBarChart extends State<SlicededBarChart> {
         alignment: BarChartAlignment.spaceAround,
         barTouchData: BarTouchData(
           enabled: false,
+          touchTooltipData: BarTouchTooltipData(
+            tooltipBgColor: Colors.transparent,
+            tooltipPadding: const EdgeInsets.all(0),
+            tooltipMargin: 8,
+            getTooltipItem: (
+                BarChartGroupData group,
+                int groupIndex,
+                BarChartRodData rod,
+                int rodIndex,
+                ) {
+              return BarTooltipItem(
+                rod.y.round().toString(),
+                const TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFFFFFDFD),
+                ),
+              );
+            },
+          ),
         ),
         titlesData: FlTitlesData(
           show: true,
@@ -103,7 +124,14 @@ class _SlicededBarChart extends State<SlicededBarChart> {
           ),
         ),
         borderData: FlBorderData(
+          // 하단 가로선
           show: true,
+          border: Border(
+            bottom: BorderSide(
+              width: 1.0,
+              color: Color(0xFFFFFDFD),
+            ),
+          ),
         ),
         barGroups: getData(),
       ),
@@ -130,6 +158,7 @@ class _SlicededBarChart extends State<SlicededBarChart> {
             ],
           ),
         ],
+        showingTooltipIndicators: [0]
       ),
       BarChartGroupData(
         x: 1,
@@ -149,6 +178,7 @@ class _SlicededBarChart extends State<SlicededBarChart> {
             ],
           )
         ],
+        showingTooltipIndicators: [0]
       ),
       BarChartGroupData(
         x: 2,
@@ -168,6 +198,7 @@ class _SlicededBarChart extends State<SlicededBarChart> {
             ],
           )
         ],
+        showingTooltipIndicators: [0]
       ),
       BarChartGroupData(
         x: 3,
@@ -187,6 +218,7 @@ class _SlicededBarChart extends State<SlicededBarChart> {
             ],
           )
         ],
+        showingTooltipIndicators: [0]
       ),
     ];
   }

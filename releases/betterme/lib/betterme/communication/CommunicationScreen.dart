@@ -94,8 +94,8 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                               child: ListTile(
                                 tileColor: blockColor,
                                 leading: SizedBox(
-                                  height: 50,
-                                  width: 50,
+                                  height: 40,
+                                  width: 40,
                                   child: Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,

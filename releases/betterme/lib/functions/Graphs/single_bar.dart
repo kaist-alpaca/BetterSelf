@@ -30,18 +30,29 @@ class _SingleBar extends State<SingleBar> {
     var min = double.maxFinite;
     var max = -double.maxFinite;
     widget.scores.forEach((e) {
+      var showTooltip = [1];
+      if(widget.Values && widget.LastValueOnly){
+        if(e.time == widget.scores.last.time)showTooltip = [0];
+      }else if(widget.Values){
+        showTooltip = [0];
+      }else{
+        showTooltip = [1];
+      }
       barlist.add(
-        BarChartGroupData(x: e.time.day, barRods: [
-          BarChartRodData(
-            y: e.value,
-            colors: [Color(0xffF2D8A7)],
-            width: 15,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(4),
-              topRight: Radius.circular(4),
+        BarChartGroupData(x: e.time.day,
+          barRods: [
+            BarChartRodData(
+              y: e.value,
+              colors: [Color(0xffF2D8A7)],
+              width: 15,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(4),
+                topRight: Radius.circular(4),
+              ),
             ),
-          ),
-        ]),
+          ],
+          showingTooltipIndicators: showTooltip,
+        ),
       );
       min = min > e.value ? e.value : min;
       max = max < e.value ? e.value : max;
@@ -54,7 +65,6 @@ class _SingleBar extends State<SingleBar> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.Values == true && widget.LastValueOnly == true) {
       return BarChart(
         BarChartData(
             barTouchData: barTouchData,
@@ -65,29 +75,6 @@ class _SingleBar extends State<SingleBar> {
             maxY: _max,
             gridData: FlGridData(show: false)),
       );
-    } else if (widget.Values == true && widget.LastValueOnly == false) {
-      return BarChart(
-        BarChartData(
-            barTouchData: barTouchData,
-            titlesData: titlesData,
-            borderData: borderData,
-            barGroups: barlist,
-            alignment: BarChartAlignment.spaceAround,
-            maxY: _max,
-            gridData: FlGridData(show: false)),
-      );
-    } else {
-      return BarChart(
-        BarChartData(
-            barTouchData: barTouchData,
-            titlesData: titlesData,
-            borderData: borderData,
-            barGroups: barlist,
-            alignment: BarChartAlignment.spaceAround,
-            maxY: _max,
-            gridData: FlGridData(show: false)),
-      );
-    }
   }
 
   BarTouchData get barTouchData => BarTouchData(
@@ -105,7 +92,8 @@ class _SingleBar extends State<SingleBar> {
             return BarTooltipItem(
               rod.y.round().toString(),
               const TextStyle(
-                color: Colors.white,
+                fontSize: 12,
+                color: Color(0xFFFFFDFD),
               ),
             );
           },
@@ -117,7 +105,7 @@ class _SingleBar extends State<SingleBar> {
         bottomTitles: SideTitles(
           showTitles: true,
           getTextStyles: (context, value) => const TextStyle(
-            color: Color(0xFFFFFFFF),
+            color: Color(0xFFFFFDFD),
             fontSize: 12,
           ),
           margin: 10,
@@ -137,7 +125,7 @@ class _SingleBar extends State<SingleBar> {
         border: Border(
           bottom: BorderSide(
             width: 1.0,
-            color: Color(0xFFFFFFFF),
+            color: Color(0xFFFFFDFD),
           ),
         ),
       );

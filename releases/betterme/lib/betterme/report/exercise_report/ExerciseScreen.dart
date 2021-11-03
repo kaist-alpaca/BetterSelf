@@ -143,7 +143,6 @@ class _ExerciseScreen extends State<ExerciseScreen> {
                         onPressed: () {
                           setState(() {
                             buttonCase = 1;
-
                             setState(() {
                               button2Color = Color(0xff827380);
                               button1Color = Color(0xff0B202A);

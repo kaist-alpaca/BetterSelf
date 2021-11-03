@@ -25,8 +25,8 @@ class _GroupBarThreeChart extends State<GroupBarThreeChart> {
                 border: Border(
                   top: BorderSide.none,
                   right: BorderSide.none,
-                  left: BorderSide(width: 1),
-                  bottom: BorderSide(width: 1),
+                  left: BorderSide.none,
+                  bottom: BorderSide(width: 1, color: Color(0xFFFFFDFD)),
                 ),
               ),
               gridData: FlGridData(show: false),
@@ -167,7 +167,7 @@ class _GroupBarThreeChart extends State<GroupBarThreeChart> {
                       ),
                     ),
                     BarChartRodData(
-                      y: 5,
+                      y: DateTime.now().day.toDouble(),
                       width: 7,
                       colors: [Color(0xFFA0B1DF)],
                       borderRadius: BorderRadius.only(
@@ -180,16 +180,16 @@ class _GroupBarThreeChart extends State<GroupBarThreeChart> {
               ],
             ),
           ),
-          Container(
-            padding: EdgeInsets.only(bottom: 10),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Divider(
-                color: Colors.white,
-                thickness: 20,
-              ),
-            ),
-          )
+          // Container(
+          //   padding: EdgeInsets.only(bottom: 10),
+          //   child: Align(
+          //     alignment: Alignment.bottomCenter,
+          //     child: Divider(
+          //       color: Colors.white,
+          //       thickness: 20,
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
