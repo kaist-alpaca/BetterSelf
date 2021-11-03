@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class MadeHorizontalChart extends StatefulWidget {
   final sleep;
@@ -49,8 +50,7 @@ class CustomeScatterChartPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round // 선의 끝은 둥글게 함.
       ..strokeWidth = 1.0; // 선의 굵기는 4.0
     // TODO: implement paint
-    final xLabelStyle = TextStyle(
-        color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold);
+    final xLabelStyle = TextStyle(color: Colors.white, fontSize: 10);
     Offset c = Offset(border, border + hd * 7);
     Offset c_x = Offset(border, border);
     const int dashWidth = 1;
@@ -59,7 +59,7 @@ class CustomeScatterChartPainter extends CustomPainter {
     for (int i = 0; i <= 24; i += 4) {
       drawTextCentered(canvas, c, i.toString(), xLabelStyle, xd);
       // canvas.drawLine(c, c_x, paint);
-      double start_y = border + hd * 7;
+      double start_y = border + hd * 6.5; //아래로 시작점
       while (start_y >= border) {
         canvas.drawLine(Offset(dash_x, start_y),
             Offset(dash_x, start_y - dashWidth), paint);
@@ -78,6 +78,15 @@ class CustomeScatterChartPainter extends CustomPainter {
             Offset(border + wd * e[2], border + hd * i), paint);
       });
     }
+
+    Paint paint2 = Paint()
+      ..color = Colors.white
+      ..strokeCap = StrokeCap.square
+      ..strokeWidth = 0.8;
+
+    //아래 가로줄
+    double start_y = border + hd * 6.5; //아래로 시작점
+    canvas.drawLine(Offset(0, start_y), Offset(size.width, start_y), paint2);
   }
 
   @override

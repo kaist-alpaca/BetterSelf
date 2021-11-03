@@ -70,33 +70,53 @@ class _ReportScreen extends State<ReportScreen> {
         color: bgColor,
         child: Scaffold(
           backgroundColor: bgColor,
-          appBar: AppBar(
-            backgroundColor: bgColor,
-            title: Text(
-                controller.startDate(controller.date).month.toString() +
-                    "월 " +
-                    controller.startDate(controller.date).day.toString() +
-                    "일 - " +
-                    controller.endDate(controller.date).month.toString() +
-                    "월 " +
-                    controller.endDate(controller.date).day.toString() +
-                    "일",
-                style: TextStyle(fontSize: defaultSize * 17, color: txtColor),
-                textAlign: TextAlign.center),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                controller.dateMinus7(controller.date);
-              },
-            ),
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.arrow_forward_ios),
-                onPressed: () {
-                  controller.datePlus7(controller.date);
-                },
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(valHeight * 0.08),
+            child: AppBar(
+              elevation: 3,
+              backgroundColor: bgColor,
+              title: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: valHeight * 0.08,
+                  padding: EdgeInsets.only(top: valHeight * 0.035),
+                  child: Text(
+                      controller.startDate(controller.date).month.toString() +
+                          "월 " +
+                          controller.startDate(controller.date).day.toString() +
+                          "일 - " +
+                          controller.endDate(controller.date).month.toString() +
+                          "월 " +
+                          controller.endDate(controller.date).day.toString() +
+                          "일",
+                      style: TextStyle(
+                          fontSize: defaultSize * 17, color: txtColor),
+                      textAlign: TextAlign.center),
+                ),
               ),
-            ],
+              leading: Container(
+                height: valHeight * 0.08,
+                padding: EdgeInsets.only(top: valHeight * 0.018),
+                child: IconButton(
+                  icon: Image.asset('images/arrow towards left.png'),
+                  onPressed: () {
+                    controller.dateMinus7(controller.date);
+                  },
+                ),
+              ),
+              actions: <Widget>[
+                Container(
+                  height: valHeight * 0.08,
+                  padding: EdgeInsets.only(top: valHeight * 0.018),
+                  child: IconButton(
+                    icon: Image.asset('images/arrow towards right.png'),
+                    onPressed: () {
+                      controller.datePlus7(controller.date);
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
           body: ListView(children: [
             Center(

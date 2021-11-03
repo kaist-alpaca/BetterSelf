@@ -60,8 +60,10 @@ class _SlicededBarChart extends State<SlicededBarChart> {
           bottomTitles: SideTitles(
             showTitles: true,
             getTextStyles: (context, value) =>
-                const TextStyle(color: Color(0xff939393), fontSize: 10),
+                const TextStyle(color: Color(0xff0B202A), fontSize: 10),
             margin: 10,
+
+            /// 여기 임시로 보이는 부분 바꾸기 위해 Color 수정했으니 참고. (안보이게 배경색으로 수정)
             getTitles: (double value) {
               switch (value.toInt()) {
                 case 0:

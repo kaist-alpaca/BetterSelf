@@ -319,7 +319,7 @@ class _FoodTabs extends State<FoodTabs> {
                     padding: EdgeInsets.symmetric(
                         vertical: valHeight * 0.008,
                         horizontal: valWidth * 0.01),
-                    child: GroupBarThreeChart(),
+                    child: GroupBarThreeChart(food: 1),
                   ),
                 ],
               )),
