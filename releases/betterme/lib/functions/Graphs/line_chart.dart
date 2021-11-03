@@ -79,12 +79,12 @@ class customeLineChartPainter extends CustomPainter {
     final clipRect = Rect.fromLTRB(0, 0, size.width, size.height);
     canvas.clipRect(clipRect);
     canvas.drawPaint(Paint()..color = Color(0xff0B202A));
-    final drawableHeight = size.height - 2.0 * border;
+    final drawableHeight = size.height - 1.0 * border; // 보더
     final drawableWidth = size.width - 2.0 * border;
     final hd = drawableHeight / 5.0;
     final wd = drawableWidth / this.x.length.toDouble();
 
-    final height = hd * 3.0;
+    final height = hd * 3.0; // 얘가 위에 있는 선 그래프 공간 차지율
     final width = drawableWidth;
     if (height <= 0.0 || width <= 0.0) return;
     if (max - min < 1.0e-6) return;

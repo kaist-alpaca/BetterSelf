@@ -99,6 +99,7 @@ class _SingleBar extends State<SingleBar> {
       );
 
   FlBorderData get borderData => FlBorderData(
+        // 하단 가로선
         show: true,
         border: Border(
           bottom: BorderSide(

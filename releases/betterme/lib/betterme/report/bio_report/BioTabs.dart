@@ -400,18 +400,21 @@ class _BioTabs extends State<BioTabs> {
                       Container(
                         height: valHeight * 0.34,
                         width: graphWidth,
-                        padding: EdgeInsets.symmetric(
-                            vertical: valHeight * 0.008,
-                            horizontal: valWidth * 0.01),
-                        child: MadeLineChart(scores: _scores),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: valWidth * 0.01),
+                        child: Container(
+                            padding: EdgeInsets.only(top: valHeight * 0.08),
+                            child: MadeLineChart(scores: _scores)),
                       ),
                       Container(
                         height: valHeight * 0.34,
                         width: graphWidth,
                         padding: EdgeInsets.symmetric(
-                            vertical: valHeight * 0.008,
+                            vertical: valHeight * 0.002,
                             horizontal: valWidth * 0.01),
-                        child: SlicededBarChart(scores: _scores),
+                        child: Container(
+                            padding: EdgeInsets.only(bottom: valHeight * 0.035),
+                            child: SlicededBarChart(scores: _scores)),
                       ),
                     ],
                   )),
@@ -472,7 +475,8 @@ class _BioTabs extends State<BioTabs> {
                   height: valHeight * 0.34,
                   width: graphWidth,
                   padding: EdgeInsets.symmetric(
-                      vertical: valHeight * 0.008, horizontal: valWidth * 0.01),
+                      vertical: valHeight * 0.025,
+                      horizontal: valWidth * 0.045),
                   child: MadeHorizontalChart(sleep: _sleep),
                 ),
               ),
