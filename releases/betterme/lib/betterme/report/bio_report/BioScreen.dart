@@ -1,6 +1,7 @@
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'BioTabs.dart';
 
@@ -29,11 +30,34 @@ class _BioScreen extends State<BioScreen> {
 
     return Scaffold(
         backgroundColor: bgColor,
-        appBar: AppBar(
-          backgroundColor: bgColor,
-          title: Text(
-            '생체 데이터',
-            style: TextStyle(color: txtColor, fontSize: defaultSize * 17),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(valHeight * 0.08),
+          child: AppBar(
+            backgroundColor: bgColor,
+            elevation: 0.0,
+            title: Container(
+              height: valHeight * 0.08,
+              padding: EdgeInsets.only(top: valHeight * 0.02),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text('생체 데이터',
+                    style:
+                        TextStyle(color: txtColor, fontSize: defaultSize * 17),
+                    textAlign: TextAlign.center),
+              ),
+            ),
+            leading: Container(
+                height: valHeight * 0.08,
+                width: valWidth * 0.1,
+                padding: EdgeInsets.only(top: valHeight * 0.022),
+                margin: EdgeInsets.only(left: valWidth * 0.05),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: SvgPicture.asset('images/arrow towards left_icon.svg'),
+                )),
+            actions: [Container(width: valWidth * 0.15)],
           ),
         ),
         body: ListView(children: [

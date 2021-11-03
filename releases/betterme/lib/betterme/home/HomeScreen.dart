@@ -82,7 +82,7 @@ class _HomeScreen extends State<HomeScreen> {
                     Container(
                       width: valWidth * 0.38,
                       child: Text(
-                        'Hi, ' + 'Name' + '!',
+                        'Hi, ' + 'Kyungbin' + '!',
                         style: TextStyle(
                           fontSize: defaultSize * 19,
                           color: Color(0xffFFFDFD),
@@ -130,8 +130,6 @@ class _HomeScreen extends State<HomeScreen> {
                             FoodDaily(gridHeight * 2, gridWidth * 6),
                           ],
                         ),
-                        
-                        
                       ]),
                 )
               ],

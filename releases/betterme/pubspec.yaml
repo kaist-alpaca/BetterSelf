@@ -75,6 +75,8 @@ flutter:
     - images/communication_icon.svg
     - images/report_icon.svg
     - images/setting_icon1.svg
+    - images/arrow towards left_icon.svg
+    - images/arrow towards right_icon.svg
     - data/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
