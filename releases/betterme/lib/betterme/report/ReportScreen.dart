@@ -8,6 +8,7 @@ import 'package:betterme/functions/Graphs/group_bar_three_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:betterme/functions/Graphs/line_chart.dart';
 
@@ -73,7 +74,6 @@ class _ReportScreen extends State<ReportScreen> {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(valHeight * 0.08),
             child: AppBar(
-              elevation: 3,
               backgroundColor: bgColor,
               title: Align(
                 alignment: Alignment.bottomCenter,
@@ -96,9 +96,9 @@ class _ReportScreen extends State<ReportScreen> {
               ),
               leading: Container(
                 height: valHeight * 0.08,
-                padding: EdgeInsets.only(top: valHeight * 0.018),
+                padding: EdgeInsets.only(top: valHeight * 0.022),
                 child: IconButton(
-                  icon: Image.asset('images/arrow towards left.png'),
+                  icon: SvgPicture.asset('images/arrow towards left_icon.svg'),
                   onPressed: () {
                     controller.dateMinus7(controller.date);
                   },
@@ -107,9 +107,10 @@ class _ReportScreen extends State<ReportScreen> {
               actions: <Widget>[
                 Container(
                   height: valHeight * 0.08,
-                  padding: EdgeInsets.only(top: valHeight * 0.018),
+                  padding: EdgeInsets.only(top: valHeight * 0.022),
                   child: IconButton(
-                    icon: Image.asset('images/arrow towards right.png'),
+                    icon:
+                        SvgPicture.asset('images/arrow towards right_icon.svg'),
                     onPressed: () {
                       controller.datePlus7(controller.date);
                     },
