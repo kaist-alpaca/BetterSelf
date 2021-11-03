@@ -65,9 +65,17 @@ class _Coaching extends State<Coaching> {
     double defaultSize = valWidth * 0.0025;
 
     return GetBuilder<ProfileController>(builder: (controller) {
-      String dayButton1txt = controller.YYDate(controller.date).day.toString();
-      String dayButton2txt = controller.YDate(controller.date).day.toString();
-      String dayButton3txt = (controller.date).day.toString();
+      DateTime homeDate = DateTime.now();
+
+      String dayButton1txt =
+          DateTime(homeDate.year, homeDate.month, homeDate.day - 2)
+              .day
+              .toString();
+      String dayButton2txt =
+          DateTime(homeDate.year, homeDate.month, homeDate.day - 1)
+              .day
+              .toString();
+      String dayButton3txt = (homeDate).day.toString();
 
       return Container(
           height: widgetHeight,
@@ -319,8 +327,8 @@ class _Coaching extends State<Coaching> {
                   SizedBox(width: widgetWidth * 0.015),
                   CoachingInside(
                       buttonCase,
-                      DateTime(controller.date.year, controller.date.month,
-                          controller.date.day - dayButtonCase),
+                      DateTime(homeDate.year, homeDate.month,
+                          homeDate.day - dayButtonCase),
                       dayButtonHeight,
                       buttonWidth,
                       blankBetweenButton,

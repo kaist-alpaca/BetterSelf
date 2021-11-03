@@ -36,7 +36,7 @@ class _GroupBarThreeChart extends State<GroupBarThreeChart> {
             getTextStyles: (context, value) => const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.normal,
-                fontSize: 16),
+                fontSize: 12),
             getTitles: (value) {
               return value.toInt().toString();
             },

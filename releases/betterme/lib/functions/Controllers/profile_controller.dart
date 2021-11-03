@@ -49,6 +49,11 @@ class ProfileController extends GetxController {
     update();
   }
 
+  void rdateMinus7(DateTime value) {
+    reportDay = reportDay.subtract(Duration(days: 7));
+    update();
+  }
+
   void datePlus(DateTime value) {
     date = date.add(Duration(days: 1));
     update();
@@ -56,6 +61,11 @@ class ProfileController extends GetxController {
 
   void datePlus7(DateTime value) {
     date = date.add(Duration(days: 7));
+    update();
+  }
+
+  void rdatePlus7(DateTime value) {
+    reportDay = reportDay.add(Duration(days: 7));
     update();
   }
 
@@ -145,6 +155,7 @@ class ProfileController extends GetxController {
 
   Future<String> authStateChanges(Object? firebaseUser) async {
     print("authStateChanges working");
+    String tmp = "0";
     if (firebaseUser != null) {
       UserModel? userModel = await ServerConnection.findUserByUid(
           FirebaseAuth.instance.currentUser!.uid);
@@ -152,6 +163,7 @@ class ProfileController extends GetxController {
         print("usermodel is not null");
         originMyProfile = userModel;
       } else {
+        tmp = "1";
         print("usermodel is null");
         await ServerConnection.uploadProfileImage(
           FirebaseAuth.instance.currentUser!.uid,
@@ -178,9 +190,10 @@ class ProfileController extends GetxController {
       }
     }
     myProfile(UserModel.clone(originMyProfile));
-    return FirebaseAuth.instance.currentUser == null
-        ? ''
-        : FirebaseAuth.instance.currentUser!.uid;
+    // return FirebaseAuth.instance.currentUser == null
+    //     ? ''
+    //     : FirebaseAuth.instance.currentUser!.uid;
+    return tmp;
   }
 
   @override
