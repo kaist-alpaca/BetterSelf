@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:betterme/functions/Controllers/profile_controller.dart';
-import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Server/ServerConnectionMethods.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -143,8 +140,7 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
                             }
                           }
                           if (snapshot.data! == "1") {
-                            try {
-                              return Container(
+                            return Container(
                                 width: valWidth * 0.25,
                                 height: valWidth * 0.25,
                                 child: ClipRRect(
@@ -163,57 +159,16 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
                                           widget.index.toString() +
                                           '.jpg',
                                       fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return Text('+',
+                                            style: TextStyle(
+                                                color: Color(0xffFBF5F6),
+                                                fontSize: defaultSize * 22));
+                                      },
                                     ),
                                   ),
-                                ),
-                              );
-                              // Image.network(
-                              //   'http://kaistuser.iptime.org:8080/img/food/' +
-                              //       controller.myProfile.value.uid! +
-                              //       '.' +
-                              //       DateTime.now().year.toString() +
-                              //       '_' +
-                              //       DateTime.now().month.toString() +
-                              //       '_' +
-                              //       DateTime.now().day.toString() +
-                              //       '_' +
-                              //       widget.index.toString() +
-                              //       '.jpg',
-                              //   fit: BoxFit.cover,
-                              //   key: ValueKey(new Random().nextInt(100)),
-                              // );
-                            } catch (e) {
-                              print("image error");
-                              print("image error");
-                              print("image error");
-                              print("image error");
-                              print("image error");
-                              return Container();
-                            }
-                            // print('good');
-                            // return Container(
-                            //   width: valWidth * 0.25,
-                            //   height: valWidth * 0.25,
-                            //   child: ClipRRect(
-                            //     borderRadius: BorderRadius.circular(100),
-                            //     child: Container(
-                            //       child: Image.network(
-                            //         'http://kaistuser.iptime.org:8080/img/food/' +
-                            //             controller.myProfile.value.uid! +
-                            //             '.' +
-                            //             DateTime.now().year.toString() +
-                            //             '_' +
-                            //             DateTime.now().month.toString() +
-                            //             '_' +
-                            //             DateTime.now().day.toString() +
-                            //             '_' +
-                            //             widget.index.toString() +
-                            //             '.jpg',
-                            //         fit: BoxFit.cover,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // );
+                                ));
                           } else {
                             return Text('+',
                                 style: TextStyle(
@@ -224,25 +179,6 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
                           return CircularProgressIndicator();
                         }
                       }),
-                  // child: ServerConnection.checkFoodPhoto() == "1"
-                  // ? Container(
-                  //     //여기에 아마도 프사설정
-                  //     width: valWidth * 0.25,
-                  //     height: valWidth * 0.25,
-                  //     child: ClipRRect(
-                  //       borderRadius: BorderRadius.circular(100),
-                  //       child: Container(
-                  //         child: Image.network(
-                  //           'http://kaistuser.iptime.org:8080/img/food/4fT7dL3H8CUkLKBx9bB3Pqjp3bi1.2021_11_3_3.jpg',
-                  //           fit: BoxFit.cover,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   )
-                  // : Text('+',
-                  //     style: TextStyle(
-                  //         color: Color(0xffFBF5F6),
-                  //         fontSize: defaultSize * 22)),
                   style: ElevatedButton.styleFrom(
                       shape: CircleBorder(), primary: Color(0xff4B4D58)),
                 ),
