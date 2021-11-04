@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:betterme/functions/Graphs/gradient_chart.dart';
+import 'package:betterme/functions/Graphs/line_chart_space.dart';
 import 'package:betterme/functions/Graphs/single_bar.dart';
 import 'package:betterme/functions/Graphs/sliced_bar_chart.dart';
 import 'package:betterme/functions/Graphs/group_bar_three_chart.dart';
@@ -48,7 +49,7 @@ class _ReportScreen extends State<ReportScreen> {
     super.initState();
     final scores = List<Score>.generate(dayCount, (index) {
       final y = rng.nextDouble() * 30.0;
-      final d = DateTime.now().add(Duration(days: -dayCount + index));
+      final d = DateTime.now().add(Duration(days: 0 + index));
       return Score(y, d);
     });
     setState(() {
@@ -225,12 +226,16 @@ class _ReportScreen extends State<ReportScreen> {
                                   ),
                                 ),
                                 Container(
-                                  width: valWidth * 0.1,
+                                  width: valWidth * 0.35,
                                   height: valHeight * 0.1,
-                                  color: Colors.grey,
+                                  color: Color(0xff0B202A),
                                   child: GradientChart(scores: _scores),
+                                  margin: EdgeInsets.only(
+                                    left: valWidth * 0.04,
+                                  ),
                                 )
                               ]),
+                              SizedBox(width: valWidth * 0.04),
                               Column(children: [
                                 Align(
                                   alignment: Alignment.topLeft,
@@ -259,10 +264,10 @@ class _ReportScreen extends State<ReportScreen> {
                                   ),
                                 ),
                                 Container(
-                                  width: valWidth * 0.1,
+                                  width: valWidth * 0.4,
                                   height: valHeight * 0.1,
                                   color: Colors.grey,
-                                  child: MadeLineChart(scores: _scores),
+                                  child: MadeLineChart2(scores: _scores),
                                 )
                               ]),
                             ],

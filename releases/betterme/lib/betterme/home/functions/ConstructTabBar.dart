@@ -55,10 +55,13 @@ class _ConstructTabBar extends State<ConstructTabBar> {
             ? <Widget>[
                 // 정상 로그인시 홈스크린 보인다.
                 HomeScreen(),
-
                 CommunicationScreen(),
                 ReportScreen(),
                 SettingScreen(),
+                // ReportScreen(),
+                // ReportScreen(),
+                // ReportScreen(),
+                // ReportScreen()
                 // ReportScreen(),
                 // ReportScreen(),
                 // ReportScreen(),
