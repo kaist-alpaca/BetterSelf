@@ -74,13 +74,14 @@ class _GradientChartState extends State<GradientChart> {
           );
         },
       ),
+      backgroundColor: Color(0xff0B202A),
       titlesData: FlTitlesData(
         show: true,
         bottomTitles: SideTitles(
           showTitles: true,
           reservedSize: 20,
           getTextStyles: (context, value) => const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
           getTitles: (value) {
             // print('bottomTitles $value');
             // switch (value.toInt()) {
@@ -136,8 +137,8 @@ class _GradientChartState extends State<GradientChart> {
           ),
         ),
       ),
-      minX: 23,
-      maxX: 29,
+      minX: 4,
+      maxX: 10,
       minY: 0,
       maxY: _max,
       lineBarsData: [

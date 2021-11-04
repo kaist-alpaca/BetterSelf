@@ -4,10 +4,9 @@ import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter/cupertino.dart';
-
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -96,99 +95,124 @@ class SettingScreen extends StatelessWidget {
                 ),
                 DividewithObj(
                     context,
-                    Container(
-                      width: valWidth * 0.3,
-                      child: Row(
-                        //내 정보 설정
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () async {
-                                  showCupertinoModalPopup(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        CupertinoActionSheet(
-                                      title: const Text('프로필 이미지 수정'),
-                                      message: const Text('Your options are '),
-                                      actions: <Widget>[
-                                        CupertinoActionSheetAction(
-                                          child: const Text('사진 촬영'),
-                                          onPressed: () async {
-                                            await controller.pickImage(
-                                                type: 'camera', use: 'profile');
-                                            print("change image");
-                                            Navigator.pop(context, 'Cancel');
-                                            var save = await controller.save();
-                                            print(save);
-                                          },
-                                        ),
-                                        CupertinoActionSheetAction(
-                                          child: const Text('갤러리에서 사진 선택'),
-                                          onPressed: () async {
-                                            await controller.pickImage(
-                                                type: 'gallery',
-                                                use: 'profile');
-                                            print("change image");
-                                            Navigator.pop(context, 'Cancel');
-                                            var save = await controller.save();
-                                            print(save);
-                                          },
-                                        )
-                                      ],
-                                      cancelButton: CupertinoActionSheetAction(
-                                        child: const Text('취소'),
-                                        isDefaultAction: true,
-                                        onPressed: () {
-                                          Navigator.pop(context, 'Cancel');
-                                        },
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          height: valWidth * 0.29,
+                          width: valWidth * 0.29,
+                          child: SvgPicture.asset('images/ring_icon.svg'),
+                        ),
+                        Center(
+                          child: Container(
+                            width: valWidth * 0.3,
+                            child: Row(
+                              //내 정보 설정
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        showCupertinoModalPopup(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              CupertinoActionSheet(
+                                            title: const Text('프로필 이미지 수정'),
+                                            message:
+                                                const Text('Your options are '),
+                                            actions: <Widget>[
+                                              CupertinoActionSheetAction(
+                                                child: const Text('사진 촬영'),
+                                                onPressed: () async {
+                                                  await controller.pickImage(
+                                                      type: 'camera',
+                                                      use: 'profile');
+                                                  print("change image");
+                                                  Navigator.pop(
+                                                      context, 'Cancel');
+                                                  var save =
+                                                      await controller.save();
+                                                  print(save);
+                                                },
+                                              ),
+                                              CupertinoActionSheetAction(
+                                                child:
+                                                    const Text('갤러리에서 사진 선택'),
+                                                onPressed: () async {
+                                                  await controller.pickImage(
+                                                      type: 'gallery',
+                                                      use: 'profile');
+                                                  print("change image");
+                                                  Navigator.pop(
+                                                      context, 'Cancel');
+                                                  var save =
+                                                      await controller.save();
+                                                  print(save);
+                                                },
+                                              )
+                                            ],
+                                            cancelButton:
+                                                CupertinoActionSheetAction(
+                                              child: const Text('취소'),
+                                              isDefaultAction: true,
+                                              onPressed: () {
+                                                Navigator.pop(
+                                                    context, 'Cancel');
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Obx(
+                                        () => Container(
+                                            //여기에 아마도 프사설정
+                                            width: valWidth * 0.18,
+                                            height: valWidth * 0.18,
+                                            // color: Colors.grey,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(100),
+                                              child: Container(
+                                                width: valWidth * 0.18,
+                                                height: valWidth * 0.18,
+                                                child: controller
+                                                            .myProfile
+                                                            .value
+                                                            .profileImage ==
+                                                        null
+                                                    ? Image.network(
+                                                        controller.myProfile
+                                                            .value.profileUrl!,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    : Image.file(
+                                                        controller
+                                                            .myProfile
+                                                            .value
+                                                            .profileImage!,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                              ),
+                                            ),
+                                            margin: EdgeInsets.fromLTRB(
+                                                valWidth * 0.025,
+                                                0,
+                                                valWidth * 0.025,
+                                                0)),
                                       ),
                                     ),
-                                  );
-                                },
-                                child: Obx(
-                                  () => Container(
-                                      //여기에 아마도 프사설정
-                                      width: valWidth * 0.18,
-                                      height: valWidth * 0.18,
-                                      // color: Colors.grey,
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        child: Container(
-                                          width: valWidth * 0.18,
-                                          height: valWidth * 0.18,
-                                          child: controller.myProfile.value
-                                                      .profileImage ==
-                                                  null
-                                              ? Image.network(
-                                                  controller.myProfile.value
-                                                      .profileUrl!,
-                                                  fit: BoxFit.cover,
-                                                )
-                                              : Image.file(
-                                                  controller.myProfile.value
-                                                      .profileImage!,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                        ),
-                                      ),
-                                      margin: EdgeInsets.fromLTRB(
-                                          valWidth * 0.025,
-                                          0,
-                                          valWidth * 0.025,
-                                          0)),
+                                  ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ), //ProfileImage
                           ),
-                        ],
-                      ), //ProfileImage
+                        ),
+                      ],
                     ),
-                    0.35,
-                    0.35), //ProfileImage
+                    0.345,
+                    0.345), //ProfileImage
 
                 SizedBox(
                   height: valHeight * 0.015,

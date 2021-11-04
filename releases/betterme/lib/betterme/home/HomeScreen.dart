@@ -14,6 +14,7 @@ import 'functions/Widgets/ExerciseGraph.dart';
 import 'functions/Widgets/FoodDaily.dart';
 import 'functions/Widgets/FoodGraph.dart';
 import 'functions/Widgets/InbodyGraph.dart';
+import 'functions/Widgets/RecordWeight.dart';
 import 'functions/Widgets/Reminder.dart';
 import 'functions/Widgets/SleepGraph.dart';
 import 'functions/Widgets/SleepTimeGraph.dart';
@@ -23,11 +24,28 @@ import 'package:betterme/betterme/login/initialsetting/InitialSettingScreen.dart
 
 import 'package:betterme/betterme/login/initialsetting/InitialSettingScreen.dart';
 
+import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:betterme/functions/Controllers/profile_controller.dart';
+import 'package:get/get.dart';
+
 // import 'functions/home_add_1.dart';
 // import 'functions/home_add_2.dart';
 
 // import 'package:timeline_tile/timeline_tile.dart';
 // import 'package:flutter_svg/svg.dart';
+
+final FocusNode _nodeText2 = FocusNode();
+
+KeyboardActionsConfig _buildConfig(BuildContext context) {
+  return KeyboardActionsConfig(
+    keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+    keyboardBarColor: Colors.grey[200],
+    nextFocus: false,
+    actions: [
+      KeyboardActionsItem(focusNode: _nodeText2),
+    ],
+  );
+}
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -72,12 +90,8 @@ class _HomeScreen extends State<HomeScreen> {
                 ),
                 Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: valWidth * 0.08,
-                      child: Divider(
-                        color: Color(0xffD2ABBA),
-                        thickness: 0.6,
-                      ),
                     ),
                     Container(
                       width: valWidth * 0.38,
@@ -90,13 +104,86 @@ class _HomeScreen extends State<HomeScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
-                    Container(
-                      width: valWidth * 0.54,
-                      child: Divider(
-                        color: Color(0xffD2ABBA),
-                        thickness: 1.0,
+                    SizedBox(
+                      width: valWidth * 0.34,
+                    ), ////이 아래로 체중 입력 팝업
+                    GestureDetector(
+                      onTap: () => showDialog(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                                backgroundColor: bgColor,
+                                title: Text(
+                                  '체중을 입력하세요',
+                                  style: TextStyle(
+                                      color: txtColor,
+                                      fontSize: defaultSize * 15),
+                                ),
+                                content: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      height: valHeight * 0.05,
+                                      width: valWidth * 0.2,
+                                      child: KeyboardActions(
+                                        // 팝업 내용
+                                        disableScroll: true,
+                                        config: _buildConfig(context),
+                                        child: TextField(
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              color: txtColor,
+                                              fontSize: defaultSize * 15),
+                                          keyboardType: TextInputType.number,
+                                          focusNode: _nodeText2,
+                                          decoration: InputDecoration(
+                                              hintStyle: TextStyle(
+                                                  color: txtColor,
+                                                  fontSize: defaultSize * 15)),
+                                          onChanged: (text) {
+                                            controller.weightSelected(text);
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: valHeight * 0.03,
+                                      width: valWidth * 0.05,
+                                      margin: EdgeInsets.only(
+                                          top: valHeight * 0.022),
+                                      child: Text(
+                                        'kg',
+                                        style: TextStyle(
+                                            color: txtColor,
+                                            fontSize: defaultSize * 15),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      // 여기에 저장 구현
+                                      Navigator.pop(context, '저장');
+                                    },
+                                    child: Text(
+                                      '저장',
+                                      style: TextStyle(
+                                          color: txtColor,
+                                          fontSize: defaultSize * 12),
+                                    ),
+                                  )
+                                ],
+                              )),
+                      child: Container(
+                        width: valWidth * 0.15,
+                        height: valHeight * 0.05,
+                        color: Colors.grey,
                       ),
                     ),
+                    SizedBox(
+                      width: valWidth * 0.05,
+                    )
                   ],
                 ),
                 SizedBox(
@@ -117,17 +204,17 @@ class _HomeScreen extends State<HomeScreen> {
                           ],
                         ),
                         Row(
-                          children: [
-                            InbodyGraph(gridHeight * 2, gridWidth * 3),
-                            StressGraph(gridHeight * 2, gridWidth * 3),
-                          ],
-                        ),
-                        Row(
                           children: [Coaching(gridHeight * 2, gridWidth * 6)],
                         ),
                         Row(
                           children: [
                             FoodDaily(gridHeight * 2, gridWidth * 6),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            StressGraph(gridHeight * 2, gridWidth * 3),
+                            RecordWeight(gridHeight * 2, gridWidth * 3),
                           ],
                         ),
                       ]),
