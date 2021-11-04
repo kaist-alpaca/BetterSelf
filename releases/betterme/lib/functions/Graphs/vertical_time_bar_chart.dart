@@ -42,6 +42,7 @@ class CustomeScatterChartPainter extends CustomPainter {
     final drawableHeight = size.height - 2.0 * border;
     final drawableWidth = size.width - 2.0 * border;
     final xd = drawableWidth / 24;
+    final xtd = drawableWidth / 6;
     final yd = drawableWidth / 450;
     Paint paint = Paint() // Paint 클래스는 어떤 식으로 화면을 그릴지 정할 때 쓰임.
       ..color = Color(0XFF53525E) // 색은 보라색
@@ -49,13 +50,32 @@ class CustomeScatterChartPainter extends CustomPainter {
       ..strokeWidth = 5.0; // 선의 굵기는 4.0
     // TODO: implement paint
     double start_x = border;
-    double start_y = border + drawableHeight;
+    double start_y = border * 0.3 + drawableHeight;
+
+    final wd = drawableWidth / 100;
+
+    final hd = drawableHeight / 7.0;
+    final xLabelStyle = TextStyle(color: Colors.white, fontSize: 8);
+    Offset c = Offset(border, border + hd * 7);
+    Offset c_x = Offset(border, border);
+    const int dashWidth = 1;
+    const int dashSpace = 5;
+    double dash_x = border;
+
     for (int i = 0; i <= 24; i++) {
       // drawTextCentered(canvas, c, i.toString(), xLabelStyle, xd);
       // canvas.drawLine(c, c_x, paint);
       canvas.drawLine(Offset(start_x, start_y), Offset(start_x, border), paint);
       start_x += xd;
     }
+
+    for (int i = 0; i <= 24; i += 4) {
+      drawTextCentered(canvas, c, i.toString() + ':00', xLabelStyle, xtd);
+      // canvas.drawLine(c, c_x, paint);
+      // startX =
+      c += Offset(xtd, 0);
+    }
+
     paint..color = Color(0XFFAAB0D8);
     activity.forEach((e) {
       canvas.drawLine(Offset(border + xd * e[0], start_y),
@@ -68,5 +88,24 @@ class CustomeScatterChartPainter extends CustomPainter {
     // TODO: implement shouldRepaint
     // throw UnimplementedError();
     return true;
+  }
+
+  TextPainter measureText(
+      String s, TextStyle style, double maxWidth, TextAlign align) {
+    final span = TextSpan(text: s, style: style);
+    final tp = TextPainter(
+        text: span, textAlign: align, textDirection: TextDirection.ltr);
+    tp.layout(minWidth: 0, maxWidth: maxWidth);
+    return tp;
+  }
+
+  Size drawTextCentered(
+      Canvas canvas, Offset c, String text, TextStyle style, double maxWidth) {
+    if (text.length == 1) text = '0' + text;
+    final tp = measureText(text, style, maxWidth, TextAlign.center);
+    final offset = c + Offset(-tp.width / 2.0, 0);
+    // final offset = c + Offset(-tp.width / 2.0, -tp.height / 2.0);
+    tp.paint(canvas, offset);
+    return tp.size;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:betterme/functions/Graphs/pie_chart_hole.dart';
 
 double? widgetHeight2;
 double? widgetWidth2;
@@ -68,7 +69,20 @@ class _SleepGraph extends State<SleepGraph> {
                 Container(
                   width: widgetWidth - outLeftBlank * 2 - inLeftBlank * 2,
                   height: widgetHeight * 0.6,
-                  color: Colors.grey,
+                  child: Container(
+                    width: valWidth * 0.4,
+                    height: valHeight * 0.2,
+                    child: CustomPaint(
+                      // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
+                      size: Size(
+                          150, 150), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
+                      painter: MadePieChartHole(
+                        percentage1: 60,
+                        percentage2: 20,
+                        text: "6시간 21분",
+                      ),
+                    ),
+                  ),
                 )
               ],
             )));

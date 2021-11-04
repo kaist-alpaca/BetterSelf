@@ -45,7 +45,7 @@ class CustomeScatterChartPainter extends CustomPainter {
     Paint paint = Paint() // Paint 클래스는 어떤 식으로 화면을 그릴지 정할 때 쓰임.
       ..color = Color(0XFF53525E) // 색은 보라색
       ..strokeCap = StrokeCap.round // 선의 끝은 둥글게 함.
-      ..strokeWidth = 15.0; // 선의 굵기는 4.0
+      ..strokeWidth = 11.0; // 선의 굵기는 4.0
     // TODO: implement paint
     canvas.drawLine(
         Offset(border, border), Offset(border + drawableWidth, border), paint);

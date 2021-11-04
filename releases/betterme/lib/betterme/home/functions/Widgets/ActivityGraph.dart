@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:betterme/functions/Graphs/vertical_time_bar_chart.dart';
+import 'package:betterme/functions/Graphs/horizontal_one_line.dart';
 
 double? widgetHeight2;
 double? widgetWidth2;
@@ -30,6 +32,16 @@ class _ActivityGraph extends State<ActivityGraph> {
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     double defaultSize = valWidth * 0.0025;
 
+    final _activity = [
+      [0, 20],
+      [2, 50],
+      [12, 80],
+      [6, 10],
+      [11, 50],
+      [10, 20],
+      [13, 30]
+    ];
+
     return Container(
         height: widgetHeight,
         width: widgetWidth,
@@ -41,7 +53,7 @@ class _ActivityGraph extends State<ActivityGraph> {
               borderRadius: BorderRadius.circular(valWidth * 0.03),
             ),
             padding: EdgeInsets.fromLTRB(
-                inLeftBlank, inTopBlank, inLeftBlank, inTopBlank), //안쪽 여백
+                inLeftBlank, inTopBlank, inLeftBlank, 0), //안쪽 여백
             child: Column(
               // 내용물
               mainAxisAlignment: MainAxisAlignment.start,
@@ -66,10 +78,49 @@ class _ActivityGraph extends State<ActivityGraph> {
                 ),
                 SizedBox(height: valHeight * 0.016),
                 Container(
-                  width: widgetWidth - outLeftBlank * 2 - inLeftBlank * 2,
-                  height: widgetHeight * 0.6,
-                  color: Colors.grey,
-                )
+                    width: widgetWidth - outLeftBlank * 2 - inLeftBlank * 2,
+                    height: widgetHeight * 0.67,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: widgetHeight * 0.1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Text('266kcal',
+                                        style: TextStyle(
+                                            color: txtColor,
+                                            fontSize: defaultSize * 15))),
+                              ),
+                              Container(
+                                child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Text(' / 450kcal',
+                                        style: TextStyle(
+                                            color: txtColor,
+                                            fontSize: defaultSize * 10))),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: widgetHeight * 0.03),
+                        Container(
+                          height: widgetHeight * 0.11,
+                          child: MadeHorizontalOneLineChart(
+                            percentage: 30,
+                          ),
+                        ),
+                        Container(
+                          height: widgetHeight * 0.42,
+                          child: VerticalTimeBarChart(
+                            activity: _activity,
+                          ),
+                        ),
+                      ],
+                    ))
               ],
             )));
   }

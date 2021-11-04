@@ -15,7 +15,7 @@ class MadePieChartHole extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
       ..color = Color(0XFFA0B1DF)
-      ..strokeWidth = 10.0
+      ..strokeWidth = 8.0
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
@@ -26,7 +26,7 @@ class MadePieChartHole extends CustomPainter {
     double arcAngle2 = 2 * pi * (percentage2 / 100);
     double arcAngle3 = 2 * pi * ((100 - percentage1 - percentage2) / 100);
 
-    double tmp = pi / 30;
+    double tmp = pi / 20;
     // tmp = 0;
 
     // canvas.drawCircle(center, radius, paint);
@@ -43,7 +43,7 @@ class MadePieChartHole extends CustomPainter {
         false,
         paint);
 
-    double fontSize = 20;
+    double fontSize = 12;
 
     TextSpan sp = TextSpan(
         style: TextStyle(
