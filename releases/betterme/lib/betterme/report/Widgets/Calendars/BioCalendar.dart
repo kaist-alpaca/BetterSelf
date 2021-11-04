@@ -1,4 +1,4 @@
-import 'package:betterme/betterme/report/Widgets/Calendars/ExerciseCalendar.dart';
+import '../CoachingDate.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -59,17 +59,15 @@ Widget InitCoaching(
 
             if (DiffDays == 0) {
               print('$checkTime and ' + Coachingtexts[checkTime]);
-              return CoachingTxtBox(context, 0, '생체 데이터 코칭\n' + formatD,
-                  Coachingtexts[checkTime], 0.25);
+              return CoachingTxtBox(context, Coachingtexts[checkTime], 0.25);
             } else if (DiffDays < 0) {
-              return CoachingTxtBox(context, 0, '생체 데이터 코칭\n' + formatD,
-                  '아직 해당 날짜의 생체 데이터 코칭이 없습니다.', 0.25);
+              return CoachingTxtBox(
+                  context, '아직 해당 날짜의 생체 데이터 코칭이 없습니다.', 0.25);
             }
             checkTime = checkTime - 1;
           }
-          print('out of While');
-          return CoachingTxtBox(context, 0, '생체 데이터 코칭\n' + formatD,
-              '아직 해당 날짜의 생체 데이터 코칭이 없습니다.', 0.25);
+
+          return CoachingTxtBox(context, '아직 해당 날짜의 생체 데이터 코칭이 없습니다.', 0.25);
         } else {
           return Center(child: CircularProgressIndicator());
         }
@@ -152,7 +150,8 @@ class _BioCalendarState extends State<BioCalendar> {
         SizedBox(
           height: valHeight * 0.02,
         ),
-        InitCoaching(context, controller.selectedDay, formattedDate),
+        CoachingDate(context, '생체 데이터 코칭', '[$formattedDate]'),
+        InitCoaching(context, controller.selectedDay, '[$formattedDate]'),
         SizedBox(
           height: valHeight * 0.08,
         )
