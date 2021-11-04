@@ -1,4 +1,4 @@
-import 'package:betterme/betterme/login/functions/tmp.dart';
+import 'package:betterme/betterme/login/functions/CheckSignedUser2.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:flutter/material.dart';
 
