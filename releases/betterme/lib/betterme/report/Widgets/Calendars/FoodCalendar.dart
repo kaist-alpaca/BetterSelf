@@ -92,57 +92,69 @@ class _FoodCalendarState extends State<FoodCalendar> {
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     return Column(
       children: [
-        TableCalendar(
-          firstDay: DateTime.utc(2010, 10, 16),
-          lastDay: DateTime.utc(2030, 3, 14),
-          focusedDay: controller.focusedDay,
-          headerStyle: HeaderStyle(
-            formatButtonVisible: false,
-            titleCentered: true,
-            titleTextStyle: TextStyle(
-              color: Colors.white,
-            ),
-            leftChevronIcon: Icon(
-              Icons.chevron_left,
-              color: Colors.white,
-            ),
-            rightChevronIcon: Icon(
-              Icons.chevron_right,
-              color: Colors.white,
-            ),
+        Container(
+          color: Color(0xff333C47),
+          child: Stack(
+            children: [
+              Container(
+                height: valHeight * 0.1068,
+                width: valWidth,
+                color: bgColor,
+              ),
+              TableCalendar(
+                firstDay: DateTime.utc(2010, 10, 16),
+                lastDay: DateTime.utc(2030, 3, 14),
+                focusedDay: controller.focusedDay,
+                headerStyle: HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  titleTextStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  leftChevronIcon: Icon(
+                    Icons.chevron_left,
+                    color: Colors.white,
+                  ),
+                  rightChevronIcon: Icon(
+                    Icons.chevron_right,
+                    color: Colors.white,
+                  ),
+                ),
+                daysOfWeekStyle: DaysOfWeekStyle(
+                  weekdayStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                  weekendStyle: TextStyle(color: Color(0XFFD2ABBA)),
+                ),
+                calendarStyle: CalendarStyle(
+                  isTodayHighlighted: false,
+                  selectedTextStyle: TextStyle(
+                    color: Colors.red,
+                  ),
+                  selectedDecoration: BoxDecoration(
+                    color: Color(0xff333C47),
+                  ),
+                  outsideDaysVisible: false,
+                  holidayTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                  weekendTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                  disabledTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                  defaultTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                ),
+                selectedDayPredicate: (day) {
+                  return isSameDay(controller.selectedDay, day);
+                },
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {});
+                  controller.updateselectedDay(selectedDay);
+                  controller.updatefocusedDay(focusedDay);
+                  print(controller.selectedDay);
+                  setState(() {
+                    formattedDate =
+                        DateFormat('y/M/d').format(controller.selectedDay);
+                  });
+                },
+                locale: 'ko-KR',
+              ),
+            ],
           ),
-          daysOfWeekStyle: DaysOfWeekStyle(
-            weekdayStyle: TextStyle(color: Color(0XFFFFFDFD)),
-            weekendStyle: TextStyle(color: Color(0XFFD2ABBA)),
-          ),
-          calendarStyle: CalendarStyle(
-            isTodayHighlighted: false,
-            selectedTextStyle: TextStyle(
-              color: Colors.red,
-            ),
-            selectedDecoration: BoxDecoration(
-              color: Color(0xff0B202A),
-            ),
-            outsideDaysVisible: false,
-            holidayTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
-            weekendTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
-            disabledTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
-            defaultTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
-          ),
-          selectedDayPredicate: (day) {
-            return isSameDay(controller.selectedDay, day);
-          },
-          onDaySelected: (selectedDay, focusedDay) {
-            setState(() {});
-            controller.updateselectedDay(selectedDay);
-            controller.updatefocusedDay(focusedDay);
-            print(controller.selectedDay);
-            setState(() {
-              formattedDate =
-                  DateFormat('y/M/d').format(controller.selectedDay);
-            });
-          },
-          locale: 'ko-KR',
         ),
         SizedBox(height: valHeight * 0.025),
         CoachingDate(context, '식단 기록 및 코칭', '[$formattedDate]'),
