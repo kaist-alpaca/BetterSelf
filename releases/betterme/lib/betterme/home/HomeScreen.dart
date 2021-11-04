@@ -14,6 +14,7 @@ import 'functions/Widgets/ExerciseGraph.dart';
 import 'functions/Widgets/FoodDaily.dart';
 import 'functions/Widgets/FoodGraph.dart';
 import 'functions/Widgets/InbodyGraph.dart';
+import 'functions/Widgets/RecordWeight.dart';
 import 'functions/Widgets/Reminder.dart';
 import 'functions/Widgets/SleepGraph.dart';
 import 'functions/Widgets/SleepTimeGraph.dart';
@@ -117,17 +118,17 @@ class _HomeScreen extends State<HomeScreen> {
                           ],
                         ),
                         Row(
-                          children: [
-                            InbodyGraph(gridHeight * 2, gridWidth * 3),
-                            StressGraph(gridHeight * 2, gridWidth * 3),
-                          ],
-                        ),
-                        Row(
                           children: [Coaching(gridHeight * 2, gridWidth * 6)],
                         ),
                         Row(
                           children: [
                             FoodDaily(gridHeight * 2, gridWidth * 6),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            StressGraph(gridHeight * 2, gridWidth * 3),
+                            RecordWeight(gridHeight * 2, gridWidth * 3),
                           ],
                         ),
                       ]),
