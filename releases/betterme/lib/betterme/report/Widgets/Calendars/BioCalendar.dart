@@ -149,14 +149,6 @@ class _BioCalendarState extends State<BioCalendar> {
           },
           locale: 'ko-KR',
         ),
-        Container(
-          child: Text(
-            controller.selectedDay.toString(),
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
         SizedBox(
           height: valHeight * 0.02,
         ),
