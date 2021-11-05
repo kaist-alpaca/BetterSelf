@@ -4,6 +4,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import '../CoachingExerciseBox.dart';
 import '../CoachingTxtBox.dart';
+import '../CoachingDate.dart';
 
 import 'package:betterme/functions/Firestore/AuthMethods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -59,17 +60,14 @@ Widget InitCoaching(BuildContext context, DateTime selectedDate) {
             print(selectedDate.toString());
             if (DiffDays == 0) {
               print('$checkTime and ' + Coachingtexts[checkTime]);
-              return CoachingTxtBox(
-                  context, 1, '운동 코칭', Coachingtexts[checkTime], 0.2);
+              return CoachingTxtBox(context, Coachingtexts[checkTime], 0.2);
             } else if (DiffDays < 0) {
-              return CoachingTxtBox(
-                  context, 1, '운동 코칭', '아직 해당 날짜의 운동 코칭이 없습니다.', 0.2);
+              return CoachingTxtBox(context, '아직 해당 날짜의 운동 코칭이 없습니다.', 0.2);
             }
             checkTime = checkTime - 1;
           }
-          print('out of While');
-          return CoachingTxtBox(
-              context, 1, '운동 코칭', '아직 해당 날짜의 운동 코칭이 없습니다.', 0.2);
+
+          return CoachingTxtBox(context, '아직 해당 날짜의 운동 코칭이 없습니다.', 0.2);
         } else {
           return Center(child: CircularProgressIndicator());
         }
@@ -97,65 +95,84 @@ class _ExerciseCalendarState extends State<ExerciseCalendar> {
 
     return Column(
       children: [
-        TableCalendar(
-          firstDay: DateTime.utc(2010, 10, 16),
-          lastDay: DateTime.utc(2030, 3, 14),
-          focusedDay: controller.focusedDay,
-          headerStyle: HeaderStyle(
-            formatButtonVisible: false,
-            titleCentered: true,
-            titleTextStyle: TextStyle(
-              color: Colors.white,
-            ),
-            leftChevronIcon: Icon(
-              Icons.chevron_left,
-              color: Colors.white,
-            ),
-            rightChevronIcon: Icon(
-              Icons.chevron_right,
-              color: Colors.white,
-            ),
+        Container(
+          color: Color(0xff333C47),
+          child: Stack(
+            children: [
+              Container(
+                height: valHeight * 0.1068,
+                width: valWidth,
+                color: bgColor,
+              ),
+              TableCalendar(
+                firstDay: DateTime.utc(2010, 10, 16),
+                lastDay: DateTime.utc(2030, 3, 14),
+                focusedDay: controller.focusedDay,
+                headerStyle: HeaderStyle(
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  titleTextStyle: TextStyle(
+                    color: Colors.white,
+                  ),
+                  leftChevronIcon: Icon(
+                    Icons.chevron_left,
+                    color: Colors.white,
+                  ),
+                  rightChevronIcon: Icon(
+                    Icons.chevron_right,
+                    color: Colors.white,
+                  ),
+                ),
+                daysOfWeekStyle: DaysOfWeekStyle(
+                  weekdayStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                  weekendStyle: TextStyle(color: Color(0XFFD2ABBA)),
+                ),
+                calendarStyle: CalendarStyle(
+                  isTodayHighlighted: false,
+                  selectedTextStyle: TextStyle(
+                    color: Colors.red,
+                  ),
+                  selectedDecoration: BoxDecoration(
+                    color: Color(0xff333C47),
+                  ),
+                  outsideDaysVisible: false,
+                  holidayTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                  weekendTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                  disabledTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                  defaultTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                ),
+                selectedDayPredicate: (day) {
+                  return isSameDay(controller.selectedDay, day);
+                },
+                onDaySelected: (selectedDay, focusedDay) {
+                  setState(() {});
+                  controller.updateselectedDay(selectedDay);
+                  controller.updatefocusedDay(focusedDay);
+                  print(controller.selectedDay);
+                  setState(() {
+                    formattedDate =
+                        DateFormat('y/M/dd').format(controller.selectedDay);
+                  });
+                },
+                locale: 'ko-KR',
+              ),
+            ],
           ),
-          daysOfWeekStyle: DaysOfWeekStyle(
-            weekdayStyle: TextStyle(color: Color(0XFFFFFDFD)),
-            weekendStyle: TextStyle(color: Color(0XFFD2ABBA)),
-          ),
-          calendarStyle: CalendarStyle(
-            isTodayHighlighted: false,
-            selectedTextStyle: TextStyle(
-              color: Colors.red,
-            ),
-            selectedDecoration: BoxDecoration(
-              color: Color(0xff0B202A),
-            ),
-            outsideDaysVisible: false,
-            holidayTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
-            weekendTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
-            disabledTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
-            defaultTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
-          ),
-          selectedDayPredicate: (day) {
-            return isSameDay(controller.selectedDay, day);
-          },
-          onDaySelected: (selectedDay, focusedDay) {
-            setState(() {});
-            controller.updateselectedDay(selectedDay);
-            controller.updatefocusedDay(focusedDay);
-            print(controller.selectedDay);
-            setState(() {
-              formattedDate =
-                  DateFormat('y/M/dd').format(controller.selectedDay);
-            });
-          },
-          locale: 'ko-KR',
         ),
         SizedBox(height: valHeight * 0.025),
-        CoachingExerciseBox(
-            context, '운동\n' + '[$formattedDate]', '운동 내용', 0.25),
+        CoachingDate(context, '운동 기록 및 코칭', '[$formattedDate]'),
+        CoachingExerciseBox(context, controller.selectedDay),
         SizedBox(
           height: valHeight * 0.015,
         ),
         InitCoaching(context, controller.selectedDay),
+        Container(
+          width: valWidth * 0.74,
+          child: Divider(
+            color: Color(0xff858E93),
+            thickness: 0.6,
+          ),
+        ),
         SizedBox(
           height: valHeight * 0.03,
         )
