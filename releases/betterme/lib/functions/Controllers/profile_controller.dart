@@ -191,8 +191,8 @@ class ProfileController extends GetxController {
     }
     myProfile(UserModel.clone(originMyProfile));
 
-    // await ServerConnection.updateHeathData(
-    //     FirebaseAuth.instance.currentUser!.uid);
+    await ServerConnection.updateHeathData(
+        FirebaseAuth.instance.currentUser!.uid);
 
     // return FirebaseAuth.instance.currentUser == null
     //     ? ''

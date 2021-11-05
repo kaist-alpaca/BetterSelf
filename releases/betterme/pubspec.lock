@@ -280,6 +280,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.0+3"
+  health_kit_reporter:
+    dependency: "direct main"
+    description:
+      name: health_kit_reporter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.1"
   http:
     dependency: "direct main"
     description:

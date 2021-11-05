@@ -4,8 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'DetectAuthStateChange.dart';
 
 class SyncFB extends StatelessWidget {
-  const SyncFB({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

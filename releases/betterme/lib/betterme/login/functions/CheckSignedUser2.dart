@@ -3,10 +3,10 @@ import 'package:betterme/betterme/login/initialsetting/InitialSettingScreen.dart
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:flutter/material.dart';
 
-class CheckSignedUser2 extends StatelessWidget {
+class checkSignedUser2 extends StatelessWidget {
   late var num;
   late var data;
-  CheckSignedUser2({Key? key, required this.num, required this.data})
+  checkSignedUser2({Key? key, required this.num, required this.data})
       : super(key: key);
 
   @override
@@ -17,8 +17,10 @@ class CheckSignedUser2 extends StatelessWidget {
           if (snapshot.hasData) {
             if (snapshot.data! == "0") {
               return ConstructTabBar();
+              // return Container(child: Text("안녕1"));
             } else {
               return InitialSettingScreen();
+              // return Container(child: Text("안녕"));
             }
           } else {
             return CircularProgressIndicator();
