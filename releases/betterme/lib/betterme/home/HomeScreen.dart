@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 
@@ -176,10 +177,20 @@ class _HomeScreen extends State<HomeScreen> {
                                 ],
                               )),
                       child: Container(
-                        width: valWidth * 0.15,
-                        height: valHeight * 0.05,
-                        color: Colors.grey,
-                      ),
+                          //여기가 입력 버튼
+                          width: valWidth * 0.1,
+                          height: valWidth * 0.1,
+                          padding: EdgeInsets.fromLTRB(
+                              valWidth * 0.01,
+                              valWidth * 0.01,
+                              valWidth * 0.01,
+                              valWidth * 0.001),
+                          decoration: BoxDecoration(
+                              color: Color(0xff333C47),
+                              borderRadius:
+                                  BorderRadius.circular(valWidth * 0.02)),
+                          child:
+                              SvgPicture.asset('images/weightscale_icon.svg')),
                     ),
                     SizedBox(
                       width: valWidth * 0.05,
@@ -214,7 +225,7 @@ class _HomeScreen extends State<HomeScreen> {
                         Row(
                           children: [
                             StressGraph(gridHeight * 2, gridWidth * 3),
-                            RecordWeight(gridHeight * 2, gridWidth * 3),
+                            InbodyGraph(gridHeight * 2, gridWidth * 3),
                           ],
                         ),
                       ]),

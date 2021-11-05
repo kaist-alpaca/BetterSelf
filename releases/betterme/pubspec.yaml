@@ -79,6 +79,7 @@ flutter:
     - images/arrow towards right_icon.svg
     - images/ring_icon.svg
     - images/coaching_icon.svg
+    - images/weightscale_icon.svg
     - data/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
