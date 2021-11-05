@@ -448,32 +448,42 @@ class SettingScreen extends StatelessWidget {
                                 textAlign: TextAlign.center)),
                         Container(
                           //체중 입력란
-                          height: TextfieldSize, //valHeight * 0.06,
-                          width: valWidth * 0.35,
-                          decoration: BoxDecoration(
-                              color: txtFeildColor,
-                              borderRadius: BorderRadius.all(
-                                  Radius.circular(valWidth * 0.015))),
-                          margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
-                              valWidth * 0.02, valWidth * 0.03),
-                          child: KeyboardActions(
-                            disableScroll: true,
-                            config: _buildConfig(context),
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: txtColor, fontSize: defaultSize * 15),
-                              keyboardType: TextInputType.number,
-                              focusNode: _nodeText2,
-                              decoration: InputDecoration(
-                                  hintStyle: TextStyle(
-                                      color: txtColor,
-                                      fontSize: defaultSize * 15)),
-                              onChanged: (text) {
-                                controller.weightSelected(text);
-                              },
+                            width: valWidth * 0.35,
+                            height: TextfieldSize, //valHeight * 0.06,
+                            decoration: BoxDecoration(
+                                color: txtFeildColor,
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(valWidth * 0.015))),
+                            margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
+                                valWidth * 0.02, valWidth * 0.015),
+                            child: KeyboardActions(
+                              disableScroll: true,
+                              config: _buildConfig(context),
+                              child: TextField(
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: txtColor, fontSize: defaultSize * 15),
+                                keyboardType: TextInputType.number,
+                                focusNode: _nodeText2,
+                                decoration: InputDecoration(
+                                    hintText: controller.weight,
+                                    hintStyle: TextStyle(
+                                        color: txtColor,
+                                        fontSize: defaultSize * 15)),
+                                onChanged: (text) {
+                                  controller.weightSelected(text);
+                                },
+                              ),
                             ),
                           ),
+                          Container(
+                            width: valWidth * 0.15,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [])
+                          ), //margin
+                        ],
                         ),
                         Container(
                           width: valWidth * 0.15,
@@ -593,9 +603,9 @@ class SettingScreen extends StatelessWidget {
                     ), //logout
                   ],
                 ),
-              ]),
+              ),
             ),
-          ));
+          );
     });
   }
 }
