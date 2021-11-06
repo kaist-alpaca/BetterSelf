@@ -16,6 +16,7 @@ Port Forwarding : Name / External port / Internal port
 	react / 1234 / 3000
 	php / 8080 / 80
 
+phpmyadmin 이용 : http://kaistuser.iptime.org:8080/phpmyadmin
 
 #3 ALPACA Ubuntu Server 
 how to connect by ssh : ssh alpaca@kaistuser.iptime.org / pw : alpaca

@@ -30,6 +30,9 @@ final rng = Random();
 const dayCount = 7;
 
 class _ReportScreen extends State<ReportScreen> {
+
+  final String TestUid = "4fT7dL3H8CUkLKBx9bB3Pqjp3bi1";
+
   late List<Score> _scores;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay = DateTime.now();
@@ -49,7 +52,7 @@ class _ReportScreen extends State<ReportScreen> {
     super.initState();
     final scores = List<Score>.generate(dayCount, (index) {
       final y = rng.nextDouble() * 30.0;
-      final d = DateTime.now().add(Duration(days: 0 + index));
+      final d = DateTime.now().add(Duration(days:index));
       return Score(y, d);
     });
     setState(() {
