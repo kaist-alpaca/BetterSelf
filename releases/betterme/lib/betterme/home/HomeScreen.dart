@@ -7,33 +7,12 @@ import 'package:betterme/functions/Controllers/profile_controller.dart';
 
 import 'functions/Widgets/ActivityGraph.dart';
 import 'functions/Widgets/Coaching.dart';
-import 'functions/Widgets/ExerciseDaily.dart';
-import 'functions/Widgets/ExerciseGraph.dart';
 import 'functions/Widgets/FoodDaily.dart';
-import 'functions/Widgets/FoodGraph.dart';
-import 'functions/Widgets/ExerciseGraph.dart';
-import 'functions/Widgets/FoodDaily.dart';
-import 'functions/Widgets/FoodGraph.dart';
 import 'functions/Widgets/InbodyGraph.dart';
-import 'functions/Widgets/RecordWeight.dart';
-import 'functions/Widgets/Reminder.dart';
 import 'functions/Widgets/SleepGraph.dart';
-import 'functions/Widgets/SleepTimeGraph.dart';
-import 'functions/Widgets/StressDaily.dart';
 import 'functions/Widgets/StressGraph.dart';
-import 'package:betterme/betterme/login/initialsetting/InitialSettingScreen.dart';
-
-import 'package:betterme/betterme/login/initialsetting/InitialSettingScreen.dart';
 
 import 'package:keyboard_actions/keyboard_actions.dart';
-import 'package:betterme/functions/Controllers/profile_controller.dart';
-import 'package:get/get.dart';
-
-// import 'functions/home_add_1.dart';
-// import 'functions/home_add_2.dart';
-
-// import 'package:timeline_tile/timeline_tile.dart';
-// import 'package:flutter_svg/svg.dart';
 
 final FocusNode _nodeText2 = FocusNode();
 
