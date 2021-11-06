@@ -4,7 +4,7 @@ $uid = $_GET["uid"];
 $date = "0";
 $tmp = 0;
 
-$list;
+$list = array();
 
 $conn = mysqli_connect('localhost', 'alpaca', 'alpaca', 'healthData_'.$uid);
 $sql = "select * from food order by id desc";
@@ -16,11 +16,10 @@ while($row = mysqli_fetch_array($result)) {
 }
 
 if ($tmp) {
-    echo json_encode('result'=>$list);
+    echo json_encode(array('result'=>$list));
 } else {
-    echo json_encode('result'=>'0');
+    echo json_encode(array('result'=>'0'));
 }
 
 
 ?>
-

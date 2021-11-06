@@ -16,11 +16,10 @@ while($row = mysqli_fetch_array($result)) {
 }
 
 if ($tmp) {
-    echo json_encode('result'=>$list);
+    echo json_encode(array('result'=>$list));
 } else {
-    echo json_encode('result'=>'0');
+    echo json_encode(array('result'=>'0'));
 }
 
 
 ?>
-
