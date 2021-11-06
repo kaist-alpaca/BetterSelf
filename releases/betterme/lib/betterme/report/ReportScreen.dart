@@ -52,7 +52,7 @@ class _ReportScreen extends State<ReportScreen> {
     super.initState();
     final scores = List<Score>.generate(dayCount, (index) {
       final y = rng.nextDouble() * 30.0;
-      final d = DateTime.now().add(Duration(days: 0 + index));
+      final d = DateTime.now().add(Duration(days:index));
       return Score(y, d);
     });
     setState(() {
