@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Graphs/gradient_chart.dart';
 import 'package:betterme/functions/Graphs/line_chart_space.dart';
 import 'package:betterme/functions/Graphs/single_bar.dart';
@@ -369,15 +370,38 @@ class _ReportScreen extends State<ReportScreen> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                width: valWidth * 0.34,
-                                height: valHeight * 0.16,
-                                child: SingleBar(
-                                    scores: _scores,
-                                    Values: true,
-                                    LastValueOnly: true,
-                                    ShowYaxis: false),
-                              )
+                              FutureBuilder(
+                                  future: ServerConnection.GetEnergyburned(TestUid),
+                                  builder: (context, AsyncSnapshot snapshot){
+                                    if (snapshot.hasData == false) {
+                                      return CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'Error: ${snapshot.error}',
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      );
+                                    } else {
+                                      var result = snapshot.data['result'];
+                                      List<Score> EnergyList = List<Score>.generate(4, (index) {
+                                        final y = double.parse(result[3-index]['EnergyBurned']);
+                                        final d = DateTime.now().add(Duration(days:index-3));
+                                        return Score(y, d);
+                                      });
+                                      print("\n\n debug : $result");
+                                      return Container(
+                                        width: valWidth * 0.34,
+                                        height: valHeight * 0.16,
+                                        child: SingleBar(
+                                            scores: EnergyList,
+                                            Values: true,
+                                            LastValueOnly: true,
+                                            ShowYaxis: false),
+                                      );
+                                    }
+                                  })
                             ]),
                           ),
                           SizedBox(height: valHeight * 0.015),

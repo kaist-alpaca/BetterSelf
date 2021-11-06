@@ -20,13 +20,8 @@ class ServerConnection {
     final response = await http.get(Uri.parse(
         "http://kaistuser.iptime.org:8080/find_user_by_uid.php?uid=" + uid));
     var responseBody = utf8.decode(response.bodyBytes);
-    // List<dynamic> list = jsonDecode(responseBody);
-    // var list = jsonDecode(response.body);
+
     Map<String, dynamic> list = json.decode(response.body);
-    // print("!!!!!!!!!!!!!!!!!!!");
-    // print(list);
-    // print(list['result']);
-    // print(list['result']['uid']);
 
     if (list['result'] == '0') {
       return null;
@@ -39,6 +34,13 @@ class ServerConnection {
       profileUrl:
           "http://kaistuser.iptime.org:8080/img/profile/" + uid + ".jpg",
     );
+  }
+
+  static Future<Map<String, dynamic>> GetEnergyburned(String uid) async {
+    final response = await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/get_energyburned.php?uid=" + uid));
+    print("debug : getEnergyBurned");
+    return Map<String, dynamic>.from(json.decode(response.body));
   }
 
   static Future<void> uploadProfileImage(String uid, String photoURL) async {

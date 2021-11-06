@@ -39,7 +39,7 @@ class _SingleBar extends State<SingleBar> {
         showTooltip = [1];
       }
       barlist.add(
-        BarChartGroupData(x: e.time.day,
+        BarChartGroupData(x: e.time.month*100+e.time.day,
           barRods: [
             BarChartRodData(
               y: e.value,
@@ -110,8 +110,8 @@ class _SingleBar extends State<SingleBar> {
           ),
           margin: 10,
           getTitles: (double value) {
-            print(value);
-            return value.toInt().toString();
+            var tmp = value.toInt();
+            return (tmp%100).toString();
           },
         ),
         leftTitles: SideTitles(showTitles: false),
