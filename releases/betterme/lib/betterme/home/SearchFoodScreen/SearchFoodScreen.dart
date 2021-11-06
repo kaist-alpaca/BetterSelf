@@ -29,8 +29,8 @@ class _SearchFoodScreen extends State<SearchFoodScreen> {
     suggestion = [];
     for(int i = 1 ; i < FoodData.length - 1 ; i++){
       suggestion.add(FoodData[i][0]);
-      //print("debug1 : \n\n${FoodData[0]}");
     }
+    print("debug : ${FoodData[0]}");
     return suggestion;
   }
 

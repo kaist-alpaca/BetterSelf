@@ -52,9 +52,7 @@ showPickerWeight(
       }).showDialog(context);
 }
 
-showPickerDate(
-  BuildContext context,
-) {
+showPickerDate(BuildContext context,) {
   Picker(
       adapter: NumberPickerAdapter(data: [
         NumberPickerColumn(

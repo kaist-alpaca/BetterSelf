@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:betterme/betterme/home/functions/Widgets/Coaching.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -59,8 +60,7 @@ Widget InitCoaching(
         Coachingtexts = [];
         Coachingtimes = [];
         if (snapshot.hasData) {
-          List CoachingList =
-              snapshot.data!.docs.map((DocumentSnapshot document) {
+          List CoachingList = snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
             print("time : ${DateTime.parse(data['time'].toDate().toString())}");
@@ -198,6 +198,8 @@ class _ExerciseTabs extends State<ExerciseTabs> {
     double graphWidth = valWidth * 0.88; // 그래프들 너비
     DateTime todayDate = todayDateO;
 
+    final String TestUid = "4fT7dL3H8CUkLKBx9bB3Pqjp3bi1";
+
     if (buttonCase == 0) {
       //7일로 선택되었을 때 표현될 위젯들은 여기에.
       return GetBuilder<ProfileController>(builder: (controller) {
@@ -284,18 +286,38 @@ class _ExerciseTabs extends State<ExerciseTabs> {
                         horizontal: valWidth * 0.01),
                     child: MadeLineChart(scores: _scores),
                   ),
-                  Container(
-                    height: valHeight * 0.34,
-                    width: graphWidth,
-                    padding: EdgeInsets.symmetric(
-                        vertical: valHeight * 0.008,
-                        horizontal: valWidth * 0.01),
-                    child: SingleBar(
-                        scores: _scores,
-                        Values: true,
-                        LastValueOnly: false,
-                        ShowYaxis: true),
-                  ),
+                  FutureBuilder(
+                      future: ServerConnection.GetEnergyburned(TestUid),
+                      builder: (context, AsyncSnapshot snapshot){
+                        if (snapshot.hasData == false) {
+                          return Center(child : CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Error: ${snapshot.error}',
+                              style: TextStyle(fontSize: 15),
+                            ),
+                          );
+                        } else {
+                          var result = snapshot.data['result'];
+                          List<Score> EnergyList = List<Score>.generate(7, (index) {
+                            final y = double.parse(result[6-index]['EnergyBurned']);
+                            final d = DateTime.now().add(Duration(days:index-6));
+                            return Score(y, d);
+                          });
+                          print("\n\n debug : $result");
+                          return Container(
+                            width: graphWidth,
+                            height: valHeight * 0.34,
+                            child: SingleBar(
+                                scores: EnergyList,
+                                Values: true,
+                                LastValueOnly: false,
+                                ShowYaxis: false),
+                          );
+                        }
+                      }),
                 ],
               )),
           SizedBox(height: valHeight * 0.02),

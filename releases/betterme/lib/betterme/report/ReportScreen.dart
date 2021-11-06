@@ -192,12 +192,39 @@ class _ReportScreen extends State<ReportScreen> {
                                   ),
                                 ),
                               ),
-                              Container(
-                                color: Colors.grey,
-                                width: valWidth * 0.85,
-                                height: valHeight * 0.15,
-                                child: MadeLineChart(scores: _scores),
-                              )
+                              FutureBuilder(
+                                  future: ServerConnection.GetWeight(TestUid),
+                                  builder: (context, AsyncSnapshot snapshot){
+                                    if (snapshot.hasData == false) {
+                                      return CircularProgressIndicator();
+                                    } else if (snapshot.hasError) {
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'Error: ${snapshot.error}',
+                                          style: TextStyle(fontSize: 15),
+                                        ),
+                                      );
+                                    } else {
+                                      var result = snapshot.data['result'].reversed.toList();
+                                      int count = 0;
+                                      while(DateTime.fromMillisecondsSinceEpoch(double.parse(result[count]['time']).round()*1000)
+                                          .isAfter(DateTime.now().add(Duration(days:-3))) && result.length-1 > count)count++;
+                                      print("debug weight count : $count");
+                                      List<Score> WeightList = List<Score>.generate(count+1, (index) {
+                                        final y = double.parse(result[index]['weight']);
+                                        final d = DateTime.fromMillisecondsSinceEpoch(double.parse(result[index]['time']).round()*1000);
+                                        print("debug weight count : $y \t $d");
+                                        return Score(y, d);
+                                      });
+                                      return Container(
+                                        width: valWidth * 0.85,
+                                        height: valHeight * 0.15,
+                                        color: Color(0xff0B202A),
+                                        child: MadeLineChart(scores: WeightList.reversed.toList()),
+                                      );
+                                    }
+                                  })
                             ],
                           ),
                           Row(
@@ -229,15 +256,42 @@ class _ReportScreen extends State<ReportScreen> {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  width: valWidth * 0.35,
-                                  height: valHeight * 0.1,
-                                  color: Color(0xff0B202A),
-                                  child: GradientChart(scores: _scores),
-                                  margin: EdgeInsets.only(
-                                    left: valWidth * 0.04,
-                                  ),
-                                )
+                                FutureBuilder(
+                                    future: ServerConnection.GetStress(TestUid),
+                                    builder: (context, AsyncSnapshot snapshot){
+                                      if (snapshot.hasData == false) {
+                                        return CircularProgressIndicator();
+                                      } else if (snapshot.hasError) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            'Error: ${snapshot.error}',
+                                            style: TextStyle(fontSize: 15),
+                                          ),
+                                        );
+                                      } else {
+                                        List result = snapshot.data['result'].reversed.toList();
+                                        int count = 0;
+                                        while(DateTime.fromMillisecondsSinceEpoch(double.parse(result[count]['time']).round()*1000)
+                                            .isAfter(DateTime.now().add(Duration(days:-3))) && result.length > count)count++;
+                                        print("debug count : $count");
+                                        List<Score> StressList = List<Score>.generate(count+1, (index) {
+                                          final y = double.parse(result[index]['stress']);
+                                          final d = DateTime.fromMillisecondsSinceEpoch(double.parse(result[index]['time']).round()*1000);
+                                          print("debug count : $y \t $d");
+                                          return Score(y, d);
+                                        });
+                                        return Container(
+                                          width: valWidth * 0.35,
+                                          height: valHeight * 0.1,
+                                          color: Color(0xff0B202A),
+                                          child: GradientChart(scores: StressList.reversed.toList()),
+                                          margin: EdgeInsets.only(
+                                            left: valWidth * 0.04,
+                                          ),
+                                        );
+                                      }
+                                    })
                               ]),
                               SizedBox(width: valWidth * 0.04),
                               Column(children: [
@@ -390,7 +444,7 @@ class _ReportScreen extends State<ReportScreen> {
                                         final d = DateTime.now().add(Duration(days:index-3));
                                         return Score(y, d);
                                       });
-                                      print("\n\n debug : $result");
+                                      //print("\n\n debug : $result");
                                       return Container(
                                         width: valWidth * 0.34,
                                         height: valHeight * 0.16,

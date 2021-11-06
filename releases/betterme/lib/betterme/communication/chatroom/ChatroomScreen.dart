@@ -129,7 +129,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                               margin: EdgeInsets.only(
                                   right: valWidth * 0.04, bottom: 7),
                               child: TextField(
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Color(0xffFFFDFD)),
                                   controller: textmessage,
                                   decoration: const InputDecoration(
                                     fillColor: Color(0xff333C47),

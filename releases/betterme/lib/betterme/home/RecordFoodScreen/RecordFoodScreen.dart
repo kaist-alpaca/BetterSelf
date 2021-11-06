@@ -29,22 +29,22 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
 
 
   final key = new GlobalKey<ScaffoldState>();
-  final TextEditingController searching = TextEditingController();
+  List Nutrition = [];
+
+  TextEditingController NumFood = TextEditingController();
 
   bool isSearching = false;
-  List<String> suggestion = [];
 
   loadData() async{
     final myData = await rootBundle.loadString('data/NutritionalComponents.csv');
     List<List<dynamic>> FoodData = const CsvToListConverter().convert(myData);
-    suggestion = [];
     for(int i = 1 ; i < FoodData.length - 1 ; i++){
       if(FoodData[i][0] == widget.food){
-        suggestion.add(FoodData[i][0]);
+        FoodData[i].forEach((element) {Nutrition.add(element);});
       }
     }
-    print("${suggestion[0]}");
-    return suggestion;
+    print("debug : ${Nutrition}");
+    return Nutrition;
   }
 
 
@@ -58,8 +58,6 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     final blockColor = Color(0xff333C47); // 여러 블럭들 색
     double defaultSize = valWidth * 0.0025;
-
-    loadData();
 
     return Scaffold(
         backgroundColor: bgColor,
@@ -93,39 +91,6 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Container(
-                    //     height: valHeight * 0.04,
-                    //     width: valWidth * 0.15,
-                    //     decoration: BoxDecoration(
-                    //       color: blockColor,
-                    //       borderRadius: BorderRadius.circular(valWidth * 0.015),
-                    //     ),
-                    //     child: Text('용량', style: TextStyle(color: txtColor))),
-                    // SizedBox(
-                    //   width: valWidth * 0.008,
-                    // ),
-                    // Container(
-                    //     height: valHeight * 0.04,
-                    //     width: valWidth * 0.15,
-                    //     decoration: BoxDecoration(
-                    //       color: bgColor,
-                    //       border: Border.all(
-                    //           color: Color(0xff546269), width: defaultSize * 1),
-                    //       borderRadius: BorderRadius.circular(valWidth * 0.015),
-                    //     ),
-                    //     child: Text('단위', style: TextStyle(color: txtColor))),
-                    // Container(
-                    //     height: valHeight * 0.04,
-                    //     width: valWidth * 0.08,
-                    //     child: Align(
-                    //       alignment: Alignment.center,
-                    //       child: Text(
-                    //         'x',
-                    //         textAlign: TextAlign.center,
-                    //         style: TextStyle(
-                    //             color: txtColor, fontSize: defaultSize * 14),
-                    //       ),
-                    //     )),
                     Container(
                         //몇인분인지 여기에 입력
                         height: valHeight * 0.04,
@@ -134,7 +99,19 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                           color: blockColor,
                           borderRadius: BorderRadius.circular(valWidth * 0.015),
                         ),
-                        child: Text('n', style: TextStyle(color: txtColor))),
+                        child: Center(
+                          child: TextField(
+                              style: TextStyle(color: Color(0xffFFFDFD)),
+                              controller: NumFood,
+                              decoration: const InputDecoration(
+                                fillColor: Color(0xff333C47),
+                                filled: true,
+                                hintText: "1",
+                                hintStyle: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              )),
+                        )),
                     Container(
                         height: valHeight * 0.04,
                         width: valWidth * 0.3,
@@ -194,50 +171,66 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                   ],
                 ),
                 SizedBox(height: valHeight * 0.08),
-                Container(
-                  height: valHeight * 0.2,
-                  width: valWidth * 0.7,
-                  decoration: BoxDecoration(
-                    color: bgColor,
-                    border: Border.all(
-                        color: Color(0xff333C47), width: defaultSize * 1),
-                    borderRadius: BorderRadius.circular(valWidth * 0.03),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: valHeight * 0.18,
-                        width: valWidth * 0.4,
-                        margin: EdgeInsets.only(right: valWidth * 0.02),
-                        color: Colors.grey,
-                      ),
-                      Container(
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                FutureBuilder(
+                    future: loadData(),
+                    builder: (context, AsyncSnapshot snapshot){
+                      if (snapshot.hasData == false) {
+                        return CircularProgressIndicator();
+                      } else if (snapshot.hasError) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Error: ${snapshot.error}',
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        );
+                      } else {
+                        return Container(
+                          height: valHeight * 0.2,
+                          width: valWidth * 0.7,
+                          decoration: BoxDecoration(
+                            color: bgColor,
+                            border: Border.all(
+                                color: Color(0xff333C47), width: defaultSize * 1),
+                            borderRadius: BorderRadius.circular(valWidth * 0.03),
+                          ),
+                          child: Row(
                             children: [
-                              MiniBox(context, Color(0xffA0B1DF), 0.012, 0.2,
-                                  10, '탄수화물 ' + 'nnn' + 'g'),
-                              SizedBox(height: valHeight * 0.008),
-                              MiniBox(context, Color(0xffF1D7A7), 0.012, 0.176,
-                                  10, '단백질 ' + 'nnn' + 'g'),
-                              SizedBox(height: valHeight * 0.008),
-                              MiniBox(context, Color(0xffDBB9C7), 0.012, 0.15,
-                                  10, '지방 ' + 'nnn' + 'g'),
-                              SizedBox(height: valHeight * 0.008),
-                              MiniBox(context, Color(0xffA0B1DF), 0.012, 0.2,
-                                  10, '콜레스테롤' + 'nnn' + 'g'),
-                              SizedBox(height: valHeight * 0.008),    
-                              MiniBox(context, Color(0xffA0B1DF), 0.012, 0.2,
-                                  10, '식이섬유' + 'nnn' + 'g'),
-                              SizedBox(height: valHeight * 0.008),
-                              MiniBox(context, txtColor, 0.012, 0.176, 10,
-                                  '나트륨 ' + 'nnn' + 'g'),
-                            ]),
-                      ),
-                    ],
-                  ),
-                ),
+                              Container(
+                                height: valHeight * 0.18,
+                                width: valWidth * 0.4,
+                                margin: EdgeInsets.only(right: valWidth * 0.02),
+                                color: Colors.grey,
+                              ),
+                              Container(
+                                child: Column( // 식단데이터
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      MiniBox(context, Color(0xffA0B1DF), 0.012, 0.2,
+                                          10, '탄수화물 ${Nutrition[2]} g'), //
+                                      SizedBox(height: valHeight * 0.008),
+                                      MiniBox(context, Color(0xffF1D7A7), 0.012, 0.176,
+                                          10, '단백질 ${Nutrition[3]} g'),
+                                      SizedBox(height: valHeight * 0.008),
+                                      MiniBox(context, Color(0xffDBB9C7), 0.012, 0.15,
+                                          10, '지방 ${Nutrition[4]} g'),
+                                      SizedBox(height: valHeight * 0.008),
+                                      MiniBox(context, Color(0xffA0B1DF), 0.012, 0.2,
+                                          10, '콜레스테롤 ${Nutrition[5]} g'),
+                                      SizedBox(height: valHeight * 0.008),
+                                      MiniBox(context, Color(0xffA0B1DF), 0.012, 0.2,
+                                          10, '식이섬유 ${Nutrition[6]} g'),
+                                      SizedBox(height: valHeight * 0.008),
+                                      MiniBox(context, txtColor, 0.012, 0.176, 10,
+                                          '나트륨 ${Nutrition[7]} g'),
+                                    ]),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    }),
                 SizedBox(height: valHeight * 0.08),
                 Container(
                   width: valWidth * 0.6,

@@ -19,7 +19,7 @@ class _GradientChartState extends State<GradientChart> {
   ];
   late double _min, _max;
   late List<double> _Y;
-  late List<String> _X;
+  late List<DateTime> _X;
   late List<FlSpot> data;
 
   @override
@@ -36,9 +36,9 @@ class _GradientChartState extends State<GradientChart> {
       _min = min;
       _max = max;
       _Y = widget.scores.map((e) => e.value).toList();
-      _X = widget.scores.map((e) => "${e.time.day}").toList();
+      _X = widget.scores.map((e) => e.time).toList();
       data = widget.scores.asMap().entries.map((e) {
-        return FlSpot(e.value.time.day.toDouble(), e.value.value);
+        return FlSpot((e.value.time.millisecondsSinceEpoch).toDouble(), e.value.value);
       }).toList();
     });
   }
@@ -56,7 +56,7 @@ class _GradientChartState extends State<GradientChart> {
   }
 
   LineChartData mainChart(
-      List<String> x, List<double> y, double min, double max) {
+      List<DateTime> x, List<double> y, double min, double max) {
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -82,20 +82,9 @@ class _GradientChartState extends State<GradientChart> {
           reservedSize: 20,
           getTextStyles: (context, value) => const TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
-          getTitles: (value) {
-            // print('bottomTitles $value');
-            // switch (value.toInt()) {
-            //   case 2:
-            //     return 'MAR';
-            //   case 5:
-            //     return 'JUN';
-            //   case 8:
-            //     return 'SEP';
-            // }
-            // return '';
-
-            // print(value);
-            return value.toInt().toString();
+          getTitles: (double value) {
+            var tmp = DateTime.fromMillisecondsSinceEpoch(value.toInt());
+            return "${tmp.day}:${tmp.hour}h";
           },
           // margin: 8,
         ),
@@ -137,40 +126,15 @@ class _GradientChartState extends State<GradientChart> {
           ),
         ),
       ),
-      minX: 4,
-      maxX: 10,
+      minX: x.first.millisecondsSinceEpoch.toDouble(),
+      maxX: x.last.millisecondsSinceEpoch.toDouble(),
       minY: 0,
-      maxY: _max,
+      maxY: _max+5,
       lineBarsData: [
         LineChartBarData(
-          // spots: [
-          //   FlSpot(0, 3),
-          //   FlSpot(2.6, 5.5),
-          //   FlSpot(4.9, 6),
-          //   FlSpot(6.8, 5.8),
-          //   FlSpot(8, 4),
-          //   FlSpot(9.5, 3),
-          //   FlSpot(11, 4),
-          // ],
           spots: data,
-          // colors: [
-          //   const Color(0xFF6FFF7C),
-          //   const Color(0xFF0087FF),
-          //   const Color(0xFF5620FF),
-          // ],
           colors: [Color(0xFFFFFFFF)],
-          // shadow:
-          // colorStops: const [0.25, 0.5, 0.75],
-          // gradientFrom: const Offset(0.5, 0),
-          // gradientTo: const Offset(0.5, 1),
           barWidth: 1,
-          // shadow: BoxShadow(
-          //   color: Colors.black,
-          //   spreadRadius: 10,
-          //   blurRadius: 3,
-          //   offset: Offset(0, 3),
-          //   spreadRadius = -9,
-          // ),
           shadow: Shadow(
             color: Colors.black,
             offset: Offset(0, 3),

@@ -43,6 +43,20 @@ class ServerConnection {
     return Map<String, dynamic>.from(json.decode(response.body));
   }
 
+  static Future<Map<String, dynamic>> GetStress(String uid) async {
+    final response = await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/get_stress.php?uid=" + uid));
+    print("debug : getStress");
+    return Map<String, dynamic>.from(json.decode(response.body));
+  }
+
+  static Future<Map<String, dynamic>> GetWeight(String uid) async {
+    final response = await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/get_weight.php?uid=" + uid));
+    print("debug : getWeight");
+    return Map<String, dynamic>.from(json.decode(response.body));
+  }
+
   static Future<void> uploadProfileImage(String uid, String photoURL) async {
     await http.get(Uri.parse(
         "http://kaistuser.iptime.org:8080/upload_image.php?uid=" +
