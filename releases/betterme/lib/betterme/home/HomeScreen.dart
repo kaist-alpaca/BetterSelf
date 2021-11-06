@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 
@@ -11,11 +12,77 @@ import 'functions/Widgets/FoodDaily.dart';
 import 'functions/Widgets/InbodyGraph.dart';
 import 'functions/Widgets/SleepGraph.dart';
 import 'functions/Widgets/StressGraph.dart';
+import 'functions/Widgets/ExerciseGraph.dart';
 
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 final FocusNode _nodeText1 = FocusNode();
 final FocusNode _nodeText2 = FocusNode();
+double weight = 0;
+DateTime date = DateTime.now();
+
+showPickerWeight(
+  BuildContext context,
+) {
+  Picker(
+      adapter: NumberPickerAdapter(data: [
+        NumberPickerColumn(
+          begin: 0,
+          end: 200,
+        ),
+        NumberPickerColumn(begin: 00, end: 99),
+      ]),
+      delimiter: [
+        PickerDelimiter(
+            child: Container(
+          width: 10,
+          alignment: Alignment.center,
+          child: Text('.'),
+        ))
+      ],
+      hideHeader: true,
+      title: Text("체중(kg)을 입력해주세요."),
+      selectedTextStyle: TextStyle(color: Colors.blue),
+      onConfirm: (Picker picker, List value) {
+        print(value.toString());
+        print(picker.getSelectedValues());
+        List selectedValues = [];
+        selectedValues = picker.getSelectedValues();
+        weight = selectedValues[0] + selectedValues[1] * 0.01;
+      }).showDialog(context);
+}
+
+showPickerDate(
+  BuildContext context,
+) {
+  Picker(
+      adapter: NumberPickerAdapter(data: [
+        NumberPickerColumn(
+          begin: 0,
+          end: 23,
+        ),
+        NumberPickerColumn(begin: 00, end: 59),
+      ]),
+      delimiter: [
+        PickerDelimiter(
+            child: Container(
+          width: 10,
+          alignment: Alignment.center,
+          child: Text(':'),
+        ))
+      ],
+      hideHeader: true,
+      title: Text("시간을 입력해주세요."),
+      selectedTextStyle: TextStyle(color: Colors.blue),
+      onConfirm: (Picker picker, List value) {
+        print(value.toString());
+        print(picker.getSelectedValues());
+        List selectedValues = [];
+        selectedValues = picker.getSelectedValues();
+        date = DateTime(DateTime.now().year, DateTime.now().month,
+            DateTime.now().day, selectedValues[0], selectedValues[1]);
+      }).showDialog(context);
+}
 
 KeyboardActionsConfig _buildConfig(BuildContext context) {
   return KeyboardActionsConfig(
@@ -93,12 +160,6 @@ class _HomeScreen extends State<HomeScreen> {
                           context: context,
                           builder: (BuildContext context) => AlertDialog(
                                 backgroundColor: bgColor,
-                                title: Text(
-                                  '체중을 입력하세요',
-                                  style: TextStyle(
-                                      color: txtColor,
-                                      fontSize: defaultSize * 15),
-                                ),
                                 content: SizedBox(
                                   height: valHeight * 0.15,
                                   child: Column(children: [
@@ -120,31 +181,30 @@ class _HomeScreen extends State<HomeScreen> {
                                                 fontSize: defaultSize * 15),
                                           ),
                                         ),
-                                        Container(
-                                          height: valHeight * 0.05,
-                                          width: valWidth * 0.2,
-                                          child: KeyboardActions(
-                                            // 팝업 내용
-                                            disableScroll: true,
-                                            config: _buildConfig(context),
-                                            child: TextField(
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: txtColor,
-                                                  fontSize: defaultSize * 15),
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              focusNode: _nodeText2,
-                                              decoration: InputDecoration(
-                                                  hintStyle: TextStyle(
-                                                      color: txtColor,
-                                                      fontSize:
-                                                          defaultSize * 15)),
-                                              onChanged: (text) {
-                                                //여기에 시간 저장
-                                              },
+                                        GestureDetector(
+                                          child: Container(
+                                            height: valHeight * 0.04,
+                                            width: valWidth * 0.2,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xff333C47),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      valWidth * 0.015),
+                                            ),
+                                            margin: EdgeInsets.only(
+                                                top: valHeight * 0.0153),
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                '${date.hour}:${date.minute}',
+                                                style:
+                                                    TextStyle(color: txtColor),
+                                              ),
                                             ),
                                           ),
+                                          onTap: () {
+                                            showPickerDate(context);
+                                          },
                                         ),
                                         Container(
                                           height: valHeight * 0.03,
@@ -153,6 +213,9 @@ class _HomeScreen extends State<HomeScreen> {
                                               top: valHeight * 0.022),
                                         ),
                                       ],
+                                    ),
+                                    SizedBox(
+                                      height: valHeight * 0.02,
                                     ),
                                     Row(
                                       mainAxisAlignment:
@@ -172,39 +235,40 @@ class _HomeScreen extends State<HomeScreen> {
                                                 fontSize: defaultSize * 15),
                                           ),
                                         ),
-                                        Container(
-                                          height: valHeight * 0.05,
-                                          width: valWidth * 0.2,
-                                          child: KeyboardActions(
-                                            // 팝업 내용
-                                            disableScroll: true,
-                                            config: _buildConfig(context),
-                                            child: TextField(
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  color: txtColor,
-                                                  fontSize: defaultSize * 15),
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              focusNode: _nodeText2,
-                                              decoration: InputDecoration(
-                                                  hintStyle: TextStyle(
-                                                      color: txtColor,
-                                                      fontSize:
-                                                          defaultSize * 15)),
-                                              onChanged: (text) {
-                                                controller.weightSelected(text);
-                                              },
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              showPickerWeight(context);
+                                            });
+                                          },
+                                          child: Container(
+                                            height: valHeight * 0.04,
+                                            width: valWidth * 0.2,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xff333C47),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      valWidth * 0.015),
+                                            ),
+                                            margin: EdgeInsets.only(
+                                                top: valHeight * 0.0153),
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                weight.toString(),
+                                                style:
+                                                    TextStyle(color: txtColor),
+                                              ),
                                             ),
                                           ),
                                         ),
                                         Container(
                                           height: valHeight * 0.03,
-                                          width: valWidth * 0.05,
+                                          width: valWidth * 0.07,
                                           margin: EdgeInsets.only(
                                               top: valHeight * 0.022),
                                           child: Text(
-                                            'kg',
+                                            '  kg',
                                             style: TextStyle(
                                                 color: txtColor,
                                                 fontSize: defaultSize * 15),
@@ -215,17 +279,33 @@ class _HomeScreen extends State<HomeScreen> {
                                   ]),
                                 ),
                                 actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      // 여기에 저장 구현
-                                      Navigator.pop(context, '저장');
-                                    },
-                                    child: Text(
-                                      '저장',
-                                      style: TextStyle(
-                                          color: txtColor,
-                                          fontSize: defaultSize * 12),
-                                    ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            primary: Color(0xff333C47),
+                                            minimumSize: Size(valWidth * 0.27,
+                                                valHeight * 0.035),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        valWidth * 0.03)),
+                                            side: BorderSide(
+                                                color: Color(0xff999CA2),
+                                                width: defaultSize * 0.7),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context, '저장');
+                                          },
+                                          child: Text(
+                                            '저장',
+                                            style: TextStyle(
+                                                color: txtColor,
+                                                fontSize: defaultSize * 12),
+                                          )),
+                                    ],
                                   )
                                 ],
                               )),
@@ -254,7 +334,7 @@ class _HomeScreen extends State<HomeScreen> {
                   height: valHeight * 0.015,
                 ),
                 Container(
-                  //위젯들 구성하는 화면 여기부터
+                  //위젯들 구성하는 화면 여기부터////////
                   height: screenHeight,
                   width: screenWidth,
                   child: Column(
@@ -263,8 +343,14 @@ class _HomeScreen extends State<HomeScreen> {
                       children: [
                         Row(
                           children: [
-                            SleepGraph(gridHeight * 2, gridWidth * 2),
-                            ActivityGraph(gridHeight * 2, gridWidth * 4),
+                            SleepGraph(gridHeight * 2, gridWidth * 3),
+                            StressGraph(gridHeight * 2, gridWidth * 3),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            ExerciseGraph(gridHeight * 2, gridWidth * 3),
+                            InbodyGraph(gridHeight * 2, gridWidth * 3),
                           ],
                         ),
                         Row(
@@ -273,12 +359,6 @@ class _HomeScreen extends State<HomeScreen> {
                         Row(
                           children: [
                             FoodDaily(gridHeight * 2, gridWidth * 6),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            StressGraph(gridHeight * 2, gridWidth * 3),
-                            InbodyGraph(gridHeight * 2, gridWidth * 3),
                           ],
                         ),
                       ]),
