@@ -35,6 +35,7 @@ import 'package:get/get.dart';
 // import 'package:timeline_tile/timeline_tile.dart';
 // import 'package:flutter_svg/svg.dart';
 
+final FocusNode _nodeText1 = FocusNode();
 final FocusNode _nodeText2 = FocusNode();
 
 KeyboardActionsConfig _buildConfig(BuildContext context) {
@@ -119,47 +120,120 @@ class _HomeScreen extends State<HomeScreen> {
                                       color: txtColor,
                                       fontSize: defaultSize * 15),
                                 ),
-                                content: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: valHeight * 0.05,
-                                      width: valWidth * 0.2,
-                                      child: KeyboardActions(
-                                        // 팝업 내용
-                                        disableScroll: true,
-                                        config: _buildConfig(context),
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: txtColor,
-                                              fontSize: defaultSize * 15),
-                                          keyboardType: TextInputType.number,
-                                          focusNode: _nodeText2,
-                                          decoration: InputDecoration(
-                                              hintStyle: TextStyle(
-                                                  color: txtColor,
-                                                  fontSize: defaultSize * 15)),
-                                          onChanged: (text) {
-                                            controller.weightSelected(text);
-                                          },
+                                content: SizedBox(
+                                  height: valHeight * 0.15,
+                                  child: Column(children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: valHeight * 0.03,
+                                          width: valWidth * 0.1,
+                                          margin: EdgeInsets.only(
+                                              top: valHeight * 0.022),
+                                          child: Text(
+                                            '시간',
+                                            style: TextStyle(
+                                                color: txtColor,
+                                                fontSize: defaultSize * 15),
+                                          ),
                                         ),
-                                      ),
+                                        Container(
+                                          height: valHeight * 0.05,
+                                          width: valWidth * 0.2,
+                                          child: KeyboardActions(
+                                            // 팝업 내용
+                                            disableScroll: true,
+                                            config: _buildConfig(context),
+                                            child: TextField(
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: txtColor,
+                                                  fontSize: defaultSize * 15),
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              focusNode: _nodeText2,
+                                              decoration: InputDecoration(
+                                                  hintStyle: TextStyle(
+                                                      color: txtColor,
+                                                      fontSize:
+                                                          defaultSize * 15)),
+                                              onChanged: (text) {
+                                                //여기에 시간 저장
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: valHeight * 0.03,
+                                          width: valWidth * 0.05,
+                                          margin: EdgeInsets.only(
+                                              top: valHeight * 0.022),
+                                        ),
+                                      ],
                                     ),
-                                    Container(
-                                      height: valHeight * 0.03,
-                                      width: valWidth * 0.05,
-                                      margin: EdgeInsets.only(
-                                          top: valHeight * 0.022),
-                                      child: Text(
-                                        'kg',
-                                        style: TextStyle(
-                                            color: txtColor,
-                                            fontSize: defaultSize * 15),
-                                      ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: valHeight * 0.03,
+                                          width: valWidth * 0.1,
+                                          margin: EdgeInsets.only(
+                                              top: valHeight * 0.022),
+                                          child: Text(
+                                            '체중',
+                                            style: TextStyle(
+                                                color: txtColor,
+                                                fontSize: defaultSize * 15),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: valHeight * 0.05,
+                                          width: valWidth * 0.2,
+                                          child: KeyboardActions(
+                                            // 팝업 내용
+                                            disableScroll: true,
+                                            config: _buildConfig(context),
+                                            child: TextField(
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: txtColor,
+                                                  fontSize: defaultSize * 15),
+                                              keyboardType:
+                                                  TextInputType.number,
+                                              focusNode: _nodeText2,
+                                              decoration: InputDecoration(
+                                                  hintStyle: TextStyle(
+                                                      color: txtColor,
+                                                      fontSize:
+                                                          defaultSize * 15)),
+                                              onChanged: (text) {
+                                                controller.weightSelected(text);
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          height: valHeight * 0.03,
+                                          width: valWidth * 0.05,
+                                          margin: EdgeInsets.only(
+                                              top: valHeight * 0.022),
+                                          child: Text(
+                                            'kg',
+                                            style: TextStyle(
+                                                color: txtColor,
+                                                fontSize: defaultSize * 15),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ]),
                                 ),
                                 actions: [
                                   TextButton(
