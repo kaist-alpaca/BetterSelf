@@ -30,6 +30,9 @@ final rng = Random();
 const dayCount = 7;
 
 class _ReportScreen extends State<ReportScreen> {
+
+  final String TestUid = "4fT7dL3H8CUkLKBx9bB3Pqjp3bi1";
+
   late List<Score> _scores;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay = DateTime.now();
