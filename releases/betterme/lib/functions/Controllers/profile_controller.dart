@@ -25,6 +25,8 @@ class ProfileController extends GetxController {
   DateTime selectedDay = DateTime.now();
   DateTime reportDay = DateTime.now();
 
+  double weightProfile = 0;
+
   DateTime date = DateTime.now();
 
   File? food;
@@ -81,6 +83,11 @@ class ProfileController extends GetxController {
 
   void updateReport(DateTime value) {
     reportDay = value;
+    update();
+  }
+
+  void updateWeight(double value) {
+    weightProfile = value;
     update();
   }
 

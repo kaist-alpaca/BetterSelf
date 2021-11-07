@@ -52,7 +52,9 @@ showPickerWeight(
       }).showDialog(context);
 }
 
-showPickerDate(BuildContext context,) {
+showPickerTime(
+  BuildContext context,
+) {
   Picker(
       adapter: NumberPickerAdapter(data: [
         NumberPickerColumn(
@@ -113,6 +115,7 @@ class _HomeScreen extends State<HomeScreen> {
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     double defaultSize = valWidth * 0.0025;
+
     return GetBuilder<ProfileController>(builder: (controller) {
       return Container(
         decoration: const BoxDecoration(
@@ -201,7 +204,7 @@ class _HomeScreen extends State<HomeScreen> {
                                             ),
                                           ),
                                           onTap: () {
-                                            showPickerDate(context);
+                                            showPickerTime(context);
                                           },
                                         ),
                                         Container(
@@ -238,6 +241,7 @@ class _HomeScreen extends State<HomeScreen> {
                                             setState(() {
                                               showPickerWeight(context);
                                             });
+                                            setState(() {});
                                           },
                                           child: Container(
                                             height: valHeight * 0.04,
