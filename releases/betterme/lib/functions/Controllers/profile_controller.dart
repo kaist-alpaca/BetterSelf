@@ -25,7 +25,7 @@ class ProfileController extends GetxController {
   DateTime selectedDay = DateTime.now();
   DateTime reportDay = DateTime.now();
 
-  double weightProfile = 0;
+  // double weightProfile = 0;
 
   DateTime date = DateTime.now();
 
@@ -86,10 +86,10 @@ class ProfileController extends GetxController {
     update();
   }
 
-  void updateWeight(double value) {
-    weightProfile = value;
-    update();
-  }
+  // void updateWeight(double value) {
+  //   weightProfile = value;
+  //   update();
+  // }
 
 //일주일구하기
   DateTime startDate(DateTime value) {
@@ -132,7 +132,8 @@ class ProfileController extends GetxController {
   String? gender;
   String? birthday;
   String? height;
-  String? weight;
+  String weight = '0.0';
+  var weight_test = RxString('');
   String? disease;
 
   void genderSelected(String value) {

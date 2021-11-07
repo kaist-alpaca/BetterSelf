@@ -18,71 +18,7 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 
 final FocusNode _nodeText1 = FocusNode();
 final FocusNode _nodeText2 = FocusNode();
-double weight = 0;
 DateTime date = DateTime.now();
-
-showPickerWeight(
-  BuildContext context,
-) {
-  Picker(
-      adapter: NumberPickerAdapter(data: [
-        NumberPickerColumn(
-          begin: 0,
-          end: 200,
-        ),
-        NumberPickerColumn(begin: 00, end: 99),
-      ]),
-      delimiter: [
-        PickerDelimiter(
-            child: Container(
-          width: 10,
-          alignment: Alignment.center,
-          child: Text('.'),
-        ))
-      ],
-      hideHeader: true,
-      title: Text("체중(kg)을 입력해주세요."),
-      selectedTextStyle: TextStyle(color: Colors.blue),
-      onConfirm: (Picker picker, List value) {
-        print(value.toString());
-        print(picker.getSelectedValues());
-        List selectedValues = [];
-        selectedValues = picker.getSelectedValues();
-        weight = selectedValues[0] + selectedValues[1] * 0.01;
-      }).showDialog(context);
-}
-
-showPickerTime(
-  BuildContext context,
-) {
-  Picker(
-      adapter: NumberPickerAdapter(data: [
-        NumberPickerColumn(
-          begin: 0,
-          end: 23,
-        ),
-        NumberPickerColumn(begin: 00, end: 59),
-      ]),
-      delimiter: [
-        PickerDelimiter(
-            child: Container(
-          width: 10,
-          alignment: Alignment.center,
-          child: Text(':'),
-        ))
-      ],
-      hideHeader: true,
-      title: Text("시간을 입력해주세요."),
-      selectedTextStyle: TextStyle(color: Colors.blue),
-      onConfirm: (Picker picker, List value) {
-        print(value.toString());
-        print(picker.getSelectedValues());
-        List selectedValues = [];
-        selectedValues = picker.getSelectedValues();
-        date = DateTime(DateTime.now().year, DateTime.now().month,
-            DateTime.now().day, selectedValues[0], selectedValues[1]);
-      }).showDialog(context);
-}
 
 KeyboardActionsConfig _buildConfig(BuildContext context) {
   return KeyboardActionsConfig(
@@ -158,8 +94,11 @@ class _HomeScreen extends State<HomeScreen> {
                     ), ////이 아래로 체중 입력 팝업
                     GestureDetector(
                       onTap: () => showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
+                        context: context,
+                        builder: (context) {
+                          return StatefulBuilder(
+                            builder: (context, setState) {
+                              return AlertDialog(
                                 backgroundColor: bgColor,
                                 content: SizedBox(
                                   height: valHeight * 0.15,
@@ -204,7 +143,50 @@ class _HomeScreen extends State<HomeScreen> {
                                             ),
                                           ),
                                           onTap: () {
-                                            showPickerTime(context);
+                                            Picker(
+                                                adapter:
+                                                    NumberPickerAdapter(data: [
+                                                  NumberPickerColumn(
+                                                    begin: 0,
+                                                    end: 23,
+                                                    initValue:
+                                                        date.hour.toInt(),
+                                                  ),
+                                                  NumberPickerColumn(
+                                                    begin: 00,
+                                                    end: 59,
+                                                    initValue:
+                                                        date.minute.toInt(),
+                                                  ),
+                                                ]),
+                                                delimiter: [
+                                                  PickerDelimiter(
+                                                      child: Container(
+                                                    width: 10,
+                                                    alignment: Alignment.center,
+                                                    child: Text(':'),
+                                                  ))
+                                                ],
+                                                hideHeader: true,
+                                                title: Text("시간을 입력해주세요."),
+                                                selectedTextStyle: TextStyle(
+                                                    color: Colors.blue),
+                                                onConfirm: (Picker picker,
+                                                    List value) {
+                                                  print(value.toString());
+                                                  print(picker
+                                                      .getSelectedValues());
+                                                  List selectedValues = [];
+                                                  selectedValues = picker
+                                                      .getSelectedValues();
+                                                  date = DateTime(
+                                                      DateTime.now().year,
+                                                      DateTime.now().month,
+                                                      DateTime.now().day,
+                                                      selectedValues[0],
+                                                      selectedValues[1]);
+                                                  setState(() {});
+                                                }).showDialog(context);
                                           },
                                         ),
                                         Container(
@@ -238,10 +220,57 @@ class _HomeScreen extends State<HomeScreen> {
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            setState(() {
-                                              showPickerWeight(context);
-                                            });
-                                            setState(() {});
+                                            Picker(
+                                                adapter:
+                                                    NumberPickerAdapter(data: [
+                                                  NumberPickerColumn(
+                                                    begin: 0,
+                                                    end: 200,
+                                                    // initValue: weight!.toInt(),
+                                                    initValue: int.parse(
+                                                        controller.weight
+                                                            .split(".")[0]),
+                                                  ),
+                                                  NumberPickerColumn(
+                                                    begin: 00,
+                                                    end: 99,
+                                                    initValue: ((double.parse(
+                                                                    controller
+                                                                        .weight) %
+                                                                1) *
+                                                            100)
+                                                        .toInt(),
+                                                  ),
+                                                ]),
+                                                delimiter: [
+                                                  PickerDelimiter(
+                                                      child: Container(
+                                                    width: 10,
+                                                    alignment: Alignment.center,
+                                                    child: Text('.'),
+                                                  ))
+                                                ],
+                                                hideHeader: true,
+                                                title: Text("체중(kg)을 입력해주세요."),
+                                                selectedTextStyle: TextStyle(
+                                                    color: Colors.blue),
+                                                onConfirm: (Picker picker,
+                                                    List value) {
+                                                  print(value.toString());
+                                                  print(picker
+                                                      .getSelectedValues());
+                                                  List selectedValues = [];
+                                                  selectedValues = picker
+                                                      .getSelectedValues();
+                                                  ProfileController.to
+                                                      .weightSelected(
+                                                          (selectedValues[0] +
+                                                                  selectedValues[
+                                                                          1] *
+                                                                      0.01)
+                                                              .toString());
+                                                  setState(() {});
+                                                }).showDialog(context);
                                           },
                                           child: Container(
                                             height: valHeight * 0.04,
@@ -257,7 +286,8 @@ class _HomeScreen extends State<HomeScreen> {
                                             child: Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                weight.toString(),
+                                                // weight.toString(),
+                                                controller.weight,
                                                 style:
                                                     TextStyle(color: txtColor),
                                               ),
@@ -310,7 +340,11 @@ class _HomeScreen extends State<HomeScreen> {
                                     ],
                                   )
                                 ],
-                              )),
+                              );
+                            },
+                          );
+                        },
+                      ),
                       child: Container(
                           //여기가 입력 버튼
                           width: valWidth * 0.1,
