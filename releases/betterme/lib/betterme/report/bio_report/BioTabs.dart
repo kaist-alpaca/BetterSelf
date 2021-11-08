@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:betterme/functions/Graphs/line_chart_new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -286,7 +287,8 @@ class _BioTabs extends State<BioTabs> {
                         padding: EdgeInsets.symmetric(
                             vertical: valHeight * 0.008,
                             horizontal: valWidth * 0.01),
-                        child: MadeLineChart(scores: _scores),
+                        child: LineChartNew(scores: _scores),
+                        // color: Colors.red,
                       ),
                       Container(
                           height: valHeight * 0.34,

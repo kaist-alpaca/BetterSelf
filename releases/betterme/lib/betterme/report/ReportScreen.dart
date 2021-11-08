@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Graphs/gradient_chart.dart';
+import 'package:betterme/functions/Graphs/line_chart_new.dart';
 import 'package:betterme/functions/Graphs/line_chart_space.dart';
 import 'package:betterme/functions/Graphs/single_bar.dart';
 import 'package:betterme/functions/Graphs/sliced_bar_chart.dart';
@@ -31,7 +32,6 @@ final rng = Random();
 const dayCount = 7;
 
 class _ReportScreen extends State<ReportScreen> {
-
   final String TestUid = "4fT7dL3H8CUkLKBx9bB3Pqjp3bi1";
 
   late List<Score> _scores;
@@ -53,7 +53,7 @@ class _ReportScreen extends State<ReportScreen> {
     super.initState();
     final scores = List<Score>.generate(dayCount, (index) {
       final y = rng.nextDouble() * 30.0;
-      final d = DateTime.now().add(Duration(days:index));
+      final d = DateTime.now().add(Duration(days: index));
       return Score(y, d);
     });
     setState(() {
@@ -194,7 +194,7 @@ class _ReportScreen extends State<ReportScreen> {
                               ),
                               FutureBuilder(
                                   future: ServerConnection.GetWeight(TestUid),
-                                  builder: (context, AsyncSnapshot snapshot){
+                                  builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData == false) {
                                       return CircularProgressIndicator();
                                     } else if (snapshot.hasError) {
@@ -206,14 +206,31 @@ class _ReportScreen extends State<ReportScreen> {
                                         ),
                                       );
                                     } else {
-                                      var result = snapshot.data['result'].reversed.toList();
+                                      var result = snapshot
+                                          .data['result'].reversed
+                                          .toList();
                                       int count = 0;
-                                      while(DateTime.fromMillisecondsSinceEpoch(double.parse(result[count]['time']).round()*1000)
-                                          .isAfter(DateTime.now().add(Duration(days:-3))) && result.length-1 > count)count++;
+                                      while (DateTime
+                                                  .fromMillisecondsSinceEpoch(
+                                                      double.parse(result[count]
+                                                                  ['time'])
+                                                              .round() *
+                                                          1000)
+                                              .isAfter(DateTime.now()
+                                                  .add(Duration(days: -3))) &&
+                                          result.length - 1 > count) count++;
                                       print("debug weight count : $count");
-                                      List<Score> WeightList = List<Score>.generate(count+1, (index) {
-                                        final y = double.parse(result[index]['weight']);
-                                        final d = DateTime.fromMillisecondsSinceEpoch(double.parse(result[index]['time']).round()*1000);
+                                      List<Score> WeightList =
+                                          List<Score>.generate(count + 1,
+                                              (index) {
+                                        final y = double.parse(
+                                            result[index]['weight']);
+                                        final d =
+                                            DateTime.fromMillisecondsSinceEpoch(
+                                                double.parse(result[index]
+                                                            ['time'])
+                                                        .round() *
+                                                    1000);
                                         print("debug weight count : $y \t $d");
                                         return Score(y, d);
                                       });
@@ -221,7 +238,9 @@ class _ReportScreen extends State<ReportScreen> {
                                         width: valWidth * 0.85,
                                         height: valHeight * 0.15,
                                         color: Color(0xff0B202A),
-                                        child: MadeLineChart(scores: WeightList.reversed.toList()),
+                                        child: MadeLineChart(
+                                            scores:
+                                                WeightList.reversed.toList()),
                                       );
                                     }
                                   })
@@ -258,7 +277,7 @@ class _ReportScreen extends State<ReportScreen> {
                                 ),
                                 FutureBuilder(
                                     future: ServerConnection.GetStress(TestUid),
-                                    builder: (context, AsyncSnapshot snapshot){
+                                    builder: (context, AsyncSnapshot snapshot) {
                                       if (snapshot.hasData == false) {
                                         return CircularProgressIndicator();
                                       } else if (snapshot.hasError) {
@@ -270,14 +289,32 @@ class _ReportScreen extends State<ReportScreen> {
                                           ),
                                         );
                                       } else {
-                                        List result = snapshot.data['result'].reversed.toList();
+                                        List result = snapshot
+                                            .data['result'].reversed
+                                            .toList();
                                         int count = 0;
-                                        while(DateTime.fromMillisecondsSinceEpoch(double.parse(result[count]['time']).round()*1000)
-                                            .isAfter(DateTime.now().add(Duration(days:-3))) && result.length > count)count++;
+                                        while (
+                                            DateTime.fromMillisecondsSinceEpoch(
+                                                        double.parse(result[
+                                                                        count]
+                                                                    ['time'])
+                                                                .round() *
+                                                            1000)
+                                                    .isAfter(DateTime.now().add(
+                                                        Duration(days: -3))) &&
+                                                result.length > count) count++;
                                         print("debug count : $count");
-                                        List<Score> StressList = List<Score>.generate(count+1, (index) {
-                                          final y = double.parse(result[index]['stress']);
-                                          final d = DateTime.fromMillisecondsSinceEpoch(double.parse(result[index]['time']).round()*1000);
+                                        List<Score> StressList =
+                                            List<Score>.generate(count + 1,
+                                                (index) {
+                                          final y = double.parse(
+                                              result[index]['stress']);
+                                          final d = DateTime
+                                              .fromMillisecondsSinceEpoch(
+                                                  double.parse(result[index]
+                                                              ['time'])
+                                                          .round() *
+                                                      1000);
                                           print("debug count : $y \t $d");
                                           return Score(y, d);
                                         });
@@ -285,7 +322,9 @@ class _ReportScreen extends State<ReportScreen> {
                                           width: valWidth * 0.35,
                                           height: valHeight * 0.1,
                                           color: Color(0xff0B202A),
-                                          child: GradientChart(scores: StressList.reversed.toList()),
+                                          child: GradientChart(
+                                              scores:
+                                                  StressList.reversed.toList()),
                                           margin: EdgeInsets.only(
                                             left: valWidth * 0.04,
                                           ),
@@ -326,6 +365,7 @@ class _ReportScreen extends State<ReportScreen> {
                                   height: valHeight * 0.1,
                                   color: Colors.grey,
                                   child: MadeLineChart2(scores: _scores),
+                                  // child: LineChartNew(scores: _scores),
                                 )
                               ]),
                             ],
@@ -425,8 +465,9 @@ class _ReportScreen extends State<ReportScreen> {
                                 ),
                               ),
                               FutureBuilder(
-                                  future: ServerConnection.GetEnergyburned(TestUid),
-                                  builder: (context, AsyncSnapshot snapshot){
+                                  future:
+                                      ServerConnection.GetEnergyburned(TestUid),
+                                  builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData == false) {
                                       return CircularProgressIndicator();
                                     } else if (snapshot.hasError) {
@@ -439,9 +480,12 @@ class _ReportScreen extends State<ReportScreen> {
                                       );
                                     } else {
                                       var result = snapshot.data['result'];
-                                      List<Score> EnergyList = List<Score>.generate(4, (index) {
-                                        final y = double.parse(result[3-index]['EnergyBurned']);
-                                        final d = DateTime.now().add(Duration(days:index-3));
+                                      List<Score> EnergyList =
+                                          List<Score>.generate(4, (index) {
+                                        final y = double.parse(
+                                            result[3 - index]['EnergyBurned']);
+                                        final d = DateTime.now()
+                                            .add(Duration(days: index - 3));
                                         return Score(y, d);
                                       });
                                       //print("\n\n debug : $result");
