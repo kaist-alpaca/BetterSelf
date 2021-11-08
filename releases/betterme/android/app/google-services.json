@@ -1,0 +1,78 @@
+{
+  "project_info": {
+    "project_number": "686202723932",
+    "project_id": "message-199ad",
+    "storage_bucket": "message-199ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686202723932:android:8bb02391a1400837fc1099",
+        "android_client_info": {
+          "package_name": "com.example.betterme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686202723932-7674qac5mldtdqrtv13jaa1higlnsqor.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.betterme",
+            "certificate_hash": "df1e40c07f4d86dc0c34d904136f08ca52056156"
+          }
+        },
+        {
+          "client_id": "686202723932-ki90asb9a35cihi1tsfs4vke50va5724.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.betterme",
+            "certificate_hash": "1e86a1fd20ec6f313c5f833c094cedc08135b661"
+          }
+        },
+        {
+          "client_id": "686202723932-moga8lp81jseevc08v9ko3o78muh60i4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.betterme",
+            "certificate_hash": "bae6b2e45157ec61b0d3b24238d91090cca13e38"
+          }
+        },
+        {
+          "client_id": "686202723932-qro8dq822uf9utq67qem722578756n1t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.betterme",
+            "certificate_hash": "8aabcdd68bad58831fb307ecde3981af4163678c"
+          }
+        },
+        {
+          "client_id": "686202723932-dsf2m3diqffjlo8q25sudtsap2s9v3n0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuehxHe7pl71lotsvW34pag8-8GSL5cZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686202723932-dsf2m3diqffjlo8q25sudtsap2s9v3n0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "686202723932-3r9fmcqkge69qb7fqasb6mn5oc4mh1rt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.alpaca.betatest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
