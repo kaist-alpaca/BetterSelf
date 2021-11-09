@@ -186,15 +186,29 @@ class ServerConnection {
     }
     try {
       var activityData = [];
-      final appleHealthActivity = await HealthKitReporter.sampleQuery(
-          QuantityType.activeEnergyBurned.identifier, _predicate);
-      // print(samples2.map((e) => e.map).toList()[0]);
-      for (final q in appleHealthActivity) {
-        var map = {};
-        map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
-        map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
-        map['calorie'] = '${json.encode(q.map["harmonized"]["value"])}';
-        activityData.add(map);
+      if (lastupdate == "0") {
+        final appleHealthActivity = await HealthKitReporter.sampleQuery(
+            QuantityType.activeEnergyBurned.identifier,
+            Predicate(start.add(Duration(days: -10)), start));
+        // print(samples2.map((e) => e.map).toList()[0]);
+        for (final q in appleHealthActivity) {
+          var map = {};
+          map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
+          map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
+          map['calorie'] = '${json.encode(q.map["harmonized"]["value"])}';
+          activityData.add(map);
+        }
+      } else {
+        final appleHealthActivity = await HealthKitReporter.sampleQuery(
+            QuantityType.activeEnergyBurned.identifier, _predicate);
+        // print(samples2.map((e) => e.map).toList()[0]);
+        for (final q in appleHealthActivity) {
+          var map = {};
+          map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
+          map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
+          map['calorie'] = '${json.encode(q.map["harmonized"]["value"])}';
+          activityData.add(map);
+        }
       }
 
       var activitySummaryData = [];
@@ -215,17 +229,54 @@ class ServerConnection {
         activitySummaryData.add(map);
       }
 
+      // var sleepData = [];
+      // var tmp = [];
+      // final appleHealthSleep = await HealthKitReporter.categoryQuery(
+      //     CategoryType.sleepAnalysis, _predicate);
+      // for (final q in appleHealthSleep) {
+      //   var map = {};
+      //   map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
+      //   map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
+      //   if (!tmp.contains(map.toString())) {
+      //     sleepData.add(map);
+      //     tmp.add(map.toString());
+      //   }
+      // }
+
       var sleepData = [];
       var tmp = [];
       final appleHealthSleep = await HealthKitReporter.categoryQuery(
           CategoryType.sleepAnalysis, _predicate);
       for (final q in appleHealthSleep) {
         var map = {};
-        map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
-        map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
-        if (!tmp.contains(map.toString())) {
-          sleepData.add(map);
-          tmp.add(map.toString());
+        // map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
+        // map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
+        // var startTime = '${json.encode(q.map["startTimestamp"])}';
+        int startTime = q.map["startTimestamp"].toInt();
+        int endTime = q.map["endTimestamp"].toInt();
+        var temp = startTime.toString() + '/' + endTime.toString();
+        map['endTime'] =
+            DateTime.fromMillisecondsSinceEpoch((endTime * 1000).toInt())
+                .toString()
+                .substring(0, 10)
+                .replaceAll("-", "_");
+        map['period'] = ((endTime - startTime) ~/ 60).toString();
+        print(endTime.runtimeType);
+        if (!tmp.contains(temp)) {
+          // sleepData.add(map);
+          tmp.add(temp);
+          print(map);
+          if (sleepData.isNotEmpty &&
+              sleepData.last["endTime"] == map['endTime']) {
+            print("same");
+            // print(sleepData.last["endTime"]);
+            sleepData.last["period"] =
+                (int.parse(sleepData.last["period"]) + int.parse(map["period"]))
+                    .toString();
+          } else {
+            print("not same");
+            sleepData.add(map);
+          }
         }
       }
 
@@ -312,74 +363,74 @@ class ServerConnection {
       // print("post test");
       // print(json.decode(response.body));
       // print(stressData);
-      final canWrite = await HealthKitReporter.isAuthorizedToWrite(
-          QuantityType.bodyMass.identifier);
-      if (canWrite) {
-        final _device = Device(
-          'FlutterTracker',
-          'kvs',
-          'T-800',
-          '3',
-          '3.0',
-          '1.1.1',
-          'kvs.sample.app',
-          '444-888-555',
-        );
-        final _source = Source(
-          'myApp',
-          'com.kvs.health_kit_reporter_example',
-        );
-        final _operatingSystem = OperatingSystem(
-          1,
-          2,
-          3,
-        );
+      // final canWrite = await HealthKitReporter.isAuthorizedToWrite(
+      //     QuantityType.bodyMass.identifier);
+      // if (canWrite) {
+      //   final _device = Device(
+      //     'FlutterTracker',
+      //     'kvs',
+      //     'T-800',
+      //     '3',
+      //     '3.0',
+      //     '1.1.1',
+      //     'kvs.sample.app',
+      //     '444-888-555',
+      //   );
+      // final _source = Source(
+      //   'myApp',
+      //   'com.kvs.health_kit_reporter_example',
+      // );
+      // final _operatingSystem = OperatingSystem(
+      //   1,
+      //   2,
+      //   3,
+      // );
 
-        SourceRevision _sourceRevision = SourceRevision(
-          _source,
-          '5',
-          'fit',
-          '4',
-          _operatingSystem,
-        );
-        // final _sourceRevision = SourceRevision(
-        //   _source,
-        //   '5',
-        //   'fit',
-        //   '4',
-        //   _operatingSystem,
-        // );
-        // final now = DateTime.now().add(Duration(minutes: -1));
-        // final minuteAgo = now.add(Duration(minutes: -1));
-        // final harmonized = QuantityHarmonized(80, 'kg', null);
-        // final weight = Quantity(
-        //     'testStepsUUID',
-        //     QuantityType.bodyMass.identifier,
-        //     now.millisecondsSinceEpoch,
-        //     now.millisecondsSinceEpoch,
-        //     _device,
-        //     _sourceRevision,
-        //     harmonized);
-        // print('try to save: ${weight.map}');
-        // final saved = await HealthKitReporter.save(weight);
-        final now = DateTime.now();
-        final minuteAgo = now.add(Duration(minutes: -1));
-        final harmonized = QuantityHarmonized(100, 'count', null);
-        final steps = Quantity(
-            'testStepsUUID',
-            QuantityType.stepCount.identifier,
-            minuteAgo.millisecondsSinceEpoch,
-            now.millisecondsSinceEpoch,
-            _device,
-            _sourceRevision,
-            harmonized);
-        print('try to save: ${steps.map}');
-        final saved = await HealthKitReporter.save(steps);
-        print('stepsSaved: $saved');
-        print('stepsWeight: $saved');
-      } else {
-        print('error canWrite weight: $canWrite');
-      }
+      // SourceRevision _sourceRevision = SourceRevision(
+      //   _source,
+      //   '5',
+      //   'fit',
+      //   '4',
+      //   _operatingSystem,
+      // );
+      // final _sourceRevision = SourceRevision(
+      //   _source,
+      //   '5',
+      //   'fit',
+      //   '4',
+      //   _operatingSystem,
+      // );
+      // final now = DateTime.now().add(Duration(minutes: -1));
+      // final minuteAgo = now.add(Duration(minutes: -1));
+      // final harmonized = QuantityHarmonized(80, 'kg', null);
+      // final weight = Quantity(
+      //     'testStepsUUID',
+      //     QuantityType.bodyMass.identifier,
+      //     now.millisecondsSinceEpoch,
+      //     now.millisecondsSinceEpoch,
+      //     _device,
+      //     _sourceRevision,
+      //     harmonized);
+      // print('try to save: ${weight.map}');
+      // final saved = await HealthKitReporter.save(weight);
+      // final now = DateTime.now();
+      // final minuteAgo = now.add(Duration(minutes: -1));
+      // final harmonized = QuantityHarmonized(100, 'count', null);
+      // final steps = Quantity(
+      //     'testStepsUUID',
+      //     QuantityType.stepCount.identifier,
+      //     minuteAgo.millisecondsSinceEpoch,
+      //     now.millisecondsSinceEpoch,
+      //     _device,
+      //     _sourceRevision,
+      //     harmonized);
+      // print('try to save: ${steps.map}');
+      // final saved = await HealthKitReporter.save(steps);
+      // print('stepsSaved: $saved');
+      // print('stepsWeight: $saved');
+      // } else {
+      //   print('error canWrite weight: $canWrite');
+      // }
     } catch (e) {
       print(
           "the problem might happen because you do not have apple health on your device");
