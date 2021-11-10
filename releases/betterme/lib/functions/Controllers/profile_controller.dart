@@ -129,6 +129,12 @@ class ProfileController extends GetxController {
     return DateTime(date.year, date.month, date.day - 1);
   }
 
+  int foodindex = 1;
+
+  String food1 = "";
+  String food2 = "";
+  String food3 = "";
+
   String? gender;
   String? birthday;
   String? weightday;
@@ -136,6 +142,22 @@ class ProfileController extends GetxController {
   String weight = '0.0';
   var weight_test = RxString('');
   String? disease;
+
+  void foodindexSelected(int value) {
+    foodindex = value;
+    update();
+  }
+
+  void foodiSelected(int index, String value) {
+    if(index == 1){
+      food1 = value;
+    }else if(index == 2){
+      food2 = value;
+    }else{
+      food3 = value;
+    }
+    update();
+  }
 
   void genderSelected(String value) {
     gender = value;

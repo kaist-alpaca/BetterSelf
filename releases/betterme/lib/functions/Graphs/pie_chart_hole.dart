@@ -2,8 +2,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class MadePieChartHole extends CustomPainter {
-  int percentage1 = 0;
-  int percentage2 = 0;
+  double percentage1 = 0;
+  double percentage2 = 0;
   String text;
 
   MadePieChartHole(
@@ -32,10 +32,10 @@ class MadePieChartHole extends CustomPainter {
     // canvas.drawCircle(center, radius, paint);
     canvas.drawArc(Rect.fromCircle(center: center, radius: radius),
         -pi / 2 + tmp, arcAngle1 - tmp * 2, false, paint);
-    paint..color = Color(0XFFDBB9C7);
+    paint..color = Color(0xffF1D7A7);
     canvas.drawArc(Rect.fromCircle(center: center, radius: radius),
         -pi / 2 + arcAngle1 + tmp, arcAngle2 - tmp * 2, false, paint);
-    paint..color = Color(0XFFF2D8A7);
+    paint..color = Color(0xffDBB9C7);
     canvas.drawArc(
         Rect.fromCircle(center: center, radius: radius),
         -pi / 2 + arcAngle1 + arcAngle2 + tmp,
