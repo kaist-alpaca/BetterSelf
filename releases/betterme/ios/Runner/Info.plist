@@ -40,7 +40,7 @@
 	<key>NSHealthShareUsageDescription</key>
 	<string>Apple Health에서 데이터를 불러옵니다</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>This super cool app wants to write some data</string>
+	<string>Apple Health에 데이터를 작성합니다</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>프로필 이미지를 제공할 목적으로 사진첩에 접근을 합니다</string>
 	<key>UILaunchStoryboardName</key>
