@@ -74,7 +74,7 @@ class SettingScreen extends StatelessWidget {
 
     final genderList = [Text("남"), Text("여"), Text("선택안함")];
 
-    final double TextfieldSize = valHeight * 0.04;
+    final double TextfieldSize = 40;
     double defaultSize = valWidth * 0.0025;
 
     return GetBuilder<ProfileController>(builder: (controller) {
@@ -84,8 +84,8 @@ class SettingScreen extends StatelessWidget {
             backgroundColor: bgColor,
             elevation: 0.0,
             centerTitle: true,
-            title: Text('계정 설정',
-                style: TextStyle(color: txtColor, fontSize: defaultSize * 15)),
+            title: Text('설정',
+                style: TextStyle(color: txtColor, fontSize: defaultSize * 17)),
           ),
           body: SingleChildScrollView(
             child: Center(
@@ -215,7 +215,7 @@ class SettingScreen extends StatelessWidget {
                     0.345), //ProfileImage
 
                 SizedBox(
-                  height: valHeight * 0.015,
+                  height: 10,
                 ),
 
                 Column(
@@ -260,7 +260,7 @@ class SettingScreen extends StatelessWidget {
                   ],
                 ), //ID and Edit // 에딧기능 넣어주세요
                 SizedBox(
-                  height: valHeight * 0.035,
+                  height: 40,
                 ),
 
                 Column(
@@ -324,7 +324,7 @@ class SettingScreen extends StatelessWidget {
                         ),
                       ],
                     ), //gender
-                    SizedBox(height: valHeight * 0.02),
+                    SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -382,14 +382,13 @@ class SettingScreen extends StatelessWidget {
                         ), //margin
                       ],
                     ),
-                    SizedBox(height: valHeight * 0.02), //birthday
+                    SizedBox(height: 16), //birthday
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                             width: valWidth * 0.25,
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
                             child: Text("키",
                                 style: TextStyle(
                                     color: txtColor,
@@ -403,9 +402,9 @@ class SettingScreen extends StatelessWidget {
                               color: txtFeildColor,
                               borderRadius: BorderRadius.all(
                                   Radius.circular(valWidth * 0.015))),
-                          margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
-                              valWidth * 0.02, valWidth * 0.015),
-                          child: KeyboardActions(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 1.5),
+                          child :KeyboardActions(
                             disableScroll: true,
                             config: _buildConfig(context),
                             child: TextField(
@@ -415,6 +414,11 @@ class SettingScreen extends StatelessWidget {
                               keyboardType: TextInputType.number,
                               focusNode: _nodeText1,
                               decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  focusedBorder: InputBorder.none,
+                                  enabledBorder: InputBorder.none,
+                                  errorBorder: InputBorder.none,
+                                  disabledBorder: InputBorder.none,
                                   hintText: controller.height,
                                   hintStyle: TextStyle(
                                       color: txtColor,
@@ -423,7 +427,7 @@ class SettingScreen extends StatelessWidget {
                                 controller.heightSelected(text);
                               },
                             ),
-                          ),
+                          )),
                         ),
                         Container(
                             width: valWidth * 0.15,
@@ -433,14 +437,13 @@ class SettingScreen extends StatelessWidget {
                                 children: [])), //margin
                       ],
                     ),
-                    SizedBox(height: valHeight * 0.02), //height
+                    SizedBox(height: 16), //height
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                             width: valWidth * 0.25,
-                            padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
                             child: Text("체중",
                                 style: TextStyle(
                                     color: txtColor,
@@ -454,26 +457,32 @@ class SettingScreen extends StatelessWidget {
                                 color: txtFeildColor,
                                 borderRadius: BorderRadius.all(
                                     Radius.circular(valWidth * 0.015))),
-                            margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
-                                valWidth * 0.02, valWidth * 0.015),
-                            child: KeyboardActions(
+                            child: Padding(
+                              padding: EdgeInsets.only(bottom: 1.5),
+                              child : KeyboardActions(
                               disableScroll: true,
                               config: _buildConfig(context),
-                              child: TextField(
+                              child:
+                                TextField(
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: txtColor, fontSize: defaultSize * 15),
                                 keyboardType: TextInputType.number,
                                 focusNode: _nodeText2,
                                 decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    errorBorder: InputBorder.none,
+                                    disabledBorder: InputBorder.none,
                                     hintText: controller.weight,
                                     hintStyle: TextStyle(
                                         color: txtColor,
                                         fontSize: defaultSize * 15)),
                                 onChanged: (text) {
                                   controller.weightSelected(text);
-                                },
-                              ),
+                                },)
+                              )
                             ),
                           ),
                           Container(
@@ -492,11 +501,11 @@ class SettingScreen extends StatelessWidget {
                     ), // weight
 
                     SizedBox(
-                      height: valHeight * 0.04,
+                      height: 50,
                     ),
 
                     Container(
-                      height: valWidth * 0.11,
+                      height: 50,
                       width: valWidth * 0.75,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
@@ -526,7 +535,7 @@ class SettingScreen extends StatelessWidget {
                       ),
                     ), //disease
                     SizedBox(
-                      height: valHeight * 0.04,
+                      height: 35,
                     ),
 
                     GestureDetector(
@@ -541,7 +550,7 @@ class SettingScreen extends StatelessWidget {
                         children: [
                           Container(
                             width: valWidth * 0.5,
-                            height: valHeight * 0.042,
+                            height: 35,
                             decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 0.7,
@@ -562,7 +571,7 @@ class SettingScreen extends StatelessWidget {
                       ),
                     ), //저장기능_추가해주세요
                     SizedBox(
-                      height: valHeight * 0.025,
+                      height: 25,
                     ),
 
                     GestureDetector(
@@ -581,7 +590,7 @@ class SettingScreen extends StatelessWidget {
                         children: [
                           Container(
                             width: valWidth * 0.5,
-                            height: valHeight * 0.042,
+                            height: 35,
                             decoration: BoxDecoration(
                                 border: Border.all(
                                   width: 0.7,
@@ -592,7 +601,7 @@ class SettingScreen extends StatelessWidget {
                                     Radius.circular(valWidth * 0.025))),
                             child: Align(
                                 alignment: FractionalOffset(0.5, 0.5),
-                                child: Text("로그아웃",
+                                child: Text("Sign Out",
                                     style: TextStyle(
                                         fontSize: defaultSize * 15,
                                         color: Color(0xffD2363A)),
@@ -600,7 +609,10 @@ class SettingScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ), //logout
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),//logout
                   ],
                 ),
               ),

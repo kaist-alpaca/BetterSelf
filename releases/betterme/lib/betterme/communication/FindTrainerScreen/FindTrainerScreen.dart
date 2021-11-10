@@ -34,6 +34,7 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
           return snapshot.hasData
               ? ListView(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   children:
                       snapshot.data!.docs.map((DocumentSnapshot document) {
                     Map<String, dynamic> data =
@@ -47,67 +48,57 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                     final blockColor = Color(0xff333C47); // 여러 블럭들 색
                     double defaultSize = valWidth * 0.0025;
                     if (data['email'].toString().contains(searching.text)) {
-                      return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 1.0, horizontal: 20.0),
-                          child: Card(
-                            color: bgColor,
-                            child: GestureDetector(
+                      return ClipRRect(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(18),
+                        ),
+                        child: Container(
+                          height: 50,
+                          child : Card(
+                              color: bgColor,
+                              child: GestureDetector(
                                 onTap: () {
                                   showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) =>
                                         AlertDialog(
-                                      content: Text(
-                                          "${data['email']} 님에게\n트레이너 요청을 보내시겠습니까?"), // 서버에 발송기능 구현
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: const Text('취소'),
+                                          content: Text(
+                                              "${data['email']} 님에게\n트레이너 요청을 보내시겠습니까?"), // 서버에 발송기능 구현
+                                          actions: <Widget>[
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'Cancel'),
+                                              child: const Text('취소'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, 'OK'),
+                                              child: const Text('확인'),
+                                            ),
+                                          ],
                                         ),
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'OK'),
-                                          child: const Text('확인'),
-                                        ),
-                                      ],
-                                    ),
                                   );
                                 },
                                 child: ListTile(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
                                   tileColor: blockColor,
-                                  leading: SizedBox(
-                                    height: 60,
-                                    width: 45,
-                                    child: Container(
+                                  dense: true,
+                                  title  : Container(
+                                      alignment: Alignment(-1, -0.2),
                                       decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: bgColor,
-                                        image: DecorationImage(
-                                          fit: BoxFit.fill,
-                                          image: NetworkImage(data['imgUrl']),
-                                        ),
-                                      ),
-                                    ),
-                                  ), // 사용자 이미지 불러오는 코드
-                                  title: Container(
-                                    height: 60,
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10))),
+                                      child : Text(
                                         data['email'],
                                         style: TextStyle(
                                           color: txtColor,
-                                          fontSize: defaultSize * 15,
+                                          fontSize: defaultSize * 15,//15,
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                )),
-                          ));
+                                      )),
+                                ),
+                              )
+                          ),
+                        ),
+                      );
                     } else {
                       return Container();
                     }
@@ -173,10 +164,11 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
             child: Container(
                 child: Column(
               children: [
+                SizedBox(height: 10,),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
                       //검색박스
-                      height: valHeight * 0.045,
+                      height: 30,
                       width: valWidth * 0.74,
                       decoration: BoxDecoration(
                         color: blockColor,
@@ -260,8 +252,9 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                 //   padding:
                 //       EdgeInsets.symmetric(vertical: 7.0, horizontal: 20.0),
                 // ),
+                SizedBox(height: 2,),
                 Container(
-                    height: 0.7 * valHeight, // 트레이너 보이는 범위
+                    height: 0.75 * valHeight, // 트레이너 보이는 범위
                     child: TrainerList(context, userlistStream)!),
                 // isSearching ? SizedBox(
                 //   height : 500,

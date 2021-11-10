@@ -131,6 +131,7 @@ class ProfileController extends GetxController {
 
   String? gender;
   String? birthday;
+  String? weightday;
   String? height;
   String weight = '0.0';
   var weight_test = RxString('');
@@ -143,6 +144,11 @@ class ProfileController extends GetxController {
 
   void birthdaySelected(String value) {
     birthday = value;
+    update();
+  }
+
+  void weightdaySelected(String value) {
+    weightday = value;
     update();
   }
 

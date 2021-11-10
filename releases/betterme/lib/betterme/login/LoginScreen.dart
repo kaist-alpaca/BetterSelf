@@ -73,7 +73,7 @@ class _LoginScreen extends State<LoginScreen> {
             backgroundColor: Colors.grey, //나중 여기에 앱아이콘
           ),
           SizedBox(
-            height: valHeight * 0.18,
+            height: 131,
           ),
           GestureDetector(
             onTap: () {
@@ -89,8 +89,9 @@ class _LoginScreen extends State<LoginScreen> {
                       MaterialPageRoute(builder: (context) => AppMain()));*/ //바로 홈페이지로 이동하는 코드
             },
             child: Container(
-                height: valHeight * 0.048,
+                height: 41,
                 width: valWidth * 0.73,
+                alignment: Alignment(0, -0.2),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(valWidth * 0.015),
                   color: Color(0xff333C47),
@@ -104,7 +105,7 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
           ),
           SizedBox(
-            height: valHeight * 0.07,
+            height: 50,
           ),
           Container(
             // 개인정보 처리방침 및 이용약관

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../functions/Widgets/DividewithObj.dart';
 
 class AgreementScreen extends StatefulWidget {
@@ -192,18 +193,35 @@ class _AgreementScreen extends State<AgreementScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: bgColor,
-        title: Text(
-          "개인정보 처리방침 및 이용약관",
-          style: TextStyle(
-            color: txtColor,
-            fontSize: defaultSize * 17,
+          backgroundColor: bgColor,
+          elevation: 0.0,
+          title: Align(
+            alignment: Alignment(-0.38, 0),
+            child: Container(
+              height: valHeight * 0.08,
+              padding: EdgeInsets.only(top: 20),
+              child: Text(
+                  "개인정보 처리방침 및 이용약관",
+                  style: TextStyle(
+                      fontSize: defaultSize * 17, color: txtColor),
+                  textAlign: TextAlign.center),
+            ),
+          ),
+          leading: Container(
+            height: valHeight * 0.08,
+            padding: EdgeInsets.only(top: 14),
+            child: IconButton(
+              icon: SvgPicture.asset('images/arrow towards left_icon.svg'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
         ),
-      ),
       backgroundColor: bgColor,
       body: ListView(
         children: [
+          SizedBox(height: 30),
           DividewithObj(
               context,
               Container(

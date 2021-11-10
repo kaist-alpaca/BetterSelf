@@ -84,31 +84,40 @@ class _ChatroomScreen extends State<ChatroomScreen> {
         },
         child: Scaffold(
           backgroundColor: bgColor,
-          appBar: AppBar(
-            backgroundColor: bgColor,
-            title: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 33,
-                  height: 33,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.white,
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: NetworkImage(widget.ChatwithImgurl),
-                    ),
+          appBar:
+            AppBar(
+              toolbarHeight: 100,
+              leadingWidth: valWidth*0.25,
+              titleSpacing: 0,
+              backgroundColor: bgColor,
+              elevation: 0.0,
+              leading:  Container(
+                margin: EdgeInsets.only(left: valWidth*0.1, top: 0),
+                width: 33,
+                height: 33,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(widget.ChatwithImgurl),
                   ),
                 ),
-                SizedBox(
-                  width: 17,
+              ),
+              title: Align(
+                alignment: Alignment(-0.38, 0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 17,
+                    ),
+                    Text('${widget.namechatwith}',
+                        style: TextStyle(color: Color(0xffFFFDFD), fontSize: 17)),
+                  ],
                 ),
-                Text('${widget.namechatwith}',
-                    style: TextStyle(color: Color(0xffFFFDFD), fontSize: 17)),
-              ],
+              ),
             ),
-          ),
           body: Container(
             child: Stack(
               children: [
@@ -157,7 +166,8 @@ class _ChatroomScreen extends State<ChatroomScreen> {
               ],
             ),
           ),
-        ));
+        )
+    );
   }
 
   Widget chatmessages(
