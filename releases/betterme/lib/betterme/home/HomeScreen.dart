@@ -1,3 +1,5 @@
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,6 +54,8 @@ class _HomeScreen extends State<HomeScreen> {
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
+    final txtFeildColor = Color(0xff333C47); //텍스트
+    final double TextfieldSize = 40;
     double defaultSize = valWidth * 0.0025;
 
     return GetBuilder<ProfileController>(builder: (controller) {
@@ -103,8 +107,76 @@ class _HomeScreen extends State<HomeScreen> {
                               return AlertDialog(
                                 backgroundColor: bgColor,
                                 content: SizedBox(
-                                  height: valHeight * 0.15,
+                                  height: valHeight * 0.24,
                                   child: Column(children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: valHeight * 0.03,
+                                          width: valWidth * 0.1,
+                                          child: Text(
+                                            '날짜',
+                                            style: TextStyle(
+                                                color: txtColor,
+                                                fontSize: defaultSize * 15),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child : GestureDetector(
+                                          onTap: () {
+                                            // _openDatePicker(context);
+                                            BottomPicker.date(
+                                                title: "날짜",
+                                                titleStyle: TextStyle(
+                                                    color: txtColor,
+                                                    fontSize: defaultSize * 15),
+                                                onChange: (index) {
+                                                  print(index);
+                                                },
+                                                onSubmit: (index) {
+                                                  print(index);
+                                                  controller.weightdaySelected(
+                                                      index.toString().substring(0, 10));
+                                                },
+                                                bottomPickerTheme:
+                                                BOTTOM_PICKER_THEME.PLUM_PLATE)
+                                                .show(context);
+                                          },
+                                          child: Container(
+                                            //날짜
+                                              width: valWidth * 0.2,
+                                              height: valHeight * 0.04, //valHeight * 0.06,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  color: txtFeildColor,
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(valWidth * 0.015))),
+                                              child: Text(
+                                                controller.weightday == null
+                                                    ? ""
+                                                    : controller.weightday.toString(),
+                                                style: TextStyle(
+                                                    color: txtColor,
+                                                    fontSize: defaultSize * 15),
+                                              )),
+                                        ),
+                                        ),
+                                        Container(
+                                          height: valHeight * 0.03,
+                                          width: valWidth * 0.05,
+                                          margin: EdgeInsets.only(
+                                              top: valHeight * 0.022),
+                                        )//margin
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: valHeight * 0.02,
+                                    ),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -114,8 +186,6 @@ class _HomeScreen extends State<HomeScreen> {
                                         Container(
                                           height: valHeight * 0.03,
                                           width: valWidth * 0.1,
-                                          margin: EdgeInsets.only(
-                                              top: valHeight * 0.022),
                                           child: Text(
                                             '시간',
                                             style: TextStyle(

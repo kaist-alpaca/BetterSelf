@@ -7,6 +7,7 @@ import 'package:betterme/functions/Firestore/AuthMethods.dart';
 import 'package:betterme/functions/Firestore/DatabaseMethods.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'FindTrainerScreen/FindTrainerScreen.dart';
 import 'chatroom/ChatroomScreen.dart';
@@ -157,28 +158,45 @@ class _CommunicationScreen extends State<CommunicationScreen> {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        centerTitle: true,
-        elevation: 0.0,
         backgroundColor: bgColor,
-        title: Text(
-          '메시지',
-          style: TextStyle(color: txtColor, fontSize: defaultSize * 15),
+        elevation: 0.0,
+        title: Align(
+          alignment: Alignment(-0.38, 0),
+          child: Container(
+            height: valHeight * 0.08,
+            padding: EdgeInsets.only(top: 20),
+            child: Text(
+                "메시지",
+                style: TextStyle(
+                    fontSize: defaultSize * 17, color: txtColor),
+                textAlign: TextAlign.center),
+          ),
         ),
-        actions: [
-          Padding(
-              padding: EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FindTrainerScreen()));
-                },
-                child: Icon(Icons.add),
-              )),
-        ],
+        leading: Container(
+          height: valHeight * 0.08,
+          padding: EdgeInsets.only(top: 14),
+          child: IconButton(
+            icon: SvgPicture.asset('images/arrow towards left_icon.svg'),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+          actions: [
+            Padding(
+                padding: EdgeInsets.only(top: 14, right: 20.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => FindTrainerScreen()));
+                  },
+                  child: Icon(Icons.add),
+                )),
+          ]
       ),
-      body: Container(child: TrainersList(context, usersStream)),
+      body: Container(margin : const EdgeInsets.only(top: 14), child: TrainersList(context, usersStream)),
     );
   }
 }
