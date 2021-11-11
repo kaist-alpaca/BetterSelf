@@ -87,7 +87,7 @@ class _HomeScreen extends State<HomeScreen> {
                     Container(
                       width: valWidth * 0.38,
                       child: Text(
-                        'Hi, ' + 'Kyungbin' + '!',
+                        'Hi, ' + controller.myProfile.value.name! + '!',
                         style: TextStyle(
                           fontSize: defaultSize * 19,
                           color: Color(0xffFFFDFD),
@@ -111,9 +111,9 @@ class _HomeScreen extends State<HomeScreen> {
                                   child: Column(children: [
                                     Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Container(
                                           height: valHeight * 0.03,
@@ -127,51 +127,61 @@ class _HomeScreen extends State<HomeScreen> {
                                         ),
                                         Align(
                                           alignment: Alignment.center,
-                                          child : GestureDetector(
-                                          onTap: () {
-                                            // _openDatePicker(context);
-                                            BottomPicker.date(
-                                                title: "날짜",
-                                                titleStyle: TextStyle(
-                                                    color: txtColor,
-                                                    fontSize: defaultSize * 15),
-                                                onChange: (index) {
-                                                  print(index);
-                                                },
-                                                onSubmit: (index) {
-                                                  print(index);
-                                                  controller.weightdaySelected(
-                                                      index.toString().substring(0, 10));
-                                                },
-                                                bottomPickerTheme:
-                                                BOTTOM_PICKER_THEME.PLUM_PLATE)
-                                                .show(context);
-                                          },
-                                          child: Container(
-                                            //날짜
-                                              width: valWidth * 0.2,
-                                              height: valHeight * 0.04, //valHeight * 0.06,
-                                              alignment: Alignment.center,
-                                              decoration: BoxDecoration(
-                                                  color: txtFeildColor,
-                                                  borderRadius: BorderRadius.all(
-                                                      Radius.circular(valWidth * 0.015))),
-                                              child: Text(
-                                                controller.weightday == null
-                                                    ? ""
-                                                    : controller.weightday.toString(),
-                                                style: TextStyle(
-                                                    color: txtColor,
-                                                    fontSize: defaultSize * 15),
-                                              )),
-                                        ),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              // _openDatePicker(context);
+                                              BottomPicker.date(
+                                                      title: "날짜",
+                                                      titleStyle: TextStyle(
+                                                          color: txtColor,
+                                                          fontSize:
+                                                              defaultSize * 15),
+                                                      onChange: (index) {
+                                                        print(index);
+                                                      },
+                                                      onSubmit: (index) {
+                                                        print(index);
+                                                        controller
+                                                            .weightdaySelected(
+                                                                index
+                                                                    .toString()
+                                                                    .substring(
+                                                                        0, 10));
+                                                      },
+                                                      bottomPickerTheme:
+                                                          BOTTOM_PICKER_THEME
+                                                              .PLUM_PLATE)
+                                                  .show(context);
+                                            },
+                                            child: Container(
+                                                //날짜
+                                                width: valWidth * 0.2,
+                                                height: valHeight *
+                                                    0.04, //valHeight * 0.06,
+                                                alignment: Alignment.center,
+                                                decoration: BoxDecoration(
+                                                    color: txtFeildColor,
+                                                    borderRadius: BorderRadius
+                                                        .all(Radius.circular(
+                                                            valWidth * 0.015))),
+                                                child: Text(
+                                                  controller.weightday == null
+                                                      ? ""
+                                                      : controller.weightday
+                                                          .toString(),
+                                                  style: TextStyle(
+                                                      color: txtColor,
+                                                      fontSize:
+                                                          defaultSize * 15),
+                                                )),
+                                          ),
                                         ),
                                         Container(
                                           height: valHeight * 0.03,
                                           width: valWidth * 0.05,
                                           margin: EdgeInsets.only(
                                               top: valHeight * 0.022),
-                                        )//margin
+                                        ) //margin
                                       ],
                                     ),
                                     SizedBox(

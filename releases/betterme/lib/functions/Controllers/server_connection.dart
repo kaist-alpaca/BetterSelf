@@ -57,7 +57,7 @@ class ServerConnection {
     print("making usermodel");
     return UserModel(
       uid: uid,
-      name: list['result']["name"],
+      name: list['result']["user_name"],
       email: list['result']["email"],
       profileUrl:
           "http://kaistuser.iptime.org:8080/img/profile/" + uid + ".jpg",
