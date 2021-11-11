@@ -135,10 +135,10 @@ class ProfileController extends GetxController {
   String food2 = "";
   String food3 = "";
 
-  String? gender;
+  String? gender = "남";
   String? birthday;
   String? weightday;
-  String? height = '';
+  String? height = '180';
   String weight = '0.0';
   var weight_test = RxString('');
   String? disease;
