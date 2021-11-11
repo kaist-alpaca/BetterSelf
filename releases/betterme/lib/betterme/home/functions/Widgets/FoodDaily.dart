@@ -21,6 +21,8 @@ class _FoodDaily extends State<FoodDaily> {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
 
+    List<String>? food;
+
     final outTopBlank = valHeight * 0.007; //바깥쪽 여백
     final outLeftBlank = valWidth * 0.012;
     final inTopBlank = valHeight * 0.02; //안쪽 여백

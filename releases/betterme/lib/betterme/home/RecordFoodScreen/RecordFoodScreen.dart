@@ -1,4 +1,5 @@
 import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
+import 'package:betterme/functions/Graphs/pie_chart_hole.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -200,7 +201,20 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                 height: valHeight * 0.18,
                                 width: valWidth * 0.4,
                                 margin: EdgeInsets.only(right: valWidth * 0.02),
-                                color: Colors.grey,
+                                child: Container(
+                                  width: valWidth * 0.4,
+                                  height: valHeight * 0.2,
+                                  child: CustomPaint(
+                                    // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
+                                    size: Size(
+                                        150, 150), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
+                                    painter: MadePieChartHole(
+                                      percentage1: Nutrition[2]/(Nutrition[2]+Nutrition[3]+Nutrition[4])*100,
+                                      percentage2: Nutrition[3]/(Nutrition[2]+Nutrition[3]+Nutrition[4])*100,
+                                      text: "${Nutrition[1]}\nkcal",
+                                    ),
+                                  ),
+                                ),
                               ),
                               Container(
                                 child: Column( // 식단데이터
@@ -247,6 +261,7 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                       alignment: FractionalOffset(0.5, 0.5),
                       child: GestureDetector(
                         onTap: (){
+
                           Get.to(()=>ConstructTabBar());
                         },
                         child: Text("저장",
