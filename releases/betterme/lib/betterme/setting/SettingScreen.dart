@@ -223,7 +223,7 @@ class SettingScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'ID',
+                      controller.myProfile.value.email!,
                       style: TextStyle(
                           color: txtColor, fontSize: defaultSize * 15),
                     ),
