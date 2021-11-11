@@ -79,17 +79,18 @@ class SettingScreen extends StatelessWidget {
 
     return GetBuilder<ProfileController>(builder: (controller) {
       return Scaffold(
+        backgroundColor: bgColor,
+        appBar: AppBar(
           backgroundColor: bgColor,
-          appBar: AppBar(
-            backgroundColor: bgColor,
-            elevation: 0.0,
-            centerTitle: true,
-            title: Text('설정',
-                style: TextStyle(color: txtColor, fontSize: defaultSize * 17)),
-          ),
-          body: SingleChildScrollView(
-            child: Center(
-              child: Column(children: [
+          elevation: 0.0,
+          centerTitle: true,
+          title: Text('설정',
+              style: TextStyle(color: txtColor, fontSize: defaultSize * 17)),
+        ),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
                 SizedBox(
                   height: valHeight * 0.015,
                 ),
@@ -403,31 +404,32 @@ class SettingScreen extends StatelessWidget {
                               borderRadius: BorderRadius.all(
                                   Radius.circular(valWidth * 0.015))),
                           child: Padding(
-                            padding: EdgeInsets.only(bottom: 1.5),
-                          child :KeyboardActions(
-                            disableScroll: true,
-                            config: _buildConfig(context),
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: txtColor, fontSize: defaultSize * 15),
-                              keyboardType: TextInputType.number,
-                              focusNode: _nodeText1,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  disabledBorder: InputBorder.none,
-                                  hintText: controller.height,
-                                  hintStyle: TextStyle(
+                              padding: EdgeInsets.only(bottom: 1.5),
+                              child: KeyboardActions(
+                                disableScroll: true,
+                                config: _buildConfig(context),
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
                                       color: txtColor,
-                                      fontSize: defaultSize * 15)),
-                              onChanged: (text) {
-                                controller.heightSelected(text);
-                              },
-                            ),
-                          )),
+                                      fontSize: defaultSize * 15),
+                                  keyboardType: TextInputType.number,
+                                  focusNode: _nodeText1,
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      errorBorder: InputBorder.none,
+                                      disabledBorder: InputBorder.none,
+                                      hintText: controller.height,
+                                      hintStyle: TextStyle(
+                                          color: txtColor,
+                                          fontSize: defaultSize * 15)),
+                                  onChanged: (text) {
+                                    controller.heightSelected(text);
+                                  },
+                                ),
+                              )),
                         ),
                         Container(
                             width: valWidth * 0.15,
@@ -451,173 +453,171 @@ class SettingScreen extends StatelessWidget {
                                 textAlign: TextAlign.center)),
                         Container(
                           //체중 입력란
-                            width: valWidth * 0.35,
-                            height: TextfieldSize, //valHeight * 0.06,
-                            decoration: BoxDecoration(
-                                color: txtFeildColor,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(valWidth * 0.015))),
-                            child: Padding(
+                          width: valWidth * 0.35,
+                          height: TextfieldSize, //valHeight * 0.06,
+                          decoration: BoxDecoration(
+                              color: txtFeildColor,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(valWidth * 0.015))),
+                          child: Padding(
                               padding: EdgeInsets.only(bottom: 1.5),
-                              child : KeyboardActions(
-                              disableScroll: true,
-                              config: _buildConfig(context),
-                              child:
-                                TextField(
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: txtColor, fontSize: defaultSize * 15),
-                                keyboardType: TextInputType.number,
-                                focusNode: _nodeText2,
-                                decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    focusedBorder: InputBorder.none,
-                                    enabledBorder: InputBorder.none,
-                                    errorBorder: InputBorder.none,
-                                    disabledBorder: InputBorder.none,
-                                    hintText: controller.weight,
-                                    hintStyle: TextStyle(
+                              child: KeyboardActions(
+                                  disableScroll: true,
+                                  config: _buildConfig(context),
+                                  child: TextField(
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
                                         color: txtColor,
-                                        fontSize: defaultSize * 15)),
-                                onChanged: (text) {
-                                  controller.weightSelected(text);
-                                },)
-                              )
-                            ),
-                          ),
-                          Container(
+                                        fontSize: defaultSize * 15),
+                                    keyboardType: TextInputType.number,
+                                    focusNode: _nodeText2,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        errorBorder: InputBorder.none,
+                                        disabledBorder: InputBorder.none,
+                                        hintText: controller.weight,
+                                        hintStyle: TextStyle(
+                                            color: txtColor,
+                                            fontSize: defaultSize * 15)),
+                                    onChanged: (text) {
+                                      controller.weightSelected(text);
+                                    },
+                                  ))),
+                        ),
+                        Container(
                             width: valWidth * 0.15,
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [])
-                          ), //margin
-                        ],
-                        ),
-                        Container(
-                          width: valWidth * 0.15,
-                        ), //margin
+                                children: [])), //margin
                       ],
-                    ), // weight
-
-                    SizedBox(
-                      height: 50,
                     ),
-
                     Container(
-                      height: 50,
-                      width: valWidth * 0.75,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: txtFeildColor,
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(valWidth * 0.02))),
-                      child: KeyboardActions(
-                        disableScroll: true,
-                        config: _buildConfig(context),
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: txtColor, fontSize: defaultSize * 15),
-                          keyboardType: TextInputType.text,
-                          focusNode: _nodeText3,
-                          decoration: InputDecoration(
-                              hintText: controller.disease == null ||
-                                      controller.disease == ""
-                                  ? "   질병기초 정보 입력"
-                                  : controller.disease,
-                              hintStyle: TextStyle(
-                                  fontSize: defaultSize * 14, color: txtColor)),
-                          onChanged: (text) {
-                            controller.diseaseSelected(text);
-                          },
-                        ),
-                      ),
-                    ), //disease
-                    SizedBox(
-                      height: 35,
-                    ),
-
-                    GestureDetector(
-                      // 저장기능 추가해주세요
-                      onTap: () {
-                        Get.to(() => ConstructTabBar());
-                        // return Home();
-                      }, //여기에 로그아웃 기능 구현
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.end,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: valWidth * 0.5,
-                            height: 35,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 0.7,
-                                  color: txtFeildBorderColor,
-                                ),
-                                color: txtFeildColor,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(valWidth * 0.025))),
-                            child: Align(
-                                alignment: FractionalOffset(0.5, 0.5),
-                                child: Text("저장",
-                                    style: TextStyle(
-                                        fontSize: defaultSize * 15,
-                                        color: txtColor),
-                                    textAlign: TextAlign.center)),
-                          ),
-                        ],
-                      ),
-                    ), //저장기능_추가해주세요
-                    SizedBox(
-                      height: 25,
-                    ),
-
-                    GestureDetector(
-                      // 로그아웃
-                      onTap: () {
-                        FirebaseAuth.instance.signOut();
-                        //Restart.restartApp(webOrigin: '');
-                        //Phoenix.rebirth(context);
-                        Get.reset();
-                        Phoenix.rebirth(context);
-                        // return Home();
-                      }, //여기에 로그아웃 기능 구현
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.end,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: valWidth * 0.5,
-                            height: 35,
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 0.7,
-                                  color: txtFeildBorderColor,
-                                ),
-                                color: txtFeildColor,
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(valWidth * 0.025))),
-                            child: Align(
-                                alignment: FractionalOffset(0.5, 0.5),
-                                child: Text("Sign Out",
-                                    style: TextStyle(
-                                        fontSize: defaultSize * 15,
-                                        color: Color(0xffD2363A)),
-                                    textAlign: TextAlign.center)),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),//logout
+                      width: valWidth * 0.15,
+                    ), //margin
                   ],
+                ), // weight
+
+                SizedBox(
+                  height: 50,
                 ),
-              ),
+
+                Container(
+                  height: 50,
+                  width: valWidth * 0.75,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: txtFeildColor,
+                      borderRadius:
+                          BorderRadius.all(Radius.circular(valWidth * 0.02))),
+                  child: KeyboardActions(
+                    disableScroll: true,
+                    config: _buildConfig(context),
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: txtColor, fontSize: defaultSize * 15),
+                      keyboardType: TextInputType.text,
+                      focusNode: _nodeText3,
+                      decoration: InputDecoration(
+                          hintText: controller.disease == null ||
+                                  controller.disease == ""
+                              ? "   질병기초 정보 입력"
+                              : controller.disease,
+                          hintStyle: TextStyle(
+                              fontSize: defaultSize * 14, color: txtColor)),
+                      onChanged: (text) {
+                        controller.diseaseSelected(text);
+                      },
+                    ),
+                  ),
+                ), //disease
+                SizedBox(
+                  height: 35,
+                ),
+
+                GestureDetector(
+                  // 저장기능 추가해주세요
+                  onTap: () {
+                    Get.to(() => ConstructTabBar());
+                    // return Home();
+                  }, //여기에 로그아웃 기능 구현
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.end,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: valWidth * 0.5,
+                        height: 35,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 0.7,
+                              color: txtFeildBorderColor,
+                            ),
+                            color: txtFeildColor,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(valWidth * 0.025))),
+                        child: Align(
+                            alignment: FractionalOffset(0.5, 0.5),
+                            child: Text("저장",
+                                style: TextStyle(
+                                    fontSize: defaultSize * 15,
+                                    color: txtColor),
+                                textAlign: TextAlign.center)),
+                      ),
+                    ],
+                  ),
+                ), //저장기능_추가해주세요
+                SizedBox(
+                  height: 25,
+                ),
+
+                GestureDetector(
+                  // 로그아웃
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                    //Restart.restartApp(webOrigin: '');
+                    //Phoenix.rebirth(context);
+                    Get.reset();
+                    Phoenix.rebirth(context);
+                    // return Home();
+                  }, //여기에 로그아웃 기능 구현
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.end,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: valWidth * 0.5,
+                        height: 35,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 0.7,
+                              color: txtFeildBorderColor,
+                            ),
+                            color: txtFeildColor,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(valWidth * 0.025))),
+                        child: Align(
+                            alignment: FractionalOffset(0.5, 0.5),
+                            child: Text("Sign Out",
+                                style: TextStyle(
+                                    fontSize: defaultSize * 15,
+                                    color: Color(0xffD2363A)),
+                                textAlign: TextAlign.center)),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 25,
+                ), //logout
+              ],
             ),
-          );
+          ),
+        ),
+      );
     });
   }
 }

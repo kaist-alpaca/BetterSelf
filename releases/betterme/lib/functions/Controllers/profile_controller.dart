@@ -235,6 +235,10 @@ class ProfileController extends GetxController {
     print(weight["result"].last["weight"]);
     weightSelected(weight["result"].last["weight"]);
 
+    var birth = await ServerConnection.GetBirthDay(
+        FirebaseAuth.instance.currentUser!.uid);
+    birthdaySelected(birth);
+
     // return FirebaseAuth.instance.currentUser == null
     //     ? ''
     //     : FirebaseAuth.instance.currentUser!.uid;
