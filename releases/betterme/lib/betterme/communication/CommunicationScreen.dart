@@ -158,30 +158,28 @@ class _CommunicationScreen extends State<CommunicationScreen> {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: bgColor,
-        elevation: 0.0,
-        title: Align(
-          alignment: Alignment(-0.38, 0),
-          child: Container(
-            height: valHeight * 0.08,
-            padding: EdgeInsets.only(top: 20),
-            child: Text(
-                "메시지",
-                style: TextStyle(
-                    fontSize: defaultSize * 17, color: txtColor),
-                textAlign: TextAlign.center),
+          backgroundColor: bgColor,
+          elevation: 0.0,
+          title: Align(
+            alignment: Alignment(-0.38, 0),
+            child: Container(
+              height: valHeight * 0.08,
+              padding: EdgeInsets.only(top: 30),
+              child: Text("메시지",
+                  style: TextStyle(fontSize: defaultSize * 17, color: txtColor),
+                  textAlign: TextAlign.center),
+            ),
           ),
-        ),
-        leading: Container(
-          height: valHeight * 0.08,
-          padding: EdgeInsets.only(top: 14),
-          child: IconButton(
-            icon: SvgPicture.asset('images/arrow towards left_icon.svg'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
+          // leading: Container(
+          //   height: valHeight * 0.08,
+          //   padding: EdgeInsets.only(top: 14),
+          //   child: IconButton(
+          //     icon: SvgPicture.asset('images/arrow towards left_icon.svg'),
+          //     onPressed: () {
+          //       Navigator.pop(context);
+          //     },
+          //   ),
+          // ),
           actions: [
             Padding(
                 padding: EdgeInsets.only(top: 14, right: 20.0),
@@ -194,9 +192,10 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                   },
                   child: Icon(Icons.add),
                 )),
-          ]
-      ),
-      body: Container(margin : const EdgeInsets.only(top: 14), child: TrainersList(context, usersStream)),
+          ]),
+      body: Container(
+          margin: const EdgeInsets.only(top: 14),
+          child: TrainersList(context, usersStream)),
     );
   }
 }
