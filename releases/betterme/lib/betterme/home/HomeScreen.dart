@@ -218,7 +218,9 @@ class _HomeScreen extends State<HomeScreen> {
                                             child: Align(
                                               alignment: Alignment.center,
                                               child: Text(
-                                                '${date.hour}:${date.minute}',
+                                                '${date.hour}:' +
+                                                    '${date.minute}'
+                                                        .padLeft(2, '0'),
                                                 style:
                                                     TextStyle(color: txtColor),
                                               ),
