@@ -77,59 +77,54 @@ class _ChatroomScreen extends State<ChatroomScreen> {
 
     print('debug: ${getchatroomid(user, widget.usernamechatwith)}');
 
-    return WillPopScope(
-        onWillPop: () {
-          Navigator.pop(context);
-          return Future.value(true);
-        },
-        child: Scaffold(
-          backgroundColor: bgColor,
-          appBar:
-            AppBar(
-              toolbarHeight: 100,
-              leadingWidth: valWidth*0.25,
-              titleSpacing: 0,
-              backgroundColor: bgColor,
-              elevation: 0.0,
-              leading:  Container(
-                margin: EdgeInsets.only(left: valWidth*0.1, top: 0),
-                width: 33,
-                height: 33,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(widget.ChatwithImgurl),
-                  ),
-                ),
-              ),
-              title: Align(
-                alignment: Alignment(-0.38, 0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 17,
-                    ),
-                    Text('${widget.namechatwith}',
-                        style: TextStyle(color: Color(0xffFFFDFD), fontSize: 17)),
-                  ],
-                ),
-              ),
+    return Scaffold(
+      backgroundColor: bgColor,
+      appBar: AppBar(
+        toolbarHeight: 100,
+        leadingWidth: valWidth * 0.25,
+        titleSpacing: 0,
+        backgroundColor: bgColor,
+        elevation: 0.0,
+        leading: Container(
+          margin: EdgeInsets.only(left: valWidth * 0.1, top: 0),
+          width: 33,
+          height: 33,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: NetworkImage(widget.ChatwithImgurl),
             ),
-          body: Container(
-            child: Stack(
-              children: [
-                chatmessages(context),
-                Container(child: Text(" ")),
-                Container(child: Text(" ")),
-                SafeArea(child: Container(
+          ),
+        ),
+        title: Align(
+          alignment: Alignment(-0.38, 0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 17,
+              ),
+              Text('${widget.namechatwith}',
+                  style: TextStyle(color: Color(0xffFFFDFD), fontSize: 17)),
+            ],
+          ),
+        ),
+      ),
+      body: Container(
+        child: Stack(
+          children: [
+            chatmessages(context),
+            Container(child: Text(" ")),
+            Container(child: Text(" ")),
+            SafeArea(
+                child: Container(
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       color: bgColor,
                       padding:
-                      EdgeInsets.symmetric(horizontal: valWidth * 0.03),
+                          EdgeInsets.symmetric(horizontal: valWidth * 0.03),
                       child: Row(
                         children: [
                           Container(
@@ -161,12 +156,10 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                               )),
                         ],
                       ),
-                    ))
-                ),
-              ],
-            ),
-          ),
-        )
+                    ))),
+          ],
+        ),
+      ),
     );
   }
 
