@@ -138,7 +138,7 @@ class ProfileController extends GetxController {
   String? gender;
   String? birthday;
   String? weightday;
-  String? height;
+  String? height = '';
   String weight = '0.0';
   var weight_test = RxString('');
   String? disease;
@@ -149,11 +149,11 @@ class ProfileController extends GetxController {
   }
 
   void foodiSelected(int index, String value) {
-    if(index == 1){
+    if (index == 1) {
       food1 = value;
-    }else if(index == 2){
+    } else if (index == 2) {
       food2 = value;
-    }else{
+    } else {
       food3 = value;
     }
     update();
@@ -229,6 +229,11 @@ class ProfileController extends GetxController {
 
     await ServerConnection.updateHeathData(
         FirebaseAuth.instance.currentUser!.uid);
+
+    var weight = await ServerConnection.GetWeight(
+        FirebaseAuth.instance.currentUser!.uid);
+    print(weight["result"].last["weight"]);
+    weightSelected(weight["result"].last["weight"]);
 
     // return FirebaseAuth.instance.currentUser == null
     //     ? ''
