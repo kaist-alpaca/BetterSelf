@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:betterme/functions/Graphs/line_chart_new.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -19,6 +18,7 @@ import '../Widgets/Calendars/BioCalendar.dart';
 import 'package:betterme/functions/Graphs/line_chart.dart';
 import 'package:betterme/functions/Graphs/sliced_bar_chart.dart';
 import 'package:betterme/functions/Graphs/horizontal_chart.dart';
+import 'package:betterme/functions/Graphs/line_chart_new.dart';
 
 import 'package:get/get.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
@@ -252,22 +252,19 @@ class _BioTabs extends State<BioTabs> {
                     ),
                   ),
                   SizedBox(width: valWidth * 0.05),
-                  Row(
-                    children: [
-                      MiniBox(
-                          context, txtColor, miniBoxSize, 0.12, 10, '체중(kg)'),
-                      SizedBox(
-                        width: valWidth * 0.008,
-                      ),
-                      MiniBox(context, Color(0xffDBB9C7), miniBoxSize, 0.18, 10,
-                          '골격근량(kg)'),
-                      SizedBox(
-                        width: valWidth * 0.008,
-                      ),
-                      MiniBox(context, Color(0xFFA0B1DF), miniBoxSize, 0.18, 10,
-                          '체지방량(kg)'),
-                    ],
-                  ),
+                  Row(children: [
+                    MiniBox(context, txtColor, miniBoxSize, 0.12, 10, '체중(kg)'),
+                    SizedBox(
+                      width: valWidth * 0.008,
+                    ),
+                    MiniBox(context, Color(0xffDBB9C7), miniBoxSize, 0.18, 10,
+                        '골격근량(kg)'),
+                    SizedBox(
+                      width: valWidth * 0.008,
+                    ),
+                    MiniBox(context, Color(0xFFA0B1DF), miniBoxSize, 0.18, 10,
+                        '체지방량(kg)'),
+                  ]),
                 ],
               ),
               Container(
@@ -288,7 +285,6 @@ class _BioTabs extends State<BioTabs> {
                             vertical: valHeight * 0.008,
                             horizontal: valWidth * 0.01),
                         child: LineChartNew(scores: _scores),
-                        // color: Colors.red,
                       ),
                       Container(
                           height: valHeight * 0.34,

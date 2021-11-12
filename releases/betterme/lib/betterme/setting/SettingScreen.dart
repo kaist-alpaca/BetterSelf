@@ -223,43 +223,15 @@ class SettingScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      controller.myProfile.value.email!,
+                      controller.myProfile.value.name!,
                       style: TextStyle(
                           color: txtColor, fontSize: defaultSize * 15),
                     ),
                     SizedBox(
                       height: valHeight * 0.01,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        // 에딧기능추가해주세요
-                        // _openDatePicker(context);
-                        BottomPicker.date(
-                                title: "생년월일",
-                                titleStyle: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                    color: Colors.blue),
-                                onChange: (index) {
-                                  print(index);
-                                },
-                                onSubmit: (index) {
-                                  print(index);
-                                  controller.birthdaySelected(
-                                      index.toString().substring(0, 10));
-                                },
-                                bottomPickerTheme:
-                                    BOTTOM_PICKER_THEME.PLUM_PLATE)
-                            .show(context);
-                      },
-                      child: Text(
-                        'Edit',
-                        style: TextStyle(
-                            color: redtxtColor, fontSize: defaultSize * 12),
-                      ),
-                    )
                   ],
-                ), //ID and Edit // 에딧기능 넣어주세요
+                ), //이름
                 SizedBox(
                   height: 40,
                 ),
