@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 import 'package:random_string/random_string.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:betterme/functions/Firestore/AuthMethods.dart';
 import 'package:betterme/functions/Firestore/DatabaseMethods.dart';
@@ -85,29 +86,50 @@ class _ChatroomScreen extends State<ChatroomScreen> {
         titleSpacing: 0,
         backgroundColor: bgColor,
         elevation: 0.0,
-        leading: Container(
-          margin: EdgeInsets.only(left: valWidth * 0.1, top: 0),
-          width: 33,
-          height: 33,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white,
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: NetworkImage(widget.ChatwithImgurl),
-            ),
-          ),
+        leading: Row(
+          children: [
+            Container(
+                height: valHeight * 0.08,
+                width: valWidth * 0.1,
+                margin: EdgeInsets.only(left: valWidth * 0.08),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: SvgPicture.asset('images/arrow towards left_icon.svg'),
+                )),
+          ],
         ),
-        title: Align(
-          alignment: Alignment(-0.38, 0),
+        title: Container(
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
-                width: 17,
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(widget.ChatwithImgurl),
+                  ),
+                ),
               ),
-              Text('${widget.namechatwith}',
-                  style: TextStyle(color: Color(0xffFFFDFD), fontSize: 17)),
+              Align(
+                alignment: Alignment(-0.38, 0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 17,
+                    ),
+                    Text('${widget.namechatwith}',
+                        style:
+                            TextStyle(color: Color(0xffFFFDFD), fontSize: 17)),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

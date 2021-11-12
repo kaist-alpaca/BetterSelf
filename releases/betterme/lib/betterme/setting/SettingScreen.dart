@@ -216,7 +216,7 @@ class SettingScreen extends StatelessWidget {
                     0.345), //ProfileImage
 
                 SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
 
                 Column(
