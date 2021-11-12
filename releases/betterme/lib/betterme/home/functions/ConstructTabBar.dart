@@ -22,7 +22,7 @@ class ConstructTabBar extends StatefulWidget {
 
 class _ConstructTabBar extends State<ConstructTabBar> {
   late PageController pageController;
-  int getPageIndex = 1;
+  int getPageIndex = 0;
   int checker = 0;
 
   @override
@@ -32,50 +32,59 @@ class _ConstructTabBar extends State<ConstructTabBar> {
   }
 
   onTapChangePage(int pageIndex) {
-    if (checker == 1) {
-      pageController.animateToPage(pageIndex,
-          duration: Duration(milliseconds: 100), curve: Curves.bounceInOut);
-      setState(() {
-        this.getPageIndex = pageIndex;
-      });
-    } else if (pageIndex != 1) {
-      setState(() {
-        this.checker = 1;
-        this.getPageIndex = pageIndex;
-      });
-      pageController.animateToPage(pageIndex,
-          duration: Duration(milliseconds: 100), curve: Curves.bounceInOut);
-    }
+    // if (checker == 1) {
+    //   pageController.animateToPage(pageIndex,
+    //       duration: Duration(milliseconds: 100), curve: Curves.bounceInOut);
+    //   setState(() {
+    //     this.getPageIndex = pageIndex;
+    //   });
+    // } else if (pageIndex != 1) {
+    //   setState(() {
+    //     this.checker = 1;
+    //     this.getPageIndex = pageIndex;
+    //   });
+    //   pageController.animateToPage(pageIndex,
+    //       duration: Duration(milliseconds: 100), curve: Curves.bounceInOut);
+    // }
+    setState(() {
+      this.getPageIndex = pageIndex;
+    });
+    pageController.animateToPage(pageIndex,
+        duration: Duration(milliseconds: 100), curve: Curves.bounceInOut);
   }
 
   buildHomeScreen() {
     return Scaffold(
       body: PageView(
-        children: checker == 0
-            ? <Widget>[
-                // 정상 로그인시 홈스크린 보인다.
-                HomeScreen(),
-                CommunicationScreen(),
-                ReportScreen(),
-                SettingScreen(),
-                // ReportScreen(),
-                // ReportScreen(),
-                // ReportScreen(),
-                // ReportScreen()
-                // ReportScreen(),
-                // ReportScreen(),
-                // ReportScreen(),
-                // ReportScreen()
-              ]
-            : <Widget>[
-                // 정상 로그인시 홈스크린 보인다.
-                CommunicationScreen(),
-
-                HomeScreen(),
-
-                ReportScreen(),
-                SettingScreen(),
-              ],
+        children: <Widget>[
+          HomeScreen(),
+          CommunicationScreen(),
+          ReportScreen(),
+          SettingScreen()
+        ],
+        // children: checker == 0
+        //     ? <Widget>[
+        //         // 정상 로그인시 홈스크린 보인다.
+        //         HomeScreen(),
+        //         CommunicationScreen(),
+        //         ReportScreen(),
+        //         SettingScreen(),
+        //         // ReportScreen(),
+        //         // ReportScreen(),
+        //         // ReportScreen(),
+        //         // ReportScreen()
+        //         // ReportScreen(),
+        //         // ReportScreen(),
+        //         // ReportScreen(),
+        //         // ReportScreen()
+        //       ]
+        //     : <Widget>[
+        //         // 정상 로그인시 홈스크린 보인다.
+        //         CommunicationScreen(),
+        //         HomeScreen(),
+        //         ReportScreen(),
+        //         SettingScreen(),
+        //       ],
         controller: pageController, // controller를 지정해주면 각 페이지별 인덱스로 컨트롤 가능
         physics: NeverScrollableScrollPhysics(),
       ),
@@ -86,10 +95,10 @@ class _ConstructTabBar extends State<ConstructTabBar> {
         inactiveColor: Color(0xff6E6572),
         backgroundColor: Color(0xff0B202A),
         items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home)),
           BottomNavigationBarItem(
             icon: SvgPicture.asset('images/communication_icon.svg'),
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.home)),
           BottomNavigationBarItem(
               icon: SvgPicture.asset('images/report_icon.svg')),
           BottomNavigationBarItem(
