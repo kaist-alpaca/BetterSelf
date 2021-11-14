@@ -1,3 +1,4 @@
+import 'package:betterme/betterme/report/ReportTestScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -59,32 +60,9 @@ class _ConstructTabBar extends State<ConstructTabBar> {
         children: <Widget>[
           HomeScreen(),
           CommunicationScreen(),
-          ReportScreen(),
+          ReportTestScreen(),
           SettingScreen()
         ],
-        // children: checker == 0
-        //     ? <Widget>[
-        //         // 정상 로그인시 홈스크린 보인다.
-        //         HomeScreen(),
-        //         CommunicationScreen(),
-        //         ReportScreen(),
-        //         SettingScreen(),
-        //         // ReportScreen(),
-        //         // ReportScreen(),
-        //         // ReportScreen(),
-        //         // ReportScreen()
-        //         // ReportScreen(),
-        //         // ReportScreen(),
-        //         // ReportScreen(),
-        //         // ReportScreen()
-        //       ]
-        //     : <Widget>[
-        //         // 정상 로그인시 홈스크린 보인다.
-        //         CommunicationScreen(),
-        //         HomeScreen(),
-        //         ReportScreen(),
-        //         SettingScreen(),
-        //       ],
         controller: pageController, // controller를 지정해주면 각 페이지별 인덱스로 컨트롤 가능
         physics: NeverScrollableScrollPhysics(),
       ),
