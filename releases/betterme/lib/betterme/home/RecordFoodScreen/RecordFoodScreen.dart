@@ -1,5 +1,6 @@
 import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
 import 'package:betterme/functions/Graphs/pie_chart_hole.dart';
+import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,7 +13,6 @@ import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:get/get.dart';
 
 class RecordFoodScreen extends StatefulWidget {
-
   final String food;
 
   RecordFoodScreen({Key? key, required this.food}) : super(key: key);
@@ -22,12 +22,10 @@ class RecordFoodScreen extends StatefulWidget {
 }
 
 class _RecordFoodScreen extends State<RecordFoodScreen> {
-
   final bgColor = Color(0xff0B202A); //배경색
   final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
   final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
   final blockColor = Color(0xff333C47); // 여러 블럭들 색
-
 
   final key = new GlobalKey<ScaffoldState>();
   List Nutrition = [];
@@ -36,18 +34,23 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
 
   bool isSearching = false;
 
-  loadData() async{
-    final myData = await rootBundle.loadString('data/NutritionalComponents.csv');
-    List<List<dynamic>> FoodData = const CsvToListConverter().convert(myData);
-    for(int i = 1 ; i < FoodData.length - 1 ; i++){
-      if(FoodData[i][0] == widget.food){
-        FoodData[i].forEach((element) {Nutrition.add(element);});
+  loadData() async {
+    final myData =
+        await rootBundle.loadString('data/NutritionalComponents.csv');
+    List<List<dynamic>> FoodData = const CsvToListConverter(
+            csvSettingsDetector:
+                FirstOccurrenceSettingsDetector(eols: ['\r\n', '\n']))
+        .convert(myData);
+    for (int i = 1; i < FoodData.length - 1; i++) {
+      if (FoodData[i][0] == widget.food) {
+        FoodData[i].forEach((element) {
+          Nutrition.add(element);
+        });
       }
     }
     print("debug : ${Nutrition}");
     return Nutrition;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -141,14 +144,10 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                         ),
                         child: TimePickerSpinner(
                           is24HourMode: false,
-                          normalTextStyle: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xffFFFDFD)
-                          ),
-                          highlightedTextStyle: TextStyle(
-                              fontSize: 12,
-                              color: Color(0xffFFFDFD)
-                          ),
+                          normalTextStyle:
+                              TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),
+                          highlightedTextStyle:
+                              TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),
                           spacing: 30,
                           itemHeight: 30,
                           itemWidth: valWidth * 0.05,
@@ -174,7 +173,7 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                 SizedBox(height: valHeight * 0.08),
                 FutureBuilder(
                     future: loadData(),
-                    builder: (context, AsyncSnapshot snapshot){
+                    builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.hasData == false) {
                         return CircularProgressIndicator();
                       } else if (snapshot.hasError) {
@@ -192,8 +191,10 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                           decoration: BoxDecoration(
                             color: bgColor,
                             border: Border.all(
-                                color: Color(0xff333C47), width: defaultSize * 1),
-                            borderRadius: BorderRadius.circular(valWidth * 0.03),
+                                color: Color(0xff333C47),
+                                width: defaultSize * 1),
+                            borderRadius:
+                                BorderRadius.circular(valWidth * 0.03),
                           ),
                           child: Row(
                             children: [
@@ -206,38 +207,48 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                   height: valHeight * 0.2,
                                   child: CustomPaint(
                                     // CustomPaint를 그리고 이 안에 차트를 그려줍니다..
-                                    size: Size(
-                                        150, 150), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
+                                    size: Size(150,
+                                        150), // CustomPaint의 크기는 가로 세로 150, 150으로 합니다.
                                     painter: MadePieChartHole(
-                                      percentage1: Nutrition[2]/(Nutrition[2]+Nutrition[3]+Nutrition[4])*100,
-                                      percentage2: Nutrition[3]/(Nutrition[2]+Nutrition[3]+Nutrition[4])*100,
+                                      percentage1: Nutrition[2] /
+                                          (Nutrition[2] +
+                                              Nutrition[3] +
+                                              Nutrition[4]) *
+                                          100,
+                                      percentage2: Nutrition[3] /
+                                          (Nutrition[2] +
+                                              Nutrition[3] +
+                                              Nutrition[4]) *
+                                          100,
                                       text: "${Nutrition[1]}\nkcal",
                                     ),
                                   ),
                                 ),
                               ),
                               Container(
-                                child: Column( // 식단데이터
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                child: Column(
+                                    // 식단데이터
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      MiniBox(context, Color(0xffA0B1DF), 0.012, 0.2,
-                                          10, '탄수화물 ${Nutrition[2]} g'), //
+                                      MiniBox(context, Color(0xffA0B1DF), 0.012,
+                                          0.2, 10, '탄수화물 ${Nutrition[2]} g'), //
                                       SizedBox(height: valHeight * 0.008),
-                                      MiniBox(context, Color(0xffF1D7A7), 0.012, 0.176,
-                                          10, '단백질 ${Nutrition[3]} g'),
+                                      MiniBox(context, Color(0xffF1D7A7), 0.012,
+                                          0.176, 10, '단백질 ${Nutrition[3]} g'),
                                       SizedBox(height: valHeight * 0.008),
-                                      MiniBox(context, Color(0xffDBB9C7), 0.012, 0.15,
-                                          10, '지방 ${Nutrition[4]} g'),
+                                      MiniBox(context, Color(0xffDBB9C7), 0.012,
+                                          0.15, 10, '지방 ${Nutrition[4]} g'),
                                       SizedBox(height: valHeight * 0.008),
-                                      MiniBox(context, Color(0xffA0B1DF), 0.012, 0.2,
-                                          10, '콜레스테롤 ${Nutrition[5]} g'),
+                                      MiniBox(context, Color(0xffA0B1DF), 0.012,
+                                          0.2, 10, '콜레스테롤 ${Nutrition[5]} g'),
                                       SizedBox(height: valHeight * 0.008),
-                                      MiniBox(context, Color(0xffA0B1DF), 0.012, 0.2,
-                                          10, '식이섬유 ${Nutrition[6]} g'),
+                                      MiniBox(context, Color(0xffA0B1DF), 0.012,
+                                          0.2, 10, '식이섬유 ${Nutrition[6]} g'),
                                       SizedBox(height: valHeight * 0.008),
-                                      MiniBox(context, txtColor, 0.012, 0.176, 10,
-                                          '나트륨 ${Nutrition[7]} g'),
+                                      MiniBox(context, txtColor, 0.012, 0.176,
+                                          10, '나트륨 ${Nutrition[7]} g'),
                                     ]),
                               ),
                             ],
@@ -258,17 +269,16 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                       borderRadius:
                           BorderRadius.all(Radius.circular(valWidth * 0.02))),
                   child: Align(
-                      alignment: FractionalOffset(0.5, 0.5),
-                      child: GestureDetector(
-                        onTap: (){
-
-                          Get.to(()=>ConstructTabBar());
+                    alignment: FractionalOffset(0.5, 0.5),
+                    child: GestureDetector(
+                        onTap: () {
+                          Get.to(() => ConstructTabBar());
                         },
                         child: Text("저장",
                             style: TextStyle(
                                 fontSize: defaultSize * 15, color: txtColor),
                             textAlign: TextAlign.center)),
-                      ),
+                  ),
                 ),
               ],
             ),
