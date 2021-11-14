@@ -1,4 +1,5 @@
 import 'package:betterme/betterme/home/RecordFoodScreen/RecordFoodScreen.dart';
+import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:csv/csv.dart';
@@ -9,12 +10,10 @@ class SearchFoodScreen extends StatefulWidget {
 }
 
 class _SearchFoodScreen extends State<SearchFoodScreen> {
-
   final bgColor = Color(0xff0B202A); //배경색
   final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
   final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
   final blockColor = Color(0xff333C47); // 여러 블럭들 색
-
 
   final key = new GlobalKey<ScaffoldState>();
   final TextEditingController searching = TextEditingController();
@@ -23,11 +22,15 @@ class _SearchFoodScreen extends State<SearchFoodScreen> {
   String _searchText = "";
   List<String> suggestion = [];
 
-  loadData() async{
-    final myData = await rootBundle.loadString('data/NutritionalComponents.csv');
-    List<List<dynamic>> FoodData = const CsvToListConverter().convert(myData);
+  loadData() async {
+    final myData =
+        await rootBundle.loadString('data/NutritionalComponents.csv');
+    List<List<dynamic>> FoodData = const CsvToListConverter(
+            csvSettingsDetector:
+                FirstOccurrenceSettingsDetector(eols: ['\r\n', '\n']))
+        .convert(myData);
     suggestion = [];
-    for(int i = 1 ; i < FoodData.length - 1 ; i++){
+    for (int i = 1; i < FoodData.length - 1; i++) {
       suggestion.add(FoodData[i][0]);
     }
     print("debug : ${FoodData[0]}");
@@ -41,8 +44,7 @@ class _SearchFoodScreen extends State<SearchFoodScreen> {
           isSearching = false;
           _searchText = "";
         });
-      }
-      else {
+      } else {
         setState(() {
           isSearching = true;
           _searchText = searching.text;
@@ -69,80 +71,81 @@ class _SearchFoodScreen extends State<SearchFoodScreen> {
       body: SingleChildScrollView(
         child: Container(
             child: Column(
-              children: [
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Container(
-                    //검색박스
-                      height: valHeight * 0.045,
-                      width: valWidth * 0.74,
-                      decoration: BoxDecoration(
-                        color: blockColor,
-                        borderRadius: BorderRadius.circular(valWidth * 0.015),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                              width: valWidth * 0.08,
-                              height: valHeight * 0.045,
-                              child: Image.asset('images/search_icon.png')),
-                          isSearching
-                              ? GestureDetector(
-                            onTap: () {
-                              isSearching = false;
-                              searching.text = "";
-                              setState(() {});
-                            },
-                            child: Container(),
-                          )
-                              : Container(),
-                          Expanded(
-                              child: TextField(
-                                //autofocus: true,
-                                controller: searching,
-                                style: TextStyle(color: txtColor),
-                              ))
-                          ///여기에 텍스트 입력받고 검색구현
-                        ],
-                      )),
-                  SizedBox(width: valWidth * 0.02),
-                  ElevatedButton(
-                    //검색 버튼
-                      onPressed: () {
-                        if (searching.text != "") {
-                          setState(() {});
-                          isSearching = true;
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          primary: blockColor,
-                          minimumSize: Size(valWidth * 0.12, valHeight * 0.045),
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.circular(valWidth * 0.015))),
-                      child: Text('검색',
-                          style: TextStyle(
-                              fontSize: defaultSize * 15, color: txtColor)))
-                ]),
-                SizedBox(height: 20,),
-                Container(
-                  height: 0.4 * valHeight,
-                  child: FutureBuilder(
-                      future: loadData(),
-                      builder: (context, snapshot){
-                        if(snapshot.hasData){
-                          return ListView(
-                              padding: new EdgeInsets.symmetric(vertical: 8.0),
-                              children: _buildSearchList()
-                          );
-                        }else{
-                          return Container();
-                        }
-                      }
+          children: [
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Container(
+                  //검색박스
+                  height: valHeight * 0.045,
+                  width: valWidth * 0.74,
+                  decoration: BoxDecoration(
+                    color: blockColor,
+                    borderRadius: BorderRadius.circular(valWidth * 0.015),
                   ),
-                )
-              ],
-            )),
+                  child: Row(
+                    children: [
+                      Container(
+                          width: valWidth * 0.08,
+                          height: valHeight * 0.045,
+                          child: Image.asset('images/search_icon.png')),
+                      isSearching
+                          ? GestureDetector(
+                              onTap: () {
+                                isSearching = false;
+                                searching.text = "";
+                                setState(() {});
+                              },
+                              child: Container(),
+                            )
+                          : Container(),
+                      Expanded(
+                          child: TextField(
+                        //autofocus: true,
+                        controller: searching,
+                        style: TextStyle(color: txtColor),
+                      ))
+
+                      ///여기에 텍스트 입력받고 검색구현
+                    ],
+                  )),
+              SizedBox(width: valWidth * 0.02),
+              ElevatedButton(
+                  //검색 버튼
+                  onPressed: () {
+                    if (searching.text != "") {
+                      setState(() {});
+                      isSearching = true;
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      primary: blockColor,
+                      minimumSize: Size(valWidth * 0.12, valHeight * 0.045),
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(valWidth * 0.015))),
+                  child: Text('검색',
+                      style: TextStyle(
+                          fontSize: defaultSize * 15, color: txtColor)))
+            ]),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              height: 0.4 * valHeight,
+              child: FutureBuilder(
+                  future: loadData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView(
+                          padding: new EdgeInsets.symmetric(vertical: 8.0),
+                          children: _buildSearchList());
+                    } else {
+                      return Container();
+                    }
+                  }),
+            )
+          ],
+        )),
       ),
     );
   }
@@ -150,11 +153,10 @@ class _SearchFoodScreen extends State<SearchFoodScreen> {
   List<ChildItem> _buildSearchList() {
     if (_searchText.isEmpty) {
       return suggestion.map((contact) => new ChildItem(contact)).toList();
-    }
-    else {
+    } else {
       List<String> _searchList = [];
       for (int i = 0; i < suggestion.length; i++) {
-        String  name = suggestion.elementAt(i);
+        String name = suggestion.elementAt(i);
         if (name.contains(_searchText.toLowerCase())) {
           _searchList.add(name);
         }
@@ -162,7 +164,6 @@ class _SearchFoodScreen extends State<SearchFoodScreen> {
       return _searchList.map((contact) => new ChildItem(contact)).toList();
     }
   }
-
 }
 
 class ChildItem extends StatelessWidget {
@@ -173,10 +174,14 @@ class ChildItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => RecordFoodScreen(food : this.name)));
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => RecordFoodScreen(food: this.name)));
       },
-      child: ListTile(title: new Text(this.name, style: TextStyle(color: txtColor))),
+      child: ListTile(
+          title: new Text(this.name, style: TextStyle(color: txtColor))),
     );
   }
 }

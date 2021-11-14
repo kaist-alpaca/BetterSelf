@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:betterme/betterme/home/RecordFoodScreen/RecordFoodScreen.dart';
 import 'package:betterme/betterme/home/SearchFoodScreen/SearchFoodScreen.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:camera/camera.dart';
@@ -215,6 +216,24 @@ class CameraScreenState extends State<CameraScreen>
               ),
               onPressed: () {
                 _captureImage();
+              },
+            ),
+          ),
+          CircleAvatar(
+            backgroundColor: Colors.white,
+            radius: 28.0,
+            child: IconButton(
+              icon: Icon(
+                Icons.food_bank,
+                size: 28.0,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        // builder: (context) => RecordFoodScreen(food: '가자미구이')));
+                        builder: (context) => SearchFoodScreen()));
               },
             ),
           ),
