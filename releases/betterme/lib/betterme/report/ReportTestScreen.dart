@@ -15,6 +15,8 @@ class ReportTestScreen extends StatefulWidget {
 
 class _ReportTestScreenState extends State<ReportTestScreen> {
 
+  List<bool> GraphTypes = [true, true, true, true, true];
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -60,8 +62,190 @@ class _ReportTestScreenState extends State<ReportTestScreen> {
             child : Text("데이터", style: TextStyle(fontSize : 14, color: Colors.pink[100],), textAlign: TextAlign.center,)
           ), 0.15, 0.6
         ),
+        SizedBox(height: 13,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              onTap: (){
+                setState(() {
+                  GraphTypes[0] ? GraphTypes[0] = false : GraphTypes[0] = true;
+                });
+              },
+              child: Container(
+                height: 20,
+                width: valWidth/7,
+                color: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    border: Border.all(
+                      color: Color(0xffFFFDFD),
+                      width: 1
+                    )
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children : [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text('체중', style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),),
+                          Text(' (kg)', style: TextStyle(fontSize: 9, color: Color(0xffFFFDFD)),)
+                        ],
+                      ),
+                    ]
+                  )
+                ),
+              ),
+            ),
+            SizedBox(width: 10,),
+            GestureDetector(
+              onTap: (){
+                setState(() {
+                  GraphTypes[1] ? GraphTypes[1] = false : GraphTypes[1] = true;
+                });
+              },
+              child: Container(
+                height: 20,
+                width: valWidth/7,
+                color: Colors.transparent,
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        border: Border.all(
+                            color: Color(0xffA0B1DF),
+                            width: 1
+                        )
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children : [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text('수면', style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),),
+                              Text(' (시간)', style: TextStyle(fontSize: 9, color: Color(0xffFFFDFD)),)
+                            ],
+                          ),
+                        ]
+                    )
+                ),
+              ),
+            ),
+            SizedBox(width: 10,),
+            GestureDetector(
+              onTap: (){
+                setState(() {
+                  GraphTypes[2] ? GraphTypes[2] = false : GraphTypes[2] = true;
+                });
+              },
+              child: Container(
+                height: 20,
+                width: valWidth/7,
+                color: Colors.transparent,
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        border: Border.all(
+                            color: Color(0xffF2D8A7),
+                            width: 1
+                        )
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children : [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text('스트레스', style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),),
+                            ],
+                          ),
+                        ]
+                    )
+                ),
+              )
+            ),
+            SizedBox(width: 10,),
+            GestureDetector(
+              onTap: (){
+                setState(() {
+                  GraphTypes[3] ? GraphTypes[3] = false : GraphTypes[3] = true;
+                });
+              },
+              child: Container(
+                height: 20,
+                width: valWidth/7,
+                color: Colors.transparent,
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        border: Border.all(
+                            color: Color(0xffD2ABBA),
+                            width: 1
+                        )
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children : [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text('섭취', style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),),
+                              Text(' (kcal)', style: TextStyle(fontSize: 9, color: Color(0xffFFFDFD)),)
+                            ],
+                          ),
+                        ]
+                    )
+                ),
+              )
+            ),
+            SizedBox(width: 10,),
+            GestureDetector(
+              onTap: (){
+                setState(() {
+                  GraphTypes[4] ? GraphTypes[4] = false : GraphTypes[4] = true;
+                });
+              },
+              child: Container(
+                height: 20,
+                width: valWidth/7,
+                color: Colors.transparent,
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        border: Border.all(
+                            color: Color(0xff8DBFBC),
+                            width: 1
+                        )
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children : [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text('소모', style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),),
+                              Text(' (kcal)', style: TextStyle(fontSize: 9, color: Color(0xffFFFDFD)),)
+                            ],
+                          ),
+                        ]
+                    )
+                ),
+              )
+            ),
+          ],
+        ),
+        SizedBox(height: 20,),
 
-        TotalGraphs(),
+        TotalGraphs(GraphTypes: GraphTypes,),
+
+        SizedBox(height: 7,),
 
         DividewithObj(context,
           Container(
