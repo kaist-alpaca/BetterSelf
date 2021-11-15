@@ -250,13 +250,13 @@ class ServerConnection {
       // }
 
       var sleepData = [];
+      var sleepDataSpecific = [];
       var tmp = [];
       final appleHealthSleep = await HealthKitReporter.categoryQuery(
           CategoryType.sleepAnalysis, _predicate);
       for (final q in appleHealthSleep) {
         var map = {};
-        // map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
-        // map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
+        var map2 = {};
         // var startTime = '${json.encode(q.map["startTimestamp"])}';
         int startTime = q.map["startTimestamp"].toInt();
         int endTime = q.map["endTimestamp"].toInt();
@@ -267,11 +267,31 @@ class ServerConnection {
                 .substring(0, 10)
                 .replaceAll("-", "_");
         map['period'] = ((endTime - startTime) ~/ 60).toString();
+
+        map2['startTime'] =
+            DateTime.fromMillisecondsSinceEpoch((startTime * 1000).toInt())
+                .toString();
+        map2['endTime'] =
+            DateTime.fromMillisecondsSinceEpoch((endTime * 1000).toInt())
+                .toString();
+        print(DateTime.fromMillisecondsSinceEpoch((endTime * 1000).toInt())
+            .toString());
+        map2['startDate'] =
+            DateTime.fromMillisecondsSinceEpoch((startTime * 1000).toInt())
+                .toString()
+                .substring(0, 10)
+                .replaceAll("-", "_");
+        map2['endDate'] =
+            DateTime.fromMillisecondsSinceEpoch((endTime * 1000).toInt())
+                .toString()
+                .substring(0, 10)
+                .replaceAll("-", "_");
         print(endTime.runtimeType);
         if (!tmp.contains(temp)) {
           // sleepData.add(map);
           tmp.add(temp);
-          print(map);
+          // print(map);
+          sleepDataSpecific.add(map2);
           if (sleepData.isNotEmpty &&
               sleepData.last["endTime"] == map['endTime']) {
             print("same");
@@ -361,6 +381,7 @@ class ServerConnection {
           'activityData': json.encode(activityData),
           'activitySummaryData': json.encode(activitySummaryData),
           'sleepData': json.encode(sleepData),
+          'sleepDataSpecific': json.encode(sleepDataSpecific),
           'stressData': json.encode(stressData),
           'weightData': json.encode(weightData),
           'workoutsData': json.encode(workoutsData)
