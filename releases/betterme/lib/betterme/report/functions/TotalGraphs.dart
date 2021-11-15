@@ -18,17 +18,25 @@ class _TotalGraphsState extends State<TotalGraphs> {
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
-    
+
     return Container(
+<<<<<<< HEAD
       child : CustomPaint(
         size: Size(valWidth, valHeight/2.8),
         painter: PathPainter(widget.GraphTypes),
       )
     );
+=======
+        child: CustomPaint(
+      size: Size(200, 200),
+      painter: PathPainter(),
+    ));
+>>>>>>> develop
   }
 }
 
 class PathPainter extends CustomPainter {
+<<<<<<< HEAD
 
   List<bool> GraphTypes = [true, true, true, true, true];
 
@@ -83,6 +91,69 @@ class PathPainter extends CustomPainter {
     DateData(DateTime.now().subtract(Duration(days: 0, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 30)];
 
   final LineSize = 0.7;
+=======
+  List<bool> GraphTypes = [
+    true,
+    true,
+    true,
+    true,
+    true,
+  ]; // 체중 수면 스트레스 섭취 소모
+  List<DateData> WeightData = [
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 7,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 6,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 5,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 4,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 3,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 2,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 1,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 0,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70)
+  ];
+  List<double> SleepData = [];
+  List<double> StressData = [];
+  List<double> DietData = [];
+  List<double> BurnedData = [];
+>>>>>>> develop
 
   @override
   void paint(Canvas canvas, Size size) {
