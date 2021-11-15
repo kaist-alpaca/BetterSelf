@@ -67,7 +67,7 @@ class _HomeScreen extends State<HomeScreen> {
             print("left");
             var _cameras = await availableCameras();
             Get.to(
-              CameraScreen(),
+              () => CameraScreen(),
               fullscreenDialog: true,
               transition: Transition.leftToRight,
               duration: Duration(milliseconds: 500),

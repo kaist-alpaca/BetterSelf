@@ -5,11 +5,14 @@ class MadePieChartHole extends CustomPainter {
   double percentage1 = 0;
   double percentage2 = 0;
   String text;
+  String type;
 
-  MadePieChartHole(
-      {required this.percentage1,
-      required this.percentage2,
-      required this.text});
+  MadePieChartHole({
+    required this.percentage1,
+    required this.percentage2,
+    required this.text,
+    required this.type,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -43,22 +46,55 @@ class MadePieChartHole extends CustomPainter {
         false,
         paint);
 
-    double fontSize = 12;
+    if (type == 'sleep') {
+      double fontSize = 12;
 
-    TextSpan sp = TextSpan(
-        style: TextStyle(
-            fontSize: fontSize,
-            fontWeight: FontWeight.normal,
-            color: Color(0XFFFFFDFD)),
-        text: text); // TextSpan은 Text위젯과 거의 동일하다.
-    TextPainter tp = TextPainter(text: sp, textDirection: TextDirection.ltr);
+      TextSpan sp = TextSpan(
+          style: TextStyle(
+              fontSize: fontSize,
+              fontWeight: FontWeight.normal,
+              color: Color(0XFFFFFDFD)),
+          text: text); // TextSpan은 Text위젯과 거의 동일하다.
+      TextPainter tp = TextPainter(text: sp, textDirection: TextDirection.ltr);
 
-    tp.layout(); // 필수! 텍스트 페인터에 그려질 텍스트의 크기와 방향를 정함.
-    double dx = size.width / 2 - tp.width / 2;
-    double dy = size.height / 2 - tp.height / 2;
+      tp.layout(); // 필수! 텍스트 페인터에 그려질 텍스트의 크기와 방향를 정함.
+      double dx = size.width / 2 - tp.width / 2;
+      double dy = size.height / 2 - tp.height / 2;
 
-    Offset offset = Offset(dx, dy);
+      Offset offset = Offset(dx, dy);
+      tp.paint(canvas, offset);
+    } else if (type == 'food') {
+      TextStyle food = TextStyle(
+        fontSize: 30,
+        fontWeight: FontWeight.normal,
+        color: Color(0XFFFFFDFD),
+      );
+      TextStyle kcal = TextStyle(
+        fontSize: 15,
+        fontWeight: FontWeight.normal,
+        color: Color(0XFFFFFDFD),
+      );
+
+      drawTextCentered(canvas, center - Offset(0, 13), text, food, 100);
+      drawTextCentered(canvas, center + Offset(0, 12), 'kcal', kcal, 60);
+    }
+  }
+
+  TextPainter measureText(
+      String s, TextStyle style, double maxWidth, TextAlign align) {
+    final span = TextSpan(text: s, style: style);
+    final tp = TextPainter(
+        text: span, textAlign: align, textDirection: TextDirection.ltr);
+    tp.layout(minWidth: 0, maxWidth: maxWidth);
+    return tp;
+  }
+
+  Size drawTextCentered(
+      Canvas canvas, Offset c, String text, TextStyle style, double maxWidth) {
+    final tp = measureText(text, style, maxWidth, TextAlign.center);
+    final offset = c + Offset(-tp.width / 2.0, -tp.height / 2.0);
     tp.paint(canvas, offset);
+    return tp.size;
   }
 
   @override

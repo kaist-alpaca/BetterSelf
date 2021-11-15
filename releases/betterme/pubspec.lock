@@ -378,6 +378,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.4.4"
+  keyboard_visibility:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: c4c4477a9f50e25a24a7b58b353fa11ee63e5629
+      url: "https://github.com/kaist-alpaca/flutter_keyboard_visibility"
+    source: git
+    version: "0.5.6"
   matcher:
     dependency: transitive
     description:

@@ -53,6 +53,9 @@ dependencies:
   health_kit_reporter: ^1.5.1
   camera: ^0.9.4+3
   path_provider: ^2.0.6
+  keyboard_visibility:
+    git:
+      url: https://github.com/kaist-alpaca/flutter_keyboard_visibility
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2

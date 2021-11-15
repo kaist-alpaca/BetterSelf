@@ -17,6 +17,7 @@ Widget MiniBox(BuildContext context, Color boxColor, double boxRatio,
             color: boxColor),
       ),
       Container(
+        margin: EdgeInsets.only(left: valWidth * 0.02),
         width: valWidth * txtRatio,
         child: Text(
           txt,
@@ -24,7 +25,7 @@ Widget MiniBox(BuildContext context, Color boxColor, double boxRatio,
             fontSize: defaultSize * fontSize,
             color: Color(0xffFFFDFD),
           ),
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.start,
         ),
       )
     ],

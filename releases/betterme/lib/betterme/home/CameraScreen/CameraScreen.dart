@@ -24,6 +24,8 @@ class CameraScreenState extends State<CameraScreen>
   // late List<CameraDescription> _cameras;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  List<Object?> food_list = [];
+
   @override
   // void initState() {
   //   _controller = CameraController(Get.arguments[0], ResolutionPreset.max);
@@ -37,6 +39,7 @@ class CameraScreenState extends State<CameraScreen>
 
   void initState() {
     super.initState();
+    print(Get.arguments[0]);
     _controller = CameraController(Get.arguments[0], ResolutionPreset.max);
     _controller.initialize().then((_) {
       if (!mounted) {
@@ -195,12 +198,16 @@ class CameraScreenState extends State<CameraScreen>
                       uid: ProfileController.to.myProfile.value.uid!,
                       index: '0',
                       file: ProfileController.to.food!);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SearchFoodScreen())).then((_) {
-                    setState(() {});
-                  });
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => SearchFoodScreen(),
+                  //   ),
+                  // );
+                  Get.to(
+                    () => SearchFoodScreen(),
+                    arguments: food_list,
+                  );
                 }
               },
             ),
@@ -229,11 +236,10 @@ class CameraScreenState extends State<CameraScreen>
                 color: Colors.black,
               ),
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        // builder: (context) => RecordFoodScreen(food: '가자미구이')));
-                        builder: (context) => SearchFoodScreen()));
+                Get.to(
+                  () => SearchFoodScreen(),
+                  arguments: food_list,
+                );
               },
             ),
           ),
@@ -306,12 +312,12 @@ class CameraScreenState extends State<CameraScreen>
           uid: ProfileController.to.myProfile.value.uid!,
           index: '0',
           file: File(tmp.path));
-      Navigator.push(context,
-              MaterialPageRoute(builder: (context) => SearchFoodScreen()))
-          .then((_) {
-        setState(() {});
-      });
-      setState(() {});
+      // Navigator.push(
+      //     context, MaterialPageRoute(builder: (context) => SearchFoodScreen()));
+      Get.to(
+        () => SearchFoodScreen(),
+        arguments: food_list,
+      );
     }
   }
 

@@ -3,6 +3,7 @@ import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:csv/csv.dart';
+import 'package:get/get.dart';
 
 class SearchFoodScreen extends StatefulWidget {
   @override
@@ -175,10 +176,23 @@ class ChildItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return new GestureDetector(
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => RecordFoodScreen(food: this.name)));
+        print(Get.arguments);
+        print(Get.arguments.runtimeType);
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => RecordFoodScreen(
+        //       food: this.name,
+        //       food_list: ['ds'],
+        //     ),
+        //   ),
+        // );
+        Get.to(
+          () => RecordFoodScreen(
+            food: this.name,
+          ),
+          arguments: Get.arguments,
+        );
       },
       child: ListTile(
           title: new Text(this.name, style: TextStyle(color: txtColor))),

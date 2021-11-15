@@ -80,6 +80,7 @@ class _SleepGraph extends State<SleepGraph> {
                         percentage1: 60,
                         percentage2: 20,
                         text: "6시간 21분",
+                        type: 'sleep',
                       ),
                     ),
                   ),
