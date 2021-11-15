@@ -19,7 +19,7 @@ import '../Widgets/Calendars/FoodCalendar.dart';
 
 import 'package:betterme/functions/Graphs/line_chart.dart';
 import 'package:betterme/functions/Graphs/group_bar_three_chart.dart';
-import 'package:betterme/functions/Graphs/scatter_chart.dart';
+import 'package:betterme/functions/Graphs/outdated/scatter_chart.dart';
 
 import 'package:get/get.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
