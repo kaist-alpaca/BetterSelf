@@ -91,6 +91,35 @@ class ProfileController extends GetxController {
   //   update();
   // }
 
+//일주일전까지구하기
+  DateTime MinusSevenDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - 7);
+  }
+
+  DateTime MinusSixDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - 6);
+  }
+
+  DateTime MinusFiveDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - 5);
+  }
+
+  DateTime MinusFourDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - 4);
+  }
+
+  DateTime MinusThreeDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - 3);
+  }
+
+  DateTime MinusTwoDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - 2);
+  }
+
+  DateTime MinusOneDate(DateTime value) {
+    return DateTime(date.year, date.month, date.day - 1);
+  }
+
 //일주일구하기
   DateTime startDate(DateTime value) {
     return DateTime(date.year, date.month, date.day - (date.weekday - 1));

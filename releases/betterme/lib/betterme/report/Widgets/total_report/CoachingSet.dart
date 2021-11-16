@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../total_coaching/SevenDaysCoaching.dart';
+import '../../total_coaching/MonthCoaching.dart';
+import '../../total_coaching/YearCoaching.dart';
 
 int? buttonCase;
 
@@ -16,13 +19,13 @@ class _CoachingSet extends State<CoachingSet> {
   Widget build(BuildContext context) {
     if (buttonCase == 0) {
       //7일로 선택되었을 때 표현될 위젯들은 여기에.
-      return Container();
+      return SevenDaysCoaching();
     } else if (buttonCase == 1) {
       //31일로 선택되었을 때 표현될 위젯들은 여기에.
-      return Container();
+      return MonthCoaching();
     } else if (buttonCase == 2) {
       //12개월로 선택되었을 때 표현될 위젯들은 여기에.
-      return Container();
+      return YearCoaching();
     } else {
       return Container();
     }

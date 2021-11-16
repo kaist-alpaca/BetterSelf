@@ -1,5 +1,5 @@
+import 'package:betterme/betterme/report/Widgets/total_report/CoachingSet.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
-
 import 'package:betterme/betterme/report/Widgets/total_report/ReportSet.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -196,6 +196,10 @@ class _ReportScreen extends State<ReportScreen> {
                           )),
                       0.15,
                       0.6),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  CoachingSet(buttonCase)
                 ],
               ),
             ),
