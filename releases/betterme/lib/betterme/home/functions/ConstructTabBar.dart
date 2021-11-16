@@ -60,7 +60,7 @@ class _ConstructTabBar extends State<ConstructTabBar> {
         children: <Widget>[
           HomeScreen(),
           CommunicationScreen(),
-          ReportTestScreen(),
+          ReportScreen(),
           SettingScreen()
         ],
         controller: pageController, // controller를 지정해주면 각 페이지별 인덱스로 컨트롤 가능

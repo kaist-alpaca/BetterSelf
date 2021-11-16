@@ -7,7 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:betterme/betterme/communication/CommunicationScreen.dart';
 import 'package:betterme/betterme/home/HomeScreen.dart';
 
-import 'package:betterme/betterme/report/ReportScreen.dart';
+import 'package:betterme/betterme/report/ReportScreen_old.dart';
 import 'package:betterme/betterme/setting/SettingScreen.dart';
 
 class BottomNavigation extends StatelessWidget {

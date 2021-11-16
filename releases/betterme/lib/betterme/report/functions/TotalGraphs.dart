@@ -2,10 +2,9 @@ import 'package:betterme/betterme/report/functions/DataType.dart';
 import 'package:flutter/material.dart';
 
 class TotalGraphs extends StatefulWidget {
-
   TotalGraphs({Key? key, required this.GraphTypes}) : super(key: key);
 
-  List<bool> GraphTypes;   // 체중 수면 스트레스 섭취 소모
+  List<bool> GraphTypes; // 체중 수면 스트레스 섭취 소모
 
   @override
   _TotalGraphsState createState() => _TotalGraphsState();
@@ -20,85 +19,20 @@ class _TotalGraphsState extends State<TotalGraphs> {
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
 
     return Container(
-<<<<<<< HEAD
-      child : CustomPaint(
-        size: Size(valWidth, valHeight/2.8),
-        painter: PathPainter(widget.GraphTypes),
-      )
-    );
-=======
         child: CustomPaint(
-      size: Size(200, 200),
-      painter: PathPainter(),
+      size: Size(valWidth, valHeight / 2.8),
+      painter: PathPainter(widget.GraphTypes),
     ));
->>>>>>> develop
   }
 }
 
 class PathPainter extends CustomPainter {
-<<<<<<< HEAD
-
   List<bool> GraphTypes = [true, true, true, true, true];
 
-  PathPainter(List<bool> e){
+  PathPainter(List<bool> e) {
     GraphTypes = e;
   }
 
-  List<DateData> WeightData = [
-    DateData(DateTime.now().subtract(Duration(days: 7, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 70),
-    DateData(DateTime.now().subtract(Duration(days: 6, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 70.5),
-    DateData(DateTime.now().subtract(Duration(days: 5, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 71),
-    DateData(DateTime.now().subtract(Duration(days: 4, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 72),
-    DateData(DateTime.now().subtract(Duration(days: 3, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 74),
-    DateData(DateTime.now().subtract(Duration(days: 2, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 70),
-    DateData(DateTime.now().subtract(Duration(days: 1, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 71),
-    DateData(DateTime.now().subtract(Duration(days: 0, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 69)];
-  List<DateData> SleepData = [
-    DateData(DateTime.now().subtract(Duration(days: 7, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 20),
-    DateData(DateTime.now().subtract(Duration(days: 6, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 70),
-    DateData(DateTime.now().subtract(Duration(days: 5, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 90),
-    DateData(DateTime.now().subtract(Duration(days: 4, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 80),
-    DateData(DateTime.now().subtract(Duration(days: 3, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 60),
-    DateData(DateTime.now().subtract(Duration(days: 2, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 84),
-    DateData(DateTime.now().subtract(Duration(days: 1, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 82),
-    DateData(DateTime.now().subtract(Duration(days: 0, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 80)];
-  List<DateData> StressData = [
-    DateData(DateTime.now().subtract(Duration(days: 7, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 40),
-    DateData(DateTime.now().subtract(Duration(days: 6, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 50),
-    DateData(DateTime.now().subtract(Duration(days: 5, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 60),
-    DateData(DateTime.now().subtract(Duration(days: 4, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 70),
-    DateData(DateTime.now().subtract(Duration(days: 3, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 80),
-    DateData(DateTime.now().subtract(Duration(days: 2, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 94),
-    DateData(DateTime.now().subtract(Duration(days: 1, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 22),
-    DateData(DateTime.now().subtract(Duration(days: 0, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 10)];
-  List<DateData> DietData = [
-    DateData(DateTime.now().subtract(Duration(days: 7, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 20),
-    DateData(DateTime.now().subtract(Duration(days: 6, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 70),
-    DateData(DateTime.now().subtract(Duration(days: 5, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 90),
-    DateData(DateTime.now().subtract(Duration(days: 4, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 80),
-    DateData(DateTime.now().subtract(Duration(days: 3, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 60),
-    DateData(DateTime.now().subtract(Duration(days: 2, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 84),
-    DateData(DateTime.now().subtract(Duration(days: 1, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 82),
-    DateData(DateTime.now().subtract(Duration(days: 0, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 80)];
-  List<DateData> BurnedData = [
-    DateData(DateTime.now().subtract(Duration(days: 7, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 70),
-    DateData(DateTime.now().subtract(Duration(days: 6, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 10),
-    DateData(DateTime.now().subtract(Duration(days: 5, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 10),
-    DateData(DateTime.now().subtract(Duration(days: 4, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 20),
-    DateData(DateTime.now().subtract(Duration(days: 3, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 50),
-    DateData(DateTime.now().subtract(Duration(days: 2, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 94),
-    DateData(DateTime.now().subtract(Duration(days: 1, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 42),
-    DateData(DateTime.now().subtract(Duration(days: 0, hours: DateTime.now().hour, minutes: DateTime.now().minute)), 30)];
-
-  final LineSize = 0.7;
-=======
-  List<bool> GraphTypes = [
-    true,
-    true,
-    true,
-    true,
-    true,
-  ]; // 체중 수면 스트레스 섭취 소모
   List<DateData> WeightData = [
     DateData(
         DateTime.now().subtract(Duration(
@@ -111,25 +45,25 @@ class PathPainter extends CustomPainter {
             days: 6,
             hours: DateTime.now().hour,
             minutes: DateTime.now().minute)),
-        70),
+        70.5),
     DateData(
         DateTime.now().subtract(Duration(
             days: 5,
             hours: DateTime.now().hour,
             minutes: DateTime.now().minute)),
-        70),
+        71),
     DateData(
         DateTime.now().subtract(Duration(
             days: 4,
             hours: DateTime.now().hour,
             minutes: DateTime.now().minute)),
-        70),
+        72),
     DateData(
         DateTime.now().subtract(Duration(
             days: 3,
             hours: DateTime.now().hour,
             minutes: DateTime.now().minute)),
-        70),
+        74),
     DateData(
         DateTime.now().subtract(Duration(
             days: 2,
@@ -141,23 +75,219 @@ class PathPainter extends CustomPainter {
             days: 1,
             hours: DateTime.now().hour,
             minutes: DateTime.now().minute)),
-        70),
+        71),
     DateData(
         DateTime.now().subtract(Duration(
             days: 0,
             hours: DateTime.now().hour,
             minutes: DateTime.now().minute)),
-        70)
+        69)
   ];
-  List<double> SleepData = [];
-  List<double> StressData = [];
-  List<double> DietData = [];
-  List<double> BurnedData = [];
->>>>>>> develop
+  List<DateData> SleepData = [
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 7,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        20),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 6,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 5,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        90),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 4,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        80),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 3,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        60),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 2,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        84),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 1,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        82),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 0,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        80)
+  ];
+  List<DateData> StressData = [
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 7,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        40),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 6,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        50),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 5,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        60),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 4,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 3,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        80),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 2,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        94),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 1,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        22),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 0,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        10)
+  ];
+  List<DateData> DietData = [
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 7,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        20),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 6,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 5,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        90),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 4,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        80),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 3,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        60),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 2,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        84),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 1,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        82),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 0,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        80)
+  ];
+  List<DateData> BurnedData = [
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 7,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        70),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 6,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        10),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 5,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        10),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 4,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        20),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 3,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        50),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 2,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        94),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 1,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        42),
+    DateData(
+        DateTime.now().subtract(Duration(
+            days: 0,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        30)
+  ];
+
+  final LineSize = 0.7;
 
   @override
   void paint(Canvas canvas, Size size) {
-
     double XPadd_right = 30;
     double YPadd_bottom = 30;
     double YPadd_top = 0;
@@ -174,7 +304,7 @@ class PathPainter extends CustomPainter {
     final GraphYSize = size.height - YPadd_bottom;
 
     final floorCorrection = 20;
-    final floor = (GraphYSize+floorCorrection) / 5;
+    final floor = (GraphYSize + floorCorrection) / 5;
     //////////////////////////////////////////////////////////////////////////////////////Underbar
 
     Paint LinePaint = Paint()
@@ -190,34 +320,34 @@ class PathPainter extends CustomPainter {
     path.close();
 
     //////////////////////////////////////////////////////////////////////////////////////XLabel
-    for(int i = 0 ; i < 7 ; i++){
+    for (int i = 0; i < 7; i++) {
       final XGridUnit = GraphXSize / 7;
       final x = GraphXSize - i * XGridUnit - 6;
       final y = size.height - YPadd_bottom + 6;
 
       final p = Offset(x, y);
 
-
-      final textPainter = (DateTime.now().subtract(Duration(days: i)).day == 1)? TextPainter(
-        text: TextSpan(
-            text: '${DateTime.now().subtract(Duration(days: i)).month}/${DateTime.now().subtract(Duration(days: i)).day}',
-            style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))
-        ),
-        textDirection: TextDirection.ltr,
-      ) : TextPainter(
-        text: TextSpan(
-            text: '${DateTime.now().subtract(Duration(days: i)).day}',
-            style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))
-        ),
-        textDirection: TextDirection.ltr,
-      );
+      final textPainter = (DateTime.now().subtract(Duration(days: i)).day == 1)
+          ? TextPainter(
+              text: TextSpan(
+                  text:
+                      '${DateTime.now().subtract(Duration(days: i)).month}/${DateTime.now().subtract(Duration(days: i)).day}',
+                  style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
+              textDirection: TextDirection.ltr,
+            )
+          : TextPainter(
+              text: TextSpan(
+                  text: '${DateTime.now().subtract(Duration(days: i)).day}',
+                  style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
+              textDirection: TextDirection.ltr,
+            );
 
       textPainter.layout();
 
       textPainter.paint(canvas, p);
     }
     //////////////////////////////////////////////////////////////////////////////////////YSubLine
-    for(int i = 1 ; i < 7 ; i++){
+    for (int i = 1; i < 7; i++) {
       final XGridUnit = GraphXSize / 7;
       final x = GraphXSize - i * XGridUnit;
       final y = GraphYSize - 1;
@@ -233,26 +363,26 @@ class PathPainter extends CustomPainter {
       canvas.drawPath(path, LinePaint);
 
       path.close();
-
     }
     //////////////////////////////////////////////////////////////////////////////////////weight_label
-    for(int i = 0 ; i < 7 ; i++){
+    for (int i = 0; i < 7; i++) {
       final XGridUnit = GraphXSize / 7;
       final x = GraphXSize - i * XGridUnit - 7;
-      final y = size.height - YPadd_bottom - 1.2*floor;
+      final y = size.height - YPadd_bottom - 1.2 * floor;
 
       final p = Offset(x, y);
 
-      final textPainter = (null != WeightData[WeightData.length - 1 - i])? TextPainter(
-        text: TextSpan(
-            text: '${WeightData[WeightData.length - 1 - i].value}',
-            style: TextStyle(fontSize: 7, color: Color(0xff858E93))
-        ),
-        textDirection: TextDirection.ltr,
-      ) : TextPainter(
-        text: TextSpan(text: ''),
-        textDirection: TextDirection.ltr,
-      );
+      final textPainter = (null != WeightData[WeightData.length - 1 - i])
+          ? TextPainter(
+              text: TextSpan(
+                  text: '${WeightData[WeightData.length - 1 - i].value}',
+                  style: TextStyle(fontSize: 7, color: Color(0xff858E93))),
+              textDirection: TextDirection.ltr,
+            )
+          : TextPainter(
+              text: TextSpan(text: ''),
+              textDirection: TextDirection.ltr,
+            );
 
       textPainter.layout();
 
@@ -260,19 +390,18 @@ class PathPainter extends CustomPainter {
     }
     //////////////////////////////////////////////////////////////////////////////////////weight
 
-    if(GraphTypes[0]){
-
+    if (GraphTypes[0]) {
       double min = 1000;
       double max = 0;
       WeightData.forEach((e) {
-        if(e.value < min)min = e.value;
-        if(e.value > min)max = e.value;
+        if (e.value < min) min = e.value;
+        if (e.value > min) max = e.value;
       });
 
       WeightData.forEach((e) {
         e.value = (e.value - min) / (max - min) * 0.4 * floor;
         e.value /= 2;
-        e.value += floor*0.3;//correction
+        e.value += floor * 0.3; //correction
       });
 
       var datapath = ComputePoints(WeightData, GraphXSize, GraphYSize);
@@ -290,11 +419,10 @@ class PathPainter extends CustomPainter {
       path.close();
     }
     //////////////////////////////////////////////////////////////////////////////////////Sleep
-    if(GraphTypes[1]){
-
+    if (GraphTypes[1]) {
       SleepData.forEach((e) {
-        e.value = e.value/2;
-        e.value += floor*2 + YPadd_bottom;
+        e.value = e.value / 2;
+        e.value += floor * 2 + YPadd_bottom;
       });
 
       var datapath = ComputePoints(SleepData, GraphXSize, GraphYSize);
@@ -312,11 +440,10 @@ class PathPainter extends CustomPainter {
       path.close();
     }
     //////////////////////////////////////////////////////////////////////////////////////Stress
-    if(GraphTypes[2]){
-
+    if (GraphTypes[2]) {
       StressData.forEach((e) {
-        e.value = e.value/2;
-        e.value += floor*2 + YPadd_bottom;
+        e.value = e.value / 2;
+        e.value += floor * 2 + YPadd_bottom;
       });
 
       var datapath = ComputePoints(StressData, GraphXSize, GraphYSize);
@@ -334,10 +461,9 @@ class PathPainter extends CustomPainter {
       path.close();
     }
     //////////////////////////////////////////////////////////////////////////////////////Diet
-    if(GraphTypes[3]){
-
+    if (GraphTypes[3]) {
       DietData.forEach((e) {
-        e.value = e.value/2;
+        e.value = e.value / 2;
         e.value += floor + YPadd_bottom;
       });
 
@@ -356,10 +482,9 @@ class PathPainter extends CustomPainter {
       path.close();
     }
     //////////////////////////////////////////////////////////////////////////////////////Burned
-    if(GraphTypes[4]){
-
+    if (GraphTypes[4]) {
       BurnedData.forEach((e) {
-        e.value = e.value/2;
+        e.value = e.value / 2;
         e.value += floor + YPadd_bottom;
       });
 
