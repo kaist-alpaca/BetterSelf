@@ -210,7 +210,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                               primary: button4Color,
                               minimumSize: Size(buttonWidth, buttonHeight)),
                           child: Text(
-                            '생체',
+                            '생활',
                             style: TextStyle(
                               color: txtColor,
                               fontSize: defaultSize * 14,
