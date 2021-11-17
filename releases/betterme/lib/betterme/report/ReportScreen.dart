@@ -22,6 +22,11 @@ class _ReportScreen extends State<ReportScreen> {
   Color button2Color = Color(0xff0B202A);
   Color button3Color = Color(0xff0B202A);
 
+  void initState() {
+    super.initState();
+    buttonCase = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
