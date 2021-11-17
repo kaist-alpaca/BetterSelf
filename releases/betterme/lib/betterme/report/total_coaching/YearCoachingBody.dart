@@ -4,10 +4,10 @@ import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:betterme/functions/Firestore/AuthMethods.dart';
 
-import '../Widgets/CoachingTxtBox.dart';
-import '../Widgets/CoachingDate.dart';
-import '../Widgets/CoachingFoodBox.dart';
-import '../Widgets/CoachingExerciseBox.dart';
+import '../Widgets/coaching_widgets/CoachingTxtBox.dart';
+import '../Widgets/coaching_widgets/CoachingDate.dart';
+import '../Widgets/coaching_widgets/CoachingFoodBox.dart';
+import '../Widgets/coaching_widgets/CoachingExerciseBox.dart';
 
 var CoachingBiotexts = [];
 var CoachingBiotimes = [];
@@ -68,12 +68,12 @@ Widget InitBioCoaching(
               return CoachingTxtBox(context, CoachingBiotexts[checkTime], 0.25);
             } else if (DiffDays < 0) {
               return CoachingTxtBox(
-                  context, '아직 해당 날짜의 생체 데이터 코칭이 없습니다.', 0.25);
+                  context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25);
             }
             checkTime = checkTime - 1;
           }
 
-          return CoachingTxtBox(context, '아직 해당 날짜의 생체 데이터 코칭이 없습니다.', 0.25);
+          return CoachingTxtBox(context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25);
         } else {
           return Center(child: CircularProgressIndicator());
         }
