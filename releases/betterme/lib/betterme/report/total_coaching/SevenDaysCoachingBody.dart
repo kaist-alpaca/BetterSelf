@@ -88,7 +88,7 @@ Widget InitBioCoaching(
             }
             checkTime = checkTime - 1;
           }
-          print('out of While');
+          //print('out of While');
           return CoachingBody(
             context,
             '아직 해당 날짜의 생활 데이터 코칭이 없습니다.',
@@ -167,7 +167,7 @@ Widget InitExerciseCoaching(
             }
             checkTime = checkTime - 1;
           }
-          print('out of While');
+          //print('out of While');
           return CoachingBody(
             context,
             '아직 해당 날짜의 운동 코칭이 없습니다.',
@@ -246,7 +246,7 @@ Widget InitFoodCoaching(
             }
             checkTime = checkTime - 1;
           }
-          print('out of While');
+          //print('out of While');
           return CoachingBody(
             context,
             '아직 해당 날짜의 식단 코칭이 없습니다.',
@@ -297,7 +297,7 @@ Widget CoachingBody(
       content,
       softWrap: true,
       style: TextStyle(color: txtColor, fontSize: defaultSize * 12),
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.left,
     ),
   );
 }
