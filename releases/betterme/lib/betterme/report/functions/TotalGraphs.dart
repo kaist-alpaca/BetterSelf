@@ -406,7 +406,7 @@ class PathPainter extends CustomPainter {
 
       var datapath = ComputePoints(WeightData, GraphXSize, GraphYSize);
 
-      print("debug : $datapath");
+      // print("debug : $datapath");
 
       Paint LinePaint = Paint()
         ..color = Color(0xffFFFDFD)
@@ -427,7 +427,7 @@ class PathPainter extends CustomPainter {
 
       var datapath = ComputePoints(SleepData, GraphXSize, GraphYSize);
 
-      print("debug : $datapath");
+      // print("debug : $datapath");
 
       Paint LinePaint = Paint()
         ..color = Color(0xffA0B1DF)
@@ -448,7 +448,7 @@ class PathPainter extends CustomPainter {
 
       var datapath = ComputePoints(StressData, GraphXSize, GraphYSize);
 
-      print("debug : $datapath");
+      // print("debug : $datapath");
 
       Paint LinePaint = Paint()
         ..color = Color(0xffF2D8A7)
@@ -469,7 +469,7 @@ class PathPainter extends CustomPainter {
 
       var datapath = ComputePoints(DietData, GraphXSize, GraphYSize);
 
-      print("debug : $datapath");
+      // print("debug : $datapath");
 
       Paint LinePaint = Paint()
         ..color = Color(0xffD2ABBA)
@@ -490,7 +490,7 @@ class PathPainter extends CustomPainter {
 
       var datapath = ComputePoints(BurnedData, GraphXSize, GraphYSize);
 
-      print("debug : $datapath");
+      // print("debug : $datapath");
 
       Paint LinePaint = Paint()
         ..color = Color(0xff8DBFBC)

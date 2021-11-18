@@ -74,10 +74,10 @@ class CustomeScatterChartPainter extends CustomPainter {
     int temp = 7;
     for (int i = 0; i < 7; i++) {
       sleep[i].forEach((e) {
-        print(e);
-        print(e[2].split(" ")[1]);
-        print('test');
-        print(DateTime.parse(e[2]).hour);
+        // print(e);
+        // print(e[2].split(" ")[1]);
+        // print('test');
+        // print(DateTime.parse(e[2]).hour);
         int startTime = DateTime.parse(e[2]).hour * 60 * 60 +
             DateTime.parse(e[2]).minute * 60 +
             DateTime.parse(e[2]).second;
