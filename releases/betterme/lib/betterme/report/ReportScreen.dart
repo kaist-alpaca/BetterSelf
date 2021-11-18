@@ -80,10 +80,12 @@ class _ReportScreen extends State<ReportScreen> {
                         width: valWidth * 0.1,
                       ),
                       Container(
-                        height: 30,
-                        width: valWidth * 0.45,
-                        color: Colors.grey,
-                      ),
+                          height: 30,
+                          width: valWidth * 0.45,
+                          padding: EdgeInsets.only(top: 13),
+                          child: Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Image.asset('images/app_title.png'))),
                       SizedBox(
                         width: valWidth * 0.255,
                       ),
