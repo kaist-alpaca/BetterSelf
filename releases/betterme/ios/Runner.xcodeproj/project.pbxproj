@@ -394,7 +394,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+<<<<<<< Updated upstream
 				MARKETING_VERSION = 0.0.3;
+=======
+				MARKETING_VERSION = 0.0.4;
+>>>>>>> Stashed changes
 				PRODUCT_BUNDLE_IDENTIFIER = com.alpaca.betatest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -528,7 +532,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+<<<<<<< Updated upstream
 				MARKETING_VERSION = 0.0.3;
+=======
+				MARKETING_VERSION = 0.0.4;
+>>>>>>> Stashed changes
 				PRODUCT_BUNDLE_IDENTIFIER = com.alpaca.betatest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -554,7 +562,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+<<<<<<< Updated upstream
 				MARKETING_VERSION = 0.0.3;
+=======
+				MARKETING_VERSION = 0.0.4;
+>>>>>>> Stashed changes
 				PRODUCT_BUNDLE_IDENTIFIER = com.alpaca.betatest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
