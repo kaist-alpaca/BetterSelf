@@ -23,7 +23,7 @@ Widget CoachingTxtBox(BuildContext context, String content, double heightRate) {
           child: Text(
             content,
             softWrap: true,
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.left,
             style: TextStyle(fontSize: 10 * defaultSize, color: txtColor),
           ),
         )
