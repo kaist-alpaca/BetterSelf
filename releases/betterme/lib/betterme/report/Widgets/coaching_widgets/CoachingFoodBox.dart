@@ -43,7 +43,7 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
               width: valWidth * 0.1,
               height: valHeight * 0.05,
               color: bgColor,
-              child: SvgPicture.asset('images/coaching_pin.svg')),
+              child: SvgPicture.asset('images/coaching_icon.svg')),
           Container(
             width: valWidth * 0.3,
             child: Divider(

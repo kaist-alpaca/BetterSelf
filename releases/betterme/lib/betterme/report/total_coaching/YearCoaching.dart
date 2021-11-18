@@ -47,7 +47,7 @@ class _YearCoaching extends State<YearCoaching> {
                 child: Stack(
                   children: [
                     Container(
-                      height: valHeight * 0.1068,
+                      height: 85,
                       width: valWidth,
                       color: bgColor,
                     ),
