@@ -132,6 +132,98 @@ class ServerConnection {
     return json.decode(response.body).toString();
   }
 
+  static Future<List<dynamic>> total_weight(String uid, int num) async {
+    var date = [];
+    if (num != 31) {
+      for (int i = 0; i < num; i++) {
+        var tmp = DateTime.now()
+            .add(Duration(days: -i))
+            .toString()
+            .substring(0, 10)
+            .replaceAll("-", "_");
+        print(tmp);
+        date.add(tmp);
+      }
+    } else {}
+    final response = await http.post(
+      Uri.http('kaistuser.iptime.org:8080', 'total_weight.php'),
+      body: <String, String>{
+        'uid': uid, //서버에 post key : 보내는 값
+        'date': json.encode(date)
+      },
+    );
+    return List<dynamic>.from(json.decode(response.body));
+  }
+
+  static Future<List<dynamic>> total_sleep(String uid, int num) async {
+    var date = [];
+    if (num != 31) {
+      for (int i = 0; i < num; i++) {
+        var tmp = DateTime.now()
+            .add(Duration(days: -i))
+            .toString()
+            .substring(0, 10)
+            .replaceAll("-", "_");
+        print(tmp);
+        date.add(tmp);
+      }
+    } else {}
+    final response = await http.post(
+      Uri.http('kaistuser.iptime.org:8080', 'total_sleep.php'),
+      body: <String, String>{
+        'uid': uid, //서버에 post key : 보내는 값
+        'date': json.encode(date)
+      },
+    );
+    return List<dynamic>.from(json.decode(response.body));
+  }
+
+  static Future<List<dynamic>> total_stress(String uid, int num) async {
+    var date = [];
+    if (num != 31) {
+      for (int i = 0; i < num; i++) {
+        var tmp = DateTime.now()
+            .add(Duration(days: -i))
+            .toString()
+            .substring(0, 10)
+            .replaceAll("-", "_");
+        print(tmp);
+        date.add(tmp);
+      }
+    } else {}
+    final response = await http.post(
+      Uri.http('kaistuser.iptime.org:8080', 'total_stress.php'),
+      body: <String, String>{
+        'uid': uid, //서버에 post key : 보내는 값
+        'date': json.encode(date)
+      },
+    );
+    return List<dynamic>.from(json.decode(response.body));
+  }
+
+  static Future<List<dynamic>> total_burned(String uid, int num) async {
+    var date = [];
+    if (num != 31) {
+      for (int i = 0; i < num; i++) {
+        var tmp = DateTime.now()
+            .add(Duration(days: -i))
+            .toString()
+            .substring(0, 10)
+            .replaceAll("-", "_");
+        print(tmp);
+        date.add(tmp);
+      }
+    } else {}
+    final response = await http.post(
+      Uri.http('kaistuser.iptime.org:8080', 'total_burned.php'),
+      body: <String, String>{
+        'uid': uid, //서버에 post key : 보내는 값
+        'date': json.encode(date)
+      },
+    );
+    return List<dynamic>.from(json.decode(response.body));
+  }
+
   static Future<String> updateHeathData(String uid) async {
     // final response = await http.get(Uri.parse(
     //     "http://kaistuser.iptime.org:8080/healthData_get_lastupdate.php?uid=alpaca"));
@@ -191,31 +283,31 @@ class ServerConnection {
       print("error...?");
     }
     try {
-      var activityData = [];
-      if (lastupdate == "0") {
-        final appleHealthActivity = await HealthKitReporter.sampleQuery(
-            QuantityType.activeEnergyBurned.identifier,
-            Predicate(start.add(Duration(days: -10)), start));
-        // print(samples2.map((e) => e.map).toList()[0]);
-        for (final q in appleHealthActivity) {
-          var map = {};
-          map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
-          map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
-          map['calorie'] = '${json.encode(q.map["harmonized"]["value"])}';
-          activityData.add(map);
-        }
-      } else {
-        final appleHealthActivity = await HealthKitReporter.sampleQuery(
-            QuantityType.activeEnergyBurned.identifier, _predicate);
-        // print(samples2.map((e) => e.map).toList()[0]);
-        for (final q in appleHealthActivity) {
-          var map = {};
-          map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
-          map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
-          map['calorie'] = '${json.encode(q.map["harmonized"]["value"])}';
-          activityData.add(map);
-        }
-      }
+      // var activityData = [];
+      // if (lastupdate == "0") {
+      //   final appleHealthActivity = await HealthKitReporter.sampleQuery(
+      //       QuantityType.activeEnergyBurned.identifier,
+      //       Predicate(start.add(Duration(days: -10)), start));
+      //   // print(samples2.map((e) => e.map).toList()[0]);
+      //   for (final q in appleHealthActivity) {
+      //     var map = {};
+      //     map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
+      //     map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
+      //     map['calorie'] = '${json.encode(q.map["harmonized"]["value"])}';
+      //     activityData.add(map);
+      //   }
+      // } else {
+      //   final appleHealthActivity = await HealthKitReporter.sampleQuery(
+      //       QuantityType.activeEnergyBurned.identifier, _predicate);
+      //   // print(samples2.map((e) => e.map).toList()[0]);
+      //   for (final q in appleHealthActivity) {
+      //     var map = {};
+      //     map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
+      //     map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
+      //     map['calorie'] = '${json.encode(q.map["harmonized"]["value"])}';
+      //     activityData.add(map);
+      //   }
+      // }
 
       var activitySummaryData = [];
       final appleHealthactivitySummary =
@@ -326,6 +418,11 @@ class ServerConnection {
               double.parse('${mapHR[json.encode(q.map["startTimestamp"])]}') -
                   double.parse('${json.encode(q.map["harmonized"]["value"])}') *
                       0.4;
+          map['startDate'] = DateTime.fromMillisecondsSinceEpoch(
+                  (q.map["startTimestamp"].toInt() * 1000).toInt())
+              .toString()
+              .substring(0, 10)
+              .replaceAll("-", "_");
           map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
           map['stress'] = stress.toString();
           stressData.add(map);
@@ -340,6 +437,11 @@ class ServerConnection {
         // print('q: ${json.encode(q.map)} \n');
         // print(
         //     'q: ${json.encode(q.map["startTimestamp"])} ${json.encode(q.map["harmonized"]["value"])} kg \n');
+        map['startDate'] = DateTime.fromMillisecondsSinceEpoch(
+                (q.map["startTimestamp"].toInt() * 1000).toInt())
+            .toString()
+            .substring(0, 10)
+            .replaceAll("-", "_");
         map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
         map['weight'] = '${json.encode(q.map["harmonized"]["value"])}';
         // print('q: ${json.encode(q.map["harmonized"]["value"])} \n');
@@ -360,6 +462,11 @@ class ServerConnection {
         // print('q: ${json.encode(q.map["harmonized"]["totalEnergyBurned"])}');
         // print(
         //     'q: ${json.encode(q.map["harmonized"]["totalEnergyBurnedUnit"])}');
+        map['startDate'] = DateTime.fromMillisecondsSinceEpoch(
+                (q.map["startTimestamp"].toInt() * 1000).toInt())
+            .toString()
+            .substring(0, 10)
+            .replaceAll("-", "_");
         map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
         map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
         map['type'] = '${json.encode(q.map["harmonized"]["description"])}'
@@ -378,7 +485,7 @@ class ServerConnection {
           'uid': uid, //서버에 post key : 보내는 값
           'checkUser': checker,
           'lastupdate': now.toString(),
-          'activityData': json.encode(activityData),
+          // 'activityData': json.encode(activityData),
           'activitySummaryData': json.encode(activitySummaryData),
           'sleepData': json.encode(sleepData),
           'sleepDataSpecific': json.encode(sleepDataSpecific),

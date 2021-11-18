@@ -1,4 +1,6 @@
 import 'package:betterme/betterme/report/functions/DataType.dart';
+import 'package:betterme/functions/Controllers/profile_controller.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/material.dart';
 
 class TotalGraphs extends StatefulWidget {
@@ -18,11 +20,124 @@ class _TotalGraphsState extends State<TotalGraphs> {
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
 
-    return Container(
-        child: CustomPaint(
-      size: Size(valWidth, valHeight / 2.8),
-      painter: PathPainter(widget.GraphTypes),
-    ));
+    return Stack(
+      children: [
+        Container(
+          child: CustomPaint(
+            size: Size(valWidth, valHeight / 2.8),
+            painter: PathPainter(widget.GraphTypes),
+          ),
+        ),
+        FutureBuilder<List<dynamic>>(
+          future: ServerConnection.total_weight(
+            ProfileController.to.originMyProfile.uid == null
+                ? ''
+                : ProfileController.to.originMyProfile.uid!,
+            7,
+          ),
+          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+            if (snapshot.hasData) {
+              // print('have data');
+              // print(snapshot.data);
+              // print(snapshot.data!);
+              if (widget.GraphTypes[0]) {
+                return Container(
+                    child: CustomPaint(
+                  size: Size(valWidth, valHeight / 2.8),
+                  painter: PathPainterWeight(snapshot.data!),
+                ));
+              } else {
+                return Container();
+              }
+            } else {
+              print('do not have data');
+              return Container();
+            }
+          },
+        ),
+        FutureBuilder<List<dynamic>>(
+          future: ServerConnection.total_sleep(
+            ProfileController.to.originMyProfile.uid == null
+                ? ''
+                : ProfileController.to.originMyProfile.uid!,
+            7,
+          ),
+          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+            if (snapshot.hasData) {
+              if (widget.GraphTypes[1]) {
+                // print('have data');
+                // print(snapshot.data);
+                // print(snapshot.data!);
+                return Container(
+                    child: CustomPaint(
+                  size: Size(valWidth, valHeight / 2.8),
+                  painter: PathPainterSleep(snapshot.data!),
+                ));
+              } else {
+                return Container();
+              }
+            } else {
+              print('do not have data');
+              return Container();
+            }
+          },
+        ),
+        FutureBuilder<List<dynamic>>(
+          future: ServerConnection.total_stress(
+            ProfileController.to.originMyProfile.uid == null
+                ? ''
+                : ProfileController.to.originMyProfile.uid!,
+            7,
+          ),
+          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+            if (snapshot.hasData) {
+              if (widget.GraphTypes[2]) {
+                // print('have data');
+                // print(snapshot.data);
+                // print(snapshot.data!);
+                return Container(
+                    child: CustomPaint(
+                  size: Size(valWidth, valHeight / 2.8),
+                  painter: PathPainterStress(snapshot.data!),
+                ));
+              } else {
+                return Container();
+              }
+            } else {
+              print('do not have data');
+              return Container();
+            }
+          },
+        ),
+        FutureBuilder<List<dynamic>>(
+          future: ServerConnection.total_burned(
+            ProfileController.to.originMyProfile.uid == null
+                ? ''
+                : ProfileController.to.originMyProfile.uid!,
+            7,
+          ),
+          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+            if (snapshot.hasData) {
+              if (widget.GraphTypes[4]) {
+                print('have data');
+                print(snapshot.data);
+                print(snapshot.data!);
+                return Container(
+                    child: CustomPaint(
+                  size: Size(valWidth, valHeight / 2.8),
+                  painter: PathPainterBurned(snapshot.data!),
+                ));
+              } else {
+                return Container();
+              }
+            } else {
+              print('do not have data');
+              return Container();
+            }
+          },
+        ),
+      ],
+    );
   }
 }
 
@@ -288,6 +403,20 @@ class PathPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    var tmp = DateData(
+        DateTime.now().subtract(Duration(
+            days: 3,
+            hours: DateTime.now().hour,
+            minutes: DateTime.now().minute)),
+        50);
+    print(tmp);
+    // var temp = DateTime.parse('1636628143.7570000');
+    var temp = DateTime.fromMicrosecondsSinceEpoch(
+        (1636628143.7570000 * 1000000).toInt());
+    print(temp);
+    tmp = DateData(temp, 50);
+    print(tmp);
+    print('!!!!!!!!!!!!!');
     double XPadd_right = 30;
     double YPadd_bottom = 30;
     double YPadd_top = 0;
@@ -390,76 +519,78 @@ class PathPainter extends CustomPainter {
     }
     //////////////////////////////////////////////////////////////////////////////////////weight
 
-    if (GraphTypes[0]) {
-      double min = 1000;
-      double max = 0;
-      WeightData.forEach((e) {
-        if (e.value < min) min = e.value;
-        if (e.value > min) max = e.value;
-      });
+    // if (GraphTypes[0]) {
+    //   // double min = 1000;
+    //   // double max = 0;
+    //   // WeightData.forEach((e) {
+    //   //   if (e.value < min) min = e.value;
+    //   //   if (e.value > min) max = e.value;
+    //   // });
 
-      WeightData.forEach((e) {
-        e.value = (e.value - min) / (max - min) * 0.4 * floor;
-        e.value /= 2;
-        e.value += floor * 0.3; //correction
-      });
+    //   // WeightData.forEach((e) {
+    //   //   e.value = (e.value - min) / (max - min) * 0.4 * floor;
+    //   //   e.value /= 2;
+    //   //   e.value += floor * 0.3; //correction
+    //   // });
 
-      var datapath = ComputePoints(WeightData, GraphXSize, GraphYSize);
+    //   // var datapath = ComputePoints(WeightData, GraphXSize, GraphYSize);
 
-      // print("debug : $datapath");
+    //   // // print("debug : $datapath");
 
-      Paint LinePaint = Paint()
-        ..color = Color(0xffFFFDFD)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = LineSize;
+    //   // Paint LinePaint = Paint()
+    //   //   ..color = Color(0xffFFFDFD)
+    //   //   ..style = PaintingStyle.stroke
+    //   //   ..strokeWidth = LineSize;
 
-      Path path = ComputePath(datapath);
-      canvas.drawPath(path, LinePaint);
+    //   // Path path = ComputePath(datapath);
+    //   // canvas.drawPath(path, LinePaint);
 
-      path.close();
-    }
+    //   // path.close();
+    //   print('show weight');
+    //   // TotalGraphWeight();
+    // }
     //////////////////////////////////////////////////////////////////////////////////////Sleep
-    if (GraphTypes[1]) {
-      SleepData.forEach((e) {
-        e.value = e.value / 2;
-        e.value += floor * 2 + YPadd_bottom;
-      });
+    // if (GraphTypes[1]) {
+    //   SleepData.forEach((e) {
+    //     e.value = e.value / 2;
+    //     e.value += floor * 2 + YPadd_bottom;
+    //   });
 
-      var datapath = ComputePoints(SleepData, GraphXSize, GraphYSize);
+    //   var datapath = ComputePoints(SleepData, GraphXSize, GraphYSize);
 
-      // print("debug : $datapath");
+    //   // print("debug : $datapath");
 
-      Paint LinePaint = Paint()
-        ..color = Color(0xffA0B1DF)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = LineSize;
+    //   Paint LinePaint = Paint()
+    //     ..color = Color(0xffA0B1DF)
+    //     ..style = PaintingStyle.stroke
+    //     ..strokeWidth = LineSize;
 
-      Path path = ComputePath(datapath);
-      canvas.drawPath(path, LinePaint);
+    //   Path path = ComputePath(datapath);
+    //   canvas.drawPath(path, LinePaint);
 
-      path.close();
-    }
+    //   path.close();
+    // }
     //////////////////////////////////////////////////////////////////////////////////////Stress
-    if (GraphTypes[2]) {
-      StressData.forEach((e) {
-        e.value = e.value / 2;
-        e.value += floor * 2 + YPadd_bottom;
-      });
+    // if (GraphTypes[2]) {
+    //   StressData.forEach((e) {
+    //     e.value = e.value / 2;
+    //     e.value += floor * 2 + YPadd_bottom;
+    //   });
 
-      var datapath = ComputePoints(StressData, GraphXSize, GraphYSize);
+    //   var datapath = ComputePoints(StressData, GraphXSize, GraphYSize);
 
-      // print("debug : $datapath");
+    //   // print("debug : $datapath");
 
-      Paint LinePaint = Paint()
-        ..color = Color(0xffF2D8A7)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = LineSize;
+    //   Paint LinePaint = Paint()
+    //     ..color = Color(0xffF2D8A7)
+    //     ..style = PaintingStyle.stroke
+    //     ..strokeWidth = LineSize;
 
-      Path path = ComputePath(datapath);
-      canvas.drawPath(path, LinePaint);
+    //   Path path = ComputePath(datapath);
+    //   canvas.drawPath(path, LinePaint);
 
-      path.close();
-    }
+    //   path.close();
+    // }
     //////////////////////////////////////////////////////////////////////////////////////Diet
     if (GraphTypes[3]) {
       DietData.forEach((e) {
@@ -482,26 +613,377 @@ class PathPainter extends CustomPainter {
       path.close();
     }
     //////////////////////////////////////////////////////////////////////////////////////Burned
-    if (GraphTypes[4]) {
-      BurnedData.forEach((e) {
-        e.value = e.value / 2;
-        e.value += floor + YPadd_bottom;
-      });
+    // if (GraphTypes[4]) {
+    //   BurnedData.forEach((e) {
+    //     e.value = e.value / 2;
+    //     e.value += floor + YPadd_bottom;
+    //   });
 
-      var datapath = ComputePoints(BurnedData, GraphXSize, GraphYSize);
+    //   var datapath = ComputePoints(BurnedData, GraphXSize, GraphYSize);
 
-      // print("debug : $datapath");
+    //   // print("debug : $datapath");
 
-      Paint LinePaint = Paint()
-        ..color = Color(0xff8DBFBC)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = LineSize;
+    //   Paint LinePaint = Paint()
+    //     ..color = Color(0xff8DBFBC)
+    //     ..style = PaintingStyle.stroke
+    //     ..strokeWidth = LineSize;
 
-      Path path = ComputePath(datapath);
-      canvas.drawPath(path, LinePaint);
+    //   Path path = ComputePath(datapath);
+    //   canvas.drawPath(path, LinePaint);
 
-      path.close();
+    //   path.close();
+    // }
+  }
+
+  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
+    List<Offset> points = [];
+    p.forEach((i) {
+      final XGridUnit = width / 7;
+      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
+      final y = height - (i.value);
+      final dp = Offset(x, y);
+      points.add(dp);
+    });
+    return points;
+  }
+
+  Path ComputePath(List<Offset> points) {
+    final path = Path();
+    for (int i = 0; i < points.length; i++) {
+      final p = points[i];
+      if (i == 0) {
+        path.moveTo(p.dx, p.dy);
+      } else {
+        path.lineTo(p.dx, p.dy);
+      }
     }
+    return path;
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+class PathPainterWeight extends CustomPainter {
+  late List<dynamic> weight;
+
+  PathPainterWeight(List<dynamic> e) {
+    weight = e;
+  }
+  @override
+  void paint(Canvas canvas, Size size) {
+    List<DateData> WeightData = [];
+    weight.forEach((e) {
+      // print(e);
+      // print(DateTime.fromMicrosecondsSinceEpoch(
+      //     (double.parse(e['time']) * 1000000).toInt()));
+      WeightData.add(
+        DateData(
+          DateTime.fromMicrosecondsSinceEpoch(
+              (double.parse(e['time']) * 1000000).toInt()),
+          double.parse(e['weight']),
+        ),
+      );
+    });
+
+    // print('good...?');
+    // print(WeightData);
+
+    double min = 1000;
+    double max = 0;
+    double XPadd_right = 30;
+    double YPadd_bottom = 30;
+    double YPadd_top = 0;
+
+    double LineSize = 1.5;
+
+    final GraphXSize = size.width - XPadd_right;
+
+    final GraphYSize = size.height - YPadd_bottom;
+
+    final floorCorrection = 20;
+    final floor = (GraphYSize + floorCorrection) / 5;
+    WeightData.forEach((e) {
+      // print('weight value');
+      // print(e.value);
+      if (e.value < min) min = e.value;
+      if (e.value > min) max = e.value;
+    });
+
+    WeightData.forEach((e) {
+      e.value = (e.value - min) / (max - min) * 0.4 * floor;
+      e.value /= 2;
+      e.value += floor * 0.3; //correction
+    });
+
+    var datapath = ComputePoints(WeightData, GraphXSize, GraphYSize);
+
+    // print("debug : $datapath");
+
+    Paint LinePaint = Paint()
+      ..color = Color(0xffFFFDFD)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = LineSize;
+
+    Path path = ComputePath(datapath);
+    canvas.drawPath(path, LinePaint);
+
+    path.close();
+  }
+
+  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
+    List<Offset> points = [];
+    p.forEach((i) {
+      final XGridUnit = width / 7;
+      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
+      final y = height - (i.value);
+      final dp = Offset(x, y);
+      points.add(dp);
+    });
+    return points;
+  }
+
+  Path ComputePath(List<Offset> points) {
+    final path = Path();
+    for (int i = 0; i < points.length; i++) {
+      final p = points[i];
+      if (i == 0) {
+        path.moveTo(p.dx, p.dy);
+      } else {
+        path.lineTo(p.dx, p.dy);
+      }
+    }
+    return path;
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+class PathPainterSleep extends CustomPainter {
+  late List<dynamic> sleep;
+
+  PathPainterSleep(List<dynamic> e) {
+    sleep = e;
+  }
+  @override
+  void paint(Canvas canvas, Size size) {
+    List<DateData> SleepData = [];
+    print('sleep');
+    sleep.forEach((e) {
+      print(e);
+      print(DateTime.parse(e['time'].replaceAll("_", "")));
+      SleepData.add(
+        DateData(
+          DateTime.parse(e['time'].replaceAll("_", "")),
+          double.parse(e['sleep']) / 60,
+        ),
+      );
+    });
+
+    print('good...?');
+    print(SleepData);
+
+    double XPadd_right = 30;
+    double YPadd_bottom = 30;
+
+    double LineSize = 1.5;
+
+    final GraphXSize = size.width - XPadd_right;
+
+    final GraphYSize = size.height - YPadd_bottom;
+
+    final floorCorrection = 20;
+    final floor = (GraphYSize + floorCorrection) / 5;
+
+    SleepData.forEach((e) {
+      e.value = e.value / 2;
+      e.value += floor * 2 + YPadd_bottom;
+    });
+
+    var datapath = ComputePoints(SleepData, GraphXSize, GraphYSize);
+
+    // print("debug : $datapath");
+
+    Paint LinePaint = Paint()
+      ..color = Color(0xffA0B1DF)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = LineSize;
+
+    Path path = ComputePath(datapath);
+    canvas.drawPath(path, LinePaint);
+
+    path.close();
+  }
+
+  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
+    List<Offset> points = [];
+    p.forEach((i) {
+      final XGridUnit = width / 7;
+      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
+      final y = height - (i.value);
+      final dp = Offset(x, y);
+      points.add(dp);
+    });
+    return points;
+  }
+
+  Path ComputePath(List<Offset> points) {
+    final path = Path();
+    for (int i = 0; i < points.length; i++) {
+      final p = points[i];
+      if (i == 0) {
+        path.moveTo(p.dx, p.dy);
+      } else {
+        path.lineTo(p.dx, p.dy);
+      }
+    }
+    return path;
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+class PathPainterStress extends CustomPainter {
+  late List<dynamic> stress;
+
+  PathPainterStress(List<dynamic> e) {
+    stress = e;
+  }
+  @override
+  void paint(Canvas canvas, Size size) {
+    List<DateData> StressData = [];
+    print('sleep');
+    stress.forEach((e) {
+      print(e);
+      print(DateTime.parse(e['time'].replaceAll("_", "")));
+      StressData.add(
+        DateData(
+          DateTime.parse(e['time'].replaceAll("_", "")),
+          double.parse(e['stress']),
+        ),
+      );
+    });
+
+    print('good...?');
+    print(StressData);
+
+    double XPadd_right = 30;
+    double YPadd_bottom = 30;
+
+    double LineSize = 1.5;
+
+    final GraphXSize = size.width - XPadd_right;
+
+    final GraphYSize = size.height - YPadd_bottom;
+
+    final floorCorrection = 20;
+    final floor = (GraphYSize + floorCorrection) / 5;
+
+    StressData.forEach((e) {
+      e.value = e.value / 2;
+      e.value += floor * 2 + YPadd_bottom;
+    });
+
+    var datapath = ComputePoints(StressData, GraphXSize, GraphYSize);
+
+    // print("debug : $datapath");
+
+    Paint LinePaint = Paint()
+      ..color = Color(0xffF2D8A7)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = LineSize;
+
+    Path path = ComputePath(datapath);
+    canvas.drawPath(path, LinePaint);
+
+    path.close();
+  }
+
+  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
+    List<Offset> points = [];
+    p.forEach((i) {
+      final XGridUnit = width / 7;
+      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
+      final y = height - (i.value);
+      final dp = Offset(x, y);
+      points.add(dp);
+    });
+    return points;
+  }
+
+  Path ComputePath(List<Offset> points) {
+    final path = Path();
+    for (int i = 0; i < points.length; i++) {
+      final p = points[i];
+      if (i == 0) {
+        path.moveTo(p.dx, p.dy);
+      } else {
+        path.lineTo(p.dx, p.dy);
+      }
+    }
+    return path;
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+class PathPainterBurned extends CustomPainter {
+  late List<dynamic> burned;
+
+  PathPainterBurned(List<dynamic> e) {
+    burned = e;
+  }
+  @override
+  void paint(Canvas canvas, Size size) {
+    List<DateData> BurnedData = [];
+    print('burned');
+    burned.forEach((e) {
+      print(e);
+      print(DateTime.parse(e['time'].replaceAll("_", "")));
+      BurnedData.add(
+        DateData(
+          DateTime.parse(e['time'].replaceAll("_", "")),
+          double.parse(e['burned']) / 60,
+        ),
+      );
+    });
+
+    print('good...?');
+    print(BurnedData);
+
+    double XPadd_right = 30;
+    double YPadd_bottom = 30;
+
+    double LineSize = 1.5;
+
+    final GraphXSize = size.width - XPadd_right;
+
+    final GraphYSize = size.height - YPadd_bottom;
+
+    final floorCorrection = 20;
+    final floor = (GraphYSize + floorCorrection) / 5;
+
+    BurnedData.forEach((e) {
+      e.value = e.value / 2;
+      e.value += floor + YPadd_bottom;
+    });
+
+    var datapath = ComputePoints(BurnedData, GraphXSize, GraphYSize);
+
+    // print("debug : $datapath");
+
+    Paint LinePaint = Paint()
+      ..color = Color(0xff8DBFBC)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = LineSize;
+
+    Path path = ComputePath(datapath);
+    canvas.drawPath(path, LinePaint);
+
+    path.close();
   }
 
   List<Offset> ComputePoints(List<DateData> p, double width, double height) {
