@@ -1,3 +1,4 @@
+import 'package:betterme/betterme/home/HomeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -5,13 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:betterme/betterme/communication/CommunicationScreen.dart';
 import 'package:betterme/betterme/report/ReportScreen.dart';
 import 'package:betterme/betterme/setting/SettingScreen.dart';
-
-import '../HomeScreen.dart';
-import 'CustomIcons.dart';
-
-import 'package:get/get.dart';
-
-import 'package:betterme/functions/Controllers/profile_controller.dart';
 
 class ConstructTabBar extends StatefulWidget {
   const ConstructTabBar({Key? key}) : super(key: key);
@@ -57,9 +51,8 @@ class _ConstructTabBar extends State<ConstructTabBar> {
     return Scaffold(
       body: PageView(
         children: <Widget>[
-          HomeScreen(),
-          CommunicationScreen(),
           ReportScreen(),
+          CommunicationScreen(),
           SettingScreen()
         ],
         controller: pageController, // controller를 지정해주면 각 페이지별 인덱스로 컨트롤 가능
@@ -72,12 +65,10 @@ class _ConstructTabBar extends State<ConstructTabBar> {
         inactiveColor: Color(0xff6E6572),
         backgroundColor: Color(0xff0B202A),
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home)),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset('images/communication_icon.svg'),
-          ),
           BottomNavigationBarItem(
               icon: SvgPicture.asset('images/report_icon.svg')),
+          BottomNavigationBarItem(
+              icon: SvgPicture.asset('images/communication_icon.svg')),
           BottomNavigationBarItem(
               icon: SvgPicture.asset('images/setting_icon1.svg')),
         ],
