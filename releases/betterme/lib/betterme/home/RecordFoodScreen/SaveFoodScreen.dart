@@ -1,5 +1,8 @@
 import 'package:betterme/betterme/home/SearchFoodScreen/SearchFoodScreen.dart';
+import 'package:betterme/betterme/report/ReportScreen.dart';
 import 'package:betterme/betterme/report/Widgets/MiniBox.dart';
+import 'package:betterme/functions/Controllers/profile_controller.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -230,8 +233,13 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
           ),
           GestureDetector(
             onTap: () {
-              // Get.to(() => SaveFoodScreen(), arguments: Get.arguments);
               print(Get.arguments);
+              ServerConnection.save_food(
+                ProfileController.to.originMyProfile.uid!,
+                Get.arguments,
+              );
+              // Get.to(() => SaveFoodScreen(), arguments: Get.arguments);
+              Get.offAll(() => ReportScreen());
             },
             child: Container(
               width: valWidth * 0.6,

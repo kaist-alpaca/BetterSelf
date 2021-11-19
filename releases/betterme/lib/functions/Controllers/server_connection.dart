@@ -132,6 +132,48 @@ class ServerConnection {
     return json.decode(response.body).toString();
   }
 
+  static Future<List<dynamic>> save_food(String uid, List food) async {
+    var data = [];
+    // if (num != 31) {
+    //   for (int i = 0; i < num; i++) {
+    //     var tmp = DateTime.now()
+    //         .add(Duration(days: -i))
+    //         .toString()
+    //         .substring(0, 10)
+    //         .replaceAll("-", "_");
+    //     print(tmp);
+    //     date.add(tmp);
+    //   }
+    // } else {}
+    food.forEach((e) {
+      var map = {};
+      print(e[0]);
+      print(e[1]);
+      print(e[2][0]);
+      print(e[2][1] * e[3]);
+      data.add([
+        e[0].toString().substring(0, 10).replaceAll("-", "_"),
+        e[0].toString(),
+        e[1],
+        e[2][0],
+        e[2][1] * e[3]
+      ]);
+    });
+    print(food.length);
+    print(data);
+    final response = await http.post(
+      Uri.http('kaistuser.iptime.org:8080', 'upload_food.php'),
+      body: <String, String>{
+        'uid': uid, //서버에 post key : 보내는 값
+        'data': json.encode(data)
+        // 'data': json.encode(data.toString())
+        // 'data': data.toString()
+      },
+    );
+    print(json.decode(response.body));
+    return List<dynamic>.from(json.decode(response.body));
+  }
+
   static Future<List<dynamic>> total_weight(String uid, int num) async {
     var date = [];
     if (num != 31) {
@@ -193,6 +235,71 @@ class ServerConnection {
     } else {}
     final response = await http.post(
       Uri.http('kaistuser.iptime.org:8080', 'total_stress.php'),
+      body: <String, String>{
+        'uid': uid, //서버에 post key : 보내는 값
+        'date': json.encode(date)
+      },
+    );
+    return List<dynamic>.from(json.decode(response.body));
+  }
+
+  static Future<List<dynamic>> total_food(String uid, int num) async {
+    var date = [];
+    if (num != 31) {
+      for (int i = 0; i < num; i++) {
+        var tmp = DateTime.now()
+            .add(Duration(days: -i))
+            .toString()
+            .substring(0, 10)
+            .replaceAll("-", "_");
+        print(tmp);
+        date.add(tmp);
+      }
+    } else {}
+    final response = await http.post(
+      Uri.http('kaistuser.iptime.org:8080', 'total_food.php'),
+      body: <String, String>{
+        'uid': uid, //서버에 post key : 보내는 값
+        'date': json.encode(date)
+      },
+    );
+    return List<dynamic>.from(json.decode(response.body));
+  }
+
+  static Future<List<dynamic>> total_seven_sleep(String uid) async {
+    var date = [];
+    for (int i = 0; i < 7; i++) {
+      var tmp = DateTime.now()
+          .add(Duration(days: -i))
+          .toString()
+          .substring(0, 10)
+          .replaceAll("-", "_");
+      print(tmp);
+      date.add(tmp);
+    }
+    final response = await http.post(
+      Uri.http('kaistuser.iptime.org:8080', 'total_seven_sleep.php'),
+      body: <String, String>{
+        'uid': uid, //서버에 post key : 보내는 값
+        'date': json.encode(date)
+      },
+    );
+    return List<dynamic>.from(json.decode(response.body));
+  }
+
+  static Future<List<dynamic>> total_seven_food(String uid) async {
+    var date = [];
+    for (int i = 0; i < 7; i++) {
+      var tmp = DateTime.now()
+          .add(Duration(days: -i))
+          .toString()
+          .substring(0, 10)
+          .replaceAll("-", "_");
+      print(tmp);
+      date.add(tmp);
+    }
+    final response = await http.post(
+      Uri.http('kaistuser.iptime.org:8080', 'total_seven_food.php'),
       body: <String, String>{
         'uid': uid, //서버에 post key : 보내는 값
         'date': json.encode(date)
