@@ -110,6 +110,33 @@ class _TotalGraphsState extends State<TotalGraphs> {
           },
         ),
         FutureBuilder<List<dynamic>>(
+          future: ServerConnection.total_food(
+            ProfileController.to.originMyProfile.uid == null
+                ? ''
+                : ProfileController.to.originMyProfile.uid!,
+            7,
+          ),
+          builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+            if (snapshot.hasData) {
+              if (widget.GraphTypes[3]) {
+                // print('have data');
+                // print(snapshot.data);
+                // print(snapshot.data!);
+                return Container(
+                    child: CustomPaint(
+                  size: Size(valWidth, valHeight / 2.8),
+                  painter: PathPainterFood(snapshot.data!),
+                ));
+              } else {
+                return Container();
+              }
+            } else {
+              print('do not have data');
+              return Container();
+            }
+          },
+        ),
+        FutureBuilder<List<dynamic>>(
           future: ServerConnection.total_burned(
             ProfileController.to.originMyProfile.uid == null
                 ? ''
@@ -592,26 +619,26 @@ class PathPainter extends CustomPainter {
     //   path.close();
     // }
     //////////////////////////////////////////////////////////////////////////////////////Diet
-    if (GraphTypes[3]) {
-      DietData.forEach((e) {
-        e.value = e.value / 2;
-        e.value += floor + YPadd_bottom;
-      });
+    // if (GraphTypes[3]) {
+    //   DietData.forEach((e) {
+    //     e.value = e.value / 2;
+    //     e.value += floor + YPadd_bottom;
+    //   });
 
-      var datapath = ComputePoints(DietData, GraphXSize, GraphYSize);
+    //   var datapath = ComputePoints(DietData, GraphXSize, GraphYSize);
 
-      // print("debug : $datapath");
+    //   // print("debug : $datapath");
 
-      Paint LinePaint = Paint()
-        ..color = Color(0xffD2ABBA)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = LineSize;
+    //   Paint LinePaint = Paint()
+    //     ..color = Color(0xffD2ABBA)
+    //     ..style = PaintingStyle.stroke
+    //     ..strokeWidth = LineSize;
 
-      Path path = ComputePath(datapath);
-      canvas.drawPath(path, LinePaint);
+    //   Path path = ComputePath(datapath);
+    //   canvas.drawPath(path, LinePaint);
 
-      path.close();
-    }
+    //   path.close();
+    // }
     //////////////////////////////////////////////////////////////////////////////////////Burned
     // if (GraphTypes[4]) {
     //   BurnedData.forEach((e) {
@@ -892,6 +919,91 @@ class PathPainterStress extends CustomPainter {
 
     Paint LinePaint = Paint()
       ..color = Color(0xffF2D8A7)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = LineSize;
+
+    Path path = ComputePath(datapath);
+    canvas.drawPath(path, LinePaint);
+
+    path.close();
+  }
+
+  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
+    List<Offset> points = [];
+    p.forEach((i) {
+      final XGridUnit = width / 7;
+      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
+      final y = height - (i.value);
+      final dp = Offset(x, y);
+      points.add(dp);
+    });
+    return points;
+  }
+
+  Path ComputePath(List<Offset> points) {
+    final path = Path();
+    for (int i = 0; i < points.length; i++) {
+      final p = points[i];
+      if (i == 0) {
+        path.moveTo(p.dx, p.dy);
+      } else {
+        path.lineTo(p.dx, p.dy);
+      }
+    }
+    return path;
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+class PathPainterFood extends CustomPainter {
+  late List<dynamic> food;
+
+  PathPainterFood(List<dynamic> e) {
+    food = e;
+  }
+  @override
+  void paint(Canvas canvas, Size size) {
+    List<DateData> DietData = [];
+    print('food');
+    food.forEach((e) {
+      print(e);
+      print(DateTime.parse(e['time'].replaceAll("_", "")));
+      DietData.add(
+        DateData(
+          DateTime.parse(e['time'].replaceAll("_", "")),
+          e['food'] / 5,
+        ),
+      );
+    });
+
+    print('good...?');
+    print(DietData);
+
+    double XPadd_right = 30;
+    double YPadd_bottom = 30;
+
+    double LineSize = 1.5;
+
+    final GraphXSize = size.width - XPadd_right;
+
+    final GraphYSize = size.height - YPadd_bottom;
+
+    final floorCorrection = 20;
+    final floor = (GraphYSize + floorCorrection) / 5;
+
+    DietData.forEach((e) {
+      e.value = e.value / 2;
+      e.value += floor + YPadd_bottom;
+    });
+
+    var datapath = ComputePoints(DietData, GraphXSize, GraphYSize);
+
+    // print("debug : $datapath");
+
+    Paint LinePaint = Paint()
+      ..color = Color(0xffD2ABBA)
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
