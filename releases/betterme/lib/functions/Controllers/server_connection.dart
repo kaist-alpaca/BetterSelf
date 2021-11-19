@@ -164,7 +164,7 @@ class ServerConnection {
             .toString()
             .substring(0, 10)
             .replaceAll("-", "_");
-        print(tmp);
+        //print(tmp);
         date.add(tmp);
       }
     } else {}
@@ -187,7 +187,7 @@ class ServerConnection {
             .toString()
             .substring(0, 10)
             .replaceAll("-", "_");
-        print(tmp);
+        //print(tmp);
         date.add(tmp);
       }
     } else {}
@@ -210,7 +210,7 @@ class ServerConnection {
             .toString()
             .substring(0, 10)
             .replaceAll("-", "_");
-        print(tmp);
+        //print(tmp);
         date.add(tmp);
       }
     } else {}
@@ -219,6 +219,27 @@ class ServerConnection {
       body: <String, String>{
         'uid': uid, //서버에 post key : 보내는 값
         'date': json.encode(date)
+      },
+    );
+    return List<dynamic>.from(json.decode(response.body));
+  }
+
+  static Future<List<dynamic>> total_workout(String uid, DateTime date) async {
+
+    var dateStr = date
+        .toString()
+        .substring(0, 10)
+        .replaceAll("-", "_");
+
+    List<String> dateStrs = [];
+
+    dateStrs.add(dateStr);
+
+    final response = await http.post(
+      Uri.http('kaistuser.iptime.org:8080', 'get_workout_by_date.php'),
+      body: <String, String>{
+        'uid': uid, //서버에 post key : 보내는 값
+        'date': json.encode(dateStrs)
       },
     );
     return List<dynamic>.from(json.decode(response.body));
