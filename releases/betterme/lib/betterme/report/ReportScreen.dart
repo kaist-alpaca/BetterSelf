@@ -305,6 +305,9 @@ class _ReportScreen extends State<ReportScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
+                                            SizedBox(
+                                              width: valWidth * 0.018,
+                                            ),
                                             Container(
                                               height: valHeight * 0.03,
                                               width: valWidth * 0.1,

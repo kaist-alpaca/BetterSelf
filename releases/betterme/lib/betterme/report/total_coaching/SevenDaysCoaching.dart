@@ -276,7 +276,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 dayButton1txt,
                                 style: TextStyle(
                                   color: txtColor,
-                                  fontSize: defaultSize * 12,
+                                  fontSize: defaultSize * 10,
                                 ),
                               ),
                               onPressed: () {
@@ -324,7 +324,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 dayButton2txt,
                                 style: TextStyle(
                                   color: txtColor,
-                                  fontSize: defaultSize * 12,
+                                  fontSize: defaultSize * 10,
                                 ),
                               ),
                               onPressed: () {
@@ -372,7 +372,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 dayButton3txt,
                                 style: TextStyle(
                                   color: txtColor,
-                                  fontSize: defaultSize * 12,
+                                  fontSize: defaultSize * 10,
                                 ),
                               ),
                               onPressed: () {
@@ -420,7 +420,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 dayButton4txt,
                                 style: TextStyle(
                                   color: txtColor,
-                                  fontSize: defaultSize * 12,
+                                  fontSize: defaultSize * 10,
                                 ),
                               ),
                               onPressed: () {
@@ -468,7 +468,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 dayButton5txt,
                                 style: TextStyle(
                                   color: txtColor,
-                                  fontSize: defaultSize * 12,
+                                  fontSize: defaultSize * 10,
                                 ),
                               ),
                               onPressed: () {
@@ -516,7 +516,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 dayButton6txt,
                                 style: TextStyle(
                                   color: txtColor,
-                                  fontSize: defaultSize * 12,
+                                  fontSize: defaultSize * 10,
                                 ),
                               ),
                               onPressed: () {
@@ -564,7 +564,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 dayButton7txt,
                                 style: TextStyle(
                                   color: txtColor,
-                                  fontSize: defaultSize * 12,
+                                  fontSize: defaultSize * 10,
                                 ),
                               ),
                               onPressed: () {
