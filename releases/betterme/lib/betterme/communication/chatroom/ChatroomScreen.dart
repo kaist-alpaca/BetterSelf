@@ -75,6 +75,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
+    double defaultSize = valWidth * 0.0025;
 
     print('debug: ${getchatroomid(user, widget.usernamechatwith)}');
 
@@ -146,14 +147,14 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                     child: Container(
                       color: bgColor,
                       padding:
-                          EdgeInsets.symmetric(horizontal: valWidth * 0.03),
+                          EdgeInsets.symmetric(horizontal: valWidth * 0.015),
                       child: Row(
                         children: [
                           Container(
-                              width: valWidth * 0.83,
+                              width: valWidth * 0.78,
                               height: 40,
                               margin: EdgeInsets.only(
-                                  right: valWidth * 0.04, bottom: 7),
+                                  right: valWidth * 0.02, bottom: 7),
                               child: TextField(
                                   style: TextStyle(color: Color(0xffFFFDFD)),
                                   controller: textmessage,
@@ -165,17 +166,29 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                       color: Colors.white,
                                     ),
                                   ))),
-                          GestureDetector(
-                              onTap: () {
-                                constructMessage(true);
-                                _scrollController.jumpTo(
-                                    _scrollController.position.maxScrollExtent);
-                                setState(() {});
-                              },
-                              child: const Icon(
-                                Icons.message,
-                                color: Colors.white,
-                              )),
+                          Container(
+                            margin: EdgeInsets.only(bottom: 6),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 0,
+                                    primary: Color(0xff333C47),
+                                    minimumSize: Size(valWidth * 0.13, 40),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            valWidth * 0.015))),
+                                onPressed: () {
+                                  constructMessage(true);
+                                  _scrollController.jumpTo(_scrollController
+                                      .position.maxScrollExtent);
+                                  setState(() {});
+                                },
+                                child: Text(
+                                  '전송',
+                                  style: TextStyle(
+                                      color: txtColor,
+                                      fontSize: defaultSize * 15),
+                                )),
+                          ),
                         ],
                       ),
                     ))),
