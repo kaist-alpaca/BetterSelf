@@ -104,7 +104,7 @@ class CustomeScatterChartPainter extends CustomPainter {
       ..strokeCap = StrokeCap.butt // 선의 끝은 둥글게 함.
       ..strokeWidth = 1.0; // 선의 굵기는 4.0
     // TODO: implement paint
-    final xLabelStyle = TextStyle(color: Colors.white, fontSize: 10);
+    final xLabelStyle = TextStyle(color: Colors.white, fontSize: 12);
     Offset c = Offset(left_border, right_border + hd * 7);
     Offset c_x = Offset(left_border, right_border);
     const int dashWidth = 1;
