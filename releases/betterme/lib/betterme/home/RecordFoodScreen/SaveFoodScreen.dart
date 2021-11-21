@@ -240,7 +240,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                 Get.arguments,
               );
               // Get.to(() => SaveFoodScreen(), arguments: Get.arguments);
-              Get.off(() => ConstructTabBar());
+              Get.offAll(() => ConstructTabBar());
             },
             child: Container(
               width: valWidth * 0.6,

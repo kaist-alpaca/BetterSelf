@@ -513,7 +513,7 @@ class SettingScreen extends StatelessWidget {
                 GestureDetector(
                   // 저장기능 추가해주세요
                   onTap: () {
-                    Get.to(() => ConstructTabBar());
+                    Get.offAll(() => ConstructTabBar());
                     // return Home();
                   }, //여기에 로그아웃 기능 구현
                   child: Column(
