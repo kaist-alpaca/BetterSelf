@@ -305,6 +305,9 @@ class _ReportScreen extends State<ReportScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,
                                           children: [
+                                            SizedBox(
+                                              width: valWidth * 0.018,
+                                            ),
                                             Container(
                                               height: valHeight * 0.03,
                                               width: valWidth * 0.1,
@@ -525,7 +528,7 @@ class _ReportScreen extends State<ReportScreen> {
                                 minimumSize:
                                     Size(valWidth * 0.27, valHeight * 0.04)),
                             child: Text(
-                              '31일',
+                              '30일',
                               style: TextStyle(
                                 color: txtColor,
                                 fontSize: defaultSize * 14,

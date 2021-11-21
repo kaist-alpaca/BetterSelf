@@ -70,7 +70,7 @@ class _LoginScreen extends State<LoginScreen> {
           ), // 가장 위 빈 공간
           CircleAvatar(
             radius: valWidth * 0.12,
-            backgroundColor: Colors.grey, //나중 여기에 앱아이콘
+            child: Image.asset('images/app_logo.png'), //나중 여기에 앱아이콘
           ),
           SizedBox(
             height: 131,

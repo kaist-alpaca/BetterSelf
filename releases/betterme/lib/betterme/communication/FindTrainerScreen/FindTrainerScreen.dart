@@ -54,7 +54,7 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                         ),
                         child: Container(
                           height: 50,
-                          child : Card(
+                          child: Card(
                               color: bgColor,
                               child: GestureDetector(
                                 onTap: () {
@@ -62,41 +62,51 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                                     context: context,
                                     builder: (BuildContext context) =>
                                         AlertDialog(
-                                          content: Text(
-                                              "${data['email']} 님에게\n트레이너 요청을 보내시겠습니까?"), // 서버에 발송기능 구현
-                                          actions: <Widget>[
-                                            TextButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context, 'Cancel'),
-                                              child: const Text('취소'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context, 'OK'),
-                                              child: const Text('확인'),
-                                            ),
-                                          ],
+                                      backgroundColor: bgColor,
+                                      content: Text(
+                                        "${data['email']} 님에게\n트레이너 요청을 보내시겠습니까?",
+                                        style: TextStyle(color: txtColor),
+                                      ), // 서버에 발송기능 구현
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text(
+                                            '취소',
+                                            style: TextStyle(
+                                                color: Color(0xffFFFDFD)),
+                                          ),
                                         ),
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'OK'),
+                                          child: const Text(
+                                            '확인',
+                                            style: TextStyle(
+                                                color: Color(0xffFFFDFD)),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
                                 child: ListTile(
                                   tileColor: blockColor,
                                   dense: true,
-                                  title  : Container(
+                                  title: Container(
                                       alignment: Alignment(-1, -0.2),
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10))),
-                                      child : Text(
+                                      child: Text(
                                         data['email'],
                                         style: TextStyle(
                                           color: txtColor,
-                                          fontSize: defaultSize * 15,//15,
+                                          fontSize: defaultSize * 15, //15,
                                         ),
                                       )),
                                 ),
-                              )
-                          ),
+                              )),
                         ),
                       );
                     } else {
@@ -164,7 +174,9 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
             child: Container(
                 child: Column(
               children: [
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
                       //검색박스
@@ -252,7 +264,9 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                 //   padding:
                 //       EdgeInsets.symmetric(vertical: 7.0, horizontal: 20.0),
                 // ),
-                SizedBox(height: 2,),
+                SizedBox(
+                  height: 2,
+                ),
                 Container(
                     height: 0.75 * valHeight, // 트레이너 보이는 범위
                     child: TrainerList(context, userlistStream)!),
