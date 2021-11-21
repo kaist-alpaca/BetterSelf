@@ -26,20 +26,6 @@ class _ConstructTabBar extends State<ConstructTabBar> {
   }
 
   onTapChangePage(int pageIndex) {
-    // if (checker == 1) {
-    //   pageController.animateToPage(pageIndex,
-    //       duration: Duration(milliseconds: 100), curve: Curves.bounceInOut);
-    //   setState(() {
-    //     this.getPageIndex = pageIndex;
-    //   });
-    // } else if (pageIndex != 1) {
-    //   setState(() {
-    //     this.checker = 1;
-    //     this.getPageIndex = pageIndex;
-    //   });
-    //   pageController.animateToPage(pageIndex,
-    //       duration: Duration(milliseconds: 100), curve: Curves.bounceInOut);
-    // }
     setState(() {
       this.getPageIndex = pageIndex;
     });

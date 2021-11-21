@@ -1,4 +1,5 @@
 import 'package:betterme/betterme/home/SearchFoodScreen/SearchFoodScreen.dart';
+import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
 import 'package:betterme/betterme/report/ReportScreen.dart';
 import 'package:betterme/betterme/report/Widgets/MiniBox.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
@@ -239,7 +240,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                 Get.arguments,
               );
               // Get.to(() => SaveFoodScreen(), arguments: Get.arguments);
-              Get.offAll(() => ReportScreen());
+              Get.off(() => ConstructTabBar());
             },
             child: Container(
               width: valWidth * 0.6,
