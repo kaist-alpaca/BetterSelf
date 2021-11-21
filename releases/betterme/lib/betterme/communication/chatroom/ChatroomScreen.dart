@@ -268,25 +268,27 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
-                            Text(formatted,
-                                style:
-                                    TextStyle(color: txtColor, fontSize: 10)),
-                            SizedBox(
-                              width: 5,
-                            ),
+                            Text(formatted, style: TextStyle(color: txtColor, fontSize: 10)),
+                            SizedBox(width: 5,),
                             Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 6, horizontal: valWidth * 0.02),
+                              padding: EdgeInsets.symmetric(
+                                vertical: 6, horizontal: valWidth * 0.02),
                                 decoration: BoxDecoration(
                                     color: blockColor,
                                     borderRadius:
-                                        BorderRadius.circular(valWidth * 0.02)),
+                                    BorderRadius.circular(valWidth * 0.02)),
                                 child: Align(
                                   alignment: Alignment.center,
-                                  child: Text(data['message'],
-                                      style: TextStyle(
-                                          color: txtColor, fontSize: 13)),
-                                )),
+                                  child: Container(
+                                      constraints: BoxConstraints(maxWidth: valWidth*0.45),
+                                      child : Text(data['message'],
+                                        style:
+                                        TextStyle(color: txtColor, fontSize: 13),
+                                        softWrap: true,
+                                      )
+                                  ),
+                                )
+                            ),
                           ])
                     ],
                   ));
@@ -338,9 +340,14 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                         BorderRadius.circular(valWidth * 0.02)),
                                 child: Align(
                                   alignment: Alignment.center,
-                                  child: Text(data['message'],
-                                      style: TextStyle(
-                                          color: txtColor, fontSize: 13)),
+                                  child: Container(
+                                      constraints: BoxConstraints(maxWidth: valWidth*0.45),
+                                      child : Text(data['message'],
+                                        style:
+                                        TextStyle(color: txtColor, fontSize: 13),
+                                        softWrap: true,
+                                      )
+                                  ),
                                 )),
                             SizedBox(
                               width: 5,
@@ -368,9 +375,14 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                       BorderRadius.circular(valWidth * 0.02)),
                               child: Align(
                                 alignment: Alignment.center,
-                                child: Text(data['message'],
-                                    style: TextStyle(
-                                        color: txtColor, fontSize: 13)),
+                                child: Container(
+                                    constraints: BoxConstraints(maxWidth: valWidth*0.45),
+                                    child : Text(data['message'],
+                                      style:
+                                      TextStyle(color: txtColor, fontSize: 13),
+                                      softWrap: true,
+                                    )
+                                ),
                               )),
                           SizedBox(
                             width: 5,
@@ -385,6 +397,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                   return ListTile(
                       title: Row(
                           //여기가 사용자 채팅
+                          mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
@@ -394,19 +407,27 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                           width: 5,
                         ),
                         Container(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 6, horizontal: valWidth * 0.02),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 6, horizontal: valWidth * 0.02),
                             decoration: BoxDecoration(
-                                color: blockColor,
-                                borderRadius:
-                                    BorderRadius.circular(valWidth * 0.02)),
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(data['message'],
-                                  style:
-                                      TextStyle(color: txtColor, fontSize: 13)),
-                            )),
-                      ]));
+                              color: blockColor,
+                              borderRadius:
+                                BorderRadius.circular(valWidth * 0.02)
+                          ),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              constraints: BoxConstraints(maxWidth: valWidth*0.45),
+                              child : Text(data['message'],
+                                style:
+                                TextStyle(color: txtColor, fontSize: 13),
+                                softWrap: true,
+                              )
+                            ),
+                          )
+                        )
+                      ])
+                  );
                 } else {
                   if (!SendedUserChanged) {
                     return ListTile(
@@ -439,9 +460,14 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                       BorderRadius.circular(valWidth * 0.02)),
                               child: Align(
                                 alignment: Alignment.center,
-                                child: Text(data['message'],
-                                    style: TextStyle(
-                                        color: txtColor, fontSize: 13)),
+                                child: Container(
+                                    constraints: BoxConstraints(maxWidth: valWidth*0.45),
+                                    child : Text(data['message'],
+                                      style:
+                                      TextStyle(color: txtColor, fontSize: 13),
+                                      softWrap: true,
+                                    )
+                                ),
                               )),
                           SizedBox(
                             width: 5,
@@ -468,9 +494,14 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                       BorderRadius.circular(valWidth * 0.02)),
                               child: Align(
                                 alignment: Alignment.center,
-                                child: Text(data['message'],
-                                    style: TextStyle(
-                                        color: txtColor, fontSize: 13)),
+                                child: Container(
+                                    constraints: BoxConstraints(maxWidth: valWidth*0.45),
+                                    child : Text(data['message'],
+                                      style:
+                                      TextStyle(color: txtColor, fontSize: 13),
+                                      softWrap: true,
+                                    )
+                                ),
                               )),
                           SizedBox(
                             width: 5,

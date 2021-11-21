@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/betterme/build" />
+      <excludeFolder url="file://$MODULE_DIR$/betterme/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/outdated/betterme with old report/build" />
+      <excludeFolder url="file://$MODULE_DIR$/outdated/betterme with old report/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/outdated/betterme_old/build" />
+      <excludeFolder url="file://$MODULE_DIR$/outdated/betterme_old/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/outdated/betterme ver BH/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/outdated/betterme ver BH/build" />
+      <excludeFolder url="file://$MODULE_DIR$/outdated/betterme ver JH/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/outdated/betterme ver JH/build" />
+      <excludeFolder url="file://$MODULE_DIR$/outdated/betterme outdated/build" />
+      <excludeFolder url="file://$MODULE_DIR$/outdated/betterme outdated/.pub" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
