@@ -170,8 +170,8 @@ class ServerConnection {
         // 'data': data.toString()
       },
     );
-    // print(json.decode(response.body));
-    return (json.decode(response.body));
+    print(json.decode(response.body));
+    return List<dynamic>.from(json.decode(response.body));
   }
 
   static Future<List<dynamic>> total_weight(
