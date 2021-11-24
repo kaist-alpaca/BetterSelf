@@ -103,7 +103,7 @@ class _ReportScreen extends State<ReportScreen> {
                           width: valWidth * 0.1,
                         ),
                         Container(
-                            height: 30,
+                            height: 32,
                             width: valWidth * 0.45,
                             padding: EdgeInsets.only(top: 13),
                             child: Align(
@@ -464,17 +464,13 @@ class _ReportScreen extends State<ReportScreen> {
                           ),
                           child: Container(
                               //여기가 입력 버튼
-                              width: valWidth * 0.1,
-                              height: valWidth * 0.1,
-                              padding: EdgeInsets.fromLTRB(
-                                  valWidth * 0.01,
-                                  valWidth * 0.01,
-                                  valWidth * 0.01,
-                                  valWidth * 0.001),
+                              width: 37,
+                              height: 37,
+                              margin: EdgeInsets.only(top: 5),
+                              padding: EdgeInsets.fromLTRB(4, 4, 4, 1),
                               decoration: BoxDecoration(
                                   color: Color(0xff333C47),
-                                  borderRadius:
-                                      BorderRadius.circular(valWidth * 0.02)),
+                                  borderRadius: BorderRadius.circular(5)),
                               child: SvgPicture.asset(
                                   'images/weightscale_icon.svg')),
                         ),

@@ -136,7 +136,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
         ),
       ),
       body: Container(
-        color: Color(0xff1F2E38),
+        color: bgColor,
         child: Stack(
           children: [
             chatmessages(context),
@@ -146,7 +146,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                 child: Container(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      color: Color(0xff1F2E38),
+                      color: bgColor,
                       padding:
                           EdgeInsets.symmetric(horizontal: valWidth * 0.015),
                       child: Row(
