@@ -5,7 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 class ImageCropController extends GetxController {
-  static ImageCropController get to => Get.find();
+  static ImageCropController get to => Get.isRegistered<ImageCropController>()
+      ? Get.find<ImageCropController>()
+      : Get.put(ImageCropController());
+  // static ImageCropController get to => Get.find();
 
   Future<File?> selectImage({required String type}) async {
     final pickedFile = type == "gallery"
