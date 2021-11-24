@@ -86,6 +86,89 @@ class ProfileController extends GetxController {
     update();
   }
 
+  int duration = 7;
+  DateTime totaldate = DateTime.now();
+  List<dynamic> datelist = [
+    DateTime.now().toString().substring(0, 10).replaceAll("-", "_"),
+    DateTime.now()
+        .add(Duration(days: -1))
+        .toString()
+        .substring(0, 10)
+        .replaceAll("-", "_"),
+    DateTime.now()
+        .add(Duration(days: -2))
+        .toString()
+        .substring(0, 10)
+        .replaceAll("-", "_"),
+    DateTime.now()
+        .add(Duration(days: -3))
+        .toString()
+        .substring(0, 10)
+        .replaceAll("-", "_"),
+    DateTime.now()
+        .add(Duration(days: -4))
+        .toString()
+        .substring(0, 10)
+        .replaceAll("-", "_"),
+    DateTime.now()
+        .add(Duration(days: -5))
+        .toString()
+        .substring(0, 10)
+        .replaceAll("-", "_"),
+    DateTime.now()
+        .add(Duration(days: -6))
+        .toString()
+        .substring(0, 10)
+        .replaceAll("-", "_"),
+  ];
+
+  int initalDatelist(int n) {
+    if (duration == n) {
+      return 1;
+    }
+    duration = n;
+    totaldate = DateTime.now();
+    datelist = [];
+    for (int i = 0; i < duration; i++) {
+      var tmp = totaldate
+          .add(Duration(days: -i))
+          .toString()
+          .substring(0, 10)
+          .replaceAll("-", "_");
+      datelist.add(tmp);
+    }
+    update();
+    return 1;
+  }
+
+  void minusDatelist(int duration) {
+    totaldate = totaldate.add(Duration(days: -duration));
+    datelist = [];
+    for (int i = 0; i < duration; i++) {
+      var tmp = totaldate
+          .add(Duration(days: -i))
+          .toString()
+          .substring(0, 10)
+          .replaceAll("-", "_");
+      datelist.add(tmp);
+    }
+    update();
+  }
+
+  void plusDatelist(int duration) {
+    totaldate = totaldate.add(Duration(days: duration));
+    datelist = [];
+    for (int i = 0; i < duration; i++) {
+      var tmp = totaldate
+          .add(Duration(days: -i))
+          .toString()
+          .substring(0, 10)
+          .replaceAll("-", "_");
+      datelist.add(tmp);
+    }
+    update();
+  }
+
   // void updateWeight(double value) {
   //   weightProfile = value;
   //   update();
@@ -164,13 +247,13 @@ class ProfileController extends GetxController {
   String food2 = "";
   String food3 = "";
 
-  String? gender = "남";
-  String? birthday;
+  String? gender = "선택안함";
+  String? birthday = '2002/06/21';
   String? weightday;
-  String? height = '180';
+  String? height = '';
   String weight = '0.0';
   var weight_test = RxString('');
-  String? disease;
+  String? disease = '';
 
   void foodindexSelected(int value) {
     foodindex = value;
@@ -340,7 +423,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> uploadFoodImage(
-      {required String uid, required String index, required File file}) async {
+      {required String uid, required File file, required String time}) async {
     print("food start");
     var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
     var length = await file.length();
@@ -348,16 +431,8 @@ class ProfileController extends GetxController {
     var uri = Uri.parse(
         "http://kaistuser.iptime.org:8080/upload_food_image.php?uid=" +
             uid +
-            "&index=" +
-            index +
             "&photoURL=" +
-            DateTime.now().year.toString() +
-            '_' +
-            DateTime.now().month.toString() +
-            '_' +
-            DateTime.now().day.toString() +
-            '_' +
-            index);
+            time);
 
     var request = new http.MultipartRequest("POST", uri);
     var multipartFile = new http.MultipartFile('imgFile', stream, length,
@@ -373,5 +448,24 @@ class ProfileController extends GetxController {
       print(value);
       tmp = value;
     });
+  }
+
+  Future<void> updateProfile() async {
+    print('gender');
+    print(gender);
+    print(birthday);
+    print(height);
+    print(originMyProfile.uid);
+    final response = await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/update_profile.php?uid=" +
+            originMyProfile.uid! +
+            '&gender=' +
+            gender! +
+            '&birthday=' +
+            birthday! +
+            '&height=' +
+            height! +
+            '&disease=' +
+            disease!));
   }
 }
