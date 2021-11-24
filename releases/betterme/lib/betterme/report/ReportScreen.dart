@@ -36,6 +36,8 @@ KeyboardActionsConfig _buildConfig(BuildContext context) {
 }
 
 class ReportScreen extends StatefulWidget {
+  ReportScreen({Key? key}) : super(key: key);
+
   @override
   _ReportScreen createState() => _ReportScreen();
 }
@@ -51,6 +53,8 @@ class _ReportScreen extends State<ReportScreen> {
   void initState() {
     super.initState();
     buttonCase = 0;
+    print('init at report');
+    ProfileController.to.initalDatelist(7);
   }
 
   @override
@@ -69,8 +73,10 @@ class _ReportScreen extends State<ReportScreen> {
     return GetBuilder<ProfileController>(builder: (controller) {
       return GestureDetector(
         onHorizontalDragUpdate: (details) async {
-          if (details.delta.direction <= 0) {
+          // print(details.delta.distance);
+          if (details.delta.direction <= 0 && details.delta.distance >= 7.5) {
             print("left");
+            print(details.delta.direction);
             var _cameras = await availableCameras();
             Get.to(
               () => CameraScreen(),
@@ -511,6 +517,7 @@ class _ReportScreen extends State<ReportScreen> {
                             ),
                             onPressed: () {
                               buttonCase = 0;
+                              ProfileController.to.initalDatelist(7);
                               setState(() {
                                 button1Color = Color(0xff827380);
                                 button2Color = Color(0xff0B202A);
@@ -528,16 +535,16 @@ class _ReportScreen extends State<ReportScreen> {
                                 minimumSize:
                                     Size(valWidth * 0.27, valHeight * 0.04)),
                             child: Text(
-                              '30일',
+                              '31일',
                               style: TextStyle(
                                 color: txtColor,
                                 fontSize: defaultSize * 14,
                               ),
                             ),
                             onPressed: () {
+                              ProfileController.to.initalDatelist(31);
                               setState(() {
                                 buttonCase = 1;
-
                                 setState(() {
                                   button2Color = Color(0xff827380);
                                   button1Color = Color(0xff0B202A);
@@ -566,7 +573,7 @@ class _ReportScreen extends State<ReportScreen> {
                               setState(() {
                                 buttonCase = 2;
                               });
-
+                              ProfileController.to.initalDatelist(365);
                               setState(() {
                                 button3Color = Color(0xff827380);
                                 button2Color = Color(0xff0B202A);
@@ -577,10 +584,104 @@ class _ReportScreen extends State<ReportScreen> {
                         ],
                       ),
                     ),
+                    Row(
+                      //기간(날짜) 선택하는 bar.
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: valWidth * 0.15,
+                          height: valHeight * 0.055,
+                          child: IconButton(
+                            icon: SvgPicture.asset(
+                                'images/arrow towards left_icon.svg'),
+                            onPressed: () {
+                              controller.minusDatelist(controller.duration);
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: valWidth * 0.70,
+                          height: valHeight * 0.05,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: controller.duration == 365
+                                ? Text(
+                                    controller.totaldate.add(Duration(days: -(controller.duration - 1))).year.toString() +
+                                        "년 " +
+                                        controller.totaldate
+                                            .add(Duration(
+                                                days:
+                                                    -(controller.duration - 1)))
+                                            .month
+                                            .toString() +
+                                        "월 " +
+                                        controller.totaldate
+                                            .add(Duration(
+                                                days:
+                                                    -(controller.duration - 1)))
+                                            .day
+                                            .toString() +
+                                        "일 - " +
+                                        controller.totaldate.year.toString() +
+                                        "년 " +
+                                        controller.totaldate.month.toString() +
+                                        "월 " +
+                                        controller.totaldate.day.toString() +
+                                        "일",
+                                    style: TextStyle(
+                                        fontSize: defaultSize * 17,
+                                        color: txtColor),
+                                    textAlign: TextAlign.center)
+                                : Text(
+                                    controller.totaldate
+                                            .add(Duration(
+                                                days:
+                                                    -(controller.duration - 1)))
+                                            .month
+                                            .toString() +
+                                        "월 " +
+                                        controller.totaldate
+                                            .add(Duration(days: -(controller.duration - 1)))
+                                            .day
+                                            .toString() +
+                                        "일 - " +
+                                        controller.totaldate.month.toString() +
+                                        "월 " +
+                                        controller.totaldate.day.toString() +
+                                        "일",
+                                    style: TextStyle(fontSize: defaultSize * 17, color: txtColor),
+                                    textAlign: TextAlign.center),
+                          ),
+                        ),
+                        //날짜 오른쪽으로 넘기는 버튼
+                        (controller.totaldate.day == DateTime.now().day) &&
+                                (controller.totaldate.month ==
+                                    DateTime.now().month) &&
+                                (controller.totaldate.year ==
+                                    DateTime.now().year)
+                            ? Container(
+                                width: valWidth * 0.15,
+                                height: valHeight * 0.05,
+                              )
+                            : Container(
+                                width: valWidth * 0.15,
+                                height: valHeight * 0.05,
+                                child: IconButton(
+                                  icon: SvgPicture.asset(
+                                      'images/arrow towards right_icon.svg'),
+                                  onPressed: () {
+                                    controller
+                                        .plusDatelist(controller.duration);
+                                  },
+                                ),
+                              ),
+                      ],
+                    ),
                     SizedBox(
                       height: 10,
                     ),
-                    ReportSet(buttonCase),
+                    ReportSet(buttonCase: buttonCase),
                     SizedBox(
                       height: 7,
                     ),
