@@ -136,6 +136,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
         ),
       ),
       body: Container(
+        color: Color(0xff1F2E38),
         child: Stack(
           children: [
             chatmessages(context),
@@ -145,7 +146,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                 child: Container(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      color: bgColor,
+                      color: Color(0xff1F2E38),
                       padding:
                           EdgeInsets.symmetric(horizontal: valWidth * 0.015),
                       child: Row(
@@ -282,27 +283,31 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: <Widget>[
-                            Text(formatted, style: TextStyle(color: txtColor, fontSize: 10)),
-                            SizedBox(width: 5,),
+                            Text(formatted,
+                                style:
+                                    TextStyle(color: txtColor, fontSize: 10)),
+                            SizedBox(
+                              width: 5,
+                            ),
                             Container(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 6, horizontal: valWidth * 0.02),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 6, horizontal: valWidth * 0.02),
                                 decoration: BoxDecoration(
                                     color: blockColor,
                                     borderRadius:
-                                    BorderRadius.circular(valWidth * 0.02)),
+                                        BorderRadius.circular(valWidth * 0.02)),
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Container(
-                                      constraints: BoxConstraints(maxWidth: maxtxtcontsize),
-                                      child : Text(data['message'],
-                                        style:
-                                        TextStyle(color: txtColor, fontSize: 13),
+                                      constraints: BoxConstraints(
+                                          maxWidth: maxtxtcontsize),
+                                      child: Text(
+                                        data['message'],
+                                        style: TextStyle(
+                                            color: txtColor, fontSize: 13),
                                         softWrap: true,
-                                      )
-                                  ),
-                                )
-                            ),
+                                      )),
+                                )),
                           ])
                     ],
                   ));
@@ -355,13 +360,14 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                 child: Align(
                                   alignment: Alignment.center,
                                   child: Container(
-                                      constraints: BoxConstraints(maxWidth: maxtxtcontsize),
-                                      child : Text(data['message'],
-                                        style:
-                                        TextStyle(color: txtColor, fontSize: 13),
+                                      constraints: BoxConstraints(
+                                          maxWidth: maxtxtcontsize),
+                                      child: Text(
+                                        data['message'],
+                                        style: TextStyle(
+                                            color: txtColor, fontSize: 13),
                                         softWrap: true,
-                                      )
-                                  ),
+                                      )),
                                 )),
                             SizedBox(
                               width: 5,
@@ -374,177 +380,187 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                     return ListTile(
                         //여기가 트레이너 채팅
                         title: Column(
-                          children: [
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 33,
-                                  ),
-                                  Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 6, horizontal: valWidth * 0.02),
-                                      decoration: BoxDecoration(
-                                          color: blockColor,
-                                          borderRadius:
-                                          BorderRadius.circular(valWidth * 0.02)),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Container(
-                                            constraints: BoxConstraints(maxWidth: maxtxtcontsize),
-                                            child : Text(data['message'],
-                                              style:
-                                              TextStyle(color: txtColor, fontSize: 13),
-                                              softWrap: true,
-                                            )
-                                        ),
-                                      )),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(formatted,
-                                      style: TextStyle(color: txtColor, fontSize: 10))
-                                ])
-                          ],
-                        )
-                    );
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 33,
+                              ),
+                              Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 6, horizontal: valWidth * 0.02),
+                                  decoration: BoxDecoration(
+                                      color: blockColor,
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.02)),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                        constraints: BoxConstraints(
+                                            maxWidth: maxtxtcontsize),
+                                        child: Text(
+                                          data['message'],
+                                          style: TextStyle(
+                                              color: txtColor, fontSize: 13),
+                                          softWrap: true,
+                                        )),
+                                  )),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(formatted,
+                                  style:
+                                      TextStyle(color: txtColor, fontSize: 10))
+                            ])
+                      ],
+                    ));
                   }
                 }
               } else {
                 if (WhoSended) {
                   return ListTile(
                       title: Column(
-                        children: [
-                          SizedBox(height: 10,),
-                          Row(
-                            //여기가 사용자 채팅
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(formatted,
-                                    style: TextStyle(color: txtColor, fontSize: 10)),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 6, horizontal: valWidth * 0.02),
-                                    decoration: BoxDecoration(
-                                        color: blockColor,
-                                        borderRadius:
-                                        BorderRadius.circular(valWidth * 0.02)
-                                    ),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Container(
-                                          constraints: BoxConstraints(maxWidth: maxtxtcontsize),
-                                          child : Text(data['message'],
-                                            style:
-                                            TextStyle(color: txtColor, fontSize: 13),
-                                            softWrap: true,
-                                          )
-                                      ),
-                                    )
-                                )
-                              ])
-                        ],
-                      )
-                  );
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                          //여기가 사용자 채팅
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Text(formatted,
+                                style:
+                                    TextStyle(color: txtColor, fontSize: 10)),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 6, horizontal: valWidth * 0.02),
+                                decoration: BoxDecoration(
+                                    color: blockColor,
+                                    borderRadius:
+                                        BorderRadius.circular(valWidth * 0.02)),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                      constraints: BoxConstraints(
+                                          maxWidth: maxtxtcontsize),
+                                      child: Text(
+                                        data['message'],
+                                        style: TextStyle(
+                                            color: txtColor, fontSize: 13),
+                                        softWrap: true,
+                                      )),
+                                ))
+                          ])
+                    ],
+                  ));
                 } else {
                   if (!SendedUserChanged) {
                     return ListTile(
                         //여기가 트레이너 채팅
                         title: Column(
-                          children: [
-                            SizedBox(height: 10,),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  Container(
-                                    width: 28,
-                                    height: 28,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: NetworkImage(widget.ChatwithImgurl),
-                                      ),
-                                    ),
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Container(
+                                width: 28,
+                                height: 28,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Colors.white,
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: NetworkImage(widget.ChatwithImgurl),
                                   ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 6, horizontal: valWidth * 0.02),
-                                      decoration: BoxDecoration(
-                                          color: blockColor,
-                                          borderRadius:
-                                          BorderRadius.circular(valWidth * 0.02)),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Container(
-                                            constraints: BoxConstraints(maxWidth: maxtxtcontsize),
-                                            child : Text(data['message'],
-                                              style:
-                                              TextStyle(color: txtColor, fontSize: 13),
-                                              softWrap: true,
-                                            )
-                                        ),
-                                      )),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(formatted,
-                                      style: TextStyle(color: txtColor, fontSize: 10))
-                                ])
-                          ],
-                        ));
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 6, horizontal: valWidth * 0.02),
+                                  decoration: BoxDecoration(
+                                      color: blockColor,
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.02)),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                        constraints: BoxConstraints(
+                                            maxWidth: maxtxtcontsize),
+                                        child: Text(
+                                          data['message'],
+                                          style: TextStyle(
+                                              color: txtColor, fontSize: 13),
+                                          softWrap: true,
+                                        )),
+                                  )),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(formatted,
+                                  style:
+                                      TextStyle(color: txtColor, fontSize: 10))
+                            ])
+                      ],
+                    ));
                   } else {
                     return ListTile(
                         //여기가 트레이너 채팅
                         title: Column(
-                          children: [
-                            SizedBox(height: 10,),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 33,
-                                  ),
-                                  Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 6, horizontal: valWidth * 0.02),
-                                      decoration: BoxDecoration(
-                                          color: blockColor,
-                                          borderRadius:
-                                          BorderRadius.circular(valWidth * 0.02)),
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Container(
-                                            constraints: BoxConstraints(maxWidth: maxtxtcontsize),
-                                            child : Text(data['message'],
-                                              style:
-                                              TextStyle(color: txtColor, fontSize: 13),
-                                              softWrap: true,
-                                            )
-                                        ),
-                                      )),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(formatted,
-                                      style: TextStyle(color: txtColor, fontSize: 10))
-                                ])
-                          ],
-                        ));
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              SizedBox(
+                                width: 33,
+                              ),
+                              Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 6, horizontal: valWidth * 0.02),
+                                  decoration: BoxDecoration(
+                                      color: blockColor,
+                                      borderRadius: BorderRadius.circular(
+                                          valWidth * 0.02)),
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                        constraints: BoxConstraints(
+                                            maxWidth: maxtxtcontsize),
+                                        child: Text(
+                                          data['message'],
+                                          style: TextStyle(
+                                              color: txtColor, fontSize: 13),
+                                          softWrap: true,
+                                        )),
+                                  )),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(formatted,
+                                  style:
+                                      TextStyle(color: txtColor, fontSize: 10))
+                            ])
+                      ],
+                    ));
                   }
                 }
               }
