@@ -4,28 +4,51 @@ import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/material.dart';
 
 class TotalGraphs extends StatefulWidget {
-  TotalGraphs({Key? key, required this.GraphTypes}) : super(key: key);
+  TotalGraphs({Key? key, required this.GraphTypes, required this.Duration})
+      : super(key: key);
 
   List<bool> GraphTypes; // 체중 수면 스트레스 섭취 소모
+  int Duration;
 
   @override
   _TotalGraphsState createState() => _TotalGraphsState();
 }
 
 class _TotalGraphsState extends State<TotalGraphs> {
+  List<dynamic> date = [];
+  // DateTime time = DateTime.now().add(Duration(days: -7));
+  DateTime time = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
+    // int test = ProfileController.to.initalDatelist(widget.Duration);
+
+    // // int k = widget.Duration;
+    // int k = 10;
+    // time = time.add(Duration(days: -k));
+    // for (int i = 0; i < widget.Duration; i++) {
+    //   var tmp = time
+    //       .add(Duration(days: -i))
+    //       .toString()
+    //       .substring(0, 10)
+    //       .replaceAll("-", "_");
+    //   date.add(tmp);
+    // }
+
+    print('send date');
+    print(time);
 
     return Stack(
       children: [
         Container(
           child: CustomPaint(
             size: Size(valWidth, valHeight / 2.8),
-            painter: PathPainter(widget.GraphTypes),
+            painter: PathPainter(widget.GraphTypes, widget.Duration,
+                ProfileController.to.totaldate),
           ),
         ),
         FutureBuilder<List<dynamic>>(
@@ -33,7 +56,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
             ProfileController.to.originMyProfile.uid == null
                 ? ''
                 : ProfileController.to.originMyProfile.uid!,
-            7,
+            ProfileController.to.datelist,
           ),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
@@ -44,7 +67,9 @@ class _TotalGraphsState extends State<TotalGraphs> {
                 return Container(
                     child: CustomPaint(
                   size: Size(valWidth, valHeight / 2.8),
-                  painter: PathPainterWeight(snapshot.data!),
+                  // willChange: true,
+                  painter: PathPainterWeight(snapshot.data!, widget.Duration,
+                      ProfileController.to.totaldate),
                 ));
               } else {
                 return Container();
@@ -60,18 +85,21 @@ class _TotalGraphsState extends State<TotalGraphs> {
             ProfileController.to.originMyProfile.uid == null
                 ? ''
                 : ProfileController.to.originMyProfile.uid!,
-            7,
+            ProfileController.to.datelist,
           ),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
               if (widget.GraphTypes[1]) {
+                print('date list');
+                print(ProfileController.to.datelist);
                 // print('have data');
                 // print(snapshot.data);
                 // print(snapshot.data!);
                 return Container(
                     child: CustomPaint(
                   size: Size(valWidth, valHeight / 2.8),
-                  painter: PathPainterSleep(snapshot.data!),
+                  painter: PathPainterSleep(snapshot.data!, widget.Duration,
+                      ProfileController.to.totaldate),
                 ));
               } else {
                 return Container();
@@ -87,7 +115,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
             ProfileController.to.originMyProfile.uid == null
                 ? ''
                 : ProfileController.to.originMyProfile.uid!,
-            7,
+            ProfileController.to.datelist,
           ),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
@@ -98,7 +126,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
                 return Container(
                     child: CustomPaint(
                   size: Size(valWidth, valHeight / 2.8),
-                  painter: PathPainterStress(snapshot.data!),
+                  painter: PathPainterStress(snapshot.data!, widget.Duration,
+                      ProfileController.to.totaldate),
                 ));
               } else {
                 return Container();
@@ -114,7 +143,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
             ProfileController.to.originMyProfile.uid == null
                 ? ''
                 : ProfileController.to.originMyProfile.uid!,
-            7,
+            ProfileController.to.datelist,
           ),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
@@ -125,7 +154,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
                 return Container(
                     child: CustomPaint(
                   size: Size(valWidth, valHeight / 2.8),
-                  painter: PathPainterFood(snapshot.data!),
+                  painter: PathPainterFood(snapshot.data!, widget.Duration,
+                      ProfileController.to.totaldate),
                 ));
               } else {
                 return Container();
@@ -141,28 +171,88 @@ class _TotalGraphsState extends State<TotalGraphs> {
             ProfileController.to.originMyProfile.uid == null
                 ? ''
                 : ProfileController.to.originMyProfile.uid!,
-            7,
+            ProfileController.to.datelist,
           ),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
               if (widget.GraphTypes[4]) {
-                print('have data');
+                print('have data burned');
                 print(snapshot.data);
-                print(snapshot.data!);
+                // print(snapshot.data!);
                 return Container(
                     child: CustomPaint(
-                  size: Size(valWidth, valHeight / 2.8),
-                  painter: PathPainterBurned(snapshot.data!),
-                ));
+                        size: Size(valWidth, valHeight / 2.8),
+                        painter: PathPainterBurned(snapshot.data!,
+                            widget.Duration, ProfileController.to.totaldate)));
               } else {
                 return Container();
               }
             } else {
-              print('do not have data');
+              // print('do not have data');
               return Container();
             }
           },
         ),
+        // GestureDetector(
+        //   onTap: () {
+        //     print('click');
+        //     // setState(() {
+        //     //   // time = time.add(Duration(days: -widget.Duration));
+        //     //   // date = [];
+        //     //   // for (int i = 0; i < widget.Duration; i++) {
+        //     //   //   var tmp = time
+        //     //   //       .add(Duration(days: -i))
+        //     //   //       .toString()
+        //     //   //       .substring(0, 10)
+        //     //   //       .replaceAll("-", "_");
+        //     //   //   date.add(tmp);
+        //     //   // }
+        //     // });
+        //     ProfileController.to.minusDatelist(widget.Duration);
+        //   },
+        //   child: Container(
+        //     width: 35,
+        //     height: 35,
+        //     // color: Colors.red,
+        //     margin: EdgeInsets.fromLTRB(
+        //         (MediaQuery.of(context).size.width - 30) -
+        //             6.5 * (MediaQuery.of(context).size.width - 30) / 7 -
+        //             20,
+        //         MediaQuery.of(context).size.height / 2.8 - 30 + 6 - 9.5,
+        //         0,
+        //         0),
+        //     child: Icon(
+        //       Icons.arrow_back_ios_new_rounded,
+        //       size: 20.0,
+        //       color: Color.fromRGBO(133, 142, 147, 1),
+        //     ),
+        //   ),
+        // ),
+        // ProfileController.to.totaldate.day == DateTime.now().day
+        //     ? Container()
+        //     : GestureDetector(
+        //         onTap: () {
+        //           print('click');
+        //           ProfileController.to.plusDatelist(widget.Duration);
+        //         },
+        //         child: Container(
+        //           width: 35,
+        //           height: 35,
+        //           // color: Colors.red,
+        //           margin: EdgeInsets.fromLTRB(
+        //               (MediaQuery.of(context).size.width - 30) +
+        //                   0.5 * (MediaQuery.of(context).size.width - 30) / 7 -
+        //                   15,
+        //               MediaQuery.of(context).size.height / 2.8 - 30 + 6 - 9.5,
+        //               0,
+        //               0),
+        //           child: Icon(
+        //             Icons.arrow_forward_ios_rounded,
+        //             size: 20.0,
+        //             color: Color.fromRGBO(133, 142, 147, 1),
+        //           ),
+        //         ),
+        //       ),
       ],
     );
   }
@@ -170,283 +260,40 @@ class _TotalGraphsState extends State<TotalGraphs> {
 
 class PathPainter extends CustomPainter {
   List<bool> GraphTypes = [true, true, true, true, true];
+  late int duration;
+  late DateTime date;
 
-  PathPainter(List<bool> e) {
+  PathPainter(
+    List<bool> e,
+    int n,
+    DateTime d,
+  ) {
     GraphTypes = e;
+    duration = n;
+    date = d;
   }
-
-  List<DateData> WeightData = [
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 7,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        70),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 6,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        70.5),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 5,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        71),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 4,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        72),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 3,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        74),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 2,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        70),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 1,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        71),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 0,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        69)
-  ];
-  List<DateData> SleepData = [
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 7,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        20),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 6,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        70),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 5,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        90),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 4,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        80),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 3,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        60),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 2,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        84),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 1,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        82),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 0,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        80)
-  ];
-  List<DateData> StressData = [
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 7,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        40),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 6,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        50),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 5,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        60),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 4,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        70),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 3,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        80),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 2,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        94),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 1,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        22),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 0,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        10)
-  ];
-  List<DateData> DietData = [
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 7,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        20),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 6,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        70),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 5,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        90),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 4,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        80),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 3,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        60),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 2,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        84),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 1,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        82),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 0,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        80)
-  ];
-  List<DateData> BurnedData = [
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 7,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        70),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 6,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        10),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 5,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        10),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 4,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        20),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 3,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        50),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 2,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        94),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 1,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        42),
-    DateData(
-        DateTime.now().subtract(Duration(
-            days: 0,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        30)
-  ];
 
   final LineSize = 0.7;
 
   @override
   void paint(Canvas canvas, Size size) {
-    var tmp = DateData(
-        DateTime.now().subtract(Duration(
-            days: 3,
-            hours: DateTime.now().hour,
-            minutes: DateTime.now().minute)),
-        50);
-    print(tmp);
-    // var temp = DateTime.parse('1636628143.7570000');
-    var temp = DateTime.fromMicrosecondsSinceEpoch(
-        (1636628143.7570000 * 1000000).toInt());
-    print(temp);
-    tmp = DateData(temp, 50);
-    print(tmp);
-    print('!!!!!!!!!!!!!');
+    // var tmp = DateData(
+    //     DateTime.now().subtract(Duration(
+    //         days: 3,
+    //         hours: DateTime.now().hour,
+    //         minutes: DateTime.now().minute)),
+    //     50);
+    // // var temp = DateTime.parse('1636628143.7570000');
+    // var temp = DateTime.fromMicrosecondsSinceEpoch(
+    //     (1636628143.7570000 * 1000000).toInt());
+    // tmp = DateData(temp, 50);
     double XPadd_right = 30;
     double YPadd_bottom = 30;
     double YPadd_top = 0;
+    DateTime today = date;
+
+    // print('x date');
+    // print(today);
 
     double LineSize = 1.5;
 
@@ -476,31 +323,62 @@ class PathPainter extends CustomPainter {
     path.close();
 
     //////////////////////////////////////////////////////////////////////////////////////XLabel
-    for (int i = 0; i < 7; i++) {
-      final XGridUnit = GraphXSize / 7;
-      final x = GraphXSize - i * XGridUnit - 6;
-      final y = size.height - YPadd_bottom + 6;
+    // print('date check');
+    if (duration == 7) {
+      for (int i = 0; i < 7; i++) {
+        final XGridUnit = GraphXSize / 7;
+        final x = GraphXSize - i * XGridUnit - 6;
+        final y = size.height - YPadd_bottom + 6;
 
-      final p = Offset(x, y);
+        final p = Offset(x, y);
 
-      final textPainter = (DateTime.now().subtract(Duration(days: i)).day == 1)
-          ? TextPainter(
-              text: TextSpan(
-                  text:
-                      '${DateTime.now().subtract(Duration(days: i)).month}/${DateTime.now().subtract(Duration(days: i)).day}',
-                  style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
-              textDirection: TextDirection.ltr,
-            )
-          : TextPainter(
-              text: TextSpan(
-                  text: '${DateTime.now().subtract(Duration(days: i)).day}',
-                  style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
-              textDirection: TextDirection.ltr,
-            );
+        final textPainter = (today.day == 1)
+            ? TextPainter(
+                text: TextSpan(
+                    text: '${today.month}/${today.day}',
+                    style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
+                textDirection: TextDirection.ltr,
+              )
+            : TextPainter(
+                text: TextSpan(
+                    text: '${today.day}',
+                    style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
+                textDirection: TextDirection.ltr,
+              );
 
-      textPainter.layout();
+        textPainter.layout();
 
-      textPainter.paint(canvas, p);
+        textPainter.paint(canvas, p);
+        today = today.subtract(Duration(days: 1));
+      }
+    } else if (duration == 31) {
+      for (int i = 0; i < 7; i++) {
+        final XGridUnit = GraphXSize / 7;
+        final x = GraphXSize - i * XGridUnit - 6;
+        final y = size.height - YPadd_bottom + 6;
+
+        final p = Offset(x, y);
+
+        final textPainter = (today.day == 1 ||
+                (i != 0 && today.day < today.subtract(Duration(days: 5)).day))
+            ? TextPainter(
+                text: TextSpan(
+                    text: '${today.month}/${today.day}',
+                    style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
+                textDirection: TextDirection.ltr,
+              )
+            : TextPainter(
+                text: TextSpan(
+                    text: '${today.day}',
+                    style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
+                textDirection: TextDirection.ltr,
+              );
+
+        textPainter.layout();
+
+        textPainter.paint(canvas, p);
+        today = today.subtract(Duration(days: 5));
+      }
     }
     //////////////////////////////////////////////////////////////////////////////////////YSubLine
     for (int i = 1; i < 7; i++) {
@@ -521,29 +399,29 @@ class PathPainter extends CustomPainter {
       path.close();
     }
     //////////////////////////////////////////////////////////////////////////////////////weight_label
-    for (int i = 0; i < 7; i++) {
-      final XGridUnit = GraphXSize / 7;
-      final x = GraphXSize - i * XGridUnit - 7;
-      final y = size.height - YPadd_bottom - 1.2 * floor;
+    // for (int i = 0; i < 7; i++) {
+    //   final XGridUnit = GraphXSize / 7;
+    //   final x = GraphXSize - i * XGridUnit - 7;
+    //   final y = size.height - YPadd_bottom - 1.2 * floor;
 
-      final p = Offset(x, y);
+    //   final p = Offset(x, y);
 
-      final textPainter = (null != WeightData[WeightData.length - 1 - i])
-          ? TextPainter(
-              text: TextSpan(
-                  text: '${WeightData[WeightData.length - 1 - i].value}',
-                  style: TextStyle(fontSize: 7, color: Color(0xff858E93))),
-              textDirection: TextDirection.ltr,
-            )
-          : TextPainter(
-              text: TextSpan(text: ''),
-              textDirection: TextDirection.ltr,
-            );
+    //   final textPainter = (null != WeightData[WeightData.length - 1 - i])
+    //       ? TextPainter(
+    //           text: TextSpan(
+    //               text: '${WeightData[WeightData.length - 1 - i].value}',
+    //               style: TextStyle(fontSize: 7, color: Color(0xff858E93))),
+    //           textDirection: TextDirection.ltr,
+    //         )
+    //       : TextPainter(
+    //           text: TextSpan(text: ''),
+    //           textDirection: TextDirection.ltr,
+    //         );
 
-      textPainter.layout();
+    //   textPainter.layout();
 
-      textPainter.paint(canvas, p);
-    }
+    //   textPainter.paint(canvas, p);
+    // }
     //////////////////////////////////////////////////////////////////////////////////////weight
 
     // if (GraphTypes[0]) {
@@ -693,9 +571,13 @@ class PathPainter extends CustomPainter {
 
 class PathPainterWeight extends CustomPainter {
   late List<dynamic> weight;
+  late int duration;
+  late DateTime time;
 
-  PathPainterWeight(List<dynamic> e) {
+  PathPainterWeight(List<dynamic> e, int n, DateTime d) {
     weight = e;
+    duration = n;
+    time = d;
   }
   @override
   void paint(Canvas canvas, Size size) {
@@ -743,7 +625,8 @@ class PathPainterWeight extends CustomPainter {
       e.value += floor * 0.3; //correction
     });
 
-    var datapath = ComputePoints(WeightData, GraphXSize, GraphYSize);
+    var datapath = TotalGraphHelper.ComputePoints(
+        WeightData, GraphXSize, GraphYSize, duration, time);
 
     // print("debug : $datapath");
 
@@ -752,35 +635,10 @@ class PathPainterWeight extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath);
     canvas.drawPath(path, LinePaint);
 
     path.close();
-  }
-
-  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
-    List<Offset> points = [];
-    p.forEach((i) {
-      final XGridUnit = width / 7;
-      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
-      final y = height - (i.value);
-      final dp = Offset(x, y);
-      points.add(dp);
-    });
-    return points;
-  }
-
-  Path ComputePath(List<Offset> points) {
-    final path = Path();
-    for (int i = 0; i < points.length; i++) {
-      final p = points[i];
-      if (i == 0) {
-        path.moveTo(p.dx, p.dy);
-      } else {
-        path.lineTo(p.dx, p.dy);
-      }
-    }
-    return path;
   }
 
   @override
@@ -789,9 +647,13 @@ class PathPainterWeight extends CustomPainter {
 
 class PathPainterSleep extends CustomPainter {
   late List<dynamic> sleep;
+  late int duration;
+  late DateTime time;
 
-  PathPainterSleep(List<dynamic> e) {
+  PathPainterSleep(List<dynamic> e, int n, DateTime d) {
     sleep = e;
+    duration = n;
+    time = d;
   }
   @override
   void paint(Canvas canvas, Size size) {
@@ -799,7 +661,7 @@ class PathPainterSleep extends CustomPainter {
     print('sleep');
     sleep.forEach((e) {
       print(e);
-      print(DateTime.parse(e['time'].replaceAll("_", "")));
+      // print(DateTime.parse(e['time'].replaceAll("_", "")));
       SleepData.add(
         DateData(
           DateTime.parse(e['time'].replaceAll("_", "")),
@@ -808,7 +670,8 @@ class PathPainterSleep extends CustomPainter {
       );
     });
 
-    print('good...?');
+    // print('good...?');
+    print("print sleepdata");
     print(SleepData);
 
     double XPadd_right = 30;
@@ -828,7 +691,8 @@ class PathPainterSleep extends CustomPainter {
       e.value += floor * 2 + YPadd_bottom;
     });
 
-    var datapath = ComputePoints(SleepData, GraphXSize, GraphYSize);
+    var datapath = TotalGraphHelper.ComputePoints(
+        SleepData, GraphXSize, GraphYSize, duration, time);
 
     // print("debug : $datapath");
 
@@ -837,35 +701,10 @@ class PathPainterSleep extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath);
     canvas.drawPath(path, LinePaint);
 
     path.close();
-  }
-
-  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
-    List<Offset> points = [];
-    p.forEach((i) {
-      final XGridUnit = width / 7;
-      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
-      final y = height - (i.value);
-      final dp = Offset(x, y);
-      points.add(dp);
-    });
-    return points;
-  }
-
-  Path ComputePath(List<Offset> points) {
-    final path = Path();
-    for (int i = 0; i < points.length; i++) {
-      final p = points[i];
-      if (i == 0) {
-        path.moveTo(p.dx, p.dy);
-      } else {
-        path.lineTo(p.dx, p.dy);
-      }
-    }
-    return path;
   }
 
   @override
@@ -874,17 +713,22 @@ class PathPainterSleep extends CustomPainter {
 
 class PathPainterStress extends CustomPainter {
   late List<dynamic> stress;
+  late int duration;
+  late DateTime time;
 
-  PathPainterStress(List<dynamic> e) {
+  PathPainterStress(List<dynamic> e, int n, DateTime d) {
     stress = e;
+    duration = n;
+    time = d;
   }
   @override
   void paint(Canvas canvas, Size size) {
     List<DateData> StressData = [];
-    print('sleep');
+    // print('sress');
+    // print(stress);
     stress.forEach((e) {
-      print(e);
-      print(DateTime.parse(e['time'].replaceAll("_", "")));
+      // print(e);
+      // print(DateTime.parse(e['time'].replaceAll("_", "")));
       StressData.add(
         DateData(
           DateTime.parse(e['time'].replaceAll("_", "")),
@@ -893,8 +737,8 @@ class PathPainterStress extends CustomPainter {
       );
     });
 
-    print('good...?');
-    print(StressData);
+    // print('good...?');
+    // print(StressData);
 
     double XPadd_right = 30;
     double YPadd_bottom = 30;
@@ -913,7 +757,8 @@ class PathPainterStress extends CustomPainter {
       e.value += floor * 2 + YPadd_bottom;
     });
 
-    var datapath = ComputePoints(StressData, GraphXSize, GraphYSize);
+    var datapath = TotalGraphHelper.ComputePoints(
+        StressData, GraphXSize, GraphYSize, duration, time);
 
     // print("debug : $datapath");
 
@@ -922,35 +767,10 @@ class PathPainterStress extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath);
     canvas.drawPath(path, LinePaint);
 
     path.close();
-  }
-
-  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
-    List<Offset> points = [];
-    p.forEach((i) {
-      final XGridUnit = width / 7;
-      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
-      final y = height - (i.value);
-      final dp = Offset(x, y);
-      points.add(dp);
-    });
-    return points;
-  }
-
-  Path ComputePath(List<Offset> points) {
-    final path = Path();
-    for (int i = 0; i < points.length; i++) {
-      final p = points[i];
-      if (i == 0) {
-        path.moveTo(p.dx, p.dy);
-      } else {
-        path.lineTo(p.dx, p.dy);
-      }
-    }
-    return path;
   }
 
   @override
@@ -959,17 +779,21 @@ class PathPainterStress extends CustomPainter {
 
 class PathPainterFood extends CustomPainter {
   late List<dynamic> food;
+  late int duration;
+  late DateTime time;
 
-  PathPainterFood(List<dynamic> e) {
+  PathPainterFood(List<dynamic> e, int n, DateTime d) {
     food = e;
+    duration = n;
+    time = d;
   }
   @override
   void paint(Canvas canvas, Size size) {
     List<DateData> DietData = [];
-    print('food');
+    // print('food');
     food.forEach((e) {
-      print(e);
-      print(DateTime.parse(e['time'].replaceAll("_", "")));
+      // print(e);
+      // print(DateTime.parse(e['time'].replaceAll("_", "")));
       DietData.add(
         DateData(
           DateTime.parse(e['time'].replaceAll("_", "")),
@@ -978,8 +802,8 @@ class PathPainterFood extends CustomPainter {
       );
     });
 
-    print('good...?');
-    print(DietData);
+    // print('good...?');
+    // print(DietData);
 
     double XPadd_right = 30;
     double YPadd_bottom = 30;
@@ -998,7 +822,8 @@ class PathPainterFood extends CustomPainter {
       e.value += floor + YPadd_bottom;
     });
 
-    var datapath = ComputePoints(DietData, GraphXSize, GraphYSize);
+    var datapath = TotalGraphHelper.ComputePoints(
+        DietData, GraphXSize, GraphYSize, duration, time);
 
     // print("debug : $datapath");
 
@@ -1007,35 +832,10 @@ class PathPainterFood extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath);
     canvas.drawPath(path, LinePaint);
 
     path.close();
-  }
-
-  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
-    List<Offset> points = [];
-    p.forEach((i) {
-      final XGridUnit = width / 7;
-      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
-      final y = height - (i.value);
-      final dp = Offset(x, y);
-      points.add(dp);
-    });
-    return points;
-  }
-
-  Path ComputePath(List<Offset> points) {
-    final path = Path();
-    for (int i = 0; i < points.length; i++) {
-      final p = points[i];
-      if (i == 0) {
-        path.moveTo(p.dx, p.dy);
-      } else {
-        path.lineTo(p.dx, p.dy);
-      }
-    }
-    return path;
   }
 
   @override
@@ -1044,17 +844,21 @@ class PathPainterFood extends CustomPainter {
 
 class PathPainterBurned extends CustomPainter {
   late List<dynamic> burned;
+  late int duration;
+  late DateTime time;
 
-  PathPainterBurned(List<dynamic> e) {
+  PathPainterBurned(List<dynamic> e, int n, DateTime d) {
     burned = e;
+    duration = n;
+    time = d;
   }
   @override
   void paint(Canvas canvas, Size size) {
     List<DateData> BurnedData = [];
-    print('burned');
+    // print('burned');
     burned.forEach((e) {
-      print(e);
-      print(DateTime.parse(e['time'].replaceAll("_", "")));
+      // print(e);
+      // print(DateTime.parse(e['time'].replaceAll("_", "")));
       BurnedData.add(
         DateData(
           DateTime.parse(e['time'].replaceAll("_", "")),
@@ -1063,8 +867,8 @@ class PathPainterBurned extends CustomPainter {
       );
     });
 
-    print('good...?');
-    print(BurnedData);
+    // print('good...?');
+    // print(BurnedData);
 
     double XPadd_right = 30;
     double YPadd_bottom = 30;
@@ -1083,7 +887,8 @@ class PathPainterBurned extends CustomPainter {
       e.value += floor + YPadd_bottom;
     });
 
-    var datapath = ComputePoints(BurnedData, GraphXSize, GraphYSize);
+    var datapath = TotalGraphHelper.ComputePoints(
+        BurnedData, GraphXSize, GraphYSize, duration, time);
 
     // print("debug : $datapath");
 
@@ -1092,17 +897,23 @@ class PathPainterBurned extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath);
     canvas.drawPath(path, LinePaint);
 
     path.close();
   }
 
-  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => true;
+}
+
+class TotalGraphHelper {
+  static List<Offset> ComputePoints(List<DateData> p, double width,
+      double height, int duration, DateTime time) {
     List<Offset> points = [];
     p.forEach((i) {
-      final XGridUnit = width / 7;
-      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
+      final XGridUnit = width / duration;
+      final x = width - (time.difference(i.time).inDays) * XGridUnit;
       final y = height - (i.value);
       final dp = Offset(x, y);
       points.add(dp);
@@ -1110,7 +921,7 @@ class PathPainterBurned extends CustomPainter {
     return points;
   }
 
-  Path ComputePath(List<Offset> points) {
+  static Path ComputePath(List<Offset> points) {
     final path = Path();
     for (int i = 0; i < points.length; i++) {
       final p = points[i];
@@ -1122,7 +933,4 @@ class PathPainterBurned extends CustomPainter {
     }
     return path;
   }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
