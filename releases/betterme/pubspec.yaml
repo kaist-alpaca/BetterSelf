@@ -53,6 +53,7 @@ dependencies:
   health_kit_reporter: ^1.5.1
   camera: ^0.9.4+3
   path_provider: ^2.0.6
+  flutter_datetime_picker: ^1.5.1
   keyboard_visibility:
     git:
       url: https://github.com/kaist-alpaca/flutter_keyboard_visibility

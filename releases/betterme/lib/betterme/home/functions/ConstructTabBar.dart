@@ -8,7 +8,7 @@ import 'package:betterme/betterme/report/ReportScreen.dart';
 import 'package:betterme/betterme/setting/SettingScreen.dart';
 
 class ConstructTabBar extends StatefulWidget {
-  const ConstructTabBar({Key? key}) : super(key: key);
+  ConstructTabBar({Key? key}) : super(key: key);
 
   @override
   _ConstructTabBar createState() => _ConstructTabBar();
