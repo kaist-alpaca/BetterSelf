@@ -106,6 +106,10 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
       else
         removeOverlay();
     });
+    if (Get.arguments[0].length != 0) {
+      print('arguemnt is not 0');
+      dropdownvalue = Get.arguments[0][0][1];
+    }
   }
 
   @override
@@ -161,12 +165,29 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                       underline: SizedBox.shrink(),
                       value: dropdownvalue,
                       style: TextStyle(color: Colors.white),
-                      dropdownColor: Colors.black,
-                      items:
-                          <String>['아침', '점심', '저녁', '간식'].map((String items) {
-                        return DropdownMenuItem(
-                            value: items, child: Text(items));
-                      }).toList(),
+                      elevation: Get.arguments[0].length == 0 ? 8 : -3,
+                      // iconSize: Get.arguments.length == 0 ? 24 : 0,
+                      icon: Icon(
+                        Icons.arrow_drop_down,
+                        color: Get.arguments[0].length == 0
+                            ? Color(0XFFFFFDFD)
+                            : Color.fromRGBO(0, 0, 0, 0),
+                      ),
+                      // dropdownColor: Colors.black,
+                      dropdownColor: Get.arguments[0].length == 0
+                          ? Colors.black
+                          : Color.fromRGBO(0, 0, 0, 0),
+                      items: Get.arguments[0].length == 0
+                          ? <String>['아침', '점심', '저녁', '간식']
+                              .map((String items) {
+                              return DropdownMenuItem(
+                                  value: items, child: Text(items));
+                            }).toList()
+                          : <String>[Get.arguments[0][0][1]]
+                              .map((String items) {
+                              return DropdownMenuItem(
+                                  value: items, child: Text(items));
+                            }).toList(),
                       onChanged: (String? newValue) {
                         setState(() {
                           dropdownvalue = newValue!;
@@ -369,7 +390,7 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                               0.012,
                                               0.2,
                                               10,
-                                              '탄수화물 ${Nutrition[2]} g'), //
+                                              '탄수화물 ${(Nutrition[2] * amount).toStringAsFixed(1)} g'), //
                                           SizedBox(height: valHeight * 0.008),
                                           MiniBox(
                                               context,
@@ -377,7 +398,7 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                               0.012,
                                               0.176,
                                               10,
-                                              '단백질 ${Nutrition[3]} g'),
+                                              '단백질 ${(Nutrition[3] * amount).toStringAsFixed(1)} g'),
                                           SizedBox(height: valHeight * 0.008),
                                           MiniBox(
                                               context,
@@ -385,7 +406,7 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                               0.012,
                                               0.15,
                                               10,
-                                              '지방 ${Nutrition[4]} g'),
+                                              '지방 ${(Nutrition[4] * amount).toStringAsFixed(1)} g'),
                                           SizedBox(height: valHeight * 0.008),
                                           MiniBox(
                                               context,
@@ -393,7 +414,7 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                               0.012,
                                               0.2,
                                               10,
-                                              '콜레스테롤 ${Nutrition[5]} g'),
+                                              '콜레스테롤 ${(Nutrition[5] * amount).toStringAsFixed(1)} g'),
                                           SizedBox(height: valHeight * 0.008),
                                           MiniBox(
                                               context,
@@ -401,7 +422,7 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                               0.012,
                                               0.2,
                                               10,
-                                              '식이섬유 ${Nutrition[6]} g'),
+                                              '식이섬유 ${(Nutrition[6] * amount).toStringAsFixed(1)} g'),
                                           SizedBox(height: valHeight * 0.008),
                                           MiniBox(
                                               context,
@@ -409,7 +430,7 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                               0.012,
                                               0.176,
                                               10,
-                                              '나트륨 ${Nutrition[7]} g'),
+                                              '나트륨 ${(Nutrition[7] * amount).toStringAsFixed(1)} g'),
                                         ]),
                                   ),
                                 ],
@@ -422,16 +443,17 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                 SizedBox(height: valHeight * 0.08),
                 GestureDetector(
                   onTap: () {
-                    Get.arguments.add([
+                    Get.arguments[0].add([
                       time,
                       dropdownvalue,
                       Nutrition,
                       amount,
                     ]);
-                    Get.arguments.sort(
+                    Get.arguments[0].sort(
                         (a, b) => a[0].toString().compareTo(b[0].toString()));
                     // print(Get.arguments);
-                    Get.to(() => SaveFoodScreen(), arguments: Get.arguments);
+                    Get.offAll(() => SaveFoodScreen(),
+                        arguments: Get.arguments);
                   },
                   child: Container(
                     width: valWidth * 0.6,

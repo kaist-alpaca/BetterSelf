@@ -26,7 +26,6 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     final blockColor = Color(0xff333C47); // 여러 블럭들 색
     double defaultSize = valWidth * 0.0025;
-    print(Get.arguments.length);
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -59,17 +58,19 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
             height: 500,
             width: valWidth,
             child: ListView.builder(
-              itemCount: Get.arguments.length + 1,
+              itemCount: Get.arguments[0].length + 1,
               itemBuilder: (BuildContext context, int i) {
                 return Material(
                   color: bgColor,
-                  child: i == Get.arguments.length
+                  child: i == Get.arguments[0].length
                       ? GestureDetector(
                           onTap: () {
                             Get.to(
                               () => SearchFoodScreen(),
                               arguments: Get.arguments,
                             );
+                            //print(Get.arguments);
+                            //print(Get.arguments[0][1]);
                           },
                           child: Column(
                             children: [
@@ -105,7 +106,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                           ),
                         )
                       : Container(
-                          height: (i == Get.arguments.length - 1)
+                          height: (i == Get.arguments[0].length - 1)
                               ? valHeight * 0.21
                               : valHeight * 0.23,
                           child: Column(
@@ -121,7 +122,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                     height: valHeight * 0.04,
                                     child: Center(
                                       child: Text(
-                                        '${Get.arguments[i][2][0]} / ${Get.arguments[i][1]}',
+                                        '${Get.arguments[0][i][2][0]} / ${Get.arguments[0][i][1]}',
                                         style: TextStyle(
                                           color: linetxtColor,
                                           fontSize: defaultSize * 20,
@@ -137,7 +138,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                     onPressed: () {
                                       print(i);
                                       setState(() {
-                                        Get.arguments.removeAt(i);
+                                        Get.arguments[0].removeAt(i);
                                       });
                                     },
                                   ),
@@ -157,7 +158,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.012,
                                         0.2,
                                         10,
-                                        '탄수화물 ${Get.arguments[i][2][2]} g'), //
+                                        '탄수화물 ${Get.arguments[0][i][2][2]} g'), //
                                     SizedBox(height: valHeight * 0.008),
                                     MiniBox(
                                         context,
@@ -165,7 +166,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.012,
                                         0.176,
                                         10,
-                                        '단백질 ${Get.arguments[i][2][3]} g'),
+                                        '단백질 ${Get.arguments[0][i][2][3]} g'),
                                     SizedBox(height: valHeight * 0.008),
                                     MiniBox(
                                         context,
@@ -173,7 +174,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.012,
                                         0.15,
                                         10,
-                                        '지방 ${Get.arguments[i][2][4]} g'),
+                                        '지방 ${Get.arguments[0][i][2][4]} g'),
                                     SizedBox(height: valHeight * 0.008),
                                     MiniBox(
                                         context,
@@ -181,7 +182,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.012,
                                         0.2,
                                         10,
-                                        '콜레스테롤 ${Get.arguments[i][2][5]} g'),
+                                        '콜레스테롤 ${Get.arguments[0][i][2][5]} g'),
                                     SizedBox(height: valHeight * 0.008),
                                     MiniBox(
                                         context,
@@ -189,7 +190,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.012,
                                         0.2,
                                         10,
-                                        '식이섬유 ${Get.arguments[i][2][6]} g'),
+                                        '식이섬유 ${Get.arguments[0][i][2][6]} g'),
                                     SizedBox(height: valHeight * 0.008),
                                     Row(
                                       mainAxisAlignment:
@@ -202,9 +203,9 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                             0.012,
                                             0.176,
                                             10,
-                                            '나트륨 ${Get.arguments[i][2][7]} g'),
+                                            '나트륨 ${Get.arguments[0][i][2][7]} g'),
                                         Text(
-                                          '${(Get.arguments[i][2][1] * Get.arguments[i][3]).round()} kcal',
+                                          '${(Get.arguments[0][i][2][1] * Get.arguments[0][i][3]).round()} kcal',
                                           style: TextStyle(
                                             color: Color(0xFFFFFDFD),
                                             fontSize: defaultSize * 15,
@@ -216,7 +217,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                 ),
                               ),
                               SizedBox(height: valHeight * 0.015),
-                              (i == Get.arguments.length - 1)
+                              (i == Get.arguments[0].length - 1)
                                   ? Container()
                                   : Container(
                                       width: valWidth * 0.95,
@@ -233,12 +234,22 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
             ),
           ),
           GestureDetector(
-            onTap: () {
-              print(Get.arguments);
-              ServerConnection.save_food(
+            onTap: () async {
+              // print(Get.arguments);
+              String time = await ServerConnection.save_food(
                 ProfileController.to.originMyProfile.uid!,
-                Get.arguments,
+                Get.arguments[0],
               );
+              print(Get.arguments[1]);
+              print(time);
+              if (Get.arguments[1] != 0) {
+                await ProfileController.to.uploadFoodImage(
+                  uid: ProfileController.to.myProfile.value.uid!,
+                  file: Get.arguments[1],
+                  time:
+                      time.toString().replaceAll(" ", "").replaceAll("-", "_"),
+                );
+              }
               // Get.to(() => SaveFoodScreen(), arguments: Get.arguments);
               Get.offAll(() => ConstructTabBar());
             },
