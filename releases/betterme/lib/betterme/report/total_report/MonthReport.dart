@@ -252,9 +252,7 @@ class _MonthReport extends State<MonthReport> {
               SizedBox(
                 height: 20,
               ),
-              TotalGraphs(
-                GraphTypes: GraphTypes,
-              ),
+              TotalGraphs(GraphTypes: GraphTypes, Duration: 31),
             ],
           ),
         ),
