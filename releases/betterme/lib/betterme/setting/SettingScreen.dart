@@ -5,6 +5,7 @@ import 'package:betterme/functions/Widgets/DividewithObj.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -298,6 +299,23 @@ class SettingScreen extends StatelessWidget {
                       ],
                     ), //gender
                     SizedBox(height: 16),
+                    // TextButton(
+                    //     onPressed: () {
+                    //       DatePicker.showDatePicker(context,
+                    //           showTitleActions: true,
+                    //           minTime: DateTime(2018, 3, 5),
+                    //           maxTime: DateTime(2019, 6, 7), onChanged: (date) {
+                    //         print('change $date');
+                    //       }, onConfirm: (date) {
+                    //         print('confirm $date');
+                    //       },
+                    //           currentTime: DateTime.now(),
+                    //           locale: LocaleType.ko);
+                    //     },
+                    //     child: Text(
+                    //       'show date time picker (Korean)',
+                    //       style: TextStyle(color: Colors.blue),
+                    //     )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -312,23 +330,42 @@ class SettingScreen extends StatelessWidget {
                                 textAlign: TextAlign.center)),
                         GestureDetector(
                           onTap: () {
+                            DatePicker.showDatePicker(context,
+                                showTitleActions: true,
+                                minTime: DateTime(1900, 1, 1),
+                                maxTime: DateTime.now(), onChanged: (date) {
+                              print('change $date');
+                            }, onConfirm: (date) {
+                              print('confirm $date');
+                              controller.birthdaySelected(date
+                                  .toString()
+                                  .substring(0, 10)
+                                  .replaceAll('-', '/'));
+                            },
+                                // currentTime: DateTime.now(),
+                                currentTime: DateTime.parse(
+                                    controller.birthday! == "/00/00"
+                                        ? "2000-01-01"
+                                        : controller.birthday!
+                                            .replaceAll('/', '-')),
+                                locale: LocaleType.ko);
                             // _openDatePicker(context);
-                            BottomPicker.date(
-                                    title: "생년월일",
-                                    titleStyle: TextStyle(
-                                        color: txtColor,
-                                        fontSize: defaultSize * 15),
-                                    onChange: (index) {
-                                      print(index);
-                                    },
-                                    onSubmit: (index) {
-                                      print(index);
-                                      controller.birthdaySelected(
-                                          index.toString().substring(0, 10));
-                                    },
-                                    bottomPickerTheme:
-                                        BOTTOM_PICKER_THEME.PLUM_PLATE)
-                                .show(context);
+                            // BottomPicker.date(
+                            //         title: "생년월일",
+                            //         titleStyle: TextStyle(
+                            //             color: txtColor,
+                            //             fontSize: defaultSize * 15),
+                            //         onChange: (index) {
+                            //           print(index);
+                            //         },
+                            //         onSubmit: (index) {
+                            //           print(index);
+                            //           controller.birthdaySelected(
+                            //               index.toString().substring(0, 10));
+                            //         },
+                            //         bottomPickerTheme:
+                            //             BOTTOM_PICKER_THEME.PLUM_PLATE)
+                            //     .show(context);
                           },
                           child: Container(
                               //생년월일 입력란
@@ -342,8 +379,8 @@ class SettingScreen extends StatelessWidget {
                               margin: EdgeInsets.fromLTRB(valWidth * 0.02, 0,
                                   valWidth * 0.02, valWidth * 0.015),
                               child: Text(
-                                controller.birthday == null
-                                    ? ""
+                                controller.birthday == "/00/00"
+                                    ? "생일 선택"
                                     : controller.birthday.toString(),
                                 style: TextStyle(
                                     color: txtColor,
@@ -513,7 +550,11 @@ class SettingScreen extends StatelessWidget {
                 GestureDetector(
                   // 저장기능 추가해주세요
                   onTap: () {
-                    Get.offAll(() => ConstructTabBar());
+                    // Get.offAll(() => ConstructTabBar());
+                    // print(controller.gender);
+                    // print(controller.birthday);
+                    // print(controller.height);
+                    controller.updateProfile();
                     // return Home();
                   }, //여기에 로그아웃 기능 구현
                   child: Column(
