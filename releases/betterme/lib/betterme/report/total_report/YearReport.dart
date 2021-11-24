@@ -251,9 +251,7 @@ class _YearReport extends State<YearReport> {
               SizedBox(
                 height: 20,
               ),
-              TotalGraphs(
-                GraphTypes: GraphTypes,
-              ),
+              TotalGraphs(GraphTypes: GraphTypes, Duration: 365),
             ],
           ),
         ),
