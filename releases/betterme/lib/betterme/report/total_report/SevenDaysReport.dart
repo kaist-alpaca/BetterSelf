@@ -9,9 +9,22 @@ import 'package:get/get.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 
 class SevenDaysReport extends StatefulWidget {
+  SevenDaysReport({Key? key}) : super(key: key);
+
   @override
   _SevenDaysReport createState() => _SevenDaysReport();
 }
+
+// TotalGraphs(
+//       {Key? key,
+//       required this.GraphTypes,
+//       required this.Duration,
+//       required this.count})
+//       : super(key: key);
+
+//   List<bool> GraphTypes; // 체중 수면 스트레스 섭취 소모
+//   int Duration;
+//   int count;
 
 class _SevenDaysReport extends State<SevenDaysReport> {
   List<bool> GraphTypes = [true, true, true, true, true];
@@ -26,107 +39,6 @@ class _SevenDaysReport extends State<SevenDaysReport> {
     double miniBoxSize = 0.015;
 
     double defaultSize = valWidth * 0.0025;
-
-    final _sleep = [
-      [
-        [
-          '2021_11_12',
-          '2021_11_12',
-          '2021-11-12 00:00:00.000',
-          '2021-11-12 01:04:00.000'
-        ],
-        [
-          '2021_11_12',
-          '2021_11_12',
-          '2021-11-12 07:10:00.000',
-          '2021-11-12 09:14:00.000'
-        ],
-      ],
-      [
-        [
-          '2021_11_01',
-          '2021_11_01',
-          '2021-11-01 21:08:00.000',
-          '2021-11-01 23:04:00.000'
-        ],
-        [
-          '2021_11_01',
-          '2021_11_01',
-          '2021-11-01 07:10:00.000',
-          '2021-11-01 09:14:00.000'
-        ],
-      ],
-      [
-        [
-          '2021_11_10',
-          '2021_11_10',
-          '2021-11-10 21:08:00.000',
-          '2021-11-10 23:04:00.000'
-        ],
-        [
-          '2021_11_10',
-          '2021_11_10',
-          '2021-11-10 07:10:00.000',
-          '2021-11-10 09:14:00.000'
-        ],
-      ],
-      [
-        [
-          '2021_11_09',
-          '2021_11_09',
-          '2021-11-09 21:08:00.000',
-          '2021-11-09 23:04:00.000'
-        ],
-        [
-          '2021_11_09',
-          '2021_11_09',
-          '2021-11-09 07:10:00.000',
-          '2021-11-09 09:14:00.000'
-        ],
-      ],
-      [
-        [
-          '2021_11_08',
-          '2021_11_08',
-          '2021-11-08 21:08:00.000',
-          '2021-11-08 23:04:00.000'
-        ],
-        [
-          '2021_11_08',
-          '2021_11_08',
-          '2021-11-08 07:10:00.000',
-          '2021-11-08 09:14:00.000'
-        ],
-      ],
-      [
-        [
-          '2021_11_07',
-          '2021_11_07',
-          '2021-11-07 21:08:00.000',
-          '2021-11-07 23:04:00.000'
-        ],
-        [
-          '2021_11_07',
-          '2021_11_07',
-          '2021-11-07 07:10:00.000',
-          '2021-11-07 09:14:00.000'
-        ],
-      ],
-      [
-        [
-          '2021_11_06',
-          '2021_11_06',
-          '2021-11-06 21:08:00.000',
-          '2021-11-06 23:59:59.999'
-        ],
-        [
-          '2021_11_06',
-          '2021_11_06',
-          '2021-11-06 07:10:00.000',
-          '2021-11-06 09:14:00.000'
-        ],
-      ],
-    ];
 
     return GetBuilder<ProfileController>(builder: (controller) {
       return Container(
@@ -356,9 +268,7 @@ class _SevenDaysReport extends State<SevenDaysReport> {
               SizedBox(
                 height: 20,
               ),
-              TotalGraphs(
-                GraphTypes: GraphTypes,
-              ),
+              TotalGraphs(GraphTypes: GraphTypes, Duration: 7),
               SizedBox(
                 height: 20,
               ),
@@ -382,10 +292,10 @@ class _SevenDaysReport extends State<SevenDaysReport> {
                 height: 15,
               ),
               Container(
-                height: valHeight * 0.34,
+                height: valWidth * 0.95 / 24 * 7 * 1.7,
                 width: valWidth * 0.95,
                 margin: EdgeInsets.only(left: valWidth * 0.025),
-                child: TotalHorizontalChart(sleep: _sleep),
+                child: TotalHorizontalChart(),
               ),
             ],
           ),
