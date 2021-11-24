@@ -194,19 +194,20 @@ class CameraScreenState extends State<CameraScreen>
                 await ProfileController.to
                     .pickImage(type: 'gallery', use: 'food');
                 if (ProfileController.to.food != null) {
-                  ProfileController.to.uploadFoodImage(
-                      uid: ProfileController.to.myProfile.value.uid!,
-                      index: '0',
-                      file: ProfileController.to.food!);
+                  // ProfileController.to.uploadFoodImage(
+                  //     uid: ProfileController.to.myProfile.value.uid!,
+                  //     index: '0',
+                  //     file: ProfileController.to.food!);
                   // Navigator.push(
                   //   context,
                   //   MaterialPageRoute(
                   //     builder: (context) => SearchFoodScreen(),
                   //   ),
                   // );
-                  Get.to(
+                  _controller.dispose();
+                  Get.off(
                     () => SearchFoodScreen(),
-                    arguments: food_list,
+                    arguments: [food_list, ProfileController.to.food],
                   );
                 }
               },
@@ -236,9 +237,10 @@ class CameraScreenState extends State<CameraScreen>
                 color: Colors.black,
               ),
               onPressed: () {
-                Get.to(
+                _controller.dispose();
+                Get.off(
                   () => SearchFoodScreen(),
-                  arguments: food_list,
+                  arguments: [food_list, 0],
                 );
               },
             ),
@@ -308,15 +310,15 @@ class CameraScreenState extends State<CameraScreen>
       // await _controller.takePicture(filePath);
       XFile tmp = await _controller.takePicture();
       print(tmp.path);
-      ProfileController.to.uploadFoodImage(
-          uid: ProfileController.to.myProfile.value.uid!,
-          index: '0',
-          file: File(tmp.path));
+      // ProfileController.to.uploadFoodImage(
+      //     uid: ProfileController.to.myProfile.value.uid!,
+      //     index: '0',
+      //     file: File(tmp.path));
       // Navigator.push(
       //     context, MaterialPageRoute(builder: (context) => SearchFoodScreen()));
-      Get.to(
+      Get.off(
         () => SearchFoodScreen(),
-        arguments: food_list,
+        arguments: [food_list, File(tmp.path)],
       );
     }
   }
