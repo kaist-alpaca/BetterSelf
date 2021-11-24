@@ -37,7 +37,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
       ),
       body: Column(
         children: [
-          SizedBox(height: valHeight * 0.03),
+          SizedBox(height: 12),
           DividewithObj(
             context,
             Container(
@@ -54,7 +54,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
             0.12,
             0.70,
           ),
-          SizedBox(height: valHeight * 0.01),
+          SizedBox(height: 4),
           Container(
             height: 500,
             width: valWidth,
@@ -106,8 +106,8 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                         )
                       : Container(
                           height: (i == Get.arguments.length - 1)
-                              ? valHeight * 0.21
-                              : valHeight * 0.23,
+                              ? 180
+                              : 210,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -124,7 +124,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         '${Get.arguments[i][2][0]} / ${Get.arguments[i][1]}',
                                         style: TextStyle(
                                           color: linetxtColor,
-                                          fontSize: defaultSize * 20,
+                                          fontSize: 20,
                                         ),
                                       ),
                                     ),
@@ -158,7 +158,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.2,
                                         10,
                                         '탄수화물 ${Get.arguments[i][2][2]} g'), //
-                                    SizedBox(height: valHeight * 0.008),
+                                    SizedBox(height: 4),
                                     MiniBox(
                                         context,
                                         Color(0xffF1D7A7),
@@ -166,7 +166,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.176,
                                         10,
                                         '단백질 ${Get.arguments[i][2][3]} g'),
-                                    SizedBox(height: valHeight * 0.008),
+                                    SizedBox(height: 4),
                                     MiniBox(
                                         context,
                                         Color(0xffDBB9C7),
@@ -174,7 +174,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.15,
                                         10,
                                         '지방 ${Get.arguments[i][2][4]} g'),
-                                    SizedBox(height: valHeight * 0.008),
+                                    SizedBox(height: 4),
                                     MiniBox(
                                         context,
                                         Color(0xffA0B1DF),
@@ -182,7 +182,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.2,
                                         10,
                                         '콜레스테롤 ${Get.arguments[i][2][5]} g'),
-                                    SizedBox(height: valHeight * 0.008),
+                                    SizedBox(height:4),
                                     MiniBox(
                                         context,
                                         Color(0xffA0B1DF),
@@ -190,7 +190,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.2,
                                         10,
                                         '식이섬유 ${Get.arguments[i][2][6]} g'),
-                                    SizedBox(height: valHeight * 0.008),
+                                    SizedBox(height: 4),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -207,7 +207,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                           '${(Get.arguments[i][2][1] * Get.arguments[i][3]).round()} kcal',
                                           style: TextStyle(
                                             color: Color(0xFFFFFDFD),
-                                            fontSize: defaultSize * 15,
+                                            fontSize: 15,
                                           ),
                                         ),
                                       ],
@@ -215,7 +215,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                   ],
                                 ),
                               ),
-                              SizedBox(height: valHeight * 0.015),
+                              SizedBox(height: 10),
                               (i == Get.arguments.length - 1)
                                   ? Container()
                                   : Container(
