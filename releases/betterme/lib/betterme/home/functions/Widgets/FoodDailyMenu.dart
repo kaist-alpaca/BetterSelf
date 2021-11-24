@@ -71,10 +71,10 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
                                   type: 'camera', use: 'food');
                               Navigator.pop(context, 'Cancel');
                               if (ProfileController.to.food != null) {
-                                controller.uploadFoodImage(
-                                    uid: controller.myProfile.value.uid!,
-                                    index: widget.index.toString(),
-                                    file: ProfileController.to.food!);
+                                // controller.uploadFoodImage(
+                                //     uid: controller.myProfile.value.uid!,
+                                //     // index: widget.index.toString(),
+                                //     file: ProfileController.to.food!);
                                 setState(() {
                                   tmp++;
                                 });
@@ -95,10 +95,10 @@ class _FoodDailyMenu extends State<FoodDailyMenu> {
                                   type: 'gallery', use: 'food');
                               Navigator.pop(context, 'Cancel');
                               if (ProfileController.to.food != null) {
-                                controller.uploadFoodImage(
-                                    uid: controller.myProfile.value.uid!,
-                                    index: widget.index.toString(),
-                                    file: ProfileController.to.food!);
+                                // controller.uploadFoodImage(
+                                //     uid: controller.myProfile.value.uid!,
+                                //     // index: widget.index.toString(),
+                                //     file: ProfileController.to.food!);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
