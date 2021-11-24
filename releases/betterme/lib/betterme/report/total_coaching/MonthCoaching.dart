@@ -77,7 +77,7 @@ class _MonthCoaching extends State<MonthCoaching> {
                       calendarStyle: CalendarStyle(
                         isTodayHighlighted: false,
                         selectedTextStyle: TextStyle(
-                          color: Colors.red,
+                          color: Color(0xffD2ABBA),
                         ),
                         selectedDecoration: BoxDecoration(
                           color: Color(0xff333C47),
