@@ -117,6 +117,24 @@ class ServerConnection {
             photoURL));
   }
 
+  static Future<void> uploadWeight(
+      String uid, String startDate, double startTime, double weight) async {
+    print('upload_weight');
+    print(uid);
+    print(startDate);
+    print(startTime);
+    print(weight);
+    await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/upload_weight.php?uid=" +
+            uid +
+            "&startDate=" +
+            startDate +
+            "&startTime=" +
+            startTime.toString() +
+            "&weight=" +
+            weight.toString()));
+  }
+
   static Future<void> createUser(
     String uid,
     String email,
@@ -318,8 +336,8 @@ class ServerConnection {
       // start = DateTime.now().add(Duration(days: -10));
     } else {
       print("update date is not none");
-      // start = DateTime.parse(lastupdate);
-      start = DateTime.now();
+      start = DateTime.parse(lastupdate);
+      // start = DateTime.now();
       // start = DateTime.now().add(Duration(days: -20));
     }
     DateTime now = DateTime.now();
@@ -501,11 +519,12 @@ class ServerConnection {
       }
 
       var weightData = [];
+      print('weight!!!');
       final appleHealthWeight = await HealthKitReporter.sampleQuery(
           QuantityType.bodyMass.identifier, _predicate);
       for (final q in appleHealthWeight) {
         var map = {};
-        // print('q: ${json.encode(q.map)} \n');
+        print('q: ${json.encode(q.map)} \n');
         // print(
         //     'q: ${json.encode(q.map["startTimestamp"])} ${json.encode(q.map["harmonized"]["value"])} kg \n');
         map['startDate'] = DateTime.fromMillisecondsSinceEpoch(

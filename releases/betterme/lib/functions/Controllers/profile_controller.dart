@@ -249,7 +249,7 @@ class ProfileController extends GetxController {
 
   String? gender = "선택안함";
   String? birthday = '2002/06/21';
-  String? weightday;
+  String? weightday = DateTime.now().toString().substring(0, 10);
   String? height = '';
   String weight = '0.0';
   var weight_test = RxString('');

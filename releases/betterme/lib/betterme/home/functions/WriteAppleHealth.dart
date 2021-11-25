@@ -1,5 +1,9 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:betterme/functions/Controllers/profile_controller.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:health_kit_reporter/health_kit_reporter.dart';
 import 'package:health_kit_reporter/model/payload/device.dart';
@@ -9,7 +13,8 @@ import 'package:health_kit_reporter/model/payload/source_revision.dart';
 import 'package:health_kit_reporter/model/type/quantity_type.dart';
 
 class WriteAppleHealth {
-  static Future<void> writeWeight() async {
+  static Future<void> writeWeight(
+      int millisecondsSinceEpoch, double weight2) async {
     bool _isAuthorizationRequested = false;
     try {
       final readTypes = <String>[];
@@ -54,19 +59,46 @@ class WriteAppleHealth {
           '4',
           _operatingSystem,
         );
-        final now = DateTime.now();
-        final minuteAgo = now.add(Duration(minutes: -1));
-        final harmonized = QuantityHarmonized(100, 'kg', null);
+        final harmonized = QuantityHarmonized(weight2, 'kg', null);
         final weight = Quantity(
             'testStepsUUID',
             QuantityType.bodyMass.identifier,
-            now.millisecondsSinceEpoch,
-            now.millisecondsSinceEpoch,
+            millisecondsSinceEpoch,
+            millisecondsSinceEpoch,
             _device,
             _sourceRevision,
             harmonized);
         print('try to save: ${weight.map}');
         final saved = await HealthKitReporter.save(weight);
+
+        final response = await http.get(Uri.parse(
+            "http://kaistuser.iptime.org:8080/healthData_get_lastupdate.php?uid=" +
+                ProfileController.to.originMyProfile.uid!));
+
+        print(json.decode(response.body));
+        String lastupdate = json.decode(response.body).toString();
+
+        if (millisecondsSinceEpoch >
+            DateTime.parse(lastupdate).millisecondsSinceEpoch) {
+          await ServerConnection.updateHeathData(
+              ProfileController.to.originMyProfile.uid!);
+        } else {
+          await ServerConnection.uploadWeight(
+              ProfileController.to.originMyProfile.uid!,
+              DateTime.fromMillisecondsSinceEpoch(millisecondsSinceEpoch)
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_'),
+              millisecondsSinceEpoch / 1000,
+              weight2);
+        }
+
+        var weight3 = await ServerConnection.GetWeight(
+            ProfileController.to.originMyProfile.uid!);
+        // print(weight["result"].last["weight"]);
+        if (weight3["result"] != '0') {
+          ProfileController.to.weightSelected(weight3["result"][0]["weight"]);
+        }
         print('stepsWeight: $saved');
       } else {
         print('error canWrite weight: $canWrite');
