@@ -360,6 +360,13 @@ class ProfileController extends GetxController {
       diseaseSelected(disease);
     }
 
+    var gender = await ServerConnection.GetGender(
+        FirebaseAuth.instance.currentUser!.uid);
+    // print(weight["result"].last["weight"]);
+    if (gender != '0') {
+      genderSelected(gender);
+    }
+
     // return FirebaseAuth.instance.currentUser == null
     //     ? ''
     //     : FirebaseAuth.instance.currentUser!.uid;
