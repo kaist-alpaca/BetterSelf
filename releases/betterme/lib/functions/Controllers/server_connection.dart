@@ -103,6 +103,12 @@ class ServerConnection {
     return (json.decode(response.body));
   }
 
+  static Future<String> GetHeight(String uid) async {
+    final response = await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/get_height.php?uid=" + uid));
+    return (json.decode(response.body));
+  }
+
   static Future<void> uploadProfileImage(String uid, String photoURL) async {
     await http.get(Uri.parse(
         "http://kaistuser.iptime.org:8080/upload_image.php?uid=" +

@@ -367,6 +367,13 @@ class ProfileController extends GetxController {
       genderSelected(gender);
     }
 
+    var height = await ServerConnection.GetHeight(
+        FirebaseAuth.instance.currentUser!.uid);
+    // print(weight["result"].last["weight"]);
+    if (height != '0') {
+      heightSelected(height);
+    }
+
     // return FirebaseAuth.instance.currentUser == null
     //     ? ''
     //     : FirebaseAuth.instance.currentUser!.uid;
@@ -469,17 +476,28 @@ class ProfileController extends GetxController {
     print(gender);
     print(birthday);
     print(height);
+    print(disease == '');
     print(originMyProfile.uid);
-    final response = await http.get(Uri.parse(
-        "http://kaistuser.iptime.org:8080/update_profile.php?uid=" +
-            originMyProfile.uid! +
-            '&gender=' +
-            gender! +
-            '&birthday=' +
-            birthday! +
-            '&height=' +
-            height! +
-            '&disease=' +
-            disease!));
+    final response = disease == ''
+        ? await http.get(Uri.parse(
+            "http://kaistuser.iptime.org:8080/update_profile.php?uid=" +
+                originMyProfile.uid! +
+                '&gender=' +
+                gender! +
+                '&birthday=' +
+                birthday! +
+                '&height=' +
+                height!))
+        : await http.get(Uri.parse(
+            "http://kaistuser.iptime.org:8080/update_profile.php?uid=" +
+                originMyProfile.uid! +
+                '&gender=' +
+                gender! +
+                '&birthday=' +
+                birthday! +
+                '&height=' +
+                height! +
+                '&disease=' +
+                disease!));
   }
 }
