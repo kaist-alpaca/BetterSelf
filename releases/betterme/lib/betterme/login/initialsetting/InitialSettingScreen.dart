@@ -90,17 +90,20 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
     showCupertinoDialog(
         context: context,
         builder: (context) {
-          return CupertinoAlertDialog(
-            title: Text(title),
-            content: Text(message),
-            actions: [
-              CupertinoDialogAction(
-                  isDefaultAction: true,
-                  child: Text("확인"),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  })
-            ],
+          return Theme(
+            data: ThemeData.dark(),
+            child: CupertinoAlertDialog(
+              title: Text(title),
+              content: Text(message),
+              actions: [
+                CupertinoDialogAction(
+                    isDefaultAction: true,
+                    child: Text("확인"),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    })
+              ],
+            ),
           );
         });
   }
