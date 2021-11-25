@@ -153,7 +153,18 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
     final txtFeildColor = Color(0xff333C47); //텍스트
     final txtFeildBorderColor = Color(0xff999CA2);
 
-    final genderList = [Text("남"), Text("여"), Text("선택안함")];
+    final genderList = [
+      Center(
+          child: Text("남",
+              style: TextStyle(
+                color: txtColor,
+              ))),
+      Center(
+          child: Text("여",
+              style: TextStyle(
+                color: txtColor,
+              )))
+    ];
 
     final double TextfieldSize = valHeight * 0.04;
 
@@ -340,23 +351,79 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                         GestureDetector(
                           onTap: () {
                             // _openDatePicker(context);
-                            BottomPicker(
-                                    items: genderList,
-                                    title: "성별",
-                                    titleStyle: TextStyle(
-                                        color: txtColor,
-                                        fontSize: defaultSize * 15),
-                                    onChange: (index) {
-                                      print(index);
-                                    },
-                                    onSubmit: (index) {
-                                      print(genderList[index].data);
-                                      controller.genderSelected(
-                                          genderList[index].data.toString());
-                                    },
-                                    bottomPickerTheme:
-                                        BOTTOM_PICKER_THEME.PLUM_PLATE)
-                                .show(context);
+                            // BottomPicker(
+                            //         items: genderList,
+                            //         title: "성별",
+                            //         titleStyle: TextStyle(
+                            //             color: txtColor,
+                            //             fontSize: defaultSize * 15),
+                            //         onSubmit: (index) {
+                            //           print(genderList[index].data);
+                            //           controller.genderSelected(
+                            //               genderList[index].data.toString());
+                            //         },
+                            //         bottomPickerTheme:
+                            //             BOTTOM_PICKER_THEME.PLUM_PLATE)
+                            //     .show(context);
+                            showCupertinoModalPopup(
+                              context: context,
+                              builder: (context) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        // color: Color(0xffffffff),
+                                        color: Color.fromRGBO(40, 51, 55, 1),
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Color(0xff999999),
+                                            width: 0.0,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          CupertinoButton(
+                                            child: Text('취소'),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0,
+                                              vertical: 5.0,
+                                            ),
+                                          ),
+                                          CupertinoButton(
+                                            child: Text('완료'),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0,
+                                              vertical: 5.0,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(bottom: 35),
+                                      height: 150.0,
+                                      color: Color.fromRGBO(40, 51, 55, 1),
+                                      child: CupertinoPicker(
+                                        itemExtent: 40,
+                                        onSelectedItemChanged: (int value) {},
+                                        children: genderList,
+                                        /* the rest of the picker */
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
                           },
                           child: Container(
                               //생년월일 입력란
