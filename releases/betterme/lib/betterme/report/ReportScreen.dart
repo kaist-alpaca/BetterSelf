@@ -49,6 +49,7 @@ class _ReportScreen extends State<ReportScreen> {
   Color button1Color = Color(0xff827380);
   Color button2Color = Color(0xff0B202A);
   Color button3Color = Color(0xff0B202A);
+  DateTime record_date = DateTime.now();
 
   void initState() {
     super.initState();
@@ -144,28 +145,151 @@ class _ReportScreen extends State<ReportScreen> {
                                               child: GestureDetector(
                                                 onTap: () {
                                                   // _openDatePicker(context);
-                                                  BottomPicker.date(
-                                                          title: "날짜",
-                                                          titleStyle: TextStyle(
-                                                              color: txtColor,
-                                                              fontSize:
-                                                                  defaultSize *
-                                                                      15),
-                                                          onChange: (index) {
-                                                            print(index);
-                                                          },
-                                                          onSubmit: (index) {
-                                                            print(index);
-                                                            controller
-                                                                .weightdaySelected(index
-                                                                    .toString()
-                                                                    .substring(
-                                                                        0, 10));
-                                                          },
-                                                          bottomPickerTheme:
-                                                              BOTTOM_PICKER_THEME
-                                                                  .PLUM_PLATE)
-                                                      .show(context);
+                                                  // BottomPicker.date(
+                                                  //         title: "날짜",
+                                                  //         titleStyle: TextStyle(
+                                                  //             color: txtColor,
+                                                  //             fontSize:
+                                                  //                 defaultSize *
+                                                  //                     15),
+                                                  //         onChange: (index) {
+                                                  //           print(index);
+                                                  //         },
+                                                  //         onSubmit: (index) {
+                                                  //           print(index);
+                                                  //           controller
+                                                  //               .weightdaySelected(index
+                                                  //                   .toString()
+                                                  //                   .substring(
+                                                  //                       0, 10));
+                                                  //         },
+                                                  //         bottomPickerTheme:
+                                                  //             BOTTOM_PICKER_THEME
+                                                  //                 .PLUM_PLATE)
+                                                  //     .show(context);
+
+                                                  showCupertinoModalPopup(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: <Widget>[
+                                                          Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              // color: Color(0xffffffff),
+                                                              color: Color
+                                                                  .fromRGBO(
+                                                                      40,
+                                                                      51,
+                                                                      55,
+                                                                      1),
+                                                              border: Border(
+                                                                bottom:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0xff999999),
+                                                                  width: 0.0,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: <
+                                                                  Widget>[
+                                                                CupertinoButton(
+                                                                  child: Text(
+                                                                      '취소'),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .symmetric(
+                                                                    horizontal:
+                                                                        16.0,
+                                                                    vertical:
+                                                                        5.0,
+                                                                  ),
+                                                                ),
+                                                                CupertinoButton(
+                                                                  child: Text(
+                                                                      '완료'),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .symmetric(
+                                                                    horizontal:
+                                                                        16.0,
+                                                                    vertical:
+                                                                        5.0,
+                                                                  ),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    bottom: 35),
+                                                            height: 300.0,
+                                                            width: valWidth,
+                                                            color:
+                                                                Color.fromRGBO(
+                                                                    40,
+                                                                    51,
+                                                                    55,
+                                                                    1),
+                                                            child:
+                                                                CupertinoTheme(
+                                                              data:
+                                                                  CupertinoThemeData(
+                                                                textTheme:
+                                                                    CupertinoTextThemeData(
+                                                                  textStyle: TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                              ),
+                                                              child:
+                                                                  CupertinoDatePicker(
+                                                                dateOrder:
+                                                                    DatePickerDateOrder
+                                                                        .ymd,
+                                                                minimumDate: DateTime
+                                                                        .now()
+                                                                    .add(Duration(
+                                                                        days:
+                                                                            -7)),
+                                                                maximumDate:
+                                                                    DateTime
+                                                                        .now(),
+                                                                initialDateTime:
+                                                                    record_date,
+                                                                onDateTimeChanged:
+                                                                    (e) {
+                                                                  print(e);
+                                                                },
+                                                                mode:
+                                                                    CupertinoDatePickerMode
+                                                                        .date,
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
                                                 },
                                                 child: Container(
                                                     //날짜
@@ -181,11 +305,7 @@ class _ReportScreen extends State<ReportScreen> {
                                                                     valWidth *
                                                                         0.015))),
                                                     child: Text(
-                                                      controller.weightday ==
-                                                              null
-                                                          ? ""
-                                                          : controller.weightday
-                                                              .toString(),
+                                                      record_date.toString(),
                                                       style: TextStyle(
                                                           color: txtColor,
                                                           fontSize:
