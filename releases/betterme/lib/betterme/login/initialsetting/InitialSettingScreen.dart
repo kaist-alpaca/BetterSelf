@@ -60,6 +60,8 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
   String height = '';
   String weight = ProfileController.to.weight;
   String disease = '';
+  String gender = '남';
+  String birth = '';
 
   showOverlay(BuildContext context) {
     if (overlayEntry != null) return;
@@ -350,6 +352,7 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                                 textAlign: TextAlign.center)),
                         GestureDetector(
                           onTap: () {
+                            gender = controller.gender == '여' ? '여' : '남';
                             // _openDatePicker(context);
                             // BottomPicker(
                             //         items: genderList,
@@ -359,8 +362,8 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                             //             fontSize: defaultSize * 15),
                             //         onSubmit: (index) {
                             //           print(genderList[index].data);
-                            //           controller.genderSelected(
-                            //               genderList[index].data.toString());
+                            // controller.genderSelected(
+                            //     genderList[index].data.toString());
                             //         },
                             //         bottomPickerTheme:
                             //             BOTTOM_PICKER_THEME.PLUM_PLATE)
@@ -399,6 +402,8 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                                           CupertinoButton(
                                             child: Text('완료'),
                                             onPressed: () {
+                                              print(gender);
+                                              controller.genderSelected(gender);
                                               Navigator.pop(context);
                                             },
                                             padding: const EdgeInsets.symmetric(
@@ -414,8 +419,27 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                                       height: 150.0,
                                       color: Color.fromRGBO(40, 51, 55, 1),
                                       child: CupertinoPicker(
+                                        scrollController:
+                                            FixedExtentScrollController(
+                                                initialItem: ProfileController
+                                                            .to.gender ==
+                                                        '여'
+                                                    ? 1
+                                                    : 0),
                                         itemExtent: 40,
-                                        onSelectedItemChanged: (int value) {},
+                                        onSelectedItemChanged: (int value) {
+                                          // print(genderList[value].child.key);
+                                          print(genderList[value]
+                                              .child
+                                              .toString()
+                                              .contains("남"));
+                                          gender = genderList[value]
+                                                  .child
+                                                  .toString()
+                                                  .contains("남")
+                                              ? '남'
+                                              : '여';
+                                        },
                                         children: genderList,
                                         /* the rest of the picker */
                                       ),
@@ -426,7 +450,7 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                             );
                           },
                           child: Container(
-                              //생년월일 입력란
+                              //일 입력란
                               width: valWidth * 0.35,
                               height: TextfieldSize, //valHeight * 0.06,
                               alignment: Alignment.center,
@@ -465,26 +489,124 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                                 textAlign: TextAlign.center)),
                         GestureDetector(
                           onTap: () {
+                            birth = controller.birthday == '/00/00'
+                                ? "2000-01-01"
+                                : controller.birthday!;
                             // _openDatePicker(context);
-                            DatePicker.showDatePicker(context,
-                                showTitleActions: true,
-                                minTime: DateTime(1900, 1, 1),
-                                maxTime: DateTime.now(), onChanged: (date) {
-                              print('change $date');
-                            }, onConfirm: (date) {
-                              print('confirm $date');
-                              controller.birthdaySelected(date
-                                  .toString()
-                                  .substring(0, 10)
-                                  .replaceAll('-', '/'));
-                            },
-                                // currentTime: DateTime.now(),
-                                currentTime: DateTime.parse(
-                                    controller.birthday! == "/00/00"
-                                        ? "2000-01-01"
-                                        : controller.birthday!
-                                            .replaceAll('/', '-')),
-                                locale: LocaleType.ko);
+                            // DatePicker.showDatePicker(context,
+                            //     showTitleActions: true,
+                            //     minTime: DateTime(1900, 1, 1),
+                            //     maxTime: DateTime.now(), onChanged: (date) {
+                            //   print('change $date');
+                            // }, onConfirm: (date) {
+                            //   print('confirm $date');
+                            //   controller.birthdaySelected(date
+                            //       .toString()
+                            //       .substring(0, 10)
+                            //       .replaceAll('-', '/'));
+                            // },
+                            //     // currentTime: DateTime.now(),
+                            // currentTime: DateTime.parse(
+                            //     controller.birthday! == "/00/00"
+                            //         ? "2000-01-01"
+                            //         : controller.birthday!
+                            //             .replaceAll('/', '-')),
+                            //     locale: LocaleType.ko);
+                            showCupertinoModalPopup(
+                              context: context,
+                              builder: (context) {
+                                return Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        // color: Color(0xffffffff),
+                                        color: Color.fromRGBO(40, 51, 55, 1),
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Color(0xff999999),
+                                            width: 0.0,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          CupertinoButton(
+                                            child: Text('취소'),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0,
+                                              vertical: 5.0,
+                                            ),
+                                          ),
+                                          CupertinoButton(
+                                            child: Text('완료'),
+                                            onPressed: () {
+                                              controller
+                                                  .birthdaySelected(birth);
+                                              Navigator.pop(context);
+                                            },
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0,
+                                              vertical: 5.0,
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(bottom: 35),
+                                      height: 300.0,
+                                      width: valWidth,
+                                      color: Color.fromRGBO(40, 51, 55, 1),
+                                      child: CupertinoTheme(
+                                        data: CupertinoThemeData(
+                                          textTheme: CupertinoTextThemeData(
+                                            textStyle:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        ),
+                                        child: CupertinoDatePicker(
+                                          dateOrder: DatePickerDateOrder.ymd,
+                                          minimumYear: 1900,
+                                          maximumYear: DateTime.now().year,
+                                          initialDateTime: DateTime.parse(
+                                              controller.birthday! == "/00/00"
+                                                  ? "2000-01-01"
+                                                  : controller.birthday!
+                                                      .replaceAll('/', '-')),
+                                          maximumDate: DateTime.now(),
+                                          onDateTimeChanged: (e) {
+                                            print(e);
+                                            birth = e
+                                                .toString()
+                                                .substring(0, 10)
+                                                .replaceAll('-', '/');
+                                          },
+                                          mode: CupertinoDatePickerMode.date,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                            // CupertinoDatePicker(
+                            //   minimumYear: 1900,
+                            //   maximumYear: DateTime.now().year,
+                            //   initialDateTime: DateTime.parse(
+                            //       controller.birthday! == "/00/00"
+                            //           ? "2000-01-01"
+                            //           : controller.birthday!
+                            //               .replaceAll('/', '-')),
+                            //   maximumDate: DateTime.now(),
+                            //   onDateTimeChanged: (e) {},
+                            //   mode: CupertinoDatePickerMode.date,
+                            // );
                           },
                           child: Container(
                               //생년월일 입력란
