@@ -540,31 +540,6 @@ class PathPainter extends CustomPainter {
     // }
   }
 
-  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
-    List<Offset> points = [];
-    p.forEach((i) {
-      final XGridUnit = width / 7;
-      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
-      final y = height - (i.value);
-      final dp = Offset(x, y);
-      points.add(dp);
-    });
-    return points;
-  }
-
-  Path ComputePath(List<Offset> points) {
-    final path = Path();
-    for (int i = 0; i < points.length; i++) {
-      final p = points[i];
-      if (i == 0) {
-        path.moveTo(p.dx, p.dy);
-      } else {
-        path.lineTo(p.dx, p.dy);
-      }
-    }
-    return path;
-  }
-
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
@@ -635,8 +610,18 @@ class PathPainterWeight extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = TotalGraphHelper.ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
+
+    if (ProfileController.to.duration == 7) {
+      datapath.forEach((dp) {
+        final dotPaintFill = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1.0;
+        canvas.drawCircle(dp, 5.0, dotPaintFill);
+      });
+    }
 
     path.close();
   }
@@ -701,8 +686,18 @@ class PathPainterSleep extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = TotalGraphHelper.ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
+
+    if (ProfileController.to.duration == 7) {
+      datapath.forEach((dp) {
+        final dotPaintFill = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1.0;
+        canvas.drawCircle(dp, 5.0, dotPaintFill);
+      });
+    }
 
     path.close();
   }
@@ -767,8 +762,18 @@ class PathPainterStress extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = TotalGraphHelper.ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
+
+    if (ProfileController.to.duration == 7) {
+      datapath.forEach((dp) {
+        final dotPaintFill = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1.0;
+        canvas.drawCircle(dp, 5.0, dotPaintFill);
+      });
+    }
 
     path.close();
   }
@@ -832,8 +837,18 @@ class PathPainterFood extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = TotalGraphHelper.ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
+
+    if (ProfileController.to.duration == 7) {
+      datapath.forEach((dp) {
+        final dotPaintFill = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1.0;
+        canvas.drawCircle(dp, 5.0, dotPaintFill);
+      });
+    }
 
     path.close();
   }
@@ -897,8 +912,18 @@ class PathPainterBurned extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = TotalGraphHelper.ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
+
+    if (ProfileController.to.duration == 7) {
+      datapath.forEach((dp) {
+        final dotPaintFill = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1.0;
+        canvas.drawCircle(dp, 5.0, dotPaintFill);
+      });
+    }
 
     path.close();
   }
@@ -930,11 +955,14 @@ class TotalGraphHelper {
     return points;
   }
 
-  static Path ComputePath(List<Offset> points) {
+  static Path ComputePath(List<Offset> points, double width, int duration) {
     final path = Path();
+    final XGridUnit = width / duration;
     for (int i = 0; i < points.length; i++) {
       final p = points[i];
       if (i == 0) {
+        path.moveTo(p.dx, p.dy);
+      } else if (duration == 7 && (points[i - 1].dx - p.dx) > XGridUnit * 1.2) {
         path.moveTo(p.dx, p.dy);
       } else {
         path.lineTo(p.dx, p.dy);
