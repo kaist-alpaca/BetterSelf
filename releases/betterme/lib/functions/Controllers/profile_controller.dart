@@ -353,6 +353,13 @@ class ProfileController extends GetxController {
         FirebaseAuth.instance.currentUser!.uid);
     birthdaySelected(birth);
 
+    var disease = await ServerConnection.GetDisease(
+        FirebaseAuth.instance.currentUser!.uid);
+    // print(weight["result"].last["weight"]);
+    if (disease != '0') {
+      diseaseSelected(disease);
+    }
+
     // return FirebaseAuth.instance.currentUser == null
     //     ? ''
     //     : FirebaseAuth.instance.currentUser!.uid;
