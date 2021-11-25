@@ -260,8 +260,8 @@ class ServerConnection {
 
   static Future<List<dynamic>> total_burned(
       String uid, List<dynamic> date) async {
-    print('showing date');
-    print(date);
+    // print('showing date');
+    // print(date);
     final response = await http.post(
       Uri.http('kaistuser.iptime.org:8080', 'total_burned.php'),
       body: <String, String>{

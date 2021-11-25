@@ -39,8 +39,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
     //   date.add(tmp);
     // }
 
-    print('send date');
-    print(time);
+    // print('send date');
+    // print(time);
 
     return Stack(
       children: [
@@ -61,7 +61,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
               // print('have data');
-              // print(snapshot.data);
+              print(snapshot.data);
               // print(snapshot.data!);
               if (widget.GraphTypes[0]) {
                 return Container(
@@ -90,8 +90,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
               if (widget.GraphTypes[1]) {
-                print('date list');
-                print(ProfileController.to.datelist);
+                // print('date list');
+                // print(ProfileController.to.datelist);
                 // print('have data');
                 // print(snapshot.data);
                 // print(snapshot.data!);
@@ -105,7 +105,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
                 return Container();
               }
             } else {
-              print('do not have data');
+              // print('do not have data');
               return Container();
             }
           },
@@ -133,7 +133,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
                 return Container();
               }
             } else {
-              print('do not have data');
+              // print('do not have data');
               return Container();
             }
           },
@@ -161,7 +161,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
                 return Container();
               }
             } else {
-              print('do not have data');
+              // print('do not have data');
               return Container();
             }
           },
@@ -176,8 +176,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
               if (widget.GraphTypes[4]) {
-                print('have data burned');
-                print(snapshot.data);
+                // print('have data burned');
+                // print(snapshot.data);
                 // print(snapshot.data!);
                 return Container(
                     child: CustomPaint(
@@ -658,9 +658,9 @@ class PathPainterSleep extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     List<DateData> SleepData = [];
-    print('sleep');
+    // print('sleep');
     sleep.forEach((e) {
-      print(e);
+      // print(e);
       // print(DateTime.parse(e['time'].replaceAll("_", "")));
       SleepData.add(
         DateData(
@@ -671,8 +671,8 @@ class PathPainterSleep extends CustomPainter {
     });
 
     // print('good...?');
-    print("print sleepdata");
-    print(SleepData);
+    // print("print sleepdata");
+    // print(SleepData);
 
     double XPadd_right = 30;
     double YPadd_bottom = 30;
@@ -908,12 +908,21 @@ class PathPainterBurned extends CustomPainter {
 }
 
 class TotalGraphHelper {
+  static DateTime ComputeDate(DateTime time) {
+    return DateTime.parse(time.year.toString() +
+        time.month.toString().padLeft(2, '0') +
+        time.day.toString().padLeft(2, '0'));
+  }
+
   static List<Offset> ComputePoints(List<DateData> p, double width,
       double height, int duration, DateTime time) {
     List<Offset> points = [];
     p.forEach((i) {
       final XGridUnit = width / duration;
-      final x = width - (time.difference(i.time).inDays) * XGridUnit;
+      final x = width -
+          (ComputeDate(time).difference(ComputeDate(i.time)).inDays) *
+              XGridUnit;
+      // final x = width - (time.day - i.time.day) * XGridUnit;
       final y = height - (i.value);
       final dp = Offset(x, y);
       points.add(dp);
