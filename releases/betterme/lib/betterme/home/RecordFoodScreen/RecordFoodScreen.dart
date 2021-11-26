@@ -293,10 +293,19 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                           setState(() {
                                             amount = double.parse(value);
                                           });
+                                          if (amount > 10) {
+                                            setState(() {
+                                              amount = 10;
+                                            });
+                                            NumFood.value =
+                                                TextEditingValue(text: '10');
+                                          }
                                         } catch (e) {
                                           setState(() {
                                             amount = 1;
                                           });
+                                          NumFood.value =
+                                              TextEditingValue(text: '1');
                                         }
                                         print(value);
                                       },
@@ -427,10 +436,10 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                           MiniBox(
                                               context,
                                               txtColor,
-                                              0.012,
+                                              0.014,
                                               0.176,
                                               10,
-                                              '나트륨 ${(Nutrition[7] * amount).toStringAsFixed(1)} g'),
+                                              '나트륨 ${(Nutrition[7] * amount).toStringAsFixed(1)} mg'),
                                         ]),
                                   ),
                                 ],

@@ -17,8 +17,8 @@ Widget MiniBox(BuildContext context, Color boxColor, double boxRatio,
             color: boxColor),
       ),
       Container(
-        margin: EdgeInsets.only(left: valWidth * 0.02),
-        width: valWidth * txtRatio,
+        margin: EdgeInsets.only(left: valWidth * 0.01),
+        width: valWidth * txtRatio * 1.18,
         child: Text(
           txt,
           style: TextStyle(

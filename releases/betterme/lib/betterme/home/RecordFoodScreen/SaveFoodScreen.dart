@@ -158,7 +158,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.012,
                                         0.2,
                                         10,
-                                        '탄수화물 ${Get.arguments[0][i][2][2]} g'), //
+                                        '탄수화물 ${(Get.arguments[0][i][2][2] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'), //
                                     SizedBox(height: valHeight * 0.008),
                                     MiniBox(
                                         context,
@@ -166,7 +166,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.012,
                                         0.176,
                                         10,
-                                        '단백질 ${Get.arguments[0][i][2][3]} g'),
+                                        '단백질 ${(Get.arguments[0][i][2][3] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
                                     SizedBox(height: valHeight * 0.008),
                                     MiniBox(
                                         context,
@@ -174,7 +174,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.012,
                                         0.15,
                                         10,
-                                        '지방 ${Get.arguments[0][i][2][4]} g'),
+                                        '지방 ${(Get.arguments[0][i][2][4] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
                                     SizedBox(height: valHeight * 0.008),
                                     MiniBox(
                                         context,
@@ -182,7 +182,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.012,
                                         0.2,
                                         10,
-                                        '콜레스테롤 ${Get.arguments[0][i][2][5]} g'),
+                                        '콜레스테롤 ${(Get.arguments[0][i][2][5] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
                                     SizedBox(height: valHeight * 0.008),
                                     MiniBox(
                                         context,
@@ -190,7 +190,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.012,
                                         0.2,
                                         10,
-                                        '식이섬유 ${Get.arguments[0][i][2][6]} g'),
+                                        '식이섬유 ${(Get.arguments[0][i][2][6] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
                                     SizedBox(height: valHeight * 0.008),
                                     Row(
                                       mainAxisAlignment:
@@ -203,7 +203,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                             0.012,
                                             0.176,
                                             10,
-                                            '나트륨 ${Get.arguments[0][i][2][7]} g'),
+                                            '나트륨 ${(Get.arguments[0][i][2][7] * Get.arguments[0][i][3]).toStringAsFixed(1)} mg'),
                                         Text(
                                           '${(Get.arguments[0][i][2][1] * Get.arguments[0][i][3]).round()} kcal',
                                           style: TextStyle(
