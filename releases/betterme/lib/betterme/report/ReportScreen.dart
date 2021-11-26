@@ -683,7 +683,7 @@ class _ReportScreen extends State<ReportScreen> {
                                 minimumSize:
                                     Size(valWidth * 0.27, valHeight * 0.04)),
                             child: Text(
-                              '7일',
+                              '주',
                               style: TextStyle(
                                 color: txtColor,
                                 fontSize: defaultSize * 14,
@@ -709,7 +709,7 @@ class _ReportScreen extends State<ReportScreen> {
                                 minimumSize:
                                     Size(valWidth * 0.27, valHeight * 0.04)),
                             child: Text(
-                              '31일',
+                              '월',
                               style: TextStyle(
                                 color: txtColor,
                                 fontSize: defaultSize * 14,
@@ -737,7 +737,7 @@ class _ReportScreen extends State<ReportScreen> {
                                 minimumSize:
                                     Size(valWidth * 0.27, valHeight * 0.04)),
                             child: Text(
-                              '12개월',
+                              '6달',
                               style: TextStyle(
                                 color: txtColor,
                                 fontSize: defaultSize * 14,
@@ -747,7 +747,7 @@ class _ReportScreen extends State<ReportScreen> {
                               setState(() {
                                 buttonCase = 2;
                               });
-                              ProfileController.to.initalDatelist(365);
+                              ProfileController.to.initalDatelist(180);
                               setState(() {
                                 button3Color = Color(0xff827380);
                                 button2Color = Color(0xff0B202A);
@@ -770,6 +770,8 @@ class _ReportScreen extends State<ReportScreen> {
                             icon: SvgPicture.asset(
                                 'images/arrow towards left_icon.svg'),
                             onPressed: () {
+                              print(controller.duration == 365);
+                              print(controller.duration);
                               controller.minusDatelist(controller.duration);
                             },
                           ),
@@ -779,53 +781,54 @@ class _ReportScreen extends State<ReportScreen> {
                           height: valHeight * 0.05,
                           child: Align(
                             alignment: Alignment.center,
-                            child: controller.duration == 365
-                                ? Text(
-                                    controller.totaldate.add(Duration(days: -(controller.duration - 1))).year.toString() +
-                                        "년 " +
-                                        controller.totaldate
-                                            .add(Duration(
-                                                days:
-                                                    -(controller.duration - 1)))
-                                            .month
-                                            .toString() +
-                                        "월 " +
-                                        controller.totaldate
-                                            .add(Duration(
-                                                days:
-                                                    -(controller.duration - 1)))
-                                            .day
-                                            .toString() +
-                                        "일 - " +
-                                        controller.totaldate.year.toString() +
-                                        "년 " +
-                                        controller.totaldate.month.toString() +
-                                        "월 " +
-                                        controller.totaldate.day.toString() +
-                                        "일",
+                            child: controller.duration == 7
+                                ? Text(controller.totaldate.add(Duration(days: -(controller.duration - 1))).month.toString() + "월 " + controller.totaldate.add(Duration(days: -(controller.duration - 1))).day.toString() + "일 - " + controller.totaldate.month.toString() + "월 " + controller.totaldate.day.toString() + "일",
                                     style: TextStyle(
                                         fontSize: defaultSize * 17,
                                         color: txtColor),
                                     textAlign: TextAlign.center)
-                                : Text(
-                                    controller.totaldate
-                                            .add(Duration(
-                                                days:
-                                                    -(controller.duration - 1)))
-                                            .month
-                                            .toString() +
-                                        "월 " +
-                                        controller.totaldate
-                                            .add(Duration(days: -(controller.duration - 1)))
-                                            .day
-                                            .toString() +
-                                        "일 - " +
-                                        controller.totaldate.month.toString() +
-                                        "월 " +
-                                        controller.totaldate.day.toString() +
-                                        "일",
-                                    style: TextStyle(fontSize: defaultSize * 17, color: txtColor),
-                                    textAlign: TextAlign.center),
+                                : controller.duration == 31
+                                    ? controller.totaldate.add(Duration(days: -28)).month ==
+                                            controller.totaldate.month
+                                        ? Text(controller.totaldate.year.toString() + "년 " + controller.totaldate.month.toString() + "월",
+                                            style: TextStyle(
+                                                fontSize: defaultSize * 17,
+                                                color: txtColor),
+                                            textAlign: TextAlign.center)
+                                        : Text(
+                                            controller.totaldate.add(Duration(days: -28)).year.toString() +
+                                                "년 " +
+                                                controller.totaldate
+                                                    .add(Duration(days: -28))
+                                                    .month
+                                                    .toString() +
+                                                "월 - " +
+                                                controller.totaldate.month
+                                                    .toString() +
+                                                "월 ",
+                                            style: TextStyle(
+                                                fontSize: defaultSize * 17,
+                                                color: txtColor),
+                                            textAlign: TextAlign.center)
+                                    : controller.totaldate.day >
+                                            (DateTime(controller.totaldate.year, controller.totaldate.month + 1, 0).day / 2)
+                                                .floor()
+                                        ? Text(
+                                            DateTime(controller.totaldate.year, controller.totaldate.month + 1, 15)
+                                                    .add(Duration(days: -150))
+                                                    .year
+                                                    .toString() +
+                                                "년 " +
+                                                DateTime(controller.totaldate.year, controller.totaldate.month + 1, 15)
+                                                    .add(Duration(days: -150))
+                                                    .month
+                                                    .toString() +
+                                                "월 - " +
+                                                DateTime(controller.totaldate.year, controller.totaldate.month + 1, 1).month.toString() +
+                                                "월 ",
+                                            style: TextStyle(fontSize: defaultSize * 17, color: txtColor),
+                                            textAlign: TextAlign.center)
+                                        : Text(DateTime(controller.totaldate.year, controller.totaldate.month, 15).add(Duration(days: -150)).year.toString() + "년 " + DateTime(controller.totaldate.year, controller.totaldate.month, 15).add(Duration(days: -150)).month.toString() + "월 - " + DateTime(controller.totaldate.year, controller.totaldate.month, 1).month.toString() + "월 ", style: TextStyle(fontSize: defaultSize * 17, color: txtColor), textAlign: TextAlign.center),
                           ),
                         ),
                         //날짜 오른쪽으로 넘기는 버튼
