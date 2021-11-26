@@ -47,7 +47,7 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
                     final blockColor = Color(0xff333C47); // 여러 블럭들 색
                     double defaultSize = valWidth * 0.0025;
-                    if (data['email'].toString().contains(searching.text)) {
+                    if (data['email'].toString().contains(searching.text) && data['isCoach'] == true) {
                       return ClipRRect(
                         borderRadius: BorderRadius.all(
                           Radius.circular(18),

@@ -344,7 +344,7 @@ class CustomeScatterChartPainterSleep extends CustomPainter {
             // canvas.drawLine(Offset(left_border + wd * startTime, left_border + hd * i),
             //     Offset(left_border + wd * endTime, left_border + hd * i), paint);
 
-            print(startTime);
+            //print(startTime);
 
             canvas.drawLine(
                 Offset(left_border + wd * startTime + temp, hd * i - tmp),

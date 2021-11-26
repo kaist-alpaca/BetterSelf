@@ -658,9 +658,9 @@ class PathPainterSleep extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     List<DateData> SleepData = [];
-    print('sleep');
+    //print('sleep');
     sleep.forEach((e) {
-      print(e);
+      //print(e);
       // print(DateTime.parse(e['time'].replaceAll("_", "")));
       SleepData.add(
         DateData(
@@ -671,8 +671,8 @@ class PathPainterSleep extends CustomPainter {
     });
 
     // print('good...?');
-    print("print sleepdata");
-    print(SleepData);
+    //print("print sleepdata");
+    //print(SleepData);
 
     double XPadd_right = 30;
     double YPadd_bottom = 30;

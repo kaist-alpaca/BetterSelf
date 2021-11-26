@@ -27,14 +27,21 @@ Widget CoachingExerciseBox(BuildContext context, DateTime selectedDay) {
       width: lineLength,
       child: FutureBuilder<List<dynamic>>(
         future: ServerConnection.total_workout(
-          //'4fT7dL3H8CUkLKBx9bB3Pqjp3bi1',
           ProfileController.to.originMyProfile.uid == null
                ? ''
                : ProfileController.to.originMyProfile.uid!,
           selectedDay,
         ),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          if (snapshot.hasData && snapshot.data![0].length > 0) {
+          if (snapshot.hasError){
+            return Container(
+              child: Text(
+                  '이 날의 운동 기록이 없습니다.',
+                  style: TextStyle(fontSize: 10, color: txtColor)
+              ),
+            );
+          }
+          else if (snapshot.hasData && snapshot.data![0].length > 0) {
             print('\n\ndebug : ${snapshot.data}');
             var data = List.from(snapshot.data![0].reversed);
             double sum = 0;

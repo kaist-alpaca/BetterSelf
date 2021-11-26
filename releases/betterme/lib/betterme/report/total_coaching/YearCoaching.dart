@@ -147,12 +147,9 @@ class _YearCoaching extends State<YearCoaching> {
                           onPressed: () {
                             setState(() {
                               buttonCase = 1;
-
-                              setState(() {
-                                button2Color = Color(0xff827380);
-                                button4Color = Color(0xff0B202A);
-                                button3Color = Color(0xff0B202A);
-                              });
+                              button2Color = Color(0xff827380);
+                              button4Color = Color(0xff0B202A);
+                              button3Color = Color(0xff0B202A);
                             });
                           },
                         ),
@@ -175,9 +172,6 @@ class _YearCoaching extends State<YearCoaching> {
                           onPressed: () {
                             setState(() {
                               buttonCase = 2;
-                            });
-
-                            setState(() {
                               button3Color = Color(0xff827380);
                               button2Color = Color(0xff0B202A);
                               button4Color = Color(0xff0B202A);
@@ -202,8 +196,6 @@ class _YearCoaching extends State<YearCoaching> {
                           onPressed: () {
                             setState(() {
                               buttonCase = 3;
-                            });
-                            setState(() {
                               button3Color = Color(0xff0B202A);
                               button2Color = Color(0xff0B202A);
                               button4Color = Color(0xff827380);

@@ -1,5 +1,8 @@
+import 'package:betterme/functions/Controllers/profile_controller.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 //식단을 보여주기 위한 위젯
 
@@ -19,14 +22,81 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
   return Container(
       child: Column(children: [
     SizedBox(height: valHeight * 0.008),
-    Container(
-      height: valHeight * 0.2,
-      width: lineLength,
-      child: Text(
-        '여기에 식단 기록 내용 들어가야 함',
-        style: TextStyle(fontSize: 10 * defaultSize, color: txtColor),
-      ),
-    ),
+        Container(
+          height: valHeight * 0.2,
+          width: lineLength,
+          child: FutureBuilder<List<dynamic>>(
+            future: ServerConnection.get_food_by_date(
+              ProfileController.to.originMyProfile.uid == null
+                  ? ''
+                  : ProfileController.to.originMyProfile.uid!,
+              selectedDay,
+            ),
+            builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+              if (snapshot.hasError){
+                return Container(
+                  child: Text(
+                      '이 날의 운동 기록이 없습니다.',
+                      style: TextStyle(fontSize: 10, color: txtColor)
+                  ),
+                );
+              }
+              else if (snapshot.hasData && snapshot.data!.length > 0) {
+                print('\n\ndebug : ${snapshot.data}');
+                var data = List.from(snapshot.data!.reversed);
+
+                List<Widget> FoodList = data.map<Widget>((e){
+                  print("debug Time : ${e['date']}");
+                  DateTime Time = DateTime.parse(e['date'].toString());
+                  print("debug Time : $Time");
+
+                  return Column(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(width: valWidth*0.07,),
+                          Text(e['when'], style: TextStyle(fontSize: 10, color: txtColor)),
+                          SizedBox(width: valWidth*0.04,),
+                          Text(DateFormat.jm().format(Time), style: TextStyle(fontSize: 10, color: txtColor)),
+                          SizedBox(width: valWidth*0.04,),
+                          Text(e['name'], style: TextStyle(fontSize: 10, color: txtColor)),
+                          SizedBox(width: valWidth*0.04,),
+                          Text("${e['amount']} 인분", style: TextStyle(fontSize: 10, color: txtColor)),
+                          SizedBox(width: valWidth*0.04,),
+                          //Text('$Dura 분', style: TextStyle(fontSize: 10, color: txtColor)),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                    ],
+                  );
+                }).toList();
+
+                FoodList.add(
+                  Row(
+                    children: [
+                      SizedBox(width: valWidth*0.07,),
+                      Text('총 칼로리: kcal', style: TextStyle(fontSize: 10, color: txtColor, fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                );
+
+                return Container(
+                  child: Column(
+                      children: FoodList
+                  ),
+                ); //Text(snapshot.data[]);
+
+              } else{
+                return Container(
+                  child: Text(
+                      '이 날의 식단 기록이 없습니다.',
+                      style: TextStyle(fontSize: 10, color: txtColor)
+                  ),
+                );
+              }
+            },
+          ),
+        ),
     SizedBox(
       width: valWidth * 0.86,
       child: Row(

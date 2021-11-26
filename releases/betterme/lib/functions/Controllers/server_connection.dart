@@ -278,6 +278,15 @@ class ServerConnection {
     return List<dynamic>.from(json.decode(response.body));
   }
 
+  static Future<List<dynamic>> get_food_by_date(
+      String uid, DateTime date) async {
+    final query = Uri.parse("http://kaistuser.iptime.org:8080/get_food_by_date.php?uid=" + uid + "&startDate="
+        + date.toString().substring(0, 10).replaceAll("-", "_"));
+    print("debug : $query");
+    final response = await http.get(query);
+    return json.decode(response.body);
+  }
+
   static Future<List<dynamic>> total_workout(String uid, DateTime date) async {
     var dateStr = date.toString().substring(0, 10).replaceAll("-", "_");
 
