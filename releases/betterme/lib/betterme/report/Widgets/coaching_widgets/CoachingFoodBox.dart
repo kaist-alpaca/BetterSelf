@@ -71,14 +71,14 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
                   );
                 }).toList();
 
-                FoodList.add(
-                  Row(
-                    children: [
-                      SizedBox(width: valWidth*0.07,),
-                      Text('총 칼로리: kcal', style: TextStyle(fontSize: 10, color: txtColor, fontWeight: FontWeight.bold))
-                    ],
-                  ),
-                );
+                // FoodList.add(
+                //   Row(
+                //     children: [
+                //       SizedBox(width: valWidth*0.07,),
+                //       Text('총 칼로리: kcal', style: TextStyle(fontSize: 10, color: txtColor, fontWeight: FontWeight.bold))
+                //     ],
+                //   ),
+                // );
 
                 return Container(
                   child: Column(
