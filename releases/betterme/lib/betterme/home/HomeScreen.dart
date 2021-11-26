@@ -437,7 +437,7 @@ class _HomeScreen extends State<HomeScreen> {
                                                   width: defaultSize * 0.7),
                                             ),
                                             onPressed: () {
-                                              WriteAppleHealth.writeWeight();
+                                              // WriteAppleHealth.writeWeight();
                                               Navigator.pop(context, '저장');
                                             },
                                             child: Text(

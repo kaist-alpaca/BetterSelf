@@ -293,10 +293,19 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                           setState(() {
                                             amount = double.parse(value);
                                           });
+                                          if (amount > 10) {
+                                            setState(() {
+                                              amount = 10;
+                                            });
+                                            NumFood.value =
+                                                TextEditingValue(text: '10');
+                                          }
                                         } catch (e) {
                                           setState(() {
                                             amount = 1;
                                           });
+                                          NumFood.value =
+                                              TextEditingValue(text: '1');
                                         }
                                         print(value);
                                       },
@@ -407,30 +416,30 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                               0.15,
                                               10,
                                               '지방 ${(Nutrition[4] * amount).toStringAsFixed(1)} g'),
-                                          SizedBox(height: valHeight * 0.008),
-                                          MiniBox(
-                                              context,
-                                              Color(0xffA0B1DF),
-                                              0.012,
-                                              0.2,
-                                              10,
-                                              '콜레스테롤 ${(Nutrition[5] * amount).toStringAsFixed(1)} g'),
-                                          SizedBox(height: valHeight * 0.008),
-                                          MiniBox(
-                                              context,
-                                              Color(0xffA0B1DF),
-                                              0.012,
-                                              0.2,
-                                              10,
-                                              '식이섬유 ${(Nutrition[6] * amount).toStringAsFixed(1)} g'),
+                                          // SizedBox(height: valHeight * 0.008),
+                                          // MiniBox(
+                                          //     context,
+                                          //     Color(0xffA0B1DF),
+                                          //     0.012,
+                                          //     0.2,
+                                          //     10,
+                                          //     '콜레스테롤 ${(Nutrition[5] * amount).toStringAsFixed(1)} g'),
+                                          // SizedBox(height: valHeight * 0.008),
+                                          // MiniBox(
+                                          //     context,
+                                          //     Color(0xffA0B1DF),
+                                          //     0.012,
+                                          //     0.2,
+                                          //     10,
+                                          //     '식이섬유 ${(Nutrition[6] * amount).toStringAsFixed(1)} g'),
                                           SizedBox(height: valHeight * 0.008),
                                           MiniBox(
                                               context,
                                               txtColor,
-                                              0.012,
+                                              0.014,
                                               0.176,
                                               10,
-                                              '나트륨 ${(Nutrition[7] * amount).toStringAsFixed(1)} g'),
+                                              '나트륨 ${(Nutrition[7] * amount).toStringAsFixed(1)} mg'),
                                         ]),
                                   ),
                                 ],

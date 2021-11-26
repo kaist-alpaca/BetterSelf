@@ -39,8 +39,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
     //   date.add(tmp);
     // }
 
-    print('send date');
-    print(time);
+    // print('send date');
+    // print(time);
 
     return Stack(
       children: [
@@ -75,7 +75,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
                 return Container();
               }
             } else {
-              print('do not have data');
+              // print('do not have data');
               return Container();
             }
           },
@@ -90,8 +90,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
               if (widget.GraphTypes[1]) {
-                print('date list');
-                print(ProfileController.to.datelist);
+                // print('date list');
+                // print(ProfileController.to.datelist);
                 // print('have data');
                 // print(snapshot.data);
                 // print(snapshot.data!);
@@ -105,7 +105,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
                 return Container();
               }
             } else {
-              print('do not have data');
+              // print('do not have data');
               return Container();
             }
           },
@@ -133,7 +133,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
                 return Container();
               }
             } else {
-              print('do not have data');
+              // print('do not have data');
               return Container();
             }
           },
@@ -161,7 +161,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
                 return Container();
               }
             } else {
-              print('do not have data');
+              // print('do not have data');
               return Container();
             }
           },
@@ -176,8 +176,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
               if (widget.GraphTypes[4]) {
-                print('have data burned');
-                print(snapshot.data);
+                // print('have data burned');
+                // print(snapshot.data);
                 // print(snapshot.data!);
                 return Container(
                     child: CustomPaint(
@@ -288,6 +288,7 @@ class PathPainter extends CustomPainter {
     //     (1636628143.7570000 * 1000000).toInt());
     // tmp = DateData(temp, 50);
     double XPadd_right = 30;
+    double XPadd_left = 15;
     double YPadd_bottom = 30;
     double YPadd_top = 0;
     DateTime today = date;
@@ -302,7 +303,7 @@ class PathPainter extends CustomPainter {
 
     canvas.drawPaint(Paint()..color = Color(0xff0B202A));
 
-    final GraphXSize = size.width - XPadd_right;
+    final GraphXSize = size.width - XPadd_right - XPadd_left;
 
     final GraphYSize = size.height - YPadd_bottom;
 
@@ -317,7 +318,7 @@ class PathPainter extends CustomPainter {
 
     Path path = Path();
     path.moveTo(0, GraphYSize);
-    path.lineTo(GraphXSize, GraphYSize);
+    path.lineTo(GraphXSize + XPadd_left + XPadd_right / 2, GraphYSize);
     canvas.drawPath(path, LinePaint);
 
     path.close();
@@ -327,40 +328,46 @@ class PathPainter extends CustomPainter {
     if (duration == 7) {
       for (int i = 0; i < 7; i++) {
         final XGridUnit = GraphXSize / 7;
-        final x = GraphXSize - i * XGridUnit - 6;
+        final x = GraphXSize - i * XGridUnit + XPadd_left;
         final y = size.height - YPadd_bottom + 6;
 
         final p = Offset(x, y);
 
-        final textPainter = (today.day == 1)
-            ? TextPainter(
-                text: TextSpan(
-                    text: '${today.month}/${today.day}',
-                    style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
-                textDirection: TextDirection.ltr,
-              )
-            : TextPainter(
-                text: TextSpan(
-                    text: '${today.day}',
-                    style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
-                textDirection: TextDirection.ltr,
-              );
+        // final textPainter = (today.day == 1)
+        //     ? TextPainter(
+        //         text: TextSpan(
+        //             text: '${today.month}/${today.day}',
+        //             style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
+        //         textDirection: TextDirection.ltr,
+        //       )
+        //     : TextPainter(
+        //         text: TextSpan(
+        //             text: '${today.day}',
+        //             style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
+        //         textDirection: TextDirection.ltr,
+        //       );
+        drawTextCentered(
+            canvas,
+            p,
+            today.day == 1 ? '${today.month}/${today.day}' : '${today.day}',
+            TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),
+            40);
+        // textPainter.layout();
 
-        textPainter.layout();
+        // textPainter.paint(canvas, p);
 
-        textPainter.paint(canvas, p);
         today = today.subtract(Duration(days: 1));
       }
     } else if (duration == 31) {
-      for (int i = 0; i < 7; i++) {
-        final XGridUnit = GraphXSize / 7;
-        final x = GraphXSize - i * XGridUnit - 6;
+      for (int i = 0; i < 4; i++) {
+        final XGridUnit = GraphXSize / 4;
+        final x = GraphXSize - i * XGridUnit + XPadd_left;
         final y = size.height - YPadd_bottom + 6;
 
         final p = Offset(x, y);
 
         final textPainter = (today.day == 1 ||
-                (i != 0 && today.day < today.subtract(Duration(days: 5)).day))
+                (i != 0 && today.day < today.subtract(Duration(days: 7)).day))
             ? TextPainter(
                 text: TextSpan(
                     text: '${today.month}/${today.day}',
@@ -374,29 +381,102 @@ class PathPainter extends CustomPainter {
                 textDirection: TextDirection.ltr,
               );
 
-        textPainter.layout();
+        drawTextCentered(
+            canvas,
+            p,
+            today.day == 1 ||
+                    (i != 0 &&
+                        today.day < today.subtract(Duration(days: 7)).day)
+                ? '${today.month}/${today.day}'
+                : '${today.day}',
+            TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),
+            40);
 
-        textPainter.paint(canvas, p);
-        today = today.subtract(Duration(days: 5));
+        // textPainter.layout();
+
+        // textPainter.paint(canvas, p);
+        today = today.subtract(Duration(days: 7));
+      }
+    } else {
+      today =
+          today.day > (DateTime(today.year, today.month + 1, 0).day / 2).floor()
+              ? DateTime(today.year, today.month + 1, 1)
+              : DateTime(today.year, today.month, 1);
+      for (int i = 0; i < 6; i++) {
+        final XGridUnit = GraphXSize / 6;
+        final x = GraphXSize - i * XGridUnit + XPadd_left;
+        final y = size.height - YPadd_bottom + 6;
+
+        final p = Offset(x, y);
+
+        print("today");
+        print(today);
+
+        drawTextCentered(canvas, p, '${today.month}',
+            TextStyle(fontSize: 12, color: Color(0xffFFFDFD)), 40);
+
+        // textPainter.layout();
+
+        // textPainter.paint(canvas, p);
+        today = DateTime(today.year, today.month, 0);
+        today = DateTime(today.year, today.month, 1);
       }
     }
     //////////////////////////////////////////////////////////////////////////////////////YSubLine
-    for (int i = 1; i < 7; i++) {
-      final XGridUnit = GraphXSize / 7;
-      final x = GraphXSize - i * XGridUnit;
-      final y = GraphYSize - 1;
+    if (duration == 7) {
+      for (int i = 0; i < 7; i++) {
+        final XGridUnit = GraphXSize / 7;
+        final x = GraphXSize - i * XGridUnit + XPadd_left;
+        final y = GraphYSize - 1;
 
-      Paint LinePaint = Paint()
-        ..color = Color(0xff858E93)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 0.75;
+        Paint LinePaint = Paint()
+          ..color = Color(0xff858E93)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0.75;
 
-      Path path = Path();
-      path.moveTo(x, y);
-      path.lineTo(x, YPadd_top);
-      canvas.drawPath(path, LinePaint);
+        Path path = Path();
+        path.moveTo(x, y);
+        path.lineTo(x, YPadd_top);
+        canvas.drawPath(path, LinePaint);
 
-      path.close();
+        path.close();
+      }
+    } else if (duration == 31) {
+      for (int i = 0; i < 4; i++) {
+        final XGridUnit = GraphXSize / 4;
+        final x = GraphXSize - i * XGridUnit + XPadd_left;
+        final y = GraphYSize - 1;
+
+        Paint LinePaint = Paint()
+          ..color = Color(0xff858E93)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0.75;
+
+        Path path = Path();
+        path.moveTo(x, y);
+        path.lineTo(x, YPadd_top);
+        canvas.drawPath(path, LinePaint);
+
+        path.close();
+      }
+    } else {
+      for (int i = 0; i < 6; i++) {
+        final XGridUnit = GraphXSize / 6;
+        final x = GraphXSize - i * XGridUnit + XPadd_left;
+        final y = GraphYSize - 1;
+
+        Paint LinePaint = Paint()
+          ..color = Color(0xff858E93)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 0.75;
+
+        Path path = Path();
+        path.moveTo(x, y);
+        path.lineTo(x, YPadd_top);
+        canvas.drawPath(path, LinePaint);
+
+        path.close();
+      }
     }
     //////////////////////////////////////////////////////////////////////////////////////weight_label
     // for (int i = 0; i < 7; i++) {
@@ -540,33 +620,26 @@ class PathPainter extends CustomPainter {
     // }
   }
 
-  List<Offset> ComputePoints(List<DateData> p, double width, double height) {
-    List<Offset> points = [];
-    p.forEach((i) {
-      final XGridUnit = width / 7;
-      final x = width - (DateTime.now().day - i.time.day) * XGridUnit;
-      final y = height - (i.value);
-      final dp = Offset(x, y);
-      points.add(dp);
-    });
-    return points;
-  }
-
-  Path ComputePath(List<Offset> points) {
-    final path = Path();
-    for (int i = 0; i < points.length; i++) {
-      final p = points[i];
-      if (i == 0) {
-        path.moveTo(p.dx, p.dy);
-      } else {
-        path.lineTo(p.dx, p.dy);
-      }
-    }
-    return path;
-  }
-
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => true;
+
+  TextPainter measureText(
+      String s, TextStyle style, double maxWidth, TextAlign align) {
+    final span = TextSpan(text: s, style: style);
+    final tp = TextPainter(
+        text: span, textAlign: align, textDirection: TextDirection.ltr);
+    tp.layout(minWidth: 0, maxWidth: maxWidth);
+    return tp;
+  }
+
+  Size drawTextCentered(
+      Canvas canvas, Offset c, String text, TextStyle style, double maxWidth) {
+    final tp = measureText(text, style, maxWidth, TextAlign.center);
+    final offset = c + Offset(-tp.width / 2.0, 0);
+    // final offset = c + Offset(-tp.width / 2.0, -tp.height / 2.0);
+    tp.paint(canvas, offset);
+    return tp.size;
+  }
 }
 
 class PathPainterWeight extends CustomPainter {
@@ -581,52 +654,100 @@ class PathPainterWeight extends CustomPainter {
   }
   @override
   void paint(Canvas canvas, Size size) {
+    double min = double.infinity;
+    double max = -double.infinity;
+    double XPadd_right = 30;
+    double XPadd_left = 15;
+    double YPadd_bottom = 30;
+
     List<DateData> WeightData = [];
-    weight.forEach((e) {
-      // print(e);
-      // print(DateTime.fromMicrosecondsSinceEpoch(
-      //     (double.parse(e['time']) * 1000000).toInt()));
-      WeightData.add(
-        DateData(
-          DateTime.fromMicrosecondsSinceEpoch(
-              (double.parse(e['time']) * 1000000).toInt()),
-          double.parse(e['weight']),
-        ),
-      );
-    });
+    if (duration == 180) {
+      List Data1 = [];
+      bool check = false;
+      DateTime first = DateTime.parse(weight[0]['day'].replaceAll("_", ""));
+      weight.forEach((e) {
+        var map = {};
+        var tmp = DateTime.parse(e['day'].replaceAll("_", ""));
+        int last = DateTime(tmp.year, tmp.month + 1, 0).day;
+        if (!check && (tmp.day == last || tmp.day == (last / 2).floor()) ||
+            first.month != tmp.month ||
+            (first.day > (last / 2).floor() && tmp.day > (last / 2).floor())) {
+          check = true;
+        }
+        if (check) {
+          map['day'] = tmp.day > last / 2
+              ? DateTime(tmp.year, tmp.month, (last / 2).floor())
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_')
+              : DateTime(tmp.year, tmp.month, 1)
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_');
+          map['value'] = e['weight'];
+          if (Data1.isNotEmpty && Data1.last['day'] == map['day']) {
+            Data1.last['value'] =
+                (double.parse(Data1.last["value"]) + double.parse(map["value"]))
+                    .toString();
+            Data1.last['count'] += 1;
+          } else {
+            map['count'] = 1;
+            Data1.add(map);
+          }
+        }
+      });
+      print('weight');
+      print(Data1);
+      Data1.forEach((e) {
+        double tmp = double.parse(e['value']) / e['count'];
+        if (tmp < min) min = tmp;
+        if (tmp > max) max = tmp;
+        // print(e);
+        // print(DateTime.parse(e['time'].replaceAll("_", "")));
+        WeightData.add(
+          DateData(
+            DateTime.parse(e['day'].replaceAll("_", "")),
+            tmp,
+          ),
+        );
+      });
+    } else {
+      weight.forEach((e) {
+        double tmp = double.parse(e['weight']);
+        if (tmp < min) min = tmp;
+        if (tmp > max) max = tmp;
+        // print(e);
+        // print(DateTime.fromMicrosecondsSinceEpoch(
+        //     (double.parse(e['time']) * 1000000).toInt()));
+        WeightData.add(
+          DateData(
+            DateTime.fromMicrosecondsSinceEpoch(
+                (double.parse(e['time']) * 1000000).toInt()),
+            tmp,
+          ),
+        );
+      });
+    }
 
     // print('good...?');
     // print(WeightData);
 
-    double min = 1000;
-    double max = 0;
-    double XPadd_right = 30;
-    double YPadd_bottom = 30;
-    double YPadd_top = 0;
-
     double LineSize = 1.5;
 
-    final GraphXSize = size.width - XPadd_right;
+    final GraphXSize = size.width - XPadd_right - XPadd_left;
 
     final GraphYSize = size.height - YPadd_bottom;
 
     final floorCorrection = 20;
     final floor = (GraphYSize + floorCorrection) / 5;
-    WeightData.forEach((e) {
-      // print('weight value');
-      // print(e.value);
-      if (e.value < min) min = e.value;
-      if (e.value > min) max = e.value;
-    });
 
     WeightData.forEach((e) {
-      e.value = (e.value - min) / (max - min) * 0.4 * floor;
-      e.value /= 2;
-      e.value += floor * 0.3; //correction
+      e.value =
+          (e.value - (min - 2)) * ((GraphYSize - 1) / 3) / (max - min + 4);
     });
 
     var datapath = TotalGraphHelper.ComputePoints(
-        WeightData, GraphXSize, GraphYSize, duration, time);
+        WeightData, GraphXSize, (GraphYSize - 1), duration, time);
 
     // print("debug : $datapath");
 
@@ -635,8 +756,18 @@ class PathPainterWeight extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = TotalGraphHelper.ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
+
+    if (ProfileController.to.duration == 7) {
+      datapath.forEach((dp) {
+        final dotPaintFill = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1.0;
+        canvas.drawCircle(dp, 5.0, dotPaintFill);
+      });
+    }
 
     path.close();
   }
@@ -657,7 +788,10 @@ class PathPainterSleep extends CustomPainter {
   }
   @override
   void paint(Canvas canvas, Size size) {
+    double min = double.infinity;
+    double max = -double.infinity;
     List<DateData> SleepData = [];
+<<<<<<< HEAD
     //print('sleep');
     sleep.forEach((e) {
       //print(e);
@@ -673,13 +807,87 @@ class PathPainterSleep extends CustomPainter {
     // print('good...?');
     //print("print sleepdata");
     //print(SleepData);
+=======
+    // print('sleep');
+
+    if (duration == 180) {
+      List Data1 = [];
+      bool check = false;
+      DateTime first = DateTime.parse(sleep[0]['time'].replaceAll("_", ""));
+      sleep.forEach((e) {
+        var map = {};
+        var tmp = DateTime.parse(e['time'].replaceAll("_", ""));
+        int last = DateTime(tmp.year, tmp.month + 1, 0).day;
+        if (!check && (tmp.day == last || tmp.day == (last / 2).floor()) ||
+            first.month != tmp.month ||
+            (first.day > (last / 2).floor() && tmp.day > (last / 2).floor())) {
+          check = true;
+        }
+        if (check) {
+          map['time'] = tmp.day > last / 2
+              ? DateTime(tmp.year, tmp.month, (last / 2).floor())
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_')
+              : DateTime(tmp.year, tmp.month, 1)
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_');
+          map['value'] = e['sleep'];
+          if (Data1.isNotEmpty && Data1.last['time'] == map['time']) {
+            Data1.last['value'] =
+                (double.parse(Data1.last["value"]) + double.parse(map["value"]))
+                    .toString();
+            Data1.last['count'] += 1;
+          } else {
+            map['count'] = 1;
+            Data1.add(map);
+          }
+        }
+      });
+      print('sleep');
+      print(Data1);
+      Data1.forEach((e) {
+        double tmp = double.parse(e['value']) / e['count'];
+        if (tmp < min) min = tmp;
+        if (tmp > max) max = tmp;
+        // print(e);
+        // print(DateTime.parse(e['time'].replaceAll("_", "")));
+        SleepData.add(
+          DateData(
+            DateTime.parse(e['time'].replaceAll("_", "")),
+            tmp,
+          ),
+        );
+      });
+    } else {
+      sleep.forEach((e) {
+        double tmp = double.parse(e['sleep']) / 60;
+        if (tmp < min) min = tmp;
+        if (tmp > max) max = tmp;
+        // print(e);
+        // print(DateTime.parse(e['time'].replaceAll("_", "")));
+        SleepData.add(
+          DateData(
+            DateTime.parse(e['time'].replaceAll("_", "")),
+            tmp,
+          ),
+        );
+      });
+    }
+
+    // print('good...?');
+    // print("print sleepdata");
+    // print(SleepData);
+>>>>>>> develop
 
     double XPadd_right = 30;
+    double XPadd_left = 15;
     double YPadd_bottom = 30;
 
     double LineSize = 1.5;
 
-    final GraphXSize = size.width - XPadd_right;
+    final GraphXSize = size.width - XPadd_right - XPadd_left;
 
     final GraphYSize = size.height - YPadd_bottom;
 
@@ -687,12 +895,12 @@ class PathPainterSleep extends CustomPainter {
     final floor = (GraphYSize + floorCorrection) / 5;
 
     SleepData.forEach((e) {
-      e.value = e.value / 2;
-      e.value += floor * 2 + YPadd_bottom;
+      e.value =
+          (e.value - (min - 2)) * ((GraphYSize - 1) / 3) / (max - min + 4);
     });
 
     var datapath = TotalGraphHelper.ComputePoints(
-        SleepData, GraphXSize, GraphYSize, duration, time);
+        SleepData, GraphXSize, (GraphYSize - 1) / 3, duration, time);
 
     // print("debug : $datapath");
 
@@ -701,8 +909,18 @@ class PathPainterSleep extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = TotalGraphHelper.ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
+
+    if (ProfileController.to.duration == 7) {
+      datapath.forEach((dp) {
+        final dotPaintFill = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1.0;
+        canvas.drawCircle(dp, 5.0, dotPaintFill);
+      });
+    }
 
     path.close();
   }
@@ -723,29 +941,84 @@ class PathPainterStress extends CustomPainter {
   }
   @override
   void paint(Canvas canvas, Size size) {
+    double min = 0;
+    double max = 100;
     List<DateData> StressData = [];
     // print('sress');
     // print(stress);
-    stress.forEach((e) {
-      // print(e);
-      // print(DateTime.parse(e['time'].replaceAll("_", "")));
-      StressData.add(
-        DateData(
-          DateTime.parse(e['time'].replaceAll("_", "")),
-          double.parse(e['stress']),
-        ),
-      );
-    });
+    if (duration == 180) {
+      List Data1 = [];
+      bool check = false;
+      DateTime first = DateTime.parse(stress[0]['time'].replaceAll("_", ""));
+      stress.forEach((e) {
+        var map = {};
+        var tmp = DateTime.parse(e['time'].replaceAll("_", ""));
+        int last = DateTime(tmp.year, tmp.month + 1, 0).day;
+        if (!check && (tmp.day == last || tmp.day == (last / 2).floor()) ||
+            first.month != tmp.month ||
+            (first.day > (last / 2).floor() && tmp.day > (last / 2).floor())) {
+          check = true;
+        }
+        if (check) {
+          map['time'] = tmp.day > last / 2
+              ? DateTime(tmp.year, tmp.month, (last / 2).floor())
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_')
+              : DateTime(tmp.year, tmp.month, 1)
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_');
+          map['value'] = e['stress'];
+          if (Data1.isNotEmpty && Data1.last['time'] == map['time']) {
+            Data1.last['value'] =
+                (double.parse(Data1.last["value"]) + double.parse(map["value"]))
+                    .toString();
+            Data1.last['count'] += 1;
+          } else {
+            map['count'] = 1;
+            Data1.add(map);
+          }
+        }
+      });
+      print('stress');
+      print(Data1);
+      Data1.forEach((e) {
+        double tmp = double.parse(e['value']) / e['count'];
+        if (tmp < min) min = tmp;
+        if (tmp > max) max = tmp;
+        StressData.add(
+          DateData(
+            DateTime.parse(e['time'].replaceAll("_", "")),
+            tmp,
+          ),
+        );
+      });
+    } else {
+      stress.forEach((e) {
+        double tmp = double.parse(e['stress']);
+        if (tmp > max) max = tmp;
+        // print(e);
+        // print(DateTime.parse(e['time'].replaceAll("_", "")));
+        StressData.add(
+          DateData(
+            DateTime.parse(e['time'].replaceAll("_", "")),
+            tmp,
+          ),
+        );
+      });
+    }
 
     // print('good...?');
     // print(StressData);
 
     double XPadd_right = 30;
+    double XPadd_left = 15;
     double YPadd_bottom = 30;
 
     double LineSize = 1.5;
 
-    final GraphXSize = size.width - XPadd_right;
+    final GraphXSize = size.width - XPadd_right - XPadd_left;
 
     final GraphYSize = size.height - YPadd_bottom;
 
@@ -753,12 +1026,14 @@ class PathPainterStress extends CustomPainter {
     final floor = (GraphYSize + floorCorrection) / 5;
 
     StressData.forEach((e) {
-      e.value = e.value / 2;
-      e.value += floor * 2 + YPadd_bottom;
+      // e.value = e.value / 2;
+      // e.value += floor * 2 + YPadd_bottom;
+      e.value =
+          (e.value - (min - 2)) * ((GraphYSize - 1) / 3) / (max - min + 4);
     });
 
     var datapath = TotalGraphHelper.ComputePoints(
-        StressData, GraphXSize, GraphYSize, duration, time);
+        StressData, GraphXSize, ((GraphYSize - 1) / 3), duration, time);
 
     // print("debug : $datapath");
 
@@ -767,8 +1042,18 @@ class PathPainterStress extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = TotalGraphHelper.ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
+
+    if (ProfileController.to.duration == 7) {
+      datapath.forEach((dp) {
+        final dotPaintFill = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1.0;
+        canvas.drawCircle(dp, 5.0, dotPaintFill);
+      });
+    }
 
     path.close();
   }
@@ -789,28 +1074,86 @@ class PathPainterFood extends CustomPainter {
   }
   @override
   void paint(Canvas canvas, Size size) {
+    double min = double.infinity;
+    double max = -double.infinity;
     List<DateData> DietData = [];
     // print('food');
-    food.forEach((e) {
-      // print(e);
-      // print(DateTime.parse(e['time'].replaceAll("_", "")));
-      DietData.add(
-        DateData(
-          DateTime.parse(e['time'].replaceAll("_", "")),
-          e['food'] / 5,
-        ),
-      );
-    });
+    if (duration == 180) {
+      List Data1 = [];
+      bool check = false;
+      DateTime first = DateTime.parse(food[0]['time'].replaceAll("_", ""));
+      food.forEach((e) {
+        var map = {};
+        var tmp = DateTime.parse(e['time'].replaceAll("_", ""));
+        int last = DateTime(tmp.year, tmp.month + 1, 0).day;
+        if (!check && (tmp.day == last || tmp.day == (last / 2).floor()) ||
+            first.month != tmp.month ||
+            (first.day > (last / 2).floor() && tmp.day > (last / 2).floor())) {
+          check = true;
+        }
+        if (check) {
+          map['time'] = tmp.day > last / 2
+              ? DateTime(tmp.year, tmp.month, (last / 2).floor())
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_')
+              : DateTime(tmp.year, tmp.month, 1)
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_');
+          map['value'] = e['food'].toDouble();
+          if (Data1.isNotEmpty && Data1.last['time'] == map['time']) {
+            Data1.last['value'] = Data1.last["value"] + map["value"];
+            Data1.last['count'] += 1;
+          } else {
+            map['count'] = 1;
+            Data1.add(map);
+          }
+        }
+      });
+      print('food');
+      print(Data1);
+      Data1.forEach((e) {
+        double tmp = e['value'] / e['count'];
+        if (tmp < min) min = tmp;
+        if (tmp > max) max = tmp;
+        // print(e);
+        // print(DateTime.parse(e['time'].replaceAll("_", "")));
+        DietData.add(
+          DateData(
+            DateTime.parse(e['time'].replaceAll("_", "")),
+            tmp,
+          ),
+        );
+      });
+    } else {
+      food.forEach((e) {
+        print(e['food'].toDouble().runtimeType);
+        print(e['food']);
+        double tmp = e['food'].toDouble();
+        if (tmp < min) min = tmp;
+        if (tmp > max) max = tmp;
+        // print(e);
+        // print(DateTime.parse(e['time'].replaceAll("_", "")));
+        DietData.add(
+          DateData(
+            DateTime.parse(e['time'].replaceAll("_", "")),
+            tmp,
+          ),
+        );
+      });
+    }
 
     // print('good...?');
     // print(DietData);
 
     double XPadd_right = 30;
+    double XPadd_left = 15;
     double YPadd_bottom = 30;
 
     double LineSize = 1.5;
 
-    final GraphXSize = size.width - XPadd_right;
+    final GraphXSize = size.width - XPadd_right - XPadd_left;
 
     final GraphYSize = size.height - YPadd_bottom;
 
@@ -818,12 +1161,14 @@ class PathPainterFood extends CustomPainter {
     final floor = (GraphYSize + floorCorrection) / 5;
 
     DietData.forEach((e) {
-      e.value = e.value / 2;
-      e.value += floor + YPadd_bottom;
+      // e.value = e.value / 2;
+      // e.value += floor + YPadd_bottom;
+      e.value =
+          (e.value - (min - 200)) * ((GraphYSize - 1) / 3) / (max - min + 400);
     });
 
     var datapath = TotalGraphHelper.ComputePoints(
-        DietData, GraphXSize, GraphYSize, duration, time);
+        DietData, GraphXSize, ((GraphYSize - 1) / 3 * 2), duration, time);
 
     // print("debug : $datapath");
 
@@ -832,8 +1177,18 @@ class PathPainterFood extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = TotalGraphHelper.ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
+
+    if (ProfileController.to.duration == 7) {
+      datapath.forEach((dp) {
+        final dotPaintFill = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1.0;
+        canvas.drawCircle(dp, 5.0, dotPaintFill);
+      });
+    }
 
     path.close();
   }
@@ -854,28 +1209,98 @@ class PathPainterBurned extends CustomPainter {
   }
   @override
   void paint(Canvas canvas, Size size) {
+    double min = double.infinity;
+    double max = -double.infinity;
     List<DateData> BurnedData = [];
     // print('burned');
-    burned.forEach((e) {
-      // print(e);
-      // print(DateTime.parse(e['time'].replaceAll("_", "")));
-      BurnedData.add(
-        DateData(
-          DateTime.parse(e['time'].replaceAll("_", "")),
-          double.parse(e['burned']) / 60,
-        ),
-      );
-    });
+    if (duration == 180) {
+      List BurnedData1 = [];
+      bool check = false;
+      DateTime first = DateTime.parse(burned[0]['time'].replaceAll("_", ""));
+      burned.forEach((e) {
+        var map = {};
+        var tmp = DateTime.parse(e['time'].replaceAll("_", ""));
+        int last = DateTime(tmp.year, tmp.month + 1, 0).day;
+        if (!check && (tmp.day == last || tmp.day == (last / 2).floor()) ||
+            first.month != tmp.month ||
+            (first.day > (last / 2).floor() && tmp.day > (last / 2).floor())) {
+          check = true;
+        }
+        if (check) {
+          map['time'] = tmp.day > last / 2
+              ? DateTime(tmp.year, tmp.month, (last / 2).floor())
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_')
+              : DateTime(tmp.year, tmp.month, 1)
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll('-', '_');
+          map['value'] = e['burned'];
+          if (BurnedData1.isNotEmpty &&
+              BurnedData1.last['time'] == map['time']) {
+            BurnedData1.last['value'] =
+                (double.parse(BurnedData1.last["value"]) +
+                        double.parse(map["value"]))
+                    .toString();
+            BurnedData1.last['count'] += 1;
+          } else {
+            map['count'] = 1;
+            BurnedData1.add(map);
+          }
+        }
+        // print(DateTime(tmp.year, tmp.day, 0).day / 2);
+        // double tmp = double.parse(e['burned']);
+        // if (tmp < min) min = tmp;
+        // if (tmp > max) max = tmp;
+        // // print(e);
+        // // print(DateTime.parse(e['time'].replaceAll("_", "")));
+        // BurnedData.add(
+        //   DateData(
+        //     DateTime.parse(e['time'].replaceAll("_", "")),
+        //     tmp,
+        //   ),
+        // );
+      });
+      BurnedData1.forEach((e) {
+        double tmp = double.parse(e['value']) / e['count'];
+        if (tmp < min) min = tmp;
+        if (tmp > max) max = tmp;
+        // print(e);
+        // print(DateTime.parse(e['time'].replaceAll("_", "")));
+        BurnedData.add(
+          DateData(
+            DateTime.parse(e['time'].replaceAll("_", "")),
+            tmp,
+          ),
+        );
+      });
+    } else {
+      burned.forEach((e) {
+        double tmp = double.parse(e['burned']);
+        if (tmp < min) min = tmp;
+        if (tmp > max) max = tmp;
+        // print(e);
+        // print(DateTime.parse(e['time'].replaceAll("_", "")));
+        BurnedData.add(
+          DateData(
+            DateTime.parse(e['time'].replaceAll("_", "")),
+            tmp,
+          ),
+        );
+      });
+    }
 
     // print('good...?');
     // print(BurnedData);
 
     double XPadd_right = 30;
+    double XPadd_left = 15;
     double YPadd_bottom = 30;
 
     double LineSize = 1.5;
 
-    final GraphXSize = size.width - XPadd_right;
+    final GraphXSize = size.width - XPadd_right - XPadd_left;
 
     final GraphYSize = size.height - YPadd_bottom;
 
@@ -883,12 +1308,14 @@ class PathPainterBurned extends CustomPainter {
     final floor = (GraphYSize + floorCorrection) / 5;
 
     BurnedData.forEach((e) {
-      e.value = e.value / 2;
-      e.value += floor + YPadd_bottom;
+      // e.value = e.value / 2;
+      // e.value += floor + YPadd_bottom;
+      e.value =
+          (e.value - (min - 200)) * ((GraphYSize - 1) / 3) / (max - min + 400);
     });
 
     var datapath = TotalGraphHelper.ComputePoints(
-        BurnedData, GraphXSize, GraphYSize, duration, time);
+        BurnedData, GraphXSize, ((GraphYSize - 1) / 3 * 2), duration, time);
 
     // print("debug : $datapath");
 
@@ -897,8 +1324,18 @@ class PathPainterBurned extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = LineSize;
 
-    Path path = TotalGraphHelper.ComputePath(datapath);
+    Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
+
+    if (ProfileController.to.duration == 7) {
+      datapath.forEach((dp) {
+        final dotPaintFill = Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1.0;
+        canvas.drawCircle(dp, 5.0, dotPaintFill);
+      });
+    }
 
     path.close();
   }
@@ -908,12 +1345,33 @@ class PathPainterBurned extends CustomPainter {
 }
 
 class TotalGraphHelper {
+  static DateTime ComputeDate(DateTime time) {
+    return DateTime.parse(time.year.toString() +
+        time.month.toString().padLeft(2, '0') +
+        time.day.toString().padLeft(2, '0'));
+  }
+
   static List<Offset> ComputePoints(List<DateData> p, double width,
       double height, int duration, DateTime time) {
     List<Offset> points = [];
     p.forEach((i) {
-      final XGridUnit = width / duration;
-      final x = width - (time.difference(i.time).inDays) * XGridUnit;
+      // final XGridUnit = duration == 365 ? width / 180 : width / duration;
+      final XGridUnit = duration == 7
+          ? width / duration
+          : duration == 31
+              ? width / 20
+              : width / 12;
+      final x = duration == 180
+          ? width -
+              (ComputeDate(time).difference(ComputeDate(i.time)).inDays / 15)
+                      .round() *
+                  XGridUnit +
+              15
+          : width -
+              (ComputeDate(time).difference(ComputeDate(i.time)).inDays) *
+                  XGridUnit +
+              15;
+      // final x = width - (time.day - i.time.day) * XGridUnit;
       final y = height - (i.value);
       final dp = Offset(x, y);
       points.add(dp);
@@ -921,11 +1379,14 @@ class TotalGraphHelper {
     return points;
   }
 
-  static Path ComputePath(List<Offset> points) {
+  static Path ComputePath(List<Offset> points, double width, int duration) {
     final path = Path();
+    final XGridUnit = width / duration;
     for (int i = 0; i < points.length; i++) {
       final p = points[i];
       if (i == 0) {
+        path.moveTo(p.dx, p.dy);
+      } else if (duration == 7 && (points[i - 1].dx - p.dx) > XGridUnit * 1.2) {
         path.moveTo(p.dx, p.dy);
       } else {
         path.lineTo(p.dx, p.dy);

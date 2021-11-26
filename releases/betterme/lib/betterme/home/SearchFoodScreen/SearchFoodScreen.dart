@@ -132,7 +132,7 @@ class _SearchFoodScreen extends State<SearchFoodScreen> {
               height: 20,
             ),
             Container(
-              height: 0.4 * valHeight,
+              height: 0.8 * valHeight - 20,
               child: FutureBuilder(
                   future: loadData(),
                   builder: (context, snapshot) {
