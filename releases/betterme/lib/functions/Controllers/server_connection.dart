@@ -207,7 +207,7 @@ class ServerConnection {
       },
     );
     print(json.decode(response.body));
-    return json.decode(response.body);
+    return (json.decode(response.body));
   }
 
   static Future<List<dynamic>> total_weight(
