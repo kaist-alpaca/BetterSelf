@@ -107,8 +107,10 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                         )
                       : Container(
                           height: (i == Get.arguments[0].length - 1)
-                              ? valHeight * 0.21
-                              : valHeight * 0.23,
+                              ? valHeight * 0.17
+                              : valHeight * 0.19,
+                          // ? valHeight * 0.21
+                          // : valHeight * 0.23,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -175,22 +177,22 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         0.15,
                                         10,
                                         '지방 ${(Get.arguments[0][i][2][4] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
-                                    SizedBox(height: valHeight * 0.008),
-                                    MiniBox(
-                                        context,
-                                        Color(0xffA0B1DF),
-                                        0.012,
-                                        0.2,
-                                        10,
-                                        '콜레스테롤 ${(Get.arguments[0][i][2][5] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
-                                    SizedBox(height: valHeight * 0.008),
-                                    MiniBox(
-                                        context,
-                                        Color(0xffA0B1DF),
-                                        0.012,
-                                        0.2,
-                                        10,
-                                        '식이섬유 ${(Get.arguments[0][i][2][6] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
+                                    // SizedBox(height: valHeight * 0.008),
+                                    // MiniBox(
+                                    //     context,
+                                    //     Color(0xffA0B1DF),
+                                    //     0.012,
+                                    //     0.2,
+                                    //     10,
+                                    //     '콜레스테롤 ${(Get.arguments[0][i][2][5] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
+                                    // SizedBox(height: valHeight * 0.008),
+                                    // MiniBox(
+                                    //     context,
+                                    //     Color(0xffA0B1DF),
+                                    //     0.012,
+                                    //     0.2,
+                                    //     10,
+                                    //     '식이섬유 ${(Get.arguments[0][i][2][6] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
                                     SizedBox(height: valHeight * 0.008),
                                     Row(
                                       mainAxisAlignment:
