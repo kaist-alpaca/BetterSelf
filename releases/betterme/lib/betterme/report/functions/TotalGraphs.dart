@@ -791,23 +791,23 @@ class PathPainterSleep extends CustomPainter {
     double min = double.infinity;
     double max = -double.infinity;
     List<DateData> SleepData = [];
-<<<<<<< HEAD
-    //print('sleep');
-    sleep.forEach((e) {
-      //print(e);
-      // print(DateTime.parse(e['time'].replaceAll("_", "")));
-      SleepData.add(
-        DateData(
-          DateTime.parse(e['time'].replaceAll("_", "")),
-          double.parse(e['sleep']) / 60,
-        ),
-      );
-    });
+// <<<<<<< HEAD
+//     //print('sleep');
+//     sleep.forEach((e) {
+//       //print(e);
+//       // print(DateTime.parse(e['time'].replaceAll("_", "")));
+//       SleepData.add(
+//         DateData(
+//           DateTime.parse(e['time'].replaceAll("_", "")),
+//           double.parse(e['sleep']) / 60,
+//         ),
+//       );
+//     });
 
-    // print('good...?');
-    //print("print sleepdata");
-    //print(SleepData);
-=======
+//     // print('good...?');
+//     //print("print sleepdata");
+//     //print(SleepData);
+// =======
     // print('sleep');
 
     if (duration == 180) {
@@ -879,7 +879,7 @@ class PathPainterSleep extends CustomPainter {
     // print('good...?');
     // print("print sleepdata");
     // print(SleepData);
->>>>>>> develop
+// >>>>>>> develop
 
     double XPadd_right = 30;
     double XPadd_left = 15;
