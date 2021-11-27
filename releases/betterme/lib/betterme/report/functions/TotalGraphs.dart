@@ -918,7 +918,7 @@ class PathPainterSleep extends CustomPainter {
           ..color = Colors.white
           ..style = PaintingStyle.fill
           ..strokeWidth = 1.0;
-        canvas.drawCircle(dp, 5.0, dotPaintFill);
+        canvas.drawCircle(dp, 1.0, dotPaintFill);
       });
     }
 

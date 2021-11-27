@@ -86,7 +86,7 @@ flutter:
     - images/arrow towards left_icon.svg
     - images/arrow towards right_icon.svg
     - images/ring_icon.svg
-    - images/coaching_icon.svg
+    - images/coaching_icon.png
     - images/weightscale_icon.svg
     - images/coaching_pin.svg
     - data/

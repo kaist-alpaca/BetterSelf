@@ -45,9 +45,9 @@ Widget InitExerciseCoaching(
         CoachingExercisetimes = [];
         if (snapshot.hasData) {
           List CoachingList =
-          snapshot.data!.docs.map((DocumentSnapshot document) {
+              snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
-            document.data()! as Map<String, dynamic>;
+                document.data()! as Map<String, dynamic>;
             print("time : ${DateTime.parse(data['time'].toDate().toString())}");
             CoachingExercisetexts.add(data['message']);
             CoachingExercisetimes.add(
@@ -118,32 +118,32 @@ Widget CoachingExerciseBox(BuildContext context, DateTime selectedDay) {
 
   return Container(
       child: Column(children: [
-        SizedBox(height: valHeight * 0.008),
-        SizedBox(
-          width: valWidth * 0.86,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: valWidth * 0.3,
-                child: Divider(
-                  color: Color(0xff30414A),
-                  thickness: 0.6,
-                ),
-              ),
-              Container(
-                  width: valWidth * 0.1,
-                  height: valHeight * 0.05,
-                  child: SvgPicture.asset('images/coaching_icon.svg')),
-              Container(
-                width: valWidth * 0.3,
-                child: Divider(
-                  color: Color(0xff30414A),
-                  thickness: 0.6,
-                ),
-              ),
-            ],
+    SizedBox(height: valHeight * 0.008),
+    SizedBox(
+      width: valWidth * 0.86,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: valWidth * 0.3,
+            child: Divider(
+              color: Color(0xff30414A),
+              thickness: 0.6,
+            ),
           ),
-        ),
-      ]));
+          Container(
+              width: valWidth * 0.1,
+              height: valHeight * 0.05,
+              child: SvgPicture.asset('images/coaching_icon.svg')),
+          Container(
+            width: valWidth * 0.3,
+            child: Divider(
+              color: Color(0xff30414A),
+              thickness: 0.6,
+            ),
+          ),
+        ],
+      ),
+    ),
+  ]));
 }
