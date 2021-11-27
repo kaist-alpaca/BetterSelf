@@ -39,7 +39,8 @@ class _LoginScreen extends State<LoginScreen> {
       "email": userDetails!.email,
       "username": userDetails.email!.replaceAll("@gmail.com", ""),
       "name": userDetails.displayName,
-      "imgUrl": userDetails.photoURL
+      "imgUrl": userDetails.photoURL,
+      "isCoach": true
     };
 
     FirebaseFirestore.instance
