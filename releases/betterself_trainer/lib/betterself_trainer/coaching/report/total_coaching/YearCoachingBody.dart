@@ -1,5 +1,6 @@
 import 'package:betterself_trainer/betterself_trainer/coaching/report/total_coaching/MonthCoachingBody.dart';
 import 'package:betterself_trainer/functions/Firestore/AuthMethods.dart';
+import 'package:betterself_trainer/functions/Firestore/DatabaseMethods.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -28,6 +29,35 @@ var user = AuthMethods()
 
 Widget InitBioCoaching(
     BuildContext context, DateTime selectedDate, String formatD, String uid) {
+
+  final EditController = TextEditingController();
+  final valWidth = MediaQuery.of(context).size.width;
+  final valHeight = MediaQuery.of(context).size.height;
+
+  Future openEdit() => showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: TextField(
+            keyboardType: TextInputType.multiline,
+            controller: EditController,
+            maxLines: null,
+            autofocus: true,
+          ),
+          actions: [
+            TextButton(
+                onPressed: (){
+                  DatabaseMethos().sendCoaching(uid, 2, selectedDate, EditController.text);
+                  Navigator.pop(context);
+                },
+                child: Text('edit')
+            )
+          ],
+        );
+      }
+  );
+
+
   Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
       .collection('users')
       .doc(uid)
@@ -35,51 +65,110 @@ Widget InitBioCoaching(
       .orderBy("time")
       .snapshots();
 
-  return StreamBuilder<QuerySnapshot>(
-      stream: usersStream,
-      builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        CoachingBiotexts = [];
-        CoachingBiotimes = [];
-        if (snapshot.hasData) {
-          List CoachingList =
+  return Container(
+      height: MediaQuery.of(context).size.height * 0.45,
+      child: StreamBuilder<QuerySnapshot>(
+          stream: usersStream,
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            CoachingBiotexts = [];
+            CoachingBiotimes = [];
+            if (snapshot.hasData) {
+              List CoachingList =
               snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data =
+                Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
-            print("time : ${DateTime.parse(data['time'].toDate().toString())}");
-            CoachingBiotexts.add(data['message']);
-            CoachingBiotimes.add(
-                DateTime.parse(data['time'].toDate().toString()));
-            return data['message'];
-          }).toList();
+                print("time : ${DateTime.parse(data['time'].toDate().toString())}");
+                CoachingBiotexts.add(data['message']);
+                CoachingBiotimes.add(
+                    DateTime.parse(data['time'].toDate().toString()));
+                return data['message'];
+              }).toList();
 
-          int checkTime = CoachingBiotimes.length - 1;
-          // DateFormat('y/M/d').format(controller.selectedDay)
+              int checkTime = CoachingBiotimes.length - 1;
+              // DateFormat('y/M/d').format(controller.selectedDay)
 
-          while (checkTime >= 0) {
-            // Coachingtimes[checkTime]-selectedDate]
-            int date1 = int.parse(
-                DateFormat('yyyyMMdd').format(CoachingBiotimes[checkTime]));
-            int date2 = int.parse(DateFormat('yyyyMMdd').format(selectedDate));
-            int DiffDays = date1 - date2;
+              while (checkTime >= 0) {
+                // Coachingtimes[checkTime]-selectedDate]
+                int date1 = int.parse(
+                    DateFormat('yyyyMMdd').format(CoachingBiotimes[checkTime]));
+                int date2 = int.parse(DateFormat('yyyyMMdd').format(selectedDate));
+                int DiffDays = date1 - date2;
 
-            if (DiffDays == 0) {
-              print('$checkTime and ' + CoachingBiotexts[checkTime]);
-              return CoachingTxtBox(context, CoachingBiotexts[checkTime], 0.25);
-            } else if (DiffDays < 0) {
-              return CoachingTxtBox(
-                  context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25);
+                if (DiffDays == 0) {
+                  print('$checkTime and ' + CoachingBiotexts[checkTime]);
+                  return InkWell(
+                      onTap: (){
+                        EditController.text = CoachingBiotexts[checkTime];
+                        openEdit();
+                      },
+                      child: SizedBox(
+                        height: valHeight * 0.25,
+                        width: valWidth * 0.86,
+                        child : CoachingTxtBox(context, CoachingBiotexts[checkTime], 0.25),
+                      )
+                  );
+                } else if (DiffDays < 0) {
+                  return InkWell(
+                      onTap: (){
+                        EditController.text = "";
+                        openEdit();
+                      },
+                      child: SizedBox(
+                          height: valHeight * 0.25,
+                          width: valWidth * 0.86,
+                          child: CoachingTxtBox(context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25)
+                      )
+                  );
+                }
+                checkTime = checkTime - 1;
+              }
+              return InkWell(
+                  onTap: (){
+                    EditController.text = "";
+                    openEdit();
+                  },
+                  child: SizedBox(
+                      height: valHeight * 0.25,
+                      width: valWidth * 0.86,
+                      child: CoachingTxtBox(context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25)
+                  )
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
             }
-            checkTime = checkTime - 1;
-          }
-
-          return CoachingTxtBox(context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25);
-        } else {
-          return Center(child: CircularProgressIndicator());
-        }
-      });
+          })
+  );
 }
 
-Widget InitExerciseCoaching(BuildContext context, DateTime selectedDate, String uid) {
+Widget InitExerciseCoaching(BuildContext context, DateTime selectedDate) {
+
+  final EditController = TextEditingController();
+  final valWidth = MediaQuery.of(context).size.width;
+  final valHeight = MediaQuery.of(context).size.height;
+
+  Future openEdit() => showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: TextField(
+            keyboardType: TextInputType.multiline,
+            controller: EditController,
+            maxLines: null,
+            autofocus: true,
+          ),
+          actions: [
+            TextButton(
+                onPressed: (){
+                  DatabaseMethos().sendCoaching(uid!, 0, selectedDate, EditController.text);
+                  Navigator.pop(context);
+                },
+                child: Text('edit')
+            )
+          ],
+        );
+      }
+  );
+
   Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
       .collection('users')
       .doc(uid)
@@ -94,9 +183,9 @@ Widget InitExerciseCoaching(BuildContext context, DateTime selectedDate, String 
         CoachingExercisetimes = [];
         if (snapshot.hasData) {
           List CoachingList =
-              snapshot.data!.docs.map((DocumentSnapshot document) {
+          snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
-                document.data()! as Map<String, dynamic>;
+            document.data()! as Map<String, dynamic>;
             print("time : ${DateTime.parse(data['time'].toDate().toString())}");
             CoachingExercisetexts.add(data['message']);
             CoachingExercisetimes.add(
@@ -114,25 +203,83 @@ Widget InitExerciseCoaching(BuildContext context, DateTime selectedDate, String 
             int date2 = int.parse(DateFormat('yyyyMMdd').format(selectedDate));
             int DiffDays = date1 - date2;
 
-            print(selectedDate.toString());
+            // print(selectedDate.toString());
             if (DiffDays == 0) {
-              print('$checkTime and ' + CoachingExercisetexts[checkTime]);
-              return CoachingTxtBox(
-                  context, CoachingExercisetexts[checkTime], 0.2);
+              // print('$checkTime and ' + CoachingExercisetexts[checkTime]);
+              return InkWell(
+                  onTap: (){
+                    EditController.text = CoachingExercisetexts[checkTime];
+                    openEdit();
+                  },
+                  child: SizedBox(
+                    height: valHeight * 0.2,
+                    width: valWidth * 0.86,
+                    child : CoachingTxtBox(context, CoachingExercisetexts[checkTime], 0.2),
+                  )
+              );
             } else if (DiffDays < 0) {
-              return CoachingTxtBox(context, '아직 해당 날짜의 운동 코칭이 없습니다.', 0.2);
+              return InkWell(
+                  onTap: (){
+                    EditController.text = CoachingExercisetexts[checkTime];
+                    openEdit();
+                  },
+                  child: SizedBox(
+                      height: valHeight * 0.2,
+                      width: valWidth * 0.86,
+                      child : CoachingTxtBox(context, '아직 해당 날짜의 운동 코칭이 없습니다.', 0.2)
+                  )
+              );
             }
             checkTime = checkTime - 1;
           }
 
-          return CoachingTxtBox(context, '아직 해당 날짜의 운동 코칭이 없습니다.', 0.2);
+          return InkWell(
+              onTap: (){
+                EditController.text = CoachingExercisetexts[checkTime];
+                openEdit();
+              },
+              child: SizedBox(
+                  height: valHeight * 0.2,
+                  width: valWidth * 0.86,
+                  child : CoachingTxtBox(context, '아직 해당 날짜의 운동 코칭이 없습니다.', 0.2)
+              )
+          );
+
         } else {
           return Center(child: CircularProgressIndicator());
         }
       });
 }
 
-Widget InitFoodCoaching(BuildContext context, DateTime selectedDate) {
+Widget InitFoodCoaching(BuildContext context, DateTime selectedDate, String uid) {
+
+  final EditController = TextEditingController();
+  final valWidth = MediaQuery.of(context).size.width;
+  final valHeight = MediaQuery.of(context).size.height;
+
+  Future openEdit() => showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: TextField(
+            keyboardType: TextInputType.multiline,
+            controller: EditController,
+            maxLines: null,
+            autofocus: true,
+          ),
+          actions: [
+            TextButton(
+                onPressed: (){
+                  DatabaseMethos().sendCoaching(uid, 1, selectedDate, EditController.text);
+                  Navigator.pop(context);
+                },
+                child: Text('edit')
+            )
+          ],
+        );
+      }
+  );
+
   Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
       .collection('users')
       .doc(uid)
@@ -147,9 +294,9 @@ Widget InitFoodCoaching(BuildContext context, DateTime selectedDate) {
         CoachingFoodtimes = [];
         if (snapshot.hasData) {
           List CoachingList =
-              snapshot.data!.docs.map((DocumentSnapshot document) {
+          snapshot.data!.docs.map((DocumentSnapshot document) {
             Map<String, dynamic> data =
-                document.data()! as Map<String, dynamic>;
+            document.data()! as Map<String, dynamic>;
             print("time : ${DateTime.parse(data['time'].toDate().toString())}");
             CoachingFoodtexts.add(data['message']);
             CoachingFoodtimes.add(
@@ -168,14 +315,44 @@ Widget InitFoodCoaching(BuildContext context, DateTime selectedDate) {
             int DiffDays = date1 - date2;
 
             if (DiffDays == 0) {
-              return CoachingTxtBox(context, CoachingFoodtexts[checkTime], 0.2);
+              return InkWell(
+                  onTap: (){
+                    EditController.text = CoachingFoodtexts[checkTime];
+                    openEdit();
+                  },
+                  child: SizedBox(
+                      height: valHeight * 0.2,
+                      width: valWidth * 0.86,
+                      child : CoachingTxtBox(context, CoachingFoodtexts[checkTime], 0.2)
+                  )
+              );
             } else if (DiffDays < 0) {
-              return CoachingTxtBox(context, '아직 해당 날짜의 식단 코칭이 없습니다.', 0.2);
+              return InkWell(
+                  onTap: (){
+                    EditController.text = CoachingFoodtexts[checkTime];
+                    openEdit();
+                  },
+                  child: SizedBox(
+                      height: valHeight * 0.2,
+                      width: valWidth * 0.86,
+                      child : CoachingTxtBox(context, '아직 해당 날짜의 식단 코칭이 없습니다.', 0.2)
+                  )
+              );
             }
             checkTime = checkTime - 1;
           }
 
-          return CoachingTxtBox(context, '아직 해당 날짜의 식단 코칭이 없습니다.', 0.2);
+          return InkWell(
+              onTap: (){
+                EditController.text = CoachingFoodtexts[checkTime];
+                openEdit();
+              },
+              child: SizedBox(
+                  height: valHeight * 0.2,
+                  width: valWidth * 0.86,
+                  child : CoachingTxtBox(context, '아직 해당 날짜의 식단 코칭이 없습니다.', 0.2)
+              )
+          );
         } else {
           return Center(child: CircularProgressIndicator());
         }
@@ -216,7 +393,7 @@ class _YearCoachingBody extends State<YearCoachingBody> {
           SizedBox(
             height: 15,
           ),
-          InitExerciseCoaching(context, selectedDay, uid!),
+          InitExerciseCoaching(context, selectedDay),
           Container(
             width: valWidth * 0.74,
             child: Divider(
@@ -238,7 +415,7 @@ class _YearCoachingBody extends State<YearCoachingBody> {
           SizedBox(
             height: 15,
           ),
-          InitFoodCoaching(context, selectedDay),
+          InitFoodCoaching(context, selectedDay, uid!),
           Container(
             width: valWidth * 0.74,
             child: Divider(

@@ -75,6 +75,20 @@ class DatabaseMethos{
     return await FirebaseFirestore.instance.collection('users').doc(Traineruid).collection("add_query").doc(uid).delete();
   }
 
+  sendCoaching(String uid, int coachtype, DateTime date, String message) async{
+
+    Map<String, dynamic> CoachInfo = {
+      "time" : date,
+      'message' : message
+    };
+
+    var coachingtype = ['coaching_exercise', 'coaching_diet', 'coaching_bio'];
+
+    String datestr = date.year.toString()+"_"+date.month.toString()+"_"+date.day.toString();
+
+    return await FirebaseFirestore.instance.collection('users').doc(uid).collection(coachingtype[coachtype]).doc(datestr).set(CoachInfo);
+  }
+
   Future<Stream<QuerySnapshot>> getchatroomMessages(chatroomId) async{
     return await FirebaseFirestore.instance.collection("Chatrooms").doc(chatroomId).collection("chats").orderBy("time", descending: true).snapshots();
   }
