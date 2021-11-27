@@ -29,7 +29,32 @@ class ProfileController extends GetxController {
 
   DateTime date = DateTime.now();
 
+  int buttonCase = 0;
+
   File? food;
+
+  //buttonCase 관련
+  void buttonCaseZero() {
+    buttonCase = 0;
+    update();
+  }
+
+  void buttonCaseOne() {
+    buttonCase = 1;
+    update();
+  }
+
+  void buttonCaseTwo() {
+    buttonCase = 2;
+    update();
+  }
+
+  void buttonCaseThree() {
+    buttonCase = 3;
+    update();
+  }
+
+  //Day 관련
 
   void updatefocusedDay(DateTime value) {
     focusedDay = value;

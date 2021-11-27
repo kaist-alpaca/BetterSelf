@@ -25,6 +25,15 @@ class DatabaseMethos{
     return FirebaseFirestore.instance.collection("Chatrooms").doc(chatroomId).collection("chats").doc(messageId).set(messageInfo);
   }
 
+  addTrainer(String Traineruid, Map<String, dynamic> userInfo) async{
+    final snapShot = await FirebaseFirestore.instance.collection("users").doc(Traineruid).collection("add_query").doc(userInfo['uid']).get();
+    if(snapShot.exists){
+      return true;
+    }else{
+      return FirebaseFirestore.instance.collection("users").doc(Traineruid).collection("add_query").doc(userInfo['uid']).set(userInfo);
+    }
+  }
+
   Future<Stream<QuerySnapshot>> getchatroomMessages(chatroomId) async{
     return await FirebaseFirestore.instance.collection("Chatrooms").doc(chatroomId).collection("chats").orderBy("time", descending: true).snapshots();
   }
