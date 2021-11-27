@@ -1,12 +1,13 @@
-import 'package:betterme/functions/Controllers/profile_controller.dart';
-import 'package:betterme/functions/Controllers/server_connection.dart';
+
+import 'package:betterself_trainer/functions/Controllers/profile_controller.dart';
+import 'package:betterself_trainer/functions/Controllers/server_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 
 //식단을 보여주기 위한 위젯
 
-Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
+Widget CoachingFoodBox(BuildContext context, DateTime selectedDay, String uid) {
   //selectedDay가 받아온 보여주길 원하는 운동 날짜임.
 
   final valWidth = MediaQuery.of(context).size.width;
@@ -27,16 +28,14 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
           width: lineLength,
           child: FutureBuilder<List<dynamic>>(
             future: ServerConnection.get_food_by_date(
-              ProfileController.to.originMyProfile.uid == null
-                  ? ''
-                  : ProfileController.to.originMyProfile.uid!,
+              uid,
               selectedDay,
             ),
             builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
               if (snapshot.hasError){
                 return Container(
                   child: Text(
-                      '이 날의 식단 기록이 없습니다.',
+                      '이 날의 운동 기록이 없습니다.',
                       style: TextStyle(fontSize: 10, color: txtColor)
                   ),
                 );
@@ -70,15 +69,6 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
                     ],
                   );
                 }).toList();
-
-                // FoodList.add(
-                //   Row(
-                //     children: [
-                //       SizedBox(width: valWidth*0.07,),
-                //       Text('총 칼로리: kcal', style: TextStyle(fontSize: 10, color: txtColor, fontWeight: FontWeight.bold))
-                //     ],
-                //   ),
-                // );
 
                 return Container(
                   child: Column(

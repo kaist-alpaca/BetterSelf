@@ -39,6 +39,7 @@ class DatabaseMethos{
     final Traineedata = Traineesnapshot.data()!;
 
     Map<String, dynamic> TraineeInfo = {
+      "uid" : uid,
       "email" : Traineedata['email'],
       "imgUrl" : Traineedata['imgUrl'],
       "name" : Traineedata['name'],
