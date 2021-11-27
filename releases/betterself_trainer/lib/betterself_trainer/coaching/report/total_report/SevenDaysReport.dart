@@ -1,8 +1,9 @@
 
 
+import 'package:betterself_trainer/betterself_trainer/coaching/report/functions/TotalGraphs.dart';
+import 'package:betterself_trainer/betterself_trainer/coaching/report/functions/TotalHorizontalGraph.dart';
 import 'package:betterself_trainer/betterself_trainer/report/Widgets/MiniBox.dart';
-import 'package:betterself_trainer/betterself_trainer/report/functions/TotalGraphs.dart';
-import 'package:betterself_trainer/betterself_trainer/report/functions/TotalHorizontalGraph.dart';
+
 import 'package:betterself_trainer/functions/Controllers/profile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,9 @@ import 'package:get/get.dart';
 
 
 class SevenDaysReport extends StatefulWidget {
-  SevenDaysReport({Key? key}) : super(key: key);
+  SevenDaysReport({Key? key, required this.uid}) : super(key: key);
+
+  final uid;
 
   @override
   _SevenDaysReport createState() => _SevenDaysReport();
@@ -269,7 +272,7 @@ class _SevenDaysReport extends State<SevenDaysReport> {
               SizedBox(
                 height: 20,
               ),
-              TotalGraphs(GraphTypes: GraphTypes, Duration: 7),
+              TotalGraphs(GraphTypes: GraphTypes, Duration: 7, uid : widget.uid),
               SizedBox(
                 height: 20,
               ),
@@ -296,7 +299,7 @@ class _SevenDaysReport extends State<SevenDaysReport> {
                 height: valWidth * 0.95 / 24 * 7 * 1.7,
                 width: valWidth * 0.95,
                 margin: EdgeInsets.only(left: valWidth * 0.025),
-                child: TotalHorizontalChart(),
+                child: TotalHorizontalChart(uid: widget.uid),
               ),
             ],
           ),

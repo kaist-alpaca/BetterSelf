@@ -1,4 +1,4 @@
-import 'package:betterself_trainer/betterself_trainer/report/functions/TotalGraphs.dart';
+import 'package:betterself_trainer/betterself_trainer/coaching/report/functions/TotalGraphs.dart';
 import 'package:betterself_trainer/functions/Controllers/profile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,9 @@ import 'package:get/get.dart';
 
 
 class YearReport extends StatefulWidget {
+  YearReport({Key? key, required this.uid}) : super(key: key);
+
+  final uid;
   @override
   _YearReport createState() => _YearReport();
 }
@@ -251,7 +254,7 @@ class _YearReport extends State<YearReport> {
               SizedBox(
                 height: 20,
               ),
-              TotalGraphs(GraphTypes: GraphTypes, Duration: 365),
+              TotalGraphs(GraphTypes: GraphTypes, Duration: 365, uid: widget.uid),
             ],
           ),
         ),

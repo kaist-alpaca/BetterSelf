@@ -224,6 +224,7 @@ class ServerConnection {
 
   static Future<List<dynamic>> total_sleep(
       String uid, List<dynamic> date) async {
+    print("debug : $uid");
     final response = await http.post(
       Uri.http('kaistuser.iptime.org:8080', 'total_sleep.php'),
       body: <String, String>{

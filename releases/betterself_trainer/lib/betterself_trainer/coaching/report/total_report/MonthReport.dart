@@ -1,6 +1,5 @@
 
-
-import 'package:betterself_trainer/betterself_trainer/report/functions/TotalGraphs.dart';
+import 'package:betterself_trainer/betterself_trainer/coaching/report/functions/TotalGraphs.dart';
 import 'package:betterself_trainer/functions/Controllers/profile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,9 @@ import 'package:get/get.dart';
 
 
 class MonthReport extends StatefulWidget {
+  MonthReport({Key? key, required this.uid}) : super(key: key);
+
+  final uid;
   @override
   _MonthReport createState() => _MonthReport();
 }
@@ -253,7 +255,7 @@ class _MonthReport extends State<MonthReport> {
               SizedBox(
                 height: 20,
               ),
-              TotalGraphs(GraphTypes: GraphTypes, Duration: 31),
+              TotalGraphs(GraphTypes: GraphTypes, Duration: 31, uid : widget.uid),
             ],
           ),
         ),
