@@ -49,7 +49,8 @@ class AuthMethods {
         "email": userDetails.email,
         "username": userDetails.email!.replaceAll("@gmail.com", ""),
         "name": userDetails.displayName,
-        "imgUrl": userDetails.photoURL
+        "imgUrl": userDetails.photoURL,
+        "isCoach": true,
       };
 
       DatabaseMethos()
