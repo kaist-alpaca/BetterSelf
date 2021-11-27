@@ -34,6 +34,46 @@ class DatabaseMethos{
     }
   }
 
+  addTrainee(String Traineruid, String uid) async{
+    final Traineesnapshot = await FirebaseFirestore.instance.collection('users').doc(Traineruid).collection("add_query").doc(uid).get();
+    final Traineedata = Traineesnapshot.data()!;
+
+    Map<String, dynamic> TraineeInfo = {
+      "email" : Traineedata['email'],
+      "imgUrl" : Traineedata['imgUrl'],
+      "name" : Traineedata['name'],
+      "profileUrl" : Traineedata['profileUrl'],
+      "username" : Traineedata['username'],
+    };
+
+    final Trainersnapshot = await FirebaseFirestore.instance.collection('users').doc(Traineruid).get();
+    final Trainerdata = Trainersnapshot.data()!;
+
+    Map<String, dynamic> TrainerInfo = {
+      "email" : Trainerdata['email'],
+      "imgUrl" : Trainerdata['imgUrl'],
+      "name" : Trainerdata['name'],
+      "profileUrl" : Trainerdata['profileUrl'],
+      "username" : Trainerdata['username'],
+    };
+
+    final Trainerchatsnapshot = await FirebaseFirestore.instance.collection('users').doc(Traineruid).collection('trainers').doc(TraineeInfo['name']).get();
+    final Traineechatsnapshot = await FirebaseFirestore.instance.collection('users').doc(uid).collection('trainers').doc(TrainerInfo['name']).get();
+
+    if(Trainerchatsnapshot.exists){
+      return removeTraineeQuery(Traineruid, uid);
+    }else{
+      FirebaseFirestore.instance.collection('users').doc(uid).collection('trainers').doc(TrainerInfo['name']).set(TrainerInfo);
+      FirebaseFirestore.instance.collection('users').doc(Traineruid).collection('trainers').doc(TraineeInfo['name']).set(TraineeInfo);
+      return removeTraineeQuery(Traineruid, uid);
+    }
+  }
+
+  removeTraineeQuery(String Traineruid, String uid) async{
+    print("debug remove uid : $uid");
+    return await FirebaseFirestore.instance.collection('users').doc(Traineruid).collection("add_query").doc(uid).delete();
+  }
+
   Future<Stream<QuerySnapshot>> getchatroomMessages(chatroomId) async{
     return await FirebaseFirestore.instance.collection("Chatrooms").doc(chatroomId).collection("chats").orderBy("time", descending: true).snapshots();
   }

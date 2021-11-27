@@ -25,7 +25,19 @@ class DatabaseMethos{
     return FirebaseFirestore.instance.collection("Chatrooms").doc(chatroomId).collection("chats").doc(messageId).set(messageInfo);
   }
 
-  addTrainer(String Traineruid, Map<String, dynamic> userInfo) async{
+  addTrainer(String Traineruid, String uid) async{
+    final userstream = await FirebaseFirestore.instance.collection("users").doc(uid).get();
+    final userdata = userstream.data()!;
+
+    Map<String, dynamic> userInfo = {
+      "uid" : uid,
+      "email" : userdata['email'],
+      "imgUrl" : userdata['imgUrl'],
+      "name" : userdata['name'],
+      "profileUrl" : userdata['profileUrl'],
+      "username" : userdata['username'],
+    };
+
     final snapShot = await FirebaseFirestore.instance.collection("users").doc(Traineruid).collection("add_query").doc(userInfo['uid']).get();
     if(snapShot.exists){
       return true;
