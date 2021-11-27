@@ -226,7 +226,7 @@ class _YearCoachingBody extends State<YearCoachingBody> {
             ),
           ),
           SizedBox(
-            height: 50,
+            height: 200,
           )
         ],
       );
@@ -248,7 +248,7 @@ class _YearCoachingBody extends State<YearCoachingBody> {
             ),
           ),
           SizedBox(
-            height: 50,
+            height: 200,
           )
         ],
       );
@@ -259,7 +259,7 @@ class _YearCoachingBody extends State<YearCoachingBody> {
           CoachingDate(context, '생활 데이터 코칭', '[$formattedDate]'),
           InitBioCoaching(context, selectedDay, '[$formattedDate]'),
           SizedBox(
-            height: 40,
+            height: 500,
           )
         ],
       );

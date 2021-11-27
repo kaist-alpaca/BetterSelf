@@ -262,7 +262,7 @@ class _MonthCoachingBody extends State<MonthCoachingBody> {
           CoachingDate(context, '생활 데이터 코칭', '[$formattedDate]'),
           InitBioCoaching(context, selectedDay, '[$formattedDate]'),
           SizedBox(
-            height: 200,
+            height: 500,
           )
         ],
       );

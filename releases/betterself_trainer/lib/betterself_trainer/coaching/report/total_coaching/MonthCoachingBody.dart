@@ -27,8 +27,35 @@ var user = AuthMethods()
     .toString()
     .replaceAll("@gmail.com", "");
 
+  String? codeDialog;
+  String? valueText;
+
+  Widget build(BuildContext context) {
+    return Container();
+  }
+
 Widget InitBioCoaching(
     BuildContext context, DateTime selectedDate, String formatD, String uid) {
+
+  Future openEdit() => showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: TextField(
+            autofocus: true,
+            decoration: InputDecoration(hintText: 'love'),
+          ),
+          actions: [
+            TextButton(
+                onPressed: (){},
+                child: Text('edit')
+            )
+          ],
+        );
+      }
+  );
+
+
   Stream<QuerySnapshot> usersStream = FirebaseFirestore.instance
       .collection('users')
       .doc(uid)
@@ -69,14 +96,14 @@ Widget InitBioCoaching(
                 print('$checkTime and ' + CoachingBiotexts[checkTime]);
                 return GestureDetector(
                   onTap: (){
-
+                    openEdit();
                   },
                   child: CoachingTxtBox(context, CoachingBiotexts[checkTime], 0.25),
                 );
               } else if (DiffDays < 0) {
                 return GestureDetector(
                   onTap: (){
-
+                    openEdit();
                   },
                   child: CoachingTxtBox(context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25)
                 );
@@ -85,7 +112,7 @@ Widget InitBioCoaching(
             }
             return GestureDetector(
                 onTap: (){
-
+                  openEdit();
                 },
                 child: CoachingTxtBox(context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25)
             );
@@ -216,6 +243,7 @@ class MonthCoachingBody extends StatefulWidget {
 
 class _MonthCoachingBody extends State<MonthCoachingBody> {
   TextEditingController _textFieldController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -287,3 +315,4 @@ class _MonthCoachingBody extends State<MonthCoachingBody> {
     }
   }
 }
+
