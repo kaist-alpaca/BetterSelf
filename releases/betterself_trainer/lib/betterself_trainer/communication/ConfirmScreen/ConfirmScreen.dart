@@ -43,7 +43,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
 
                     print("debug uid : ${data['uid']}");
 
-                    if (data['uid'].toString().contains(searching.text)) {
+                    if (data['name'].toString().contains(searching.text)) {
                       return ClipRRect(
                         borderRadius: BorderRadius.all(
                           Radius.circular(18),
@@ -60,15 +60,17 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                         AlertDialog(
                                       backgroundColor: bgColor,
                                       content: Text(
-                                        "${data['uid']} 님에게\n트레이너 요청을 보내시겠습니까?",
+                                        "${data['name']} 님의 요청을 받으시겠습니까?",
                                         style: TextStyle(color: txtColor),
                                       ), // 서버에 발송기능 구현
                                       actions: <Widget>[
                                         TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
+                                          onPressed: () {
+                                            DatabaseMethos().removeTraineeQuery(AuthMethods().auth.currentUser!.uid, data['uid']);
+                                            Navigator.pop(context, 'Delete');
+                                          },
                                           child: const Text(
-                                            '취소',
+                                            '삭제',
                                             style: TextStyle(
                                                 color: Color(0xffFFFDFD)),
                                           ),
@@ -78,7 +80,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                             Map<String, dynamic> userInfo = {
                                               "uid": AuthMethods().auth.currentUser!.uid
                                             };
-                                            DatabaseMethos().addTrainer(document.id, userInfo);
+                                            DatabaseMethos().addTrainee(AuthMethods().auth.currentUser!.uid, data['uid']);
                                             Navigator.pop(context, 'OK');
                                           },
                                           child: const Text(
@@ -100,7 +102,7 @@ class _ConfirmScreenState extends State<ConfirmScreen> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10))),
                                       child: Text(
-                                        data['uid'],
+                                        data['name'],
                                         style: TextStyle(
                                           color: txtColor,
                                           fontSize: defaultSize * 15, //15,

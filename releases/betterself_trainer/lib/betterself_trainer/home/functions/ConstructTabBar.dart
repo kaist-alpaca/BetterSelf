@@ -1,6 +1,6 @@
+import 'package:betterself_trainer/betterself_trainer/coaching/CoachingScreen.dart';
 import 'package:betterself_trainer/betterself_trainer/communication/CommunicationScreen.dart';
 import 'package:betterself_trainer/betterself_trainer/report/ReportScreen.dart';
-import 'package:betterself_trainer/betterself_trainer/setting/SettingScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -39,7 +39,7 @@ class _ConstructTabBar extends State<ConstructTabBar> {
         children: <Widget>[
           ReportScreen(),
           CommunicationScreen(),
-          SettingScreen()
+          CoachingScreen()
         ],
         controller: pageController, // controller를 지정해주면 각 페이지별 인덱스로 컨트롤 가능
         physics: NeverScrollableScrollPhysics(),
