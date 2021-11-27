@@ -94,11 +94,11 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                          controller.MinusSevenDate(controller.date)
+                          controller.MinusSixDate(controller.date)
                                   .month
                                   .toString() +
                               "월 " +
-                              controller.MinusSevenDate(controller.date)
+                              controller.MinusSixDate(controller.date)
                                   .day
                                   .toString() +
                               "일 - " +
