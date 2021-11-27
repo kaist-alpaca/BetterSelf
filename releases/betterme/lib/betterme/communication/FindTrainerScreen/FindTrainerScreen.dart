@@ -78,8 +78,13 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                                           ),
                                         ),
                                         TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'OK'),
+                                          onPressed: () {
+                                            Map<String, dynamic> userInfo = {
+                                              "uid": AuthMethods().auth.currentUser!.uid
+                                            };
+                                            DatabaseMethos().addTrainer(document.id, userInfo);
+                                            Navigator.pop(context, 'OK');
+                                          },
                                           child: const Text(
                                             '확인',
                                             style: TextStyle(
