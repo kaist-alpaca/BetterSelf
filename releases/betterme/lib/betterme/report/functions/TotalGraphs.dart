@@ -809,16 +809,16 @@ class PathPainterSleep extends CustomPainter {
 //     //print(SleepData);
 // =======
     //print('sleep');
-    sleep.forEach((e) {
-      //print(e);
-      // print(DateTime.parse(e['time'].replaceAll("_", "")));
-      SleepData.add(
-        DateData(
-          DateTime.parse(e['time'].replaceAll("_", "")),
-          double.parse(e['sleep']) / 60,
-        ),
-      );
-    });
+    // sleep.forEach((e) {
+    //   //print(e);
+    //   // print(DateTime.parse(e['time'].replaceAll("_", "")));
+    //   SleepData.add(
+    //     DateData(
+    //       DateTime.parse(e['time'].replaceAll("_", "")),
+    //       double.parse(e['sleep']) / 60,
+    //     ),
+    //   );
+    // });
 
     // print('good...?');
     //print("print sleepdata");
