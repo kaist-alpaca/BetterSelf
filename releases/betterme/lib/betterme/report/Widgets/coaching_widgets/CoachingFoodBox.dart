@@ -43,12 +43,12 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
               }
               else if (snapshot.hasData && snapshot.data!.length > 0) {
                 print('\n\ndebug : ${snapshot.data}');
-                var data = List.from(snapshot.data!.reversed);
+                var data = List.from(snapshot.data!);
                 double sum = 0;
 
                 List<Widget> FoodList = data.map<Widget>((e){
                   print("debug Time : ${e['date']}");
-                  DateTime Time = DateTime.parse(e['date'].toString());
+                  DateTime Time = DateTime.parse(e['time'].toString());
                   print("debug Time : $Time");
 
                   sum += e['amount'] as num;
