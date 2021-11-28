@@ -44,11 +44,14 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
               else if (snapshot.hasData && snapshot.data!.length > 0) {
                 print('\n\ndebug : ${snapshot.data}');
                 var data = List.from(snapshot.data!.reversed);
+                double sum = 0;
 
                 List<Widget> FoodList = data.map<Widget>((e){
                   print("debug Time : ${e['date']}");
                   DateTime Time = DateTime.parse(e['date'].toString());
                   print("debug Time : $Time");
+
+                  sum += e['amount'] as num;
 
                   return Column(
                     children: [
@@ -61,7 +64,7 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
                           SizedBox(width: valWidth*0.04,),
                           Text(e['name'], style: TextStyle(fontSize: 10, color: txtColor)),
                           SizedBox(width: valWidth*0.04,),
-                          Text("${e['amount']} 인분", style: TextStyle(fontSize: 10, color: txtColor)),
+                          Text("${e['amount']} kcal", style: TextStyle(fontSize: 10, color: txtColor)),
                           SizedBox(width: valWidth*0.04,),
                           //Text('$Dura 분', style: TextStyle(fontSize: 10, color: txtColor)),
                         ],
@@ -71,14 +74,14 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
                   );
                 }).toList();
 
-                // FoodList.add(
-                //   Row(
-                //     children: [
-                //       SizedBox(width: valWidth*0.07,),
-                //       Text('총 칼로리: kcal', style: TextStyle(fontSize: 10, color: txtColor, fontWeight: FontWeight.bold))
-                //     ],
-                //   ),
-                // );
+                FoodList.add(
+                   Row(
+                     children: [
+                       SizedBox(width: valWidth*0.07,),
+                       Text('총 칼로리: $sum kcal', style: TextStyle(fontSize: 10, color: txtColor, fontWeight: FontWeight.bold))
+                     ],
+                   ),
+                );
 
                 return Container(
                   child: Column(
