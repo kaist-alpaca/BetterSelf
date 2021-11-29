@@ -1,4 +1,5 @@
 import 'package:betterme/betterme/home/HomeScreen.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,6 +23,7 @@ class _ConstructTabBar extends State<ConstructTabBar> {
   @override
   void initState() {
     super.initState();
+    ServerConnection.write_log('ConstructTabBar', '', '');
     pageController = PageController();
   }
 

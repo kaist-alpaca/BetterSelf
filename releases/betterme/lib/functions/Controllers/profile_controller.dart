@@ -111,6 +111,17 @@ class ProfileController extends GetxController {
     update();
   }
 
+  int total_graph_type = 0;
+  void updatetotal_graph_type(int n) {
+    if (total_graph_type == n || total_graph_type != 0) {
+      ServerConnection.write_log('ReportScreen', 'graph_area_all', '');
+      total_graph_type = 0;
+    } else {
+      total_graph_type = n;
+    }
+    update();
+  }
+
   int duration = 7;
   DateTime totaldate = DateTime.now();
   List<dynamic> datelist = [
@@ -399,6 +410,8 @@ class ProfileController extends GetxController {
       heightSelected(height);
     }
 
+    ServerConnection.write_log('login', '', '');
+
     // return FirebaseAuth.instance.currentUser == null
     //     ? ''
     //     : FirebaseAuth.instance.currentUser!.uid;
@@ -496,7 +509,7 @@ class ProfileController extends GetxController {
     });
   }
 
-  Future<void> updateProfile() async {
+  Future<bool> updateProfile() async {
     print('gender');
     print(gender);
     print(birthday);
@@ -524,5 +537,7 @@ class ProfileController extends GetxController {
                 height! +
                 '&disease=' +
                 disease!));
+    // print(json.decode(response.body));
+    return (json.decode(response.body));
   }
 }

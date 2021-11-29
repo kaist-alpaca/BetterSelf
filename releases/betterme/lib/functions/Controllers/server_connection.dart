@@ -14,6 +14,7 @@ import 'dart:io';
 // import 'package:health_kit_reporter/model/type/quantity_type.dart';
 // import 'package:health_kit_reporter/model/type/series_type.dart';
 // import 'package:health_kit_reporter/model/type/workout_type.dart';
+import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -168,7 +169,7 @@ class ServerConnection {
     return json.decode(response.body).toString();
   }
 
-  static Future<String> save_food(String uid, List food) async {
+  static Future<String> save_food(String uid, List food, argument) async {
     var data = [];
     // if (num != 31) {
     //   for (int i = 0; i < num; i++) {
@@ -197,11 +198,21 @@ class ServerConnection {
     });
     print(food.length);
     print(data);
+    var temp;
+    if (argument == '0') {
+      temp = '0';
+    } else {
+      temp = '1';
+    }
+    print("dsiofjsdoijfidsjfdsjfsdj!!!!!!!!!!!!!!");
+    print(argument);
+    print("dsiofjsdoijfidsjfdsjfsdj!!!!!!!!!!!!!!");
     final response = await http.post(
       Uri.http('kaistuser.iptime.org:8080', 'upload_food.php'),
       body: <String, String>{
         'uid': uid, //서버에 post key : 보내는 값
-        'data': json.encode(data)
+        'data': json.encode(data),
+        'date': temp,
         // 'data': json.encode(data.toString())
         // 'data': data.toString()
       },
@@ -224,7 +235,6 @@ class ServerConnection {
 
   static Future<List<dynamic>> total_sleep(
       String uid, List<dynamic> date) async {
-
     final response = await http.post(
       Uri.http('kaistuser.iptime.org:8080', 'total_sleep.php'),
       body: <String, String>{
@@ -299,8 +309,11 @@ class ServerConnection {
 
   static Future<List<dynamic>> get_food_by_date(
       String uid, DateTime date) async {
-    final query = Uri.parse("http://kaistuser.iptime.org:8080/get_food_by_date.php?uid=" + uid + "&startDate="
-        + date.toString().substring(0, 10).replaceAll("-", "_"));
+    final query = Uri.parse(
+        "http://kaistuser.iptime.org:8080/get_food_by_date.php?uid=" +
+            uid +
+            "&startDate=" +
+            date.toString().substring(0, 10).replaceAll("-", "_"));
     print("debug : $query");
     final response = await http.get(query);
     return json.decode(response.body);
@@ -672,5 +685,25 @@ class ServerConnection {
       print(e);
     }
     return lastupdate;
+  }
+
+  static Future<void> write_log(
+      String log, String click, String move_to) async {
+    String uid = ProfileController.to.originMyProfile.uid!;
+
+    print('wrtie log');
+    print(uid);
+    print(log);
+    print(click);
+    print(move_to);
+
+    http.get(Uri.parse("http://kaistuser.iptime.org:8080/write_log.php?uid=" +
+        uid +
+        "&log=" +
+        log +
+        "&click=" +
+        click +
+        "&move_to=" +
+        move_to));
   }
 }

@@ -28,68 +28,80 @@ Widget CoachingExerciseBox(BuildContext context, DateTime selectedDay) {
       child: FutureBuilder<List<dynamic>>(
         future: ServerConnection.total_workout(
           ProfileController.to.originMyProfile.uid == null
-               ? ''
-               : ProfileController.to.originMyProfile.uid!,
+              ? ''
+              : ProfileController.to.originMyProfile.uid!,
           selectedDay,
         ),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          if (snapshot.hasError){
+          if (snapshot.hasError) {
             return Container(
-              child: Text(
-                  '이 날의 운동 기록이 없습니다.',
-                  style: TextStyle(fontSize: 10, color: txtColor)
-              ),
+              child: Text('이 날의 운동 기록이 없습니다.',
+                  style: TextStyle(fontSize: 10, color: txtColor)),
             );
-          }
-          else if (snapshot.hasData && snapshot.data![0].length > 0) {
+          } else if (snapshot.hasData && snapshot.data![0].length > 0) {
             print('\n\ndebug : ${snapshot.data}');
             var data = List.from(snapshot.data![0].reversed);
             double sum = 0;
 
-            List<Widget> ExerciseList = data.map<Widget>((e){
+            List<Widget> ExerciseList = data.map<Widget>((e) {
               sum = sum + double.parse(e[3]);
-              DateTime startTime = DateTime.fromMicrosecondsSinceEpoch(((double.parse(e[0])*1000000).round()));
-              DateTime endTime = DateTime.fromMicrosecondsSinceEpoch(((double.parse(e[1])*1000000).round()));
+              DateTime startTime = DateTime.fromMicrosecondsSinceEpoch(
+                  ((double.parse(e[0]) * 1000000).round()));
+              DateTime endTime = DateTime.fromMicrosecondsSinceEpoch(
+                  ((double.parse(e[1]) * 1000000).round()));
               int Dura = endTime.difference(startTime).inMinutes;
 
               return Column(
                 children: [
                   Row(
                     children: [
-                      SizedBox(width: valWidth*0.07,),
-                      Text(DateFormat.jm().format(startTime), style: TextStyle(fontSize: 10, color: txtColor)),
-                      SizedBox(width: valWidth*0.04,),
-                      Text(e[2], style: TextStyle(fontSize: 10, color: txtColor)),
-                      SizedBox(width: valWidth*0.04,),
-                      Text('$Dura 분', style: TextStyle(fontSize: 10, color: txtColor)),
+                      SizedBox(
+                        width: valWidth * 0.07,
+                      ),
+                      Text(DateFormat.jm().format(startTime),
+                          style: TextStyle(fontSize: 10, color: txtColor)),
+                      SizedBox(
+                        width: valWidth * 0.04,
+                      ),
+                      Text(e[2],
+                          style: TextStyle(fontSize: 10, color: txtColor)),
+                      SizedBox(
+                        width: valWidth * 0.04,
+                      ),
+                      Text('$Dura 분',
+                          style: TextStyle(fontSize: 10, color: txtColor)),
                     ],
                   ),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               );
             }).toList();
 
             ExerciseList.add(
-                Row(
-                  children: [
-                    SizedBox(width: valWidth*0.07,),
-                    Text('총 소모 칼로리: $sum kcal', style: TextStyle(fontSize: 10, color: txtColor, fontWeight: FontWeight.bold))
-                  ],
-                ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: valWidth * 0.07,
+                  ),
+                  Text('총 소모 칼로리: $sum kcal',
+                      style: TextStyle(
+                          fontSize: 10,
+                          color: txtColor,
+                          fontWeight: FontWeight.bold))
+                ],
+              ),
             );
 
             return Container(
-              child: Column(
-                children: ExerciseList
-              ),
+              child: Column(children: ExerciseList),
             ); //Text(snapshot.data[]);
 
-          } else{
+          } else {
             return Container(
-              child: Text(
-                  '이 날의 운동 기록이 없습니다.',
-                  style: TextStyle(fontSize: 10, color: txtColor)
-              ),
+              child: Text('이 날의 운동 기록이 없습니다.',
+                  style: TextStyle(fontSize: 10, color: txtColor)),
             );
           }
         },
@@ -110,7 +122,7 @@ Widget CoachingExerciseBox(BuildContext context, DateTime selectedDay) {
           Container(
               width: valWidth * 0.1,
               height: valHeight * 0.05,
-              child: SvgPicture.asset('images/coaching_icon.svg')),
+              child: Image.asset('images/coaching_icon.png')),
           Container(
             width: valWidth * 0.3,
             child: Divider(

@@ -16,6 +16,11 @@ class SaveFoodScreen extends StatefulWidget {
 }
 
 class _SaveFoodScreenState extends State<SaveFoodScreen> {
+  void initState() {
+    super.initState();
+    ServerConnection.write_log('SaveFoodScreen', 'start', '');
+  }
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -31,8 +36,28 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("식단 저장",
-            style: TextStyle(color: txtColor, fontSize: defaultSize * 15)),
+            style: TextStyle(
+              color: txtColor,
+              fontSize: defaultSize * 17,
+              fontWeight: FontWeight.w400,
+            )),
         backgroundColor: bgColor,
+        actions: [
+          TextButton(
+            onPressed: () {
+              ServerConnection.write_log(
+                  'SaveFoodScreen', 'end', 'ConstructTabBar');
+              Get.offAll(() => ConstructTabBar());
+            },
+            child: Text("취소",
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0XFFFFFDFD),
+                  fontWeight: FontWeight.w400,
+                )),
+          ),
+          SizedBox(width: 15),
+        ],
       ),
       body: Column(
         children: [
@@ -47,6 +72,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                 style: TextStyle(
                   color: linetxtColor,
                   fontSize: defaultSize * 14,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),
@@ -65,6 +91,8 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                   child: i == Get.arguments[0].length
                       ? GestureDetector(
                           onTap: () {
+                            ServerConnection.write_log(
+                                'SaveFoodScreen', 'end', 'SearchFoodScreen');
                             Get.to(
                               () => SearchFoodScreen(),
                               arguments: Get.arguments,
@@ -92,6 +120,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                   style: TextStyle(
                                     color: Color(0xFFFFFDFD),
                                     fontSize: defaultSize * 14,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ),
@@ -127,7 +156,8 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         '${Get.arguments[0][i][2][0]} / ${Get.arguments[0][i][1]}',
                                         style: TextStyle(
                                           color: linetxtColor,
-                                          fontSize: defaultSize * 20,
+                                          fontSize: defaultSize * 14,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
@@ -159,23 +189,23 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                         Color(0xffA0B1DF),
                                         0.012,
                                         0.2,
-                                        10,
+                                        defaultSize * 12,
                                         '탄수화물 ${(Get.arguments[0][i][2][2] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'), //
                                     SizedBox(height: valHeight * 0.008),
                                     MiniBox(
                                         context,
                                         Color(0xffF1D7A7),
                                         0.012,
-                                        0.176,
-                                        10,
+                                        0.2,
+                                        defaultSize * 12,
                                         '단백질 ${(Get.arguments[0][i][2][3] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
                                     SizedBox(height: valHeight * 0.008),
                                     MiniBox(
                                         context,
                                         Color(0xffDBB9C7),
                                         0.012,
-                                        0.15,
-                                        10,
+                                        0.2,
+                                        defaultSize * 12,
                                         '지방 ${(Get.arguments[0][i][2][4] * Get.arguments[0][i][3]).toStringAsFixed(1)} g'),
                                     // SizedBox(height: valHeight * 0.008),
                                     // MiniBox(
@@ -203,14 +233,15 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                                             context,
                                             txtColor,
                                             0.012,
-                                            0.176,
-                                            10,
+                                            0.2,
+                                            defaultSize * 12,
                                             '나트륨 ${(Get.arguments[0][i][2][7] * Get.arguments[0][i][3]).toStringAsFixed(1)} mg'),
                                         Text(
                                           '${(Get.arguments[0][i][2][1] * Get.arguments[0][i][3]).round()} kcal',
                                           style: TextStyle(
                                             color: Color(0xFFFFFDFD),
-                                            fontSize: defaultSize * 15,
+                                            fontSize: defaultSize * 14,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                       ],
@@ -241,6 +272,7 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
               String time = await ServerConnection.save_food(
                 ProfileController.to.originMyProfile.uid!,
                 Get.arguments[0],
+                Get.arguments[1] == 0 ? '0' : Get.arguments[1],
               );
               print(Get.arguments[1]);
               print(time);
@@ -253,11 +285,14 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                 );
               }
               // Get.to(() => SaveFoodScreen(), arguments: Get.arguments);
+              ServerConnection.write_log('SaveFoodScreen', 'save_food', '');
+              ServerConnection.write_log(
+                  'SaveFoodScreen', 'end', 'ConstructTabBar');
               Get.offAll(() => ConstructTabBar());
             },
             child: Container(
-              width: valWidth * 0.6,
-              height: 50,
+              width: valWidth * 0.47,
+              height: 40,
               decoration: BoxDecoration(
                 border: Border.all(
                   width: 1,
@@ -265,13 +300,17 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
                 ),
                 color: Color(0xff333C47),
                 borderRadius:
-                    BorderRadius.all(Radius.circular(valWidth * 0.02)),
+                    BorderRadius.all(Radius.circular(valWidth * 0.04)),
               ),
               child: Align(
                 alignment: FractionalOffset(0.5, 0.5),
                 child: Text(
                   "저장",
-                  style: TextStyle(fontSize: defaultSize * 15, color: txtColor),
+                  style: TextStyle(
+                    fontSize: defaultSize * 14,
+                    color: txtColor,
+                    fontWeight: FontWeight.w400,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),

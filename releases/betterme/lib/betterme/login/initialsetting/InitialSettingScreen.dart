@@ -1,3 +1,4 @@
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Server/ServerConnectionMethods.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import 'package:flutter/cupertino.dart';
@@ -110,6 +111,7 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
 
   @override
   void initState() {
+    ServerConnection.write_log('InitialSettingScreen', 'start', '');
     KeyBoard1.value = TextEditingValue(text: weight);
     super.initState();
     KeyboardVisibilityNotification().addNewListener(
@@ -159,6 +161,11 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
     final txtFeildBorderColor = Color(0xff999CA2);
 
     final genderList = [
+      Center(
+          child: Text("선택안함",
+              style: TextStyle(
+                color: txtColor,
+              ))),
       Center(
           child: Text("남",
               style: TextStyle(
@@ -419,16 +426,20 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                                     ),
                                     Container(
                                       padding: EdgeInsets.only(bottom: 35),
-                                      height: 150.0,
+                                      height: 220.0,
                                       color: Color.fromRGBO(40, 51, 55, 1),
                                       child: CupertinoPicker(
                                         scrollController:
                                             FixedExtentScrollController(
                                                 initialItem: ProfileController
                                                             .to.gender ==
-                                                        '여'
-                                                    ? 1
-                                                    : 0),
+                                                        '선택안함'
+                                                    ? 0
+                                                    : ProfileController
+                                                                .to.gender ==
+                                                            '남'
+                                                        ? 1
+                                                        : 2),
                                         itemExtent: 40,
                                         onSelectedItemChanged: (int value) {
                                           // print(genderList[value].child.key);
@@ -436,12 +447,27 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                                               .child
                                               .toString()
                                               .contains("남"));
-                                          gender = genderList[value]
-                                                  .child
-                                                  .toString()
-                                                  .contains("남")
+                                          // _showAlert(
+                                          //     title: '다음 정보를 입력해 주세요',
+                                          //     message: genderList[value]
+                                          //         .child
+                                          //         .toString());
+                                          gender = value == 1
                                               ? '남'
-                                              : '여';
+                                              : value == 2
+                                                  ? '여'
+                                                  : '선택안함';
+                                          // gender = genderList[value]
+                                          //         .child
+                                          //         .toString()
+                                          //         .contains("남")
+                                          //     ? '남'
+                                          //     : genderList[value]
+                                          //             .child
+                                          //             .toString()
+                                          //             .contains("여")
+                                          //         ? '여'
+                                          //         : '선택안함';
                                         },
                                         children: genderList,
                                         /* the rest of the picker */
@@ -549,8 +575,8 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                                           CupertinoButton(
                                             child: Text('완료'),
                                             onPressed: () {
-                                              controller
-                                                  .birthdaySelected(birth);
+                                              controller.birthdaySelected(
+                                                  birth.replaceAll("-", "/"));
                                               Navigator.pop(context);
                                             },
                                             padding: const EdgeInsets.symmetric(
@@ -927,7 +953,6 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                   // 저장기능 추가해주세요
                   onTap: () {
                     String text = '';
-                    text += controller.gender == '선택안함' ? '성별 ' : '';
                     text += controller.birthday == "/00/00" ? '생년월일 ' : '';
                     text += controller.height == '' ? '키 ' : '';
 
@@ -935,6 +960,8 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                       _showAlert(title: '다음 정보를 입력해 주세요', message: text);
                     } else {
                       controller.updateProfile();
+                      ServerConnection.write_log(
+                          'InitialSettingScreen', 'end', 'ConstructTabBar');
                       Get.offAll(() => ConstructTabBar());
                     }
                     // return Home();

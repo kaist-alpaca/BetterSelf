@@ -1,3 +1,4 @@
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,6 +53,7 @@ class _MonthCoaching extends State<MonthCoaching> {
                       color: bgColor,
                     ),
                     TableCalendar(
+                      availableGestures: AvailableGestures.horizontalSwipe,
                       firstDay: DateTime.utc(2010, 10, 16),
                       lastDay: DateTime.utc(2030, 3, 14),
                       focusedDay: controller.focusedDay,
@@ -81,6 +83,12 @@ class _MonthCoaching extends State<MonthCoaching> {
                         ),
                         selectedDecoration: BoxDecoration(
                           color: Color(0xff333C47),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            width: 1,
+                            color: Color(0xffD2ABBA),
+                            style: BorderStyle.solid,
+                          ),
                         ),
                         outsideDaysVisible: false,
                         holidayTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
@@ -92,6 +100,8 @@ class _MonthCoaching extends State<MonthCoaching> {
                         return isSameDay(controller.selectedDay, day);
                       },
                       onDaySelected: (selectedDay, focusedDay) {
+                        ServerConnection.write_log('ReportScreen',
+                            'month_coaching_calendar_change_date', '');
                         setState(() {});
                         controller.updateselectedDay(selectedDay);
                         controller.updatefocusedDay(focusedDay);
@@ -145,6 +155,8 @@ class _MonthCoaching extends State<MonthCoaching> {
                             ),
                           ),
                           onPressed: () {
+                            ServerConnection.write_log(
+                                'ReportScreen', 'month_coaching_exercise', '');
                             setState(() {
                               buttonCase = 1;
                               button2Color = Color(0xff827380);
@@ -170,6 +182,8 @@ class _MonthCoaching extends State<MonthCoaching> {
                             ),
                           ),
                           onPressed: () {
+                            ServerConnection.write_log(
+                                'ReportScreen', 'month_coaching_food', '');
                             setState(() {
                               buttonCase = 2;
                               button3Color = Color(0xff827380);
@@ -194,6 +208,8 @@ class _MonthCoaching extends State<MonthCoaching> {
                             ),
                           ),
                           onPressed: () {
+                            ServerConnection.write_log(
+                                'ReportScreen', 'month_coaching_life', '');
                             setState(() {
                               buttonCase = 3;
                               button3Color = Color(0xff0B202A);

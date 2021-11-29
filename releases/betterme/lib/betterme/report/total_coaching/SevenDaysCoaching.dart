@@ -1,3 +1,4 @@
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -83,6 +84,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                       icon: SvgPicture.asset(
                           'images/arrow towards left_icon.svg'),
                       onPressed: () {
+                        ServerConnection.write_log('ReportScreen',
+                            'week_coaching_to_previous_date', '');
                         controller.dateMinus7(controller.date);
                         controller.rdateMinus7(controller.reportDay);
                       },
@@ -119,6 +122,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                       icon: SvgPicture.asset(
                           'images/arrow towards right_icon.svg'),
                       onPressed: () {
+                        ServerConnection.write_log(
+                            'ReportScreen', 'week_coaching_to_later_date', '');
                         controller.datePlus7(controller.date);
                         controller.rdatePlus7(controller.reportDay);
                       },
@@ -162,6 +167,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                             ),
                           ),
                           onPressed: () {
+                            ServerConnection.write_log(
+                                'ReportScreen', 'week_coaching_exercise', '');
                             setState(() {
                               buttonCase = 1;
 
@@ -190,6 +197,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                             ),
                           ),
                           onPressed: () {
+                            ServerConnection.write_log(
+                                'ReportScreen', 'week_coaching_food', '');
                             setState(() {
                               buttonCase = 2;
                             });
@@ -217,6 +226,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                             ),
                           ),
                           onPressed: () {
+                            ServerConnection.write_log(
+                                'ReportScreen', 'week_coaching_life', '');
                             setState(() {
                               buttonCase = 3;
                             });
@@ -280,6 +291,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 ),
                               ),
                               onPressed: () {
+                                ServerConnection.write_log('ReportScreen',
+                                    'week_coaching_previous_6_day', '');
                                 dayButtonCase = 0;
                                 setState(() {
                                   dayButton1Color = Color(0xff474A55);
@@ -328,6 +341,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 ),
                               ),
                               onPressed: () {
+                                ServerConnection.write_log('ReportScreen',
+                                    'week_coaching_previous_5_day', '');
                                 dayButtonCase = 1;
                                 setState(() {
                                   dayButton2Color = Color(0xff474A55);
@@ -376,6 +391,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 ),
                               ),
                               onPressed: () {
+                                ServerConnection.write_log('ReportScreen',
+                                    'week_coaching_previous_4_day', '');
                                 dayButtonCase = 0;
                                 setState(() {
                                   dayButton3Color = Color(0xff474A55);
@@ -424,6 +441,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 ),
                               ),
                               onPressed: () {
+                                ServerConnection.write_log('ReportScreen',
+                                    'week_coaching_previous_3_day', '');
                                 dayButtonCase = 0;
                                 setState(() {
                                   dayButton4Color = Color(0xff474A55);
@@ -472,6 +491,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 ),
                               ),
                               onPressed: () {
+                                ServerConnection.write_log('ReportScreen',
+                                    'week_coaching_previous_2_day', '');
                                 dayButtonCase = 0;
                                 setState(() {
                                   dayButton5Color = Color(0xff474A55);
@@ -520,6 +541,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 ),
                               ),
                               onPressed: () {
+                                ServerConnection.write_log('ReportScreen',
+                                    'week_coaching_previous_1_day', '');
                                 dayButtonCase = 0;
                                 setState(() {
                                   dayButton6Color = Color(0xff474A55);
@@ -568,6 +591,8 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                                 ),
                               ),
                               onPressed: () {
+                                ServerConnection.write_log('ReportScreen',
+                                    'week_coaching_previous_0_day', '');
                                 dayButtonCase = 0;
                                 setState(() {
                                   dayButton7Color = Color(0xff474A55);

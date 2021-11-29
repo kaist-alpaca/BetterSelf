@@ -27,12 +27,6 @@ class _TotalHorizontalChart extends State<TotalHorizontalChart> {
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     return Stack(
       children: [
-        Container(
-          child: CustomPaint(
-            child: Container(),
-            painter: CustomeScatterChartPainter(),
-          ),
-        ),
         FutureBuilder<List<dynamic>>(
           future: ServerConnection.total_seven_sleep(
               ProfileController.to.originMyProfile.uid == null
@@ -54,6 +48,12 @@ class _TotalHorizontalChart extends State<TotalHorizontalChart> {
               return Container();
             }
           },
+        ),
+        Container(
+          child: CustomPaint(
+            child: Container(),
+            painter: CustomeScatterChartPainter(),
+          ),
         ),
         FutureBuilder<List<dynamic>>(
           future: ServerConnection.total_seven_food(
@@ -127,7 +127,7 @@ class CustomeScatterChartPainter extends CustomPainter {
     int temp = 7;
     // DateTime today = DateTime.now();
     DateTime today = ProfileController.to.totaldate;
-    for (int i = 0; i < 7; i++) {
+    for (int i = 6; i >= 0; i--) {
       int startTime = today.hour * 60 * 60 + today.minute * 60 + today.second;
       int endTime = today.hour * 60 * 60 + today.minute * 60 + today.second;
       // canvas.drawLine(Offset(left_border + wd * startTime, left_border + hd * i),
@@ -375,26 +375,26 @@ class CustomeScatterChartPainterSleep extends CustomPainter {
 
             // print(startTime);
 
-            if (i != 6) {
+            if (i != 0) {
               canvas.drawLine(
                   Offset(
-                      left_border + wd * startTime + temp, hd * (i + 1) - tmp),
-                  Offset(left_border + wd * endTime - temp, hd * (i + 1) - tmp),
+                      left_border + wd * startTime + temp, hd * (i - 1) - tmp),
+                  Offset(left_border + wd * endTime - temp, hd * (i - 1) - tmp),
                   paint_);
               canvas.drawLine(
                   Offset(
-                      left_border + wd * startTime + temp, hd * (i + 1) + tmp),
-                  Offset(left_border + wd * endTime - temp, hd * (i + 1) + tmp),
+                      left_border + wd * startTime + temp, hd * (i - 1) + tmp),
+                  Offset(left_border + wd * endTime - temp, hd * (i - 1) + tmp),
                   paint_);
               canvas.drawLine(
                   Offset(
-                      left_border + wd * startTime + temp, hd * (i + 1) + tmp),
+                      left_border + wd * startTime + temp, hd * (i - 1) + tmp),
                   Offset(
-                      left_border + wd * startTime + temp, hd * (i + 1) - tmp),
+                      left_border + wd * startTime + temp, hd * (i - 1) - tmp),
                   paint_);
               canvas.drawLine(
-                  Offset(left_border + wd * endTime - temp, hd * (i + 1) + tmp),
-                  Offset(left_border + wd * endTime - temp, hd * (i + 1) - tmp),
+                  Offset(left_border + wd * endTime - temp, hd * (i - 1) + tmp),
+                  Offset(left_border + wd * endTime - temp, hd * (i - 1) - tmp),
                   paint_);
               // canvas.drawLine(
               //     Offset(left_border + wd * startTime, hd * (i + 1)),
@@ -481,7 +481,7 @@ class CustomeScatterChartPainterSleep extends CustomPainter {
 }
 
 class CustomeScatterChartPainterFood extends CustomPainter {
-  final food;
+  var food;
   CustomeScatterChartPainterFood(this.food);
 
   @override
@@ -521,8 +521,8 @@ class CustomeScatterChartPainterFood extends CustomPainter {
 
     int tmp = 2;
     int temp = 2;
-    // print('food !!!!!!!!!!!!!!!!!');
     for (int i = 0; i < 7; i++) {
+      print(food[i]);
       food[i].forEach((e) {
         if (e[1] != 0) {
           // print(e[2]);

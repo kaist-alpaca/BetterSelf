@@ -1,4 +1,5 @@
 import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Graphs/pie_chart_hole.dart';
 import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/cupertino.dart';
@@ -89,6 +90,7 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
   @override
   void initState() {
     super.initState();
+    ServerConnection.write_log('RecordFoodScreen', 'start', '');
     KeyboardVisibilityNotification().addNewListener(
       onShow: () {
         print("show");
@@ -129,7 +131,11 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
         appBar: AppBar(
           centerTitle: true,
           title: Text("식단 기록",
-              style: TextStyle(color: txtColor, fontSize: defaultSize * 15)),
+              style: TextStyle(
+                color: txtColor,
+                fontSize: defaultSize * 17,
+                fontWeight: FontWeight.w400,
+              )),
           backgroundColor: bgColor,
         ),
         body: SingleChildScrollView(
@@ -149,6 +155,7 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                       style: TextStyle(
                         color: linetxtColor,
                         fontSize: defaultSize * 14,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                   ),
@@ -233,7 +240,10 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                       "섭취 정보",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: linetxtColor, fontSize: defaultSize * 14),
+                        color: linetxtColor,
+                        fontSize: defaultSize * 14,
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                   0.12,
@@ -259,8 +269,10 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                             Text(
                               Nutrition[0],
                               style: TextStyle(
-                                  color: linetxtColor,
-                                  fontSize: defaultSize * 20),
+                                color: linetxtColor,
+                                fontSize: defaultSize * 14,
+                                fontWeight: FontWeight.w600,
+                              ),
                             ),
                             SizedBox(height: valHeight * 0.03),
                             Row(
@@ -275,6 +287,8 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                       showCursor: false,
                                       style: TextStyle(
                                         color: Colors.white,
+                                        fontSize: defaultSize * 14,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                       decoration: BoxDecoration(
                                         color: Color(0x51D2ABBA),
@@ -318,6 +332,8 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                         color: hasFocus
                                             ? CupertinoColors.placeholderText
                                             : Colors.white,
+                                        fontSize: defaultSize * 14,
+                                        fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                   ),
@@ -335,8 +351,10 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                             ' kcal', //nn에 칼로리 계산값 삽입
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                            color: txtColor,
-                                            fontSize: defaultSize * 14)),
+                                          color: txtColor,
+                                          fontSize: defaultSize * 14,
+                                          fontWeight: FontWeight.w400,
+                                        )),
                                   ),
                                 ),
                               ],
@@ -358,8 +376,8 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                   Container(
                                     height: valHeight * 0.18,
                                     width: valWidth * 0.4,
-                                    margin:
-                                        EdgeInsets.only(right: valWidth * 0.02),
+                                    // margin:
+                                    //     EdgeInsets.only(right: valWidth * 0.0),
                                     child: Container(
                                       width: valWidth * 0.4,
                                       height: valHeight * 0.2,
@@ -397,24 +415,24 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                               context,
                                               Color(0xffA0B1DF),
                                               0.012,
-                                              0.2,
-                                              10,
+                                              0.21,
+                                              defaultSize * 12,
                                               '탄수화물 ${(Nutrition[2] * amount).toStringAsFixed(1)} g'), //
                                           SizedBox(height: valHeight * 0.008),
                                           MiniBox(
                                               context,
                                               Color(0xffF1D7A7),
                                               0.012,
-                                              0.176,
-                                              10,
+                                              0.21,
+                                              defaultSize * 12,
                                               '단백질 ${(Nutrition[3] * amount).toStringAsFixed(1)} g'),
                                           SizedBox(height: valHeight * 0.008),
                                           MiniBox(
                                               context,
                                               Color(0xffDBB9C7),
                                               0.012,
-                                              0.15,
-                                              10,
+                                              0.21,
+                                              defaultSize * 12,
                                               '지방 ${(Nutrition[4] * amount).toStringAsFixed(1)} g'),
                                           // SizedBox(height: valHeight * 0.008),
                                           // MiniBox(
@@ -436,9 +454,9 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                           MiniBox(
                                               context,
                                               txtColor,
-                                              0.014,
-                                              0.176,
-                                              10,
+                                              0.012,
+                                              0.21,
+                                              defaultSize * 12,
                                               '나트륨 ${(Nutrition[7] * amount).toStringAsFixed(1)} mg'),
                                         ]),
                                   ),
@@ -461,12 +479,14 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                     Get.arguments[0].sort(
                         (a, b) => a[0].toString().compareTo(b[0].toString()));
                     // print(Get.arguments);
+                    ServerConnection.write_log(
+                        'RecordFoodScreen', 'end', 'SaveFoodScreen');
                     Get.offAll(() => SaveFoodScreen(),
                         arguments: Get.arguments);
                   },
                   child: Container(
-                    width: valWidth * 0.6,
-                    height: 50,
+                    width: valWidth * 0.47,
+                    height: 40,
                     decoration: BoxDecoration(
                       border: Border.all(
                         width: 1,
@@ -474,14 +494,17 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                       ),
                       color: Color(0xff333C47),
                       borderRadius:
-                          BorderRadius.all(Radius.circular(valWidth * 0.02)),
+                          BorderRadius.all(Radius.circular(valWidth * 0.04)),
                     ),
                     child: Align(
                       alignment: FractionalOffset(0.5, 0.5),
                       child: Text(
                         "기록",
                         style: TextStyle(
-                            fontSize: defaultSize * 15, color: txtColor),
+                          fontSize: defaultSize * 14,
+                          color: txtColor,
+                          fontWeight: FontWeight.w400,
+                        ),
                         textAlign: TextAlign.center,
                       ),
                     ),

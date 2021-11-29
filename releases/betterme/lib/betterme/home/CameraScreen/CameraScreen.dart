@@ -2,10 +2,13 @@ import 'dart:io';
 
 import 'package:betterme/betterme/home/RecordFoodScreen/RecordFoodScreen.dart';
 import 'package:betterme/betterme/home/SearchFoodScreen/SearchFoodScreen.dart';
+import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
@@ -39,6 +42,7 @@ class CameraScreenState extends State<CameraScreen>
 
   void initState() {
     super.initState();
+    ServerConnection.write_log('CameraScreen', 'start', '');
     print(Get.arguments[0]);
     _controller = CameraController(Get.arguments[0], ResolutionPreset.max);
     _controller.initialize().then((_) {
@@ -57,48 +61,59 @@ class CameraScreenState extends State<CameraScreen>
 
   @override
   Widget build(BuildContext context) {
+    final valHeight = MediaQuery.of(context).size.height; //화면 높이
+    final valWidth = MediaQuery.of(context).size.width; //화면 너비
+    double defaultSize = valWidth * 0.0025;
     super.build(context);
     return Scaffold(
       // backgroundColor: Theme.of(context).backgroundColor,
-      backgroundColor: Colors.black,
+      appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_rounded),
+            padding: EdgeInsets.zero,
+            // alignment: Alignment.bottomCenter,
+            onPressed: () {
+              ServerConnection.write_log(
+                  'CameraScreen', 'end', 'ConstructTabBar');
+              Get.offAll(() => ConstructTabBar());
+            }),
+        actions: [
+          TextButton(
+            onPressed: () {
+              _controller.dispose();
+              ServerConnection.write_log(
+                  'CameraScreen', 'end', 'SearchFoodScreen');
+              Get.off(
+                () => SearchFoodScreen(),
+                arguments: [food_list, 0],
+              );
+            },
+            child: Text("건너뛰기",
+                style: TextStyle(
+                  fontSize: defaultSize * 14,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0XFFFFFDFD),
+                )),
+          ),
+          SizedBox(width: 15),
+        ],
+        elevation: 0,
+        backgroundColor: Color(0XFF0B202A),
+      ),
+      backgroundColor: Color(0XFF0B202A),
       key: _scaffoldKey,
       extendBody: true,
-      body: Stack(
-        children: <Widget>[
-          _buildCameraPreview(),
-          Positioned(
-            top: 24.0,
-            left: 12.0,
-            child: Row(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios_new_rounded,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Get.back();
-                  },
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.switch_camera,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    _onCameraSwitch();
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+      body: OrientationBuilder(builder: (context, orientation) {
+        // return _buildCameraPreview(Orientation.portrait);
+        return orientation == Orientation.portrait
+            ? _buildCameraPreview(Orientation.portrait)
+            : Text('sd');
+      }),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
   }
 
-  Widget _buildCameraPreview() {
+  Widget _buildCameraPreview(Orientation portrait) {
     final size = MediaQuery.of(context).size;
     var a;
     var ratio;
@@ -108,7 +123,6 @@ class CameraScreenState extends State<CameraScreen>
     // }
     // print(_controller.value.aspectRatio);
     try {
-      print(_controller.value.aspectRatio);
       a = 1;
       ratio = 1 / _controller.value.aspectRatio;
       ratio_1 = ratio / size.aspectRatio;
@@ -119,6 +133,7 @@ class CameraScreenState extends State<CameraScreen>
       ratio_1 = 1.6;
     }
     print("rebuild");
+    print(portrait.index);
     print(ratio);
     print(ratio_1);
     print(size.aspectRatio);
@@ -144,7 +159,7 @@ class CameraScreenState extends State<CameraScreen>
 
   Widget _buildBottomNavigationBar() {
     return Container(
-      color: Theme.of(context).bottomAppBarColor,
+      color: Color(0XFF0B202A),
       height: 100.0,
       width: double.infinity,
       child: Row(
@@ -180,71 +195,107 @@ class CameraScreenState extends State<CameraScreen>
           //     );
           //   },
           // ),
-          CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 28.0,
-            child: IconButton(
-              icon: Icon(
-                Icons.add_photo_alternate_rounded,
-                size: 28.0,
-                color: Colors.black,
-              ),
-              onPressed: () async {
-                // _captureImage();
-                await ProfileController.to
-                    .pickImage(type: 'gallery', use: 'food');
-                if (ProfileController.to.food != null) {
-                  // ProfileController.to.uploadFoodImage(
-                  //     uid: ProfileController.to.myProfile.value.uid!,
-                  //     index: '0',
-                  //     file: ProfileController.to.food!);
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => SearchFoodScreen(),
-                  //   ),
-                  // );
-                  _controller.dispose();
-                  Get.off(
-                    () => SearchFoodScreen(),
-                    arguments: [food_list, ProfileController.to.food],
-                  );
-                }
-              },
-            ),
-          ),
-          CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 28.0,
-            child: IconButton(
-              icon: Icon(
-                Icons.camera_alt,
-                size: 28.0,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                _captureImage();
-              },
-            ),
-          ),
-          CircleAvatar(
-            backgroundColor: Colors.white,
-            radius: 28.0,
-            child: IconButton(
-              icon: Icon(
-                Icons.food_bank,
-                size: 28.0,
-                color: Colors.black,
-              ),
-              onPressed: () {
+          // CircleAvatar(
+          //   backgroundColor: Colors.white,
+          //   radius: 28.0,
+          //   child: IconButton(
+          //     icon: Icon(
+          //       Icons.add_photo_alternate_rounded,
+          //       size: 28.0,
+          //       color: Colors.black,
+          //     ),
+          //     onPressed: () async {
+          //       // _captureImage();
+          // await ProfileController.to
+          //     .pickImage(type: 'gallery', use: 'food');
+          // if (ProfileController.to.food != null) {
+          //   // ProfileController.to.uploadFoodImage(
+          //   //     uid: ProfileController.to.myProfile.value.uid!,
+          //   //     index: '0',
+          //   //     file: ProfileController.to.food!);
+          //   // Navigator.push(
+          //   //   context,
+          //   //   MaterialPageRoute(
+          //   //     builder: (context) => SearchFoodScreen(),
+          //   //   ),
+          //   // );
+          //   _controller.dispose();
+          //   Get.off(
+          //     () => SearchFoodScreen(),
+          //     arguments: [food_list, ProfileController.to.food],
+          //   );
+          //       }
+          //     },
+          //   ),
+          // ),
+          IconButton(
+            icon: SvgPicture.asset('images/camerpage_pick_picture.svg'),
+            iconSize: 50,
+            onPressed: () async {
+              ServerConnection.write_log('CameraScreen', 'pick_picture', '');
+              await ProfileController.to
+                  .pickImage(type: 'gallery', use: 'food');
+              if (ProfileController.to.food != null) {
+                // ProfileController.to.uploadFoodImage(
+                //     uid: ProfileController.to.myProfile.value.uid!,
+                //     index: '0',
+                //     file: ProfileController.to.food!);
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => SearchFoodScreen(),
+                //   ),
+                // );
                 _controller.dispose();
+                ServerConnection.write_log(
+                    'CameraScreen', 'end', 'SearchFoodScreen');
                 Get.off(
                   () => SearchFoodScreen(),
-                  arguments: [food_list, 0],
+                  arguments: [food_list, ProfileController.to.food],
                 );
-              },
-            ),
+              }
+            },
           ),
+          IconButton(
+            icon: SvgPicture.asset('images/camerapage_take_picture.svg'),
+            iconSize: 70,
+            onPressed: () {
+              _captureImage();
+            },
+          ),
+          SizedBox(width: 50)
+          // CircleAvatar(
+          //   backgroundColor: Colors.white,
+          //   radius: 28.0,
+          //   child: IconButton(
+          //     icon: Icon(
+          //       Icons.camera_alt,
+          //       size: 28.0,
+          //       color: Colors.black,
+          //     ),
+          //     onPressed: () {
+          //       _captureImage();
+          //     },
+          //   ),
+          // ),
+          // CircleAvatar(
+          //   backgroundColor: Colors.white,
+          //   radius: 28.0,
+          //   child: IconButton(
+          //     icon: Icon(
+          //       Icons.food_bank,
+          //       size: 28.0,
+          //       color: Colors.black,
+          //     ),
+          //     onPressed: () {
+          // _controller.dispose();
+          // Get.off(
+          //   () => SearchFoodScreen(),
+          //   arguments: [food_list, 0],
+          // );
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );
@@ -316,6 +367,8 @@ class CameraScreenState extends State<CameraScreen>
       //     file: File(tmp.path));
       // Navigator.push(
       //     context, MaterialPageRoute(builder: (context) => SearchFoodScreen()));
+      ServerConnection.write_log('CameraScreen', 'take_picture', '');
+      ServerConnection.write_log('CameraScreen', 'end', 'SearchFoodScreen');
       Get.off(
         () => SearchFoodScreen(),
         arguments: [food_list, File(tmp.path)],

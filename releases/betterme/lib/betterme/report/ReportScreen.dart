@@ -1,4 +1,5 @@
 import 'package:betterme/betterme/report/Widgets/total_report/CoachingSet.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import 'package:betterme/betterme/report/Widgets/total_report/ReportSet.dart';
 
@@ -53,6 +54,7 @@ class _ReportScreen extends State<ReportScreen> {
 
   void initState() {
     super.initState();
+    ServerConnection.write_log('ReportScreen', 'start', '');
     buttonCase = 0;
     print('init at report');
     ProfileController.to.initalDatelist(7);
@@ -64,6 +66,8 @@ class _ReportScreen extends State<ReportScreen> {
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     final bgColor = Color(0xff0B202A); //배경색
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
+    // final txtColor1 = Color.fromRGBO(194, 198, 199, 1); //텍스트 , 앱바 텍스트 색
+    final txtColor1 = Color(0XFFC2C6C8); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     final shadowColor = Color(0xffD2ABBA);
     double defaultSize = valWidth * 0.0025;
@@ -81,6 +85,7 @@ class _ReportScreen extends State<ReportScreen> {
             print("left");
             print(details.delta.direction);
             var _cameras = await availableCameras();
+            ServerConnection.write_log('ReportScreen', 'end', 'CameraScreen');
             Get.to(
               () => CameraScreen(),
               fullscreenDialog: true,
@@ -117,6 +122,8 @@ class _ReportScreen extends State<ReportScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
+                            ServerConnection.write_log(
+                                'ReportScreen', 'start_write_weight', '');
                             DateTime record_date = DateTime.now();
                             controller.weightdaySelected(
                                 record_date.toString().substring(0, 10));
@@ -324,7 +331,7 @@ class _ReportScreen extends State<ReportScreen> {
                                                   },
                                                   child: Container(
                                                       //날짜
-                                                      width: valWidth * 0.2,
+                                                      width: valWidth * 0.25,
                                                       height: valHeight *
                                                           0.04, //valHeight * 0.06,
                                                       alignment:
@@ -378,7 +385,7 @@ class _ReportScreen extends State<ReportScreen> {
                                               GestureDetector(
                                                 child: Container(
                                                   height: valHeight * 0.04,
-                                                  width: valWidth * 0.2,
+                                                  width: valWidth * 0.25,
                                                   decoration: BoxDecoration(
                                                     color: Color(0xff333C47),
                                                     borderRadius:
@@ -550,7 +557,7 @@ class _ReportScreen extends State<ReportScreen> {
                                                 },
                                                 child: Container(
                                                   height: valHeight * 0.04,
-                                                  width: valWidth * 0.2,
+                                                  width: valWidth * 0.25,
                                                   decoration: BoxDecoration(
                                                     color: Color(0xff333C47),
                                                     borderRadius:
@@ -608,6 +615,10 @@ class _ReportScreen extends State<ReportScreen> {
                                                       width: defaultSize * 0.7),
                                                 ),
                                                 onPressed: () {
+                                                  ServerConnection.write_log(
+                                                      'ReportScreen',
+                                                      'update_weight',
+                                                      '');
                                                   WriteAppleHealth.writeWeight(
                                                       DateTime.parse(controller
                                                                   .weightday
@@ -642,9 +653,9 @@ class _ReportScreen extends State<ReportScreen> {
                           },
                           child: Container(
                               //여기가 입력 버튼
-                              width: 37,
-                              height: 37,
-                              margin: EdgeInsets.only(top: 5),
+                              width: 30,
+                              height: 30,
+                              margin: EdgeInsets.only(top: 14),
                               padding: EdgeInsets.fromLTRB(4, 4, 4, 1),
                               decoration: BoxDecoration(
                                   color: Color(0xff333C47),
@@ -690,6 +701,8 @@ class _ReportScreen extends State<ReportScreen> {
                               ),
                             ),
                             onPressed: () {
+                              ServerConnection.write_log(
+                                  'ReportScreen', 'totalgraph_to_week', '');
                               buttonCase = 0;
                               ProfileController.to.initalDatelist(7);
                               setState(() {
@@ -716,6 +729,8 @@ class _ReportScreen extends State<ReportScreen> {
                               ),
                             ),
                             onPressed: () {
+                              ServerConnection.write_log(
+                                  'ReportScreen', 'totalgraph_to_month', '');
                               ProfileController.to.initalDatelist(31);
                               setState(() {
                                 buttonCase = 1;
@@ -744,6 +759,8 @@ class _ReportScreen extends State<ReportScreen> {
                               ),
                             ),
                             onPressed: () {
+                              ServerConnection.write_log(
+                                  'ReportScreen', 'totalgraph_to_6month', '');
                               setState(() {
                                 buttonCase = 2;
                               });
@@ -758,6 +775,9 @@ class _ReportScreen extends State<ReportScreen> {
                         ],
                       ),
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       //기간(날짜) 선택하는 bar.
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -768,8 +788,12 @@ class _ReportScreen extends State<ReportScreen> {
                           height: valHeight * 0.055,
                           child: IconButton(
                             icon: SvgPicture.asset(
-                                'images/arrow towards left_icon.svg'),
+                              'images/arrow towards left_icon.svg',
+                              color: txtColor1,
+                            ),
                             onPressed: () {
+                              ServerConnection.write_log('ReportScreen',
+                                  'totalgraph_to_previous_date', '');
                               print(controller.duration == 365);
                               print(controller.duration);
                               controller.minusDatelist(controller.duration);
@@ -785,7 +809,7 @@ class _ReportScreen extends State<ReportScreen> {
                                 ? Text(controller.totaldate.add(Duration(days: -(controller.duration - 1))).month.toString() + "월 " + controller.totaldate.add(Duration(days: -(controller.duration - 1))).day.toString() + "일 - " + controller.totaldate.month.toString() + "월 " + controller.totaldate.day.toString() + "일",
                                     style: TextStyle(
                                         fontSize: defaultSize * 17,
-                                        color: txtColor),
+                                        color: txtColor1),
                                     textAlign: TextAlign.center)
                                 : controller.duration == 31
                                     ? controller.totaldate.add(Duration(days: -28)).month ==
@@ -793,7 +817,7 @@ class _ReportScreen extends State<ReportScreen> {
                                         ? Text(controller.totaldate.year.toString() + "년 " + controller.totaldate.month.toString() + "월",
                                             style: TextStyle(
                                                 fontSize: defaultSize * 17,
-                                                color: txtColor),
+                                                color: txtColor1),
                                             textAlign: TextAlign.center)
                                         : Text(
                                             controller.totaldate.add(Duration(days: -28)).year.toString() +
@@ -808,7 +832,7 @@ class _ReportScreen extends State<ReportScreen> {
                                                 "월 ",
                                             style: TextStyle(
                                                 fontSize: defaultSize * 17,
-                                                color: txtColor),
+                                                color: txtColor1),
                                             textAlign: TextAlign.center)
                                     : controller.totaldate.day >
                                             (DateTime(controller.totaldate.year, controller.totaldate.month + 1, 0).day / 2)
@@ -826,12 +850,25 @@ class _ReportScreen extends State<ReportScreen> {
                                                 "월 - " +
                                                 DateTime(controller.totaldate.year, controller.totaldate.month + 1, 1).month.toString() +
                                                 "월 ",
-                                            style: TextStyle(fontSize: defaultSize * 17, color: txtColor),
+                                            style: TextStyle(fontSize: defaultSize * 17, color: txtColor1),
                                             textAlign: TextAlign.center)
-                                        : Text(DateTime(controller.totaldate.year, controller.totaldate.month, 15).add(Duration(days: -150)).year.toString() + "년 " + DateTime(controller.totaldate.year, controller.totaldate.month, 15).add(Duration(days: -150)).month.toString() + "월 - " + DateTime(controller.totaldate.year, controller.totaldate.month, 1).month.toString() + "월 ", style: TextStyle(fontSize: defaultSize * 17, color: txtColor), textAlign: TextAlign.center),
+                                        : Text(DateTime(controller.totaldate.year, controller.totaldate.month, 15).add(Duration(days: -150)).year.toString() + "년 " + DateTime(controller.totaldate.year, controller.totaldate.month, 15).add(Duration(days: -150)).month.toString() + "월 - " + DateTime(controller.totaldate.year, controller.totaldate.month, 1).month.toString() + "월 ", style: TextStyle(fontSize: defaultSize * 17, color: txtColor1), textAlign: TextAlign.center),
                           ),
                         ),
                         //날짜 오른쪽으로 넘기는 버튼
+                        // Container(
+                        //   width: valWidth * 0.15,
+                        //   height: valHeight * 0.05,
+                        //   child: IconButton(
+                        //     icon: SvgPicture.asset(
+                        //       'images/arrow towards right_icon.svg',
+                        //       color: Color(0XFF48575F),
+                        //     ),
+                        //     onPressed: () {
+                        //       controller.plusDatelist(controller.duration);
+                        //     },
+                        //   ),
+                        // ),
                         (controller.totaldate.day == DateTime.now().day) &&
                                 (controller.totaldate.month ==
                                     DateTime.now().month) &&
@@ -840,14 +877,28 @@ class _ReportScreen extends State<ReportScreen> {
                             ? Container(
                                 width: valWidth * 0.15,
                                 height: valHeight * 0.05,
+                                child: IconButton(
+                                  icon: SvgPicture.asset(
+                                    'images/arrow towards right_icon.svg',
+                                    color: Color(0XFF48575F),
+                                  ),
+                                  onPressed: () {
+                                    ServerConnection.write_log('ReportScreen',
+                                        'totalgraph_to_later_date_fail', '');
+                                  },
+                                ),
                               )
                             : Container(
                                 width: valWidth * 0.15,
                                 height: valHeight * 0.05,
                                 child: IconButton(
                                   icon: SvgPicture.asset(
-                                      'images/arrow towards right_icon.svg'),
+                                    'images/arrow towards right_icon.svg',
+                                    color: txtColor1,
+                                  ),
                                   onPressed: () {
+                                    ServerConnection.write_log('ReportScreen',
+                                        'totalgraph_to_previous_date', '');
                                     controller
                                         .plusDatelist(controller.duration);
                                   },
@@ -855,9 +906,9 @@ class _ReportScreen extends State<ReportScreen> {
                               ),
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
+                    // SizedBox(
+                    //   height: 3,
+                    // ),
                     ReportSet(buttonCase: buttonCase),
                     SizedBox(
                       height: 7,

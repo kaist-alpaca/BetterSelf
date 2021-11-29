@@ -1,4 +1,5 @@
 import 'package:betterme/betterme/communication/functions/Widgets.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -29,6 +30,11 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
 
+    void initState() {
+      super.initState();
+      ServerConnection.write_log('FindTrainerScreen', 'start', '');
+    }
+
     return StreamBuilder<QuerySnapshot>(
         stream: stream,
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -47,7 +53,8 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
                     final blockColor = Color(0xff333C47); // 여러 블럭들 색
                     double defaultSize = valWidth * 0.0025;
-                    if (data['email'].toString().contains(searching.text) && data['isCoach'] == true) {
+                    if (data['email'].toString().contains(searching.text) &&
+                        data['isCoach'] == true) {
                       return ClipRRect(
                         borderRadius: BorderRadius.all(
                           Radius.circular(18),
@@ -69,8 +76,13 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                                       ), // 서버에 발송기능 구현
                                       actions: <Widget>[
                                         TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
+                                          onPressed: () {
+                                            ServerConnection.write_log(
+                                                'FindTrainerScreen',
+                                                'cancel_send_request',
+                                                '');
+                                            Navigator.pop(context, 'Cancel');
+                                          },
                                           child: const Text(
                                             '취소',
                                             style: TextStyle(
@@ -79,7 +91,16 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                                         ),
                                         TextButton(
                                           onPressed: () {
-                                            DatabaseMethos().addTrainer(document.id, AuthMethods().auth.currentUser!.uid);
+                                            ServerConnection.write_log(
+                                                'FindTrainerScreen',
+                                                'ok_send_request',
+                                                '');
+                                            DatabaseMethos().addTrainer(
+                                                document.id,
+                                                AuthMethods()
+                                                    .auth
+                                                    .currentUser!
+                                                    .uid);
                                             Navigator.pop(context, 'OK');
                                           },
                                           child: const Text(
@@ -164,6 +185,8 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                   margin: EdgeInsets.only(left: valWidth * 0.05),
                   child: IconButton(
                     onPressed: () {
+                      ServerConnection.write_log(
+                          'FindTrainerScreen', 'end', 'CommunicationScreen');
                       Navigator.pop(context);
                     },
                     icon:
@@ -219,6 +242,8 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                       //검색 버튼
                       onPressed: () {
                         if (searching.text != "") {
+                          ServerConnection.write_log(
+                              'FindTrainerScreen', 'search_coach', '');
                           setState(() {});
                           isSearching = true;
                         }

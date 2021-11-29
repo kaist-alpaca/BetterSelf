@@ -1,3 +1,4 @@
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import 'package:flutter/material.dart';
 
@@ -71,6 +72,11 @@ class _ChatroomScreen extends State<ChatroomScreen> {
     }
   }
 
+  void initState() {
+    super.initState();
+    ServerConnection.write_log('ChatroomScreen', 'start', '');
+  }
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -95,6 +101,8 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                 margin: EdgeInsets.only(left: valWidth * 0.08),
                 child: IconButton(
                   onPressed: () {
+                    ServerConnection.write_log(
+                        'ChatroomScreen', 'end', 'CommunicationScreen');
                     Navigator.pop(context);
                   },
                   icon: SvgPicture.asset('images/arrow towards left_icon.svg'),
@@ -178,6 +186,8 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                         borderRadius: BorderRadius.circular(
                                             valWidth * 0.015))),
                                 onPressed: () {
+                                  ServerConnection.write_log(
+                                      'ChatroomScreen', 'send_chat', '');
                                   constructMessage(true);
                                   _scrollController.jumpTo(_scrollController
                                       .position.maxScrollExtent);

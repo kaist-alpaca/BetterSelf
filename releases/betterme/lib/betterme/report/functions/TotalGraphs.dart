@@ -63,7 +63,9 @@ class _TotalGraphsState extends State<TotalGraphs> {
               // print('have data');
               // print(snapshot.data);
               // print(snapshot.data!);
-              if (widget.GraphTypes[0]) {
+              if (widget.GraphTypes[0] &&
+                  (ProfileController.to.total_graph_type == 0 ||
+                      ProfileController.to.total_graph_type == 3)) {
                 return Container(
                     child: CustomPaint(
                   size: Size(valWidth, valHeight / 2.8),
@@ -89,7 +91,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
           ),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
-              if (widget.GraphTypes[1]) {
+              if (widget.GraphTypes[1] &&
+                  (ProfileController.to.total_graph_type <= 1)) {
                 // print('date list');
                 // print(ProfileController.to.datelist);
                 // print('have data');
@@ -119,7 +122,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
           ),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
-              if (widget.GraphTypes[2]) {
+              if (widget.GraphTypes[2] &&
+                  (ProfileController.to.total_graph_type <= 1)) {
                 // print('have data');
                 // print(snapshot.data);
                 // print(snapshot.data!);
@@ -147,7 +151,9 @@ class _TotalGraphsState extends State<TotalGraphs> {
           ),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
-              if (widget.GraphTypes[3]) {
+              if (widget.GraphTypes[3] &&
+                  (ProfileController.to.total_graph_type == 0 ||
+                      ProfileController.to.total_graph_type == 2)) {
                 // print('have data');
                 // print(snapshot.data);
                 // print(snapshot.data!);
@@ -175,7 +181,9 @@ class _TotalGraphsState extends State<TotalGraphs> {
           ),
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
-              if (widget.GraphTypes[4]) {
+              if (widget.GraphTypes[4] &&
+                  (ProfileController.to.total_graph_type == 0 ||
+                      ProfileController.to.total_graph_type == 2)) {
                 // print('have data burned');
                 // print(snapshot.data);
                 // print(snapshot.data!);
@@ -253,6 +261,49 @@ class _TotalGraphsState extends State<TotalGraphs> {
         //           ),
         //         ),
         //       ),
+        Column(
+          children: [
+            GestureDetector(
+              onTap: () {
+                ServerConnection.write_log(
+                    'ReportScreen', 'graph_area_top', '');
+                print('!!!!!!!!!!!!!!!!!!!!');
+                ProfileController.to.updatetotal_graph_type(1);
+              },
+              child: Container(
+                color: Colors.red.withOpacity(0),
+                width: valWidth,
+                height: valHeight / 2.8 / 3 - 10,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                ServerConnection.write_log(
+                    'ReportScreen', 'graph_area_middle', '');
+                print('@@@@@@@@@@@');
+                ProfileController.to.updatetotal_graph_type(2);
+              },
+              child: Container(
+                color: Colors.blue.withOpacity(0),
+                width: valWidth,
+                height: valHeight / 2.8 / 3 - 10,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                ServerConnection.write_log(
+                    'ReportScreen', 'graph_area_bottom', '');
+                print('dsfdsfdsfdsf');
+                ProfileController.to.updatetotal_graph_type(3);
+              },
+              child: Container(
+                color: Colors.green.withOpacity(0),
+                width: valWidth,
+                height: valHeight / 2.8 / 3 - 10,
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -732,7 +783,7 @@ class PathPainterWeight extends CustomPainter {
     // print('good...?');
     // print(WeightData);
 
-    double LineSize = 1.5;
+    double LineSize = duration == 7 ? 1.0 : 1.5;
 
     final GraphXSize = size.width - XPadd_right - XPadd_left;
 
@@ -744,6 +795,10 @@ class PathPainterWeight extends CustomPainter {
     WeightData.forEach((e) {
       e.value =
           (e.value - (min - 2)) * ((GraphYSize - 1) / 3) / (max - min + 4);
+
+      if (ProfileController.to.total_graph_type == 3) {
+        e.value *= 3;
+      }
     });
 
     var datapath = TotalGraphHelper.ComputePoints(
@@ -762,10 +817,10 @@ class PathPainterWeight extends CustomPainter {
     if (ProfileController.to.duration == 7) {
       datapath.forEach((dp) {
         final dotPaintFill = Paint()
-          ..color = Colors.white
+          ..color = Color(0xffFFFDFD)
           ..style = PaintingStyle.fill
           ..strokeWidth = 1.0;
-        canvas.drawCircle(dp, 5.0, dotPaintFill);
+        canvas.drawCircle(dp, 3.5, dotPaintFill);
       });
     }
 
@@ -900,7 +955,7 @@ class PathPainterSleep extends CustomPainter {
     double XPadd_left = 15;
     double YPadd_bottom = 30;
 
-    double LineSize = 1.5;
+    double LineSize = duration == 7 ? 1.0 : 1.5;
 
     final GraphXSize = size.width - XPadd_right - XPadd_left;
 
@@ -912,10 +967,20 @@ class PathPainterSleep extends CustomPainter {
     SleepData.forEach((e) {
       e.value =
           (e.value - (min - 2)) * ((GraphYSize - 1) / 3) / (max - min + 4);
+
+      if (ProfileController.to.total_graph_type == 1) {
+        e.value *= 3;
+      }
     });
 
     var datapath = TotalGraphHelper.ComputePoints(
-        SleepData, GraphXSize, (GraphYSize - 1) / 3, duration, time);
+        SleepData,
+        GraphXSize,
+        ProfileController.to.total_graph_type == 1
+            ? (GraphYSize - 1)
+            : (GraphYSize - 1) / 3,
+        duration,
+        time);
 
     // print("debug : $datapath");
 
@@ -930,10 +995,10 @@ class PathPainterSleep extends CustomPainter {
     if (ProfileController.to.duration == 7) {
       datapath.forEach((dp) {
         final dotPaintFill = Paint()
-          ..color = Colors.white
+          ..color = Color(0xffA0B1DF)
           ..style = PaintingStyle.fill
           ..strokeWidth = 1.0;
-        canvas.drawCircle(dp, 1.0, dotPaintFill);
+        canvas.drawCircle(dp, 3.5, dotPaintFill);
       });
     }
 
@@ -1031,7 +1096,7 @@ class PathPainterStress extends CustomPainter {
     double XPadd_left = 15;
     double YPadd_bottom = 30;
 
-    double LineSize = 1.5;
+    double LineSize = duration == 7 ? 1.0 : 1.5;
 
     final GraphXSize = size.width - XPadd_right - XPadd_left;
 
@@ -1045,10 +1110,20 @@ class PathPainterStress extends CustomPainter {
       // e.value += floor * 2 + YPadd_bottom;
       e.value =
           (e.value - (min - 2)) * ((GraphYSize - 1) / 3) / (max - min + 4);
+
+      if (ProfileController.to.total_graph_type == 1) {
+        e.value *= 3;
+      }
     });
 
     var datapath = TotalGraphHelper.ComputePoints(
-        StressData, GraphXSize, ((GraphYSize - 1) / 3), duration, time);
+        StressData,
+        GraphXSize,
+        ProfileController.to.total_graph_type == 1
+            ? (GraphYSize - 1)
+            : (GraphYSize - 1) / 3,
+        duration,
+        time);
 
     // print("debug : $datapath");
 
@@ -1063,10 +1138,10 @@ class PathPainterStress extends CustomPainter {
     if (ProfileController.to.duration == 7) {
       datapath.forEach((dp) {
         final dotPaintFill = Paint()
-          ..color = Colors.white
+          ..color = Color(0xffF2D8A7)
           ..style = PaintingStyle.fill
           ..strokeWidth = 1.0;
-        canvas.drawCircle(dp, 5.0, dotPaintFill);
+        canvas.drawCircle(dp, 3.5, dotPaintFill);
       });
     }
 
@@ -1166,7 +1241,7 @@ class PathPainterFood extends CustomPainter {
     double XPadd_left = 15;
     double YPadd_bottom = 30;
 
-    double LineSize = 1.5;
+    double LineSize = duration == 7 ? 1.0 : 1.5;
 
     final GraphXSize = size.width - XPadd_right - XPadd_left;
 
@@ -1180,10 +1255,20 @@ class PathPainterFood extends CustomPainter {
       // e.value += floor + YPadd_bottom;
       e.value =
           (e.value - (min - 200)) * ((GraphYSize - 1) / 3) / (max - min + 400);
+
+      if (ProfileController.to.total_graph_type == 2) {
+        e.value *= 3;
+      }
     });
 
     var datapath = TotalGraphHelper.ComputePoints(
-        DietData, GraphXSize, ((GraphYSize - 1) / 3 * 2), duration, time);
+        DietData,
+        GraphXSize,
+        ProfileController.to.total_graph_type == 2
+            ? (GraphYSize - 1)
+            : ((GraphYSize - 1) / 3 * 2),
+        duration,
+        time);
 
     // print("debug : $datapath");
 
@@ -1198,10 +1283,10 @@ class PathPainterFood extends CustomPainter {
     if (ProfileController.to.duration == 7) {
       datapath.forEach((dp) {
         final dotPaintFill = Paint()
-          ..color = Colors.white
+          ..color = Color(0xffD2ABBA)
           ..style = PaintingStyle.fill
           ..strokeWidth = 1.0;
-        canvas.drawCircle(dp, 5.0, dotPaintFill);
+        canvas.drawCircle(dp, 3.5, dotPaintFill);
       });
     }
 
@@ -1313,7 +1398,7 @@ class PathPainterBurned extends CustomPainter {
     double XPadd_left = 15;
     double YPadd_bottom = 30;
 
-    double LineSize = 1.5;
+    double LineSize = duration == 7 ? 1.0 : 1.5;
 
     final GraphXSize = size.width - XPadd_right - XPadd_left;
 
@@ -1327,10 +1412,20 @@ class PathPainterBurned extends CustomPainter {
       // e.value += floor + YPadd_bottom;
       e.value =
           (e.value - (min - 200)) * ((GraphYSize - 1) / 3) / (max - min + 400);
+
+      if (ProfileController.to.total_graph_type == 2) {
+        e.value *= 3;
+      }
     });
 
     var datapath = TotalGraphHelper.ComputePoints(
-        BurnedData, GraphXSize, ((GraphYSize - 1) / 3 * 2), duration, time);
+        BurnedData,
+        GraphXSize,
+        ProfileController.to.total_graph_type == 2
+            ? (GraphYSize - 1)
+            : ((GraphYSize - 1) / 3 * 2),
+        duration,
+        time);
 
     // print("debug : $datapath");
 
@@ -1345,10 +1440,10 @@ class PathPainterBurned extends CustomPainter {
     if (ProfileController.to.duration == 7) {
       datapath.forEach((dp) {
         final dotPaintFill = Paint()
-          ..color = Colors.white
+          ..color = Color(0xff8DBFBC)
           ..style = PaintingStyle.fill
           ..strokeWidth = 1.0;
-        canvas.drawCircle(dp, 5.0, dotPaintFill);
+        canvas.drawCircle(dp, 3.5, dotPaintFill);
       });
     }
 

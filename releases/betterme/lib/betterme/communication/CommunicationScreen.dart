@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -85,6 +86,8 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                             };
                             DatabaseMethos()
                                 .createChatroom(chatroomId, chatroomInfo);
+                            ServerConnection.write_log(
+                                'CommunicationScreen', 'end', 'ChatroomScreen');
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -133,6 +136,11 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                 )
               : Center(child: CircularProgressIndicator());
         });
+  }
+
+  void initState() {
+    super.initState();
+    ServerConnection.write_log('CommunicationScreen', 'start', '');
   }
 
   @override
@@ -185,6 +193,8 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                 padding: EdgeInsets.only(top: 14, right: 20.0),
                 child: GestureDetector(
                   onTap: () {
+                    ServerConnection.write_log(
+                        'CommunicationScreen', 'end', 'FindTrainerScreen');
                     Navigator.push(
                         context,
                         MaterialPageRoute(

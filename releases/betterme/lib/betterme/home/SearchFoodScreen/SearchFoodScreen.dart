@@ -1,4 +1,5 @@
 import 'package:betterme/betterme/home/RecordFoodScreen/RecordFoodScreen.dart';
+import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:csv/csv_settings_autodetection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,6 +55,12 @@ class _SearchFoodScreen extends State<SearchFoodScreen> {
     });
   }
 
+  void initState() {
+    super.initState();
+    ServerConnection.write_log('SearchFoodScreen', 'start', '');
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -65,7 +72,11 @@ class _SearchFoodScreen extends State<SearchFoodScreen> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("음식 검색",
-            style: TextStyle(color: txtColor, fontSize: defaultSize * 15)),
+            style: TextStyle(
+              color: txtColor,
+              fontSize: defaultSize * 17,
+              fontWeight: FontWeight.w400,
+            )),
         backgroundColor: bgColor,
       ),
       key: key,
@@ -126,7 +137,10 @@ class _SearchFoodScreen extends State<SearchFoodScreen> {
                               BorderRadius.circular(valWidth * 0.015))),
                   child: Text('검색',
                       style: TextStyle(
-                          fontSize: defaultSize * 15, color: txtColor)))
+                        fontSize: defaultSize * 16,
+                        color: txtColor,
+                        fontWeight: FontWeight.w400,
+                      )))
             ]),
             SizedBox(
               height: 20,
@@ -174,6 +188,8 @@ class ChildItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final valWidth = MediaQuery.of(context).size.width; //화면 너비
+    double defaultSize = valWidth * 0.0025;
     return new GestureDetector(
       onTap: () {
         print(Get.arguments);
@@ -187,6 +203,7 @@ class ChildItem extends StatelessWidget {
         //     ),
         //   ),
         // );
+        ServerConnection.write_log('SearchFoodScreen', 'end', 'RecordFoodScreen');
         Get.to(
           () => RecordFoodScreen(
             food: this.name,
@@ -195,7 +212,12 @@ class ChildItem extends StatelessWidget {
         );
       },
       child: ListTile(
-          title: new Text(this.name, style: TextStyle(color: txtColor))),
+          title: new Text(this.name,
+              style: TextStyle(
+                color: txtColor,
+                fontSize: defaultSize * 15,
+                fontWeight: FontWeight.w400,
+              ))),
     );
   }
 }

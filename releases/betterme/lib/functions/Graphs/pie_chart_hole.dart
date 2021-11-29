@@ -16,21 +16,27 @@ class MadePieChartHole extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    print(percentage1);
+    print(percentage2);
+    print(percentage1 + percentage2);
+    print('비율!!!!!!!!!!!!!!');
+
     Paint paint = Paint()
       ..color = Color(0XFFA0B1DF)
-      ..strokeWidth = 8.0
+      ..strokeWidth = 11.0
       ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round;
+      ..strokeCap = StrokeCap.butt;
 
     double radius = min(size.width / 2 - paint.strokeWidth / 2,
         size.height / 2 - paint.strokeWidth / 2);
+    radius *= 0.75;
     Offset center = Offset(size.width / 2, size.height / 2);
     double arcAngle1 = 2 * pi * (percentage1 / 100);
     double arcAngle2 = 2 * pi * (percentage2 / 100);
     double arcAngle3 = 2 * pi * ((100 - percentage1 - percentage2) / 100);
 
     double tmp = pi / 20;
-    // tmp = 0;
+    tmp = 0;
 
     // canvas.drawCircle(center, radius, paint);
     canvas.drawArc(Rect.fromCircle(center: center, radius: radius),
@@ -39,6 +45,7 @@ class MadePieChartHole extends CustomPainter {
     canvas.drawArc(Rect.fromCircle(center: center, radius: radius),
         -pi / 2 + arcAngle1 + tmp, arcAngle2 - tmp * 2, false, paint);
     paint..color = Color(0xffDBB9C7);
+
     canvas.drawArc(
         Rect.fromCircle(center: center, radius: radius),
         -pi / 2 + arcAngle1 + arcAngle2 + tmp,
@@ -65,7 +72,7 @@ class MadePieChartHole extends CustomPainter {
       tp.paint(canvas, offset);
     } else if (type == 'food') {
       TextStyle food = TextStyle(
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: FontWeight.normal,
         color: Color(0XFFFFFDFD),
       );
@@ -75,7 +82,7 @@ class MadePieChartHole extends CustomPainter {
         color: Color(0XFFFFFDFD),
       );
 
-      drawTextCentered(canvas, center - Offset(0, 13), text, food, 100);
+      drawTextCentered(canvas, center - Offset(0, 8), text, food, 100);
       drawTextCentered(canvas, center + Offset(0, 12), 'kcal', kcal, 60);
     }
   }
