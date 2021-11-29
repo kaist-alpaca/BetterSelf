@@ -593,6 +593,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                     Text(" "),
                   ])),
             );
+            _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
             return ListView(controller: _scrollController, children: ChatList);
           } else {
             return Center(child: CircularProgressIndicator());

@@ -1,4 +1,8 @@
+import 'dart:io';
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 // import '../pages/login_page/agreement_screen.dart'; // 이용약관 스크린
 import 'package:google_sign_in/google_sign_in.dart';
@@ -13,6 +17,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreen extends State<LoginScreen> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  String? token;
+  void _firebaseCloudMessaging_Listeners(){
+    if(Platform.isIOS){}
+    _firebaseMessaging.getAPNSToken().then((result){
+      token = result;
+      print('debug token : $token');
+    });
+  }
+
   bool _isChecked = false;
 
   Future<UserCredential> signInWithGoogle() async {
@@ -59,6 +73,9 @@ class _LoginScreen extends State<LoginScreen> {
     final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
     double defaultSize = valWidth * 0.0025; //폰트사이즈용
+
+    _firebaseCloudMessaging_Listeners();
+
     return Scaffold(
       backgroundColor: bgColor,
       body: Center(

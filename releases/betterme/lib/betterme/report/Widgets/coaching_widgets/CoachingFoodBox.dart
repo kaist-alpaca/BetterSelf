@@ -21,7 +21,7 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
 
   return Container(
       child: Column(children: [
-    SizedBox(height: valHeight * 0.008),
+        SizedBox(height: valHeight * 0.008,),
         Container(
           height: valHeight * 0.2,
           width: lineLength,
@@ -90,14 +90,12 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
                         width: valWidth * 0.04,
                       ),
                       //Text('$Dura 분', style: TextStyle(fontSize: 10, color: txtColor)),
-                    ],
-                  ),
                   SizedBox(
                     height: 10,
                   ),
-                ],
-              );
-            }).toList();
+                  ]
+                  );
+                }).toList();
 
                 FoodList.add(
                    Row(
