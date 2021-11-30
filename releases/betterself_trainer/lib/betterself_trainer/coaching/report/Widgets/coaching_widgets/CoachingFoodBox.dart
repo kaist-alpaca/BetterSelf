@@ -24,7 +24,7 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay, String uid) {
       child: Column(children: [
     SizedBox(height: valHeight * 0.008),
         Container(
-          height: valHeight * 0.2,
+
           width: lineLength,
           child: FutureBuilder<List<dynamic>>(
             future: ServerConnection.get_food_by_date(
@@ -34,41 +34,57 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay, String uid) {
             builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
               if (snapshot.hasError){
                 return Container(
+                  height: valHeight * 0.2,
                   child: Text(
-                      '이 날의 운동 기록이 없습니다.',
+                      '이 날의 식단 기록이 없습니다.',
                       style: TextStyle(fontSize: 10, color: txtColor)
                   ),
                 );
               }
               else if (snapshot.hasData && snapshot.data!.length > 0) {
                 print('\n\ndebug : ${snapshot.data}');
-                var data = List.from(snapshot.data!.reversed);
+                var data = List.from(snapshot.data!);
+                double sum = 0;
 
                 List<Widget> FoodList = data.map<Widget>((e){
                   print("debug Time : ${e['date']}");
-                  DateTime Time = DateTime.parse(e['date'].toString());
+                  DateTime Time = DateTime.parse(e['time'].toString());
                   print("debug Time : $Time");
 
+                  sum += double.parse(e['amount'].toString());
+
                   return Column(
-                    children: [
-                      Row(
-                        children: [
-                          SizedBox(width: valWidth*0.07,),
-                          Text(e['when'], style: TextStyle(fontSize: 10, color: txtColor)),
-                          SizedBox(width: valWidth*0.04,),
-                          Text(DateFormat.jm().format(Time), style: TextStyle(fontSize: 10, color: txtColor)),
-                          SizedBox(width: valWidth*0.04,),
-                          Text(e['name'], style: TextStyle(fontSize: 10, color: txtColor)),
-                          SizedBox(width: valWidth*0.04,),
-                          Text("${e['amount']} 인분", style: TextStyle(fontSize: 10, color: txtColor)),
-                          SizedBox(width: valWidth*0.04,),
-                          //Text('$Dura 분', style: TextStyle(fontSize: 10, color: txtColor)),
-                        ],
-                      ),
-                      SizedBox(height: 10,),
-                    ],
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(width: valWidth*0.07,),
+                            Text(e['when'], style: TextStyle(fontSize: 10, color: txtColor)),
+                            SizedBox(width: valWidth*0.04,),
+                            Text(DateFormat.jm().format(Time), style: TextStyle(fontSize: 10, color: txtColor)),
+                            SizedBox(width: valWidth*0.04,),
+                            Text(e['name'], style: TextStyle(fontSize: 10, color: txtColor)),
+                            SizedBox(width: valWidth*0.04,),
+                            Text("${e['amount']} kcal", style: TextStyle(fontSize: 10, color: txtColor)),
+                            SizedBox(width: valWidth*0.04,),
+                            //Text('$Dura 분', style: TextStyle(fontSize: 10, color: txtColor)),
+                          ],
+                        ),
+                        //Text('$Dura 분', style: TextStyle(fontSize: 10, color: txtColor)),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ]
                   );
                 }).toList();
+
+                FoodList.add(
+                  Row(
+                    children: [
+                      SizedBox(width: valWidth*0.07,),
+                      Text('총 칼로리: $sum kcal', style: TextStyle(fontSize: 10, color: txtColor, fontWeight: FontWeight.bold))
+                    ],
+                  ),
+                );
 
                 return Container(
                   child: Column(
@@ -78,6 +94,7 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay, String uid) {
 
               } else{
                 return Container(
+                  height: valHeight * 0.2,
                   child: Text(
                       '이 날의 식단 기록이 없습니다.',
                       style: TextStyle(fontSize: 10, color: txtColor)

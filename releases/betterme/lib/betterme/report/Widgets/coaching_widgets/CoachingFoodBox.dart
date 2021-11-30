@@ -23,7 +23,6 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
       child: Column(children: [
         SizedBox(height: valHeight * 0.008,),
         Container(
-          height: valHeight * 0.2,
           width: lineLength,
           child: FutureBuilder<List<dynamic>>(
             future: ServerConnection.get_food_by_date(
@@ -35,6 +34,7 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
             builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
               if (snapshot.hasError){
                 return Container(
+                  height: valHeight * 0.2,
                   child: Text(
                       '이 날의 식단 기록이 없습니다.',
                       style: TextStyle(fontSize: 10, color: txtColor)
@@ -92,6 +92,7 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
 
           } else {
             return Container(
+              height: valHeight * 0.2,
               child: Text('이 날의 식단 기록이 없습니다.',
                   style: TextStyle(fontSize: 10, color: txtColor)),
             );
