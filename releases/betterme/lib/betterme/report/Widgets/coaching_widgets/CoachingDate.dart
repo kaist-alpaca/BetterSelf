@@ -22,9 +22,6 @@ Widget CoachingDate(
     child: Column(
       children: [
         Row(children: [
-          SizedBox(
-            width: valWidth * 0.05,
-          ),
           Container(
             width: valWidth * 0.3,
             child: Text(title, //ㅇㅇ데이터 코칭
@@ -32,10 +29,10 @@ Widget CoachingDate(
                 style: TextStyle(fontSize: 14 * defaultSize, color: txtColor)),
           ),
           SizedBox(
-            width: valWidth * 0.3,
+            width: valWidth * 0.40,
           ),
           Container(
-              width: valWidth * 0.2,
+              width: valWidth * 0.16,
               child: Text(
                 //날짜
                 date,
@@ -44,7 +41,7 @@ Widget CoachingDate(
         ]),
         SizedBox(height: valHeight * 0.0025),
         Container(
-          width: valWidth * 0.74,
+          width: valWidth * 0.88,
           child: Divider(
             color: Color(0xff858E93),
             thickness: 0.6,

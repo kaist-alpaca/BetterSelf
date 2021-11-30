@@ -37,50 +37,53 @@ Widget InitBioCoaching(
       .snapshots();
 
   return Container(
-    height: MediaQuery.of(context).size.height * 0.45,
-    child: StreamBuilder<QuerySnapshot>(
-        stream: usersStream,
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          CoachingBiotexts = [];
-          CoachingBiotimes = [];
-          if (snapshot.hasData) {
-            List CoachingList =
-            snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data =
-              document.data()! as Map<String, dynamic>;
-              print("time : ${DateTime.parse(data['time'].toDate().toString())}");
-              CoachingBiotexts.add(data['message']);
-              CoachingBiotimes.add(
-                  DateTime.parse(data['time'].toDate().toString()));
-              return data['message'];
-            }).toList();
+      height: MediaQuery.of(context).size.height * 0.45,
+      child: StreamBuilder<QuerySnapshot>(
+          stream: usersStream,
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            CoachingBiotexts = [];
+            CoachingBiotimes = [];
+            if (snapshot.hasData) {
+              List CoachingList =
+                  snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map<String, dynamic> data =
+                    document.data()! as Map<String, dynamic>;
+                print(
+                    "time : ${DateTime.parse(data['time'].toDate().toString())}");
+                CoachingBiotexts.add(data['message']);
+                CoachingBiotimes.add(
+                    DateTime.parse(data['time'].toDate().toString()));
+                return data['message'];
+              }).toList();
 
-            int checkTime = CoachingBiotimes.length - 1;
-            // DateFormat('y/M/d').format(controller.selectedDay)
+              int checkTime = CoachingBiotimes.length - 1;
+              // DateFormat('y/M/d').format(controller.selectedDay)
 
-            while (checkTime >= 0) {
-              // Coachingtimes[checkTime]-selectedDate]
-              int date1 = int.parse(
-                  DateFormat('yyyyMMdd').format(CoachingBiotimes[checkTime]));
-              int date2 = int.parse(DateFormat('yyyyMMdd').format(selectedDate));
-              int DiffDays = date1 - date2;
+              while (checkTime >= 0) {
+                // Coachingtimes[checkTime]-selectedDate]
+                int date1 = int.parse(
+                    DateFormat('yyyyMMdd').format(CoachingBiotimes[checkTime]));
+                int date2 =
+                    int.parse(DateFormat('yyyyMMdd').format(selectedDate));
+                int DiffDays = date1 - date2;
 
-              if (DiffDays == 0) {
-                print('$checkTime and ' + CoachingBiotexts[checkTime]);
-                return CoachingTxtBox(context, CoachingBiotexts[checkTime], 0.25);
-              } else if (DiffDays < 0) {
-                return CoachingTxtBox(
-                    context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25);
+                if (DiffDays == 0) {
+                  print('$checkTime and ' + CoachingBiotexts[checkTime]);
+                  return CoachingTxtBox(
+                      context, CoachingBiotexts[checkTime], 0.25);
+                } else if (DiffDays < 0) {
+                  return CoachingTxtBox(
+                      context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25);
+                }
+                checkTime = checkTime - 1;
               }
-              checkTime = checkTime - 1;
-            }
 
-            return CoachingTxtBox(context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25);
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        })
-  );
+              return CoachingTxtBox(
+                  context, '아직 해당 날짜의 생활 데이터 코칭이 없습니다.', 0.25);
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          }));
 }
 
 Widget InitExerciseCoaching(BuildContext context, DateTime selectedDate) {
@@ -215,14 +218,14 @@ class _MonthCoachingBody extends State<MonthCoachingBody> {
       //운동
       return Column(
         children: [
-          CoachingDate(context, '운동 기록 및 코칭', '[$formattedDate]'),
+          CoachingDate(context, '운동 기록 및 코칭', '$formattedDate'),
           CoachingExerciseBox(context, selectedDay),
           SizedBox(
             height: 15,
           ),
           InitExerciseCoaching(context, selectedDay),
           Container(
-            width: valWidth * 0.74,
+            width: valWidth * 0.88,
             child: Divider(
               color: Color(0xff858E93),
               thickness: 0.6,
@@ -237,14 +240,14 @@ class _MonthCoachingBody extends State<MonthCoachingBody> {
       //식단
       return Column(
         children: [
-          CoachingDate(context, '식단 기록 및 코칭', '[$formattedDate]'),
+          CoachingDate(context, '식단 기록 및 코칭', '$formattedDate'),
           CoachingFoodBox(context, selectedDay),
           SizedBox(
             height: 15,
           ),
           InitFoodCoaching(context, selectedDay),
           Container(
-            width: valWidth * 0.74,
+            width: valWidth * 0.88,
             child: Divider(
               color: Color(0xff858E93),
               thickness: 0.6,
@@ -259,8 +262,8 @@ class _MonthCoachingBody extends State<MonthCoachingBody> {
       //생활
       return Column(
         children: [
-          CoachingDate(context, '생활 데이터 코칭', '[$formattedDate]'),
-          InitBioCoaching(context, selectedDay, '[$formattedDate]'),
+          CoachingDate(context, '생활 데이터 코칭', '$formattedDate'),
+          InitBioCoaching(context, selectedDay, '$formattedDate'),
           SizedBox(
             height: 500,
           )

@@ -219,7 +219,7 @@ class _YearCoachingBody extends State<YearCoachingBody> {
           ),
           InitExerciseCoaching(context, selectedDay),
           Container(
-            width: valWidth * 0.74,
+            width: valWidth * 0.88,
             child: Divider(
               color: Color(0xff858E93),
               thickness: 0.6,
@@ -241,7 +241,7 @@ class _YearCoachingBody extends State<YearCoachingBody> {
           ),
           InitFoodCoaching(context, selectedDay),
           Container(
-            width: valWidth * 0.74,
+            width: valWidth * 0.88,
             child: Divider(
               color: Color(0xff858E93),
               thickness: 0.6,

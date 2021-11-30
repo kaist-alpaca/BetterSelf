@@ -107,11 +107,13 @@ Widget CoachingExerciseBox(BuildContext context, DateTime selectedDay) {
         },
       ),
     ),
-    SizedBox(
-      width: valWidth * 0.86,
+    Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Container(
+            width: valWidth * 0.02,
+          ),
           Container(
             width: valWidth * 0.3,
             child: Divider(
@@ -120,9 +122,15 @@ Widget CoachingExerciseBox(BuildContext context, DateTime selectedDay) {
             ),
           ),
           Container(
-              width: valWidth * 0.1,
+            width: valWidth * 0.045,
+          ),
+          Container(
+              width: valWidth * 0.06,
               height: valHeight * 0.05,
               child: Image.asset('images/coaching_icon.png')),
+          Container(
+            width: valWidth * 0.045,
+          ),
           Container(
             width: valWidth * 0.3,
             child: Divider(
