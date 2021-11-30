@@ -27,6 +27,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
   final bgColor = Color(0xff0B202A); //배경색
   final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
   final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
+  bool InitalScroll = false;
 
   var user = AuthMethods()
       .auth
@@ -38,8 +39,6 @@ class _ChatroomScreen extends State<ChatroomScreen> {
   TextEditingController textmessage = TextEditingController();
 
   ScrollController _scrollController = ScrollController();
-
-  FocusNode _focusNode = FocusNode();
 
   getchatroomid(String a, String b) {
     if (a.compareTo(b) < 0) {
@@ -60,10 +59,8 @@ class _ChatroomScreen extends State<ChatroomScreen> {
         "sendby": user,
         "time": messagetime,
       };
-
       DatabaseMethos().addMessage(
           getchatroomid(user, widget.usernamechatwith), messageId, messageInfo);
-
       if (sendClicked) {
         textmessage.text = "";
         messageId = "";
@@ -79,12 +76,19 @@ class _ChatroomScreen extends State<ChatroomScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final valHeight = MediaQuery.of(context).size.height; //화면 높이
-    final valWidth = MediaQuery.of(context).size.width; //화면 너비
+    final valHeight = MediaQuery
+        .of(context)
+        .size
+        .height; //화면 높이
+    final valWidth = MediaQuery
+        .of(context)
+        .size
+        .width; //화면 너비
     double defaultSize = valWidth * 0.0025;
 
-    print('debug: ${getchatroomid(user, widget.usernamechatwith)}');
+    Widget message = chatmessages(context);
 
+    // print('debug: ${getchatroomid(user, widget.usernamechatwith)}');
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -135,7 +139,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                     ),
                     Text('${widget.namechatwith}',
                         style:
-                            TextStyle(color: Color(0xffFFFDFD), fontSize: 17)),
+                        TextStyle(color: Color(0xffFFFDFD), fontSize: 17)),
                   ],
                 ),
               ),
@@ -147,7 +151,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
         color: bgColor,
         child: Stack(
           children: [
-            chatmessages(context),
+            message,
             Container(child: Text(" ")),
             Container(child: Text(" ")),
             SafeArea(
@@ -155,8 +159,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       color: bgColor,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: valWidth * 0.015),
+                      padding: EdgeInsets.symmetric(horizontal: valWidth * 0.015),
                       child: Row(
                         children: [
                           Container(
@@ -213,13 +216,6 @@ class _ChatroomScreen extends State<ChatroomScreen> {
     BuildContext context,
   ) {
     Stream<QuerySnapshot> messagestream = FirebaseFirestore.instance
-        .collection("Chatrooms")
-        .doc(getchatroomid(user, widget.usernamechatwith))
-        .collection("chats")
-        .orderBy("time")
-        .snapshots();
-
-    Stream<QuerySnapshot> userinfo = FirebaseFirestore.instance
         .collection("Chatrooms")
         .doc(getchatroomid(user, widget.usernamechatwith))
         .collection("chats")
@@ -582,19 +578,20 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                   title: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                    Text(" "),
-                  ])),
+                        Text(" "),
+                      ])),
             );
             ChatList.add(
               ListTile(
                   title: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                    Text(" "),
-                  ])),
+                        Text(" "),
+                      ])),
             );
-            _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+
             return ListView(controller: _scrollController, children: ChatList);
+
           } else {
             return Center(child: CircularProgressIndicator());
           }

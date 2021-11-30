@@ -51,7 +51,7 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
                   DateTime Time = DateTime.parse(e['time'].toString());
                   print("debug Time : $Time");
 
-                  sum += e['amount'] as num;
+                  sum += double.parse(e['amount'].toString());
 
                   return Column(
                     children: [
@@ -68,26 +68,6 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
                           SizedBox(width: valWidth*0.04,),
                           //Text('$Dura 분', style: TextStyle(fontSize: 10, color: txtColor)),
                         ],
-                      ),
-                      Text(e['when'],
-                          style: TextStyle(fontSize: 10, color: txtColor)),
-                      SizedBox(
-                        width: valWidth * 0.04,
-                      ),
-                      Text(DateFormat.jm().format(Time),
-                          style: TextStyle(fontSize: 10, color: txtColor)),
-                      SizedBox(
-                        width: valWidth * 0.04,
-                      ),
-                      Text(e['name'],
-                          style: TextStyle(fontSize: 10, color: txtColor)),
-                      SizedBox(
-                        width: valWidth * 0.04,
-                      ),
-                      Text("${e['amount']} 인분",
-                          style: TextStyle(fontSize: 10, color: txtColor)),
-                      SizedBox(
-                        width: valWidth * 0.04,
                       ),
                       //Text('$Dura 분', style: TextStyle(fontSize: 10, color: txtColor)),
                   SizedBox(
