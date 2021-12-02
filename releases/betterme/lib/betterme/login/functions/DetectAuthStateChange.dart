@@ -1,3 +1,4 @@
+import 'package:betterme/functions/Controllers/notification_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,12 +22,14 @@ class DetectAuthStateChange extends GetView<ProfileController> {
             // return Test();
             print("uid is?");
             String _data = snapshot.data.toString();
+            String uid = _data.substring(
+                _data.lastIndexOf("uid: ") + 5, _data.length - 1);
+            // print(uid);
+            NotificationController.to.initNotification(uid: uid);
             // print(_data.substring(
             //     _data.lastIndexOf("uid: ") + 5, _data.length - 1));
             // return BuildHome();
-            return CheckSignedUser(
-                uid: _data.substring(
-                    _data.lastIndexOf("uid: ") + 5, _data.length - 1));
+            return CheckSignedUser(uid: uid);
             // Get.off(BasicInfoScreen());
           } else
             // user not authorized hence redirect to login page

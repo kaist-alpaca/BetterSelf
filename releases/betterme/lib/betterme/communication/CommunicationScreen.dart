@@ -78,7 +78,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                       child: Card(
                         color: bgColor,
                         child: GestureDetector(
-                          onTap: () {
+                          onTap: () async {
                             var chatroomId =
                                 getchatroomid(user, data['username']);
                             Map<String, dynamic> chatroomInfo = {
@@ -88,13 +88,18 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                                 .createChatroom(chatroomId, chatroomInfo);
                             ServerConnection.write_log(
                                 'CommunicationScreen', 'end', 'ChatroomScreen');
+                            var trainer_uid =
+                                await ServerConnection.get_uid_by_email(
+                                    email: data['email']);
+                            print(data);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => ChatroomScreen(
                                         data['name'],
                                         data['username'],
-                                        data['imgUrl'])));
+                                        data['imgUrl'],
+                                        trainer_uid)));
                           },
                           child: ListTile(
                             shape: RoundedRectangleBorder(
