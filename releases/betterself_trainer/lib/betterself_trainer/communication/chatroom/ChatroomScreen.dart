@@ -231,7 +231,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
           bool PrevWhoSended = true;
 
           if (snapshot.hasData) {
-            List<Widget> ChatList =
+            List<Widget> ChatList = List.from(
                 snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
@@ -563,10 +563,10 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                   }
                 }
               }
-            }).toList();
+            }).toList().reversed);
 
             //Padding
-            ChatList.add(
+            ChatList.insert(0,
               ListTile(
                   title: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -574,7 +574,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                     Text(" "),
                   ])),
             );
-            ChatList.add(
+            ChatList.insert(0,
               ListTile(
                   title: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -582,7 +582,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                     Text(" "),
                   ])),
             );
-            return ListView(controller: _scrollController, children: ChatList);
+            return ListView(controller: _scrollController, children: ChatList, reverse: true,);
           } else {
             return Center(child: CircularProgressIndicator());
           }
