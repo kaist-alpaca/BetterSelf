@@ -5,6 +5,7 @@ import 'package:betterself_trainer/betterself_trainer/coaching/report/functions/
 import 'package:betterself_trainer/betterself_trainer/report/Widgets/MiniBox.dart';
 
 import 'package:betterself_trainer/functions/Controllers/profile_controller.dart';
+import 'package:betterself_trainer/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -276,6 +277,10 @@ class _SevenDaysReport extends State<SevenDaysReport> {
               SizedBox(
                 height: 20,
               ),
+              Im().immediate(widget.uid),
+              SizedBox(
+                height: 20,
+              ),
               Row(
                 // 여기는 식단/수면 그래프 색 설명해줌.
                 children: [
@@ -293,7 +298,7 @@ class _SevenDaysReport extends State<SevenDaysReport> {
                 ],
               ),
               SizedBox(
-                height: 15,
+                height: 20,
               ),
               Container(
                 height: valWidth * 0.95 / 24 * 7 * 1.7,
@@ -313,4 +318,37 @@ class SalesData {
   SalesData(this.year, this.sales);
   final String year;
   final double sales;
+}
+
+class Im{
+  immediate(String uid){
+    return FutureBuilder<List<dynamic>>(
+      future: ServerConnection.total_weight(
+        uid,
+        ProfileController.to.datelist,
+      ),
+      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
+        if (snapshot.hasData) {
+          List<Widget> L = [];
+          var data = snapshot.data;
+          data!.forEach((e) {
+            print("Debug e");
+            print(e);
+            L.add(Text('\t${e['weight'].toString()}\t', style: TextStyle(color: Colors.white)));
+          });
+          L = List.from(L.reversed);
+          print("FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK");
+          print(snapshot.data);
+          print(L);
+          return Row(
+            children: L,
+            mainAxisAlignment: MainAxisAlignment.center,
+          );
+        } else {
+          // print('do not have data');
+          return Container();
+        }
+      },
+    );
+  }
 }
