@@ -16,8 +16,9 @@ class ChatroomScreen extends StatefulWidget {
   final String namechatwith;
   final String usernamechatwith;
   final ChatwithImgurl;
-  const ChatroomScreen(
-      this.namechatwith, this.usernamechatwith, this.ChatwithImgurl);
+  final String trainer_uid;
+  const ChatroomScreen(this.namechatwith, this.usernamechatwith,
+      this.ChatwithImgurl, this.trainer_uid);
 
   @override
   _ChatroomScreen createState() => _ChatroomScreen();
@@ -66,6 +67,12 @@ class _ChatroomScreen extends State<ChatroomScreen> {
         messageId = "";
         setState(() {});
       }
+      ServerConnection.write_log('ChatroomScreen', 'send_chat', '');
+      ServerConnection.fcm_chat(
+          trainer_uid: widget.trainer_uid,
+          chat: message,
+          namechatwith: widget.namechatwith,
+          usernamechatwith: widget.usernamechatwith);
     }
   }
 
@@ -76,14 +83,8 @@ class _ChatroomScreen extends State<ChatroomScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final valHeight = MediaQuery
-        .of(context)
-        .size
-        .height; //화면 높이
-    final valWidth = MediaQuery
-        .of(context)
-        .size
-        .width; //화면 너비
+    final valHeight = MediaQuery.of(context).size.height; //화면 높이
+    final valWidth = MediaQuery.of(context).size.width; //화면 너비
     double defaultSize = valWidth * 0.0025;
 
     Widget message = chatmessages(context);
@@ -139,7 +140,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                     ),
                     Text('${widget.namechatwith}',
                         style:
-                        TextStyle(color: Color(0xffFFFDFD), fontSize: 17)),
+                            TextStyle(color: Color(0xffFFFDFD), fontSize: 17)),
                   ],
                 ),
               ),
@@ -159,7 +160,8 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       color: bgColor,
-                      padding: EdgeInsets.symmetric(horizontal: valWidth * 0.015),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: valWidth * 0.015),
                       child: Row(
                         children: [
                           Container(
@@ -189,8 +191,6 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                         borderRadius: BorderRadius.circular(
                                             valWidth * 0.015))),
                                 onPressed: () {
-                                  ServerConnection.write_log(
-                                      'ChatroomScreen', 'send_chat', '');
                                   constructMessage(true);
                                   _scrollController.jumpTo(_scrollController
                                       .position.maxScrollExtent);
@@ -238,6 +238,9 @@ class _ChatroomScreen extends State<ChatroomScreen> {
           bool PrevWhoSended = true;
 
           if (snapshot.hasData) {
+            print('decrese app badge');
+            ServerConnection.app_badge_count(trainer_uid: widget.trainer_uid);
+
             List<Widget> ChatList =
                 snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
@@ -578,20 +581,19 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                   title: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Text(" "),
-                      ])),
+                    Text(" "),
+                  ])),
             );
             ChatList.add(
               ListTile(
                   title: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Text(" "),
-                      ])),
+                    Text(" "),
+                  ])),
             );
 
             return ListView(controller: _scrollController, children: ChatList);
-
           } else {
             return Center(child: CircularProgressIndicator());
           }
