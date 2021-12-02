@@ -87,9 +87,17 @@ class _ChatroomScreen extends State<ChatroomScreen> {
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     double defaultSize = valWidth * 0.0025;
 
-    Widget message = chatmessages(context);
+    Stream<QuerySnapshot> messagestream = FirebaseFirestore.instance
+        .collection("Chatrooms")
+        .doc(getchatroomid(user, widget.usernamechatwith))
+        .collection("chats")
+        .orderBy("time")
+        .snapshots();
+
+    StreamBuilder<QuerySnapshot> message = chatmessages(context, messagestream);
 
     // print('debug: ${getchatroomid(user, widget.usernamechatwith)}');
+
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -192,8 +200,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                             valWidth * 0.015))),
                                 onPressed: () {
                                   constructMessage(true);
-                                  _scrollController.jumpTo(_scrollController
-                                      .position.maxScrollExtent);
+                                  _scrollController.jumpTo(0);
                                   setState(() {});
                                 },
                                 child: Text(
@@ -212,15 +219,9 @@ class _ChatroomScreen extends State<ChatroomScreen> {
     );
   }
 
-  Widget chatmessages(
-    BuildContext context,
+  StreamBuilder<QuerySnapshot> chatmessages(
+    BuildContext context, Stream<QuerySnapshot> messagestream
   ) {
-    Stream<QuerySnapshot> messagestream = FirebaseFirestore.instance
-        .collection("Chatrooms")
-        .doc(getchatroomid(user, widget.usernamechatwith))
-        .collection("chats")
-        .orderBy("time")
-        .snapshots();
 
     return StreamBuilder<QuerySnapshot>(
         stream: messagestream,
@@ -241,7 +242,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
             print('decrese app badge');
             ServerConnection.app_badge_count(trainer_uid: widget.trainer_uid);
 
-            List<Widget> ChatList =
+            List<Widget> ChatList = List.from(
                 snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
                   document.data()! as Map<String, dynamic>;
@@ -573,10 +574,10 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                   }
                 }
               }
-            }).toList();
+            }).toList().reversed);
 
             //Padding
-            ChatList.add(
+            ChatList.insert(0,
               ListTile(
                   title: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -584,7 +585,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                     Text(" "),
                   ])),
             );
-            ChatList.add(
+            ChatList.insert(0,
               ListTile(
                   title: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -593,9 +594,10 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                   ])),
             );
 
-            return ListView(controller: _scrollController, children: ChatList);
+            return ListView(controller: _scrollController, children: ChatList, reverse: true,);
+
           } else {
-            return Center(child: CircularProgressIndicator());
+            return ListView(controller: _scrollController, children: []);
           }
         });
   }
