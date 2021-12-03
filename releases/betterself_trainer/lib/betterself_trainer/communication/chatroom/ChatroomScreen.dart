@@ -1,6 +1,8 @@
+import 'package:betterself_trainer/functions/Controllers/server_connection.dart';
 import 'package:betterself_trainer/functions/Firestore/AuthMethods.dart';
 import 'package:betterself_trainer/functions/Firestore/DatabaseMethods.dart';
 import 'package:betterself_trainer/functions/Widgets/DividewithObj.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,8 +16,9 @@ class ChatroomScreen extends StatefulWidget {
   final String namechatwith;
   final String usernamechatwith;
   final ChatwithImgurl;
+  final String trainer_uid;
   const ChatroomScreen(
-      this.namechatwith, this.usernamechatwith, this.ChatwithImgurl);
+      this.namechatwith, this.usernamechatwith, this.ChatwithImgurl, this.trainer_uid);
 
   @override
   _ChatroomScreen createState() => _ChatroomScreen();
@@ -67,6 +70,11 @@ class _ChatroomScreen extends State<ChatroomScreen> {
         messageId = "";
         setState(() {});
       }
+      ServerConnection.fcm_chat(
+          trainer_uid: widget.trainer_uid,
+          chat: message,
+          namechatwith: user,
+          usernamechatwith: AuthMethods().auth.currentUser!.displayName!);
     }
   }
 
@@ -178,8 +186,7 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                             valWidth * 0.015))),
                                 onPressed: () {
                                   constructMessage(true);
-                                  _scrollController.jumpTo(_scrollController
-                                      .position.maxScrollExtent);
+                                  _scrollController.jumpTo(0);
                                   setState(() {});
                                 },
                                 child: Text(
