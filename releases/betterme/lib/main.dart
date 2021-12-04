@@ -38,6 +38,7 @@ class BetterSelf extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'ImageCropper',
+      //지금은 theme을 적용해도 왜인지 바뀌지 않음. 나중에 알아볼 것
       theme: ThemeData(
           fontFamily: 'NotoSans',
           //for debugging : 나중에 0x0B202A로 바꿀 것
