@@ -1,12 +1,7 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
-import 'package:betterme/functions/Firestore/AuthMethods.dart';
 
 import 'CoachingInside.dart';
 

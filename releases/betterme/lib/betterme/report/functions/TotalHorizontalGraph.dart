@@ -1,7 +1,6 @@
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
 
 class TotalHorizontalChart extends StatefulWidget {
   const TotalHorizontalChart({Key? key}) : super(key: key);

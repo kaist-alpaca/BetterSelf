@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:betterme/functions/Controllers/profile_controller.dart';
-import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Server/ServerConnectionMethods.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

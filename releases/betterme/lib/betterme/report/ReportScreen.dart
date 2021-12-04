@@ -14,8 +14,6 @@ import '../home/CameraScreen/CameraScreen.dart';
 import 'package:camera/camera.dart';
 
 import 'package:keyboard_actions/keyboard_actions.dart';
-import 'package:bottom_picker/bottom_picker.dart';
-import 'package:bottom_picker/resources/arrays.dart';
 
 import 'package:flutter_picker/flutter_picker.dart';
 

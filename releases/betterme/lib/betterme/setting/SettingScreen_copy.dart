@@ -1,5 +1,3 @@
-import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
-
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
 
@@ -17,10 +15,6 @@ import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 
 import 'package:keyboard_actions/keyboard_actions.dart';
-import 'package:restart_app/restart_app.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
-
-import 'Functions/AgreementScreen.dart';
 
 //이곳의 질병기초정보와 개인정보동의서는 setting page의 것 (로그인 페이지와는 또 따로)임을 확인.
 

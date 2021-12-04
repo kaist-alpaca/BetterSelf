@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:betterme/betterme/home/RecordFoodScreen/RecordFoodScreen.dart';
 import 'package:betterme/betterme/home/SearchFoodScreen/SearchFoodScreen.dart';
 import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 // import 'package:thumbnails/thumbnails.dart';
 
