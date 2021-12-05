@@ -353,6 +353,11 @@ class ServerConnection {
     // print(list['result']['uid']);
     print(json.decode(response.body));
     String lastupdate = json.decode(response.body).toString();
+
+    final response_workout = await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/healthData_get_workout_last.php?uid=" +
+            uid));
+    String lastupdate_workout = json.decode(response_workout.body).toString();
     DateTime start;
     if (lastupdate == "0") {
       print("update date is none");
@@ -371,6 +376,32 @@ class ServerConnection {
       // lastupdate.,
       now,
     );
+    var _predicate_workout;
+    if (lastupdate_workout != "0" &&
+        int.parse(DateTime.fromMicrosecondsSinceEpoch(
+                    (double.parse(lastupdate_workout) * 1000000).toInt())
+                .difference(start)
+                .inDays
+                .toString()) <
+            0) {
+      print('need to');
+      _predicate_workout = Predicate(
+        DateTime.fromMicrosecondsSinceEpoch(
+            (double.parse(lastupdate_workout) * 1000000).toInt()),
+        // DateTime.now().add(Duration(days: -365 * 2)),
+        // lastupdate.,
+        now,
+      );
+    } else {
+      print('do not need to');
+      _predicate_workout = Predicate(
+        start,
+        // DateTime.now().add(Duration(days: -365 * 2)),
+        // lastupdate.,
+        now,
+      );
+    }
+    print(_predicate_workout);
     bool _isAuthorizationRequested = false;
     try {
       final readTypes = <String>[];
@@ -564,7 +595,7 @@ class ServerConnection {
 
       var workoutsData = [];
       final appleHealthWorkouts =
-          await HealthKitReporter.workoutQuery(_predicate);
+          await HealthKitReporter.workoutQuery(_predicate_workout);
       // print('workouts: ${workouts.map((e) => e.map).toList()}');
       for (final q in appleHealthWorkouts) {
         var map = {};
