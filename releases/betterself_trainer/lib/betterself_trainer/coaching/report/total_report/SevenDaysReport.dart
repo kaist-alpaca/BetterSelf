@@ -337,7 +337,6 @@ class Im{
             L.add(Text('\t${e['weight'].toString()}\t', style: TextStyle(color: Colors.white)));
           });
           L = List.from(L.reversed);
-          print("FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK");
           print(snapshot.data);
           print(L);
           return Row(

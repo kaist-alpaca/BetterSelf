@@ -14,6 +14,7 @@ import 'dart:io';
 // import 'package:health_kit_reporter/model/type/quantity_type.dart';
 // import 'package:health_kit_reporter/model/type/series_type.dart';
 // import 'package:health_kit_reporter/model/type/workout_type.dart';
+import 'package:betterself_trainer/functions/Controllers/profile_controller.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -673,4 +674,60 @@ class ServerConnection {
     }
     return lastupdate;
   }
+
+  static Future<void> fcm_token(
+      {required String uid, required String token}) async {
+    http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/upload_fcm_token.php?uid=" +
+            uid +
+            "&token=" +
+            token));
+  }
+
+  static Future<String> get_uid_by_email({required String email}) async {
+    final response = await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/get_uid_by_email.php?email=" +
+            email));
+    return json.decode(response.body).toString();
+  }
+
+  static Future<void> fcm_chat(
+      {required String trainer_uid,
+        required String chat,
+        required String namechatwith,
+        required String usernamechatwith}) async {
+    String uid = ProfileController.to.originMyProfile.uid!;
+    String name = ProfileController.to.originMyProfile.name!;
+    print("debug : ${
+            "http://kaistuser.iptime.org:8080/send_fcm.php?send_uid=" +
+                uid +
+                "&send_name=" +
+                name +
+                "&to_uid=" +
+                trainer_uid +
+                "&namechatwith=" +
+                namechatwith +
+                "&usernamechatwith=" +
+                usernamechatwith +
+                "&chat=" +
+                chat +
+                "&type=fcm_chat"
+    }");
+    http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/send_fcm.php?send_uid=" +
+            uid +
+            "&send_name=" +
+            name +
+            "&to_uid=" +
+            trainer_uid +
+            "&namechatwith=" +
+            namechatwith +
+            "&usernamechatwith=" +
+            usernamechatwith +
+            "&chat=" +
+            chat +
+            "&type=fcm_chat"));
+  }
+
+
 }

@@ -1,3 +1,4 @@
+import 'package:betterself_trainer/functions/Controllers/notification_controller.dart';
 import 'package:betterself_trainer/functions/Controllers/profile_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,10 @@ class DetectAuthStateChange extends GetView<ProfileController> {
             // return Test();
             print("uid is?");
             String _data = snapshot.data.toString();
+            String uid = _data.substring(
+                _data.lastIndexOf("uid: ") + 5, _data.length - 1);
+            // print(uid);
+            NotificationController.to.initNotification(uid: uid);
             // print(_data.substring(
             //     _data.lastIndexOf("uid: ") + 5, _data.length - 1));
             // return BuildHome();
