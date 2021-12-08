@@ -4,7 +4,11 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class NotificationController extends GetxController {
-  static NotificationController get to => Get.find();
+  // static NotificationController get to => Get.find();
+  static NotificationController get to =>
+      Get.isRegistered<NotificationController>()
+          ? Get.find<NotificationController>()
+          : Get.put(NotificationController());
   // FirebaseMessaging _messaging = FirebaseMessaging();
   // FirebaseMessaging _messaging = FirebaseMessaging.instance;
   // RxMap<String, dynamic> message = Map<String, dynamic>().obs;
