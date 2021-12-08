@@ -46,7 +46,32 @@ class _checkSignedUser2State extends State<checkSignedUser2> {
               // return Container(child: Text("안녕"));
             }
           } else {
-            return CircularProgressIndicator();
+            return Material(
+              type: MaterialType.transparency,
+              child: Container(
+                color: Color(0xff0B202A),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Center(
+                      child: Text(
+                        "데이터를 불러오는 중입니다....",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
           }
         });
   }
