@@ -348,11 +348,27 @@ class ProfileController extends GetxController {
         originMyProfile = userModel;
       } else {
         tmp = "1";
+        // await FirebaseAuth.instance.signOut();
         print("usermodel is null");
-        await ServerConnection.uploadProfileImage(
-          FirebaseAuth.instance.currentUser!.uid,
-          FirebaseAuth.instance.currentUser!.photoURL!,
-        );
+        if (FirebaseAuth.instance.currentUser!.displayName != null &&
+            FirebaseAuth.instance.currentUser!.photoURL != null) {
+          await ServerConnection.uploadProfileImage(
+            FirebaseAuth.instance.currentUser!.uid,
+            FirebaseAuth.instance.currentUser!.photoURL!,
+          );
+        } else {
+          print('sign with apple');
+          print(FirebaseAuth.instance.currentUser!);
+          await FirebaseAuth.instance.currentUser!.updateDisplayName('testing');
+          await FirebaseAuth.instance.currentUser!.updatePhotoURL(
+              'http://kaistuser.iptime.org:8080/img/profile.png');
+          // FirebaseAuth.instance.currentUser!.displayName = 'testting';
+          await ServerConnection.uploadProfileImage(
+            FirebaseAuth.instance.currentUser!.uid,
+            'http://kaistuser.iptime.org:8080/img/profile.png',
+          );
+          print(FirebaseAuth.instance.currentUser!);
+        }
         print("create user");
         print(FirebaseAuth.instance.currentUser!.uid);
         print(FirebaseAuth.instance.currentUser!.email!);
