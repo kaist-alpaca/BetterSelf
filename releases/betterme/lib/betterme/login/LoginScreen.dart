@@ -224,7 +224,7 @@ class _LoginScreen extends State<LoginScreen> {
                 ),
           ),
           SizedBox(
-            height: 50,
+            height: 30,
           ),
           Container(
             // 개인정보 처리방침 및 이용약관
@@ -241,14 +241,17 @@ class _LoginScreen extends State<LoginScreen> {
                   },
                   child: Container(
                       width: valWidth * 0.55,
-                      // height: valHeight * 0.06,
-                      child: Text(
-                        "개인정보 처리방침 및 이용약관",
-                        style: TextStyle(
-                          color: txtColor,
-                          fontSize: defaultSize * 14,
+                      height: valHeight * 0.15,
+                      color: Color.fromRGBO(0, 0, 0, 0),
+                      child: Center(
+                        child: Text(
+                          "개인정보 처리방침 및 이용약관",
+                          style: TextStyle(
+                            color: txtColor,
+                            fontSize: defaultSize * 14,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       )),
                 ),
                 // Checkbox(
