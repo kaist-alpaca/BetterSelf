@@ -154,12 +154,15 @@ class _ReportScreen extends State<ReportScreen> {
                                                   Container(
                                                     height: valHeight * 0.03,
                                                     width: valWidth * 0.1,
-                                                    child: Text(
-                                                      '날짜',
-                                                      style: TextStyle(
-                                                          color: txtColor,
-                                                          fontSize:
-                                                              defaultSize * 15),
+                                                    child: Center(
+                                                      child: Text(
+                                                        '날짜',
+                                                        style: TextStyle(
+                                                            color: txtColor,
+                                                            fontSize:
+                                                                defaultSize *
+                                                                    15),
+                                                      ),
                                                     ),
                                                   ),
                                                   Align(
@@ -379,12 +382,17 @@ class _ReportScreen extends State<ReportScreen> {
                                                   Container(
                                                     height: valHeight * 0.03,
                                                     width: valWidth * 0.1,
-                                                    child: Text(
-                                                      '시간',
-                                                      style: TextStyle(
-                                                          color: txtColor,
-                                                          fontSize:
-                                                              defaultSize * 15),
+                                                    margin: EdgeInsets.only(
+                                                        top: valHeight * 0.022),
+                                                    child: Center(
+                                                      child: Text(
+                                                        '시간',
+                                                        style: TextStyle(
+                                                            color: txtColor,
+                                                            fontSize:
+                                                                defaultSize *
+                                                                    15),
+                                                      ),
                                                     ),
                                                   ),
                                                   GestureDetector(
@@ -506,12 +514,15 @@ class _ReportScreen extends State<ReportScreen> {
                                                     width: valWidth * 0.1,
                                                     margin: EdgeInsets.only(
                                                         top: valHeight * 0.022),
-                                                    child: Text(
-                                                      '체중',
-                                                      style: TextStyle(
-                                                          color: txtColor,
-                                                          fontSize:
-                                                              defaultSize * 15),
+                                                    child: Center(
+                                                      child: Text(
+                                                        '체중',
+                                                        style: TextStyle(
+                                                            color: txtColor,
+                                                            fontSize:
+                                                                defaultSize *
+                                                                    15),
+                                                      ),
                                                     ),
                                                   ),
                                                   GestureDetector(
