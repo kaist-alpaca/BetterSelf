@@ -37,8 +37,9 @@ class BetterSelf extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'ImageCropper',
-      theme: ThemeData.light().copyWith(primaryColor: Colors.white),
+      title: 'BetterSelf',
+      // theme: ThemeData.light().copyWith(primaryColor: Colors.white),
+      theme: ThemeData.dark().copyWith(primaryColor: Color(0xff0B202A)),
       initialBinding: BindingsBuilder(() {
         Get.lazyPut<ProfileController>(() => ProfileController());
         Get.lazyPut<ImageCropController>(() => ImageCropController());
