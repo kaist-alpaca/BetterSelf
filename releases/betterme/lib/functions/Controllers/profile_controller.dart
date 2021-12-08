@@ -359,7 +359,7 @@ class ProfileController extends GetxController {
         } else {
           print('sign with apple');
           print(FirebaseAuth.instance.currentUser!);
-          await FirebaseAuth.instance.currentUser!.updateDisplayName('testing');
+          await FirebaseAuth.instance.currentUser!.updateDisplayName('닉네임');
           await FirebaseAuth.instance.currentUser!.updatePhotoURL(
               'http://kaistuser.iptime.org:8080/img/profile.png');
           // FirebaseAuth.instance.currentUser!.displayName = 'testting';
@@ -555,5 +555,20 @@ class ProfileController extends GetxController {
                 disease!));
     // print(json.decode(response.body));
     return (json.decode(response.body));
+  }
+
+  Future<void> updateName({required String name}) async {
+    FirebaseAuth.instance.currentUser!.updateDisplayName(name);
+    originMyProfile.name = name;
+    myProfile.value.name = name;
+    update();
+    print('updateName');
+    print(name);
+    print(originMyProfile.uid);
+    await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/update_name.php?uid=" +
+            originMyProfile.uid! +
+            '&name=' +
+            name));
   }
 }

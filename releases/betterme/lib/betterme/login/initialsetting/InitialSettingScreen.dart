@@ -53,6 +53,7 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
   TextEditingController KeyBoard = TextEditingController();
   TextEditingController KeyBoard1 = TextEditingController();
   TextEditingController KeyBoard2 = TextEditingController();
+  TextEditingController KeyBoard3 = TextEditingController();
   FocusNode phoneNumberFocusNode = new FocusNode();
   FocusNode phoneNumberFocusNode1 = new FocusNode();
   FocusNode phoneNumberFocusNode2 = new FocusNode();
@@ -63,6 +64,7 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
   String disease = '';
   String gender = '남';
   String birth = '';
+  String name = '';
 
   showOverlay(BuildContext context) {
     if (overlayEntry != null) return;
@@ -114,16 +116,16 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
     ServerConnection.write_log('InitialSettingScreen', 'start', '');
     KeyBoard1.value = TextEditingValue(text: weight);
     super.initState();
-    KeyboardVisibilityNotification().addNewListener(
-      onShow: () {
-        print("show");
-        showOverlay(context);
-      },
-      onHide: () {
-        print("hide");
-        removeOverlay();
-      },
-    );
+    // KeyboardVisibilityNotification().addNewListener(
+    //   onShow: () {
+    //     print("show");
+    //     showOverlay(context);
+    //   },
+    //   onHide: () {
+    //     print("hide");
+    //     removeOverlay();
+    //   },
+    // );
     phoneNumberFocusNode.addListener(() {
       bool hasFocus = phoneNumberFocusNode.hasFocus;
       if (hasFocus) {
@@ -331,11 +333,62 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      controller.myProfile.value.name!,
-                      style: TextStyle(
-                          color: txtColor, fontSize: defaultSize * 15),
-                    ),
+                    controller.myProfile.value.name! == "닉네임"
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "edit",
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: defaultSize * 15),
+                              ),
+                              SizedBox(
+                                width: valWidth * 0.02,
+                              ),
+                              // Text(
+                              //   controller.myProfile.value.name!,
+                              //   style: TextStyle(
+                              //       color: txtColor,
+                              //       fontSize: defaultSize * 15),
+                              // ),
+                              Container(
+                                width: 100,
+                                height: defaultSize * 50,
+                                child: CupertinoTextField(
+                                  showCursor: false,
+                                  keyboardAppearance: Brightness.dark,
+                                  style: TextStyle(
+                                      color: txtColor,
+                                      fontSize: defaultSize * 15),
+                                  decoration: BoxDecoration(
+                                      color: bgColor,
+                                      // color: Colors.red,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(valWidth * 0.015))),
+                                  textAlign: TextAlign.start,
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  textAlignVertical: TextAlignVertical.center,
+                                  keyboardType: TextInputType.name,
+                                  maxLines: 1,
+                                  // focusNode: phoneNumberFocusNode2,
+                                  // controller: KeyBoard2,
+                                  onChanged: (value) {
+                                    name = value;
+                                  },
+                                  placeholder: controller.myProfile.value.name!,
+                                  placeholderStyle: TextStyle(
+                                      fontSize: defaultSize * 14,
+                                      color: Color(0xFF858E93)),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Text(
+                            controller.myProfile.value.name!,
+                            style: TextStyle(
+                                color: txtColor, fontSize: defaultSize * 15),
+                          ),
                     SizedBox(
                       height: 40,
                     ),
@@ -953,12 +1006,19 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                   // 저장기능 추가해주세요
                   onTap: () {
                     String text = '';
+                    text +=
+                        controller.myProfile.value.name! == "닉네임" && name == ""
+                            ? '닉네임 '
+                            : '';
                     text += controller.birthday == "/00/00" ? '생년월일 ' : '';
                     text += controller.height == '' ? '키 ' : '';
 
                     if (text != '') {
                       _showAlert(title: '다음 정보를 입력해 주세요', message: text);
                     } else {
+                      if (controller.myProfile.value.name! == "닉네임") {
+                        controller.updateName(name: name);
+                      }
                       controller.updateProfile();
                       ServerConnection.write_log(
                           'InitialSettingScreen', 'end', 'ConstructTabBar');
