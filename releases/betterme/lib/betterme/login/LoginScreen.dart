@@ -124,7 +124,8 @@ class _LoginScreen extends State<LoginScreen> {
           // ),
           Container(
             width: valWidth * 0.35,
-            child: Image.asset('images/app_logo.png'), //나중 여기에 앱아이콘
+            // child: Image.asset('images/app_logo.png'), //나중 여기에 앱아이콘
+            child: Image.asset('images/appLogo.png'), //나중 여기에 앱아이콘
             // child: SvgPicture.asset('images/appLogo.svg'), //나중 여기에 앱아이콘
           ),
           SizedBox(
