@@ -153,62 +153,64 @@ class _ChatroomScreen extends State<ChatroomScreen> {
       ),
       body: Container(
         color: bgColor,
-        child: Stack(
-          children: [
-            message,
-            Container(child: Text(" ")),
-            Container(child: Text(" ")),
-            SafeArea(
-                child: Container(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      color: bgColor,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: valWidth * 0.015),
-                      child: Row(
-                        children: [
-                          Container(
-                              width: valWidth * 0.78,
-                              height: 40,
-                              margin: EdgeInsets.only(
-                                  right: valWidth * 0.02, bottom: 7),
-                              child: TextField(
-                                  style: TextStyle(color: Color(0xffFFFDFD)),
-                                  controller: textmessage,
-                                  decoration: const InputDecoration(
-                                    fillColor: Color(0xff333C47),
-                                    filled: true,
-                                    hintText: "message...",
-                                    hintStyle: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ))),
-                          Container(
-                            margin: EdgeInsets.only(bottom: 6),
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    elevation: 0,
-                                    primary: Color(0xff333C47),
-                                    minimumSize: Size(valWidth * 0.13, 40),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            valWidth * 0.015))),
-                                onPressed: () {
-                                  constructMessage(true);
-                                  _scrollController.jumpTo(0);
-                                  setState(() {});
-                                },
-                                child: Text(
-                                  '전송',
-                                  style: TextStyle(
-                                      color: txtColor,
-                                      fontSize: defaultSize * 15),
-                                )),
-                          ),
-                        ],
-                      ),
-                    ))),
-          ],
+        child: SafeArea(
+          child: Stack(
+            children: [
+              message,
+              Container(child: Text(" ")),
+              Container(child: Text(" ")),
+              SafeArea(
+                  child: Container(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        color: bgColor,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: valWidth * 0.015),
+                        child: Row(
+                          children: [
+                            Container(
+                                width: valWidth * 0.78,
+                                height: 40,
+                                margin: EdgeInsets.only(
+                                    right: valWidth * 0.02, bottom: 7),
+                                child: TextField(
+                                    style: TextStyle(color: Color(0xffFFFDFD)),
+                                    controller: textmessage,
+                                    decoration: const InputDecoration(
+                                      fillColor: Color(0xff333C47),
+                                      filled: true,
+                                      hintText: "message...",
+                                      hintStyle: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    ))),
+                            Container(
+                              margin: EdgeInsets.only(bottom: 6),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      elevation: 0,
+                                      primary: Color(0xff333C47),
+                                      minimumSize: Size(valWidth * 0.13, 40),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              valWidth * 0.015))),
+                                  onPressed: () {
+                                    constructMessage(true);
+                                    _scrollController.jumpTo(0);
+                                    setState(() {});
+                                  },
+                                  child: Text(
+                                    '전송',
+                                    style: TextStyle(
+                                        color: txtColor,
+                                        fontSize: defaultSize * 15),
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ))),
+            ],
+          ),
         ),
       ),
     );
