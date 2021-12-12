@@ -105,6 +105,8 @@ class HomeCoachingInfo {
   late final double blank_coachingInfo; //코칭 디바이더와의 높이 간격
   late final Divider coachingDivider; //코칭 디바이더 정보
 
+  late final Center coachingDetailDivider; //코칭 디테일 디바이더 정보
+
   //실제 context의 크기에 맞춰 값 생성
   HomeCoachingInfo(this.valWidth, {this.valPixel = 364}) {
     this.widthRatio = valWidth / valPixel;
@@ -122,6 +124,44 @@ class HomeCoachingInfo {
       endIndent: 24 * widthRatio,
       color: Color(0xff858E93),
       thickness: 1,
+    );
+
+    coachingDetailDivider = Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: valWidth * 0.02,
+          ),
+          Container(
+            width: valWidth * 0.3,
+            child: Divider(
+              color: Color(0xff30414A),
+              thickness: 1,
+            ),
+          ),
+          Container(
+            width: valWidth * 0.045,
+          ),
+          Container(
+              width: valWidth * 0.06,
+              height: valWidth * 0.06,
+              child: Image.asset('images/coaching_icon.png')),
+          Container(
+            width: valWidth * 0.045,
+          ),
+          Container(
+            width: valWidth * 0.3,
+            child: Divider(
+              color: Color(0xff30414A),
+              thickness: 0.6,
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+        ],
+      ),
     );
   }
 }
