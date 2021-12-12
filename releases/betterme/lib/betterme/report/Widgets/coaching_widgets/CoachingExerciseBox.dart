@@ -1,5 +1,6 @@
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
+import 'package:betterme/functions/Widgets/WidgetInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -10,13 +11,9 @@ Widget CoachingExerciseBox(BuildContext context, DateTime selectedDay) {
 
   final valWidth = MediaQuery.of(context).size.width;
   final valHeight = MediaQuery.of(context).size.height;
-  double miniHeight = 0.04 * valHeight;
-  double defaultSize = valWidth * 0.0025;
   double lineLength = valWidth * 0.7;
 
-  final bgColor = Color(0xff0B202A); //배경색
   final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
-  final boxBorderRadius = valWidth * 0.015;
 
   return Container(
       child: Column(children: [
@@ -104,40 +101,6 @@ Widget CoachingExerciseBox(BuildContext context, DateTime selectedDay) {
             );
           }
         },
-      ),
-    ),
-    Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: valWidth * 0.02,
-          ),
-          Container(
-            width: valWidth * 0.3,
-            child: Divider(
-              color: Color(0xff30414A),
-              thickness: 0.6,
-            ),
-          ),
-          Container(
-            width: valWidth * 0.045,
-          ),
-          Container(
-              width: valWidth * 0.06,
-              height: valHeight * 0.05,
-              child: Image.asset('images/coaching_icon.png')),
-          Container(
-            width: valWidth * 0.045,
-          ),
-          Container(
-            width: valWidth * 0.3,
-            child: Divider(
-              color: Color(0xff30414A),
-              thickness: 0.6,
-            ),
-          ),
-        ],
       ),
     ),
   ]));

@@ -116,39 +116,5 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
         },
       ),
     ),
-    Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: valWidth * 0.02,
-          ),
-          Container(
-            width: valWidth * 0.3,
-            child: Divider(
-              color: Color(0xff30414A),
-              thickness: 0.6,
-            ),
-          ),
-          Container(
-            width: valWidth * 0.045,
-          ),
-          Container(
-              width: valWidth * 0.06,
-              height: valHeight * 0.05,
-              child: Image.asset('images/coaching_icon.png')),
-          Container(
-            width: valWidth * 0.045,
-          ),
-          Container(
-            width: valWidth * 0.3,
-            child: Divider(
-              color: Color(0xff30414A),
-              thickness: 0.6,
-            ),
-          ),
-        ],
-      ),
-    ),
   ]));
 }
