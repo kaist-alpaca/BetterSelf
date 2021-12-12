@@ -1,3 +1,4 @@
+import 'package:betterme/betterme/report/functions/DataType.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -189,12 +190,12 @@ Widget InitFoodCoaching(BuildContext context, DateTime selectedDate) {
       });
 }
 
-int? buttonCase;
+DataType? buttonCase;
 DateTime? selectedDay1;
 
 class MonthCoachingBody extends StatefulWidget {
-  MonthCoachingBody(int a, DateTime selectedDay) {
-    buttonCase = a;
+  MonthCoachingBody(DataType dt, DateTime selectedDay) {
+    buttonCase = dt;
     selectedDay1 = selectedDay;
   }
 
@@ -205,15 +206,19 @@ class MonthCoachingBody extends StatefulWidget {
 class _MonthCoachingBody extends State<MonthCoachingBody> {
   @override
   Widget build(BuildContext context) {
-    final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
-    final bgColor = Color(0xff0B202A); //배경색
-    final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
-    final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
 
     DateTime selectedDay = selectedDay1!;
-    String formattedDate = DateFormat('y/M/d').format(selectedDay);
+    String formattedDate = DateFormat('y/M/dd').format(selectedDay);
 
+    switch (buttonCase) {
+      // 운동
+      case DataType.exercise:
+      // 식단
+      case DataType.diet:
+      // 생활
+      case DataType.life:
+    }
     if (buttonCase == 1) {
       //운동
       return Column(
