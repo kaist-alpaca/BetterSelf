@@ -1,5 +1,12 @@
 import 'dart:io';
+import 'package:betterme/functions/Encryption/Encryption.dart';
+import 'package:betterme/functions/Encryption/rsa_key.dart';
+import 'package:cryptography/cryptography.dart';
+import 'package:encrypt/encrypt.dart';
+import 'package:encrypt/encrypt_io.dart';
+import 'package:fast_rsa/model/bridge_model_generated.dart';
 import 'package:get/get.dart';
+import 'package:fast_rsa/fast_rsa.dart' as fast_rsa;
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:convert';
@@ -532,27 +539,242 @@ class ProfileController extends GetxController {
     print(height);
     print(disease == '');
     print(originMyProfile.uid);
+
+    // final key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+    // // 1회용 키
+    // final nonce = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    // // 인증용 데이터
+    // final aad = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+
+    // // 암호화할 데이터
+    // // final plainText = [1, 2, 3];
+    // final plainText = utf8.encode(originMyProfile.uid!);
+
+    // // AES GCM 128 알고리즘 사용
+    // final algorithm = AesGcm.with128bits();
+
+    // // 키를 SecretKey로 생성
+    // final secretKey = SecretKey(key);
+
+    // // 암호화!
+    // final secretBox = await algorithm.encrypt(plainText,
+    //     secretKey: secretKey, nonce: nonce, aad: aad);
+
+    // // 암호화된 데이터
+    // print('Ciphertext: ${secretBox.cipherText}');
+    // // 암호화된 유효성 검사용 MAC 데이터
+    // print('MAC: ${secretBox.mac}');
+
+    // var decryptedData = <int>[];
+    // try {
+    //   // 복호화
+    //   decryptedData = await algorithm.decrypt(
+    //     secretBox,
+    //     secretKey: secretKey,
+    //     aad: aad,
+    //   );
+    // } catch (e) {
+    //   print('decryption error: $e');
+    // } finally {
+    //   //복호화 성공시!
+    //   print('decryptedData: $decryptedData');
+    //   print(utf8.decode(decryptedData));
+    //   // print(utf16.decode(decryptedData));
+    // }
+
+    // final plainText = utf8.encode(originMyProfile.uid!);
+    // final algorithm = AesCbc.with128bits(macAlgorithm: Hmac.sha256());
+    // final key = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+    // final secretKey = SecretKey(key);
+    // final nonce = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+
+    // // Encrypt
+    // final secretBox = await algorithm.encrypt(
+    //   plainText,
+    //   secretKey: secretKey,
+    //   nonce: nonce,
+    // );
+    // print('Nonce: ${secretBox.nonce}');
+    // print('Ciphertext: ${secretBox.cipherText}');
+    // print('MAC: ${secretBox.mac.bytes}');
+
+    // // Decrypt
+    // final clearText = await algorithm.decrypt(
+    //   secretBox,
+    //   secretKey: secretKey,
+    // );
+    // print('Cleartext: $clearText');
+    // print(utf8.decode(clearText));
+
+    // var secretBox = await Encryption.encrypt(text: originMyProfile.uid!);
+    // print('Nonce: ${secretBox.nonce}');
+    // print('Ciphertext: ${secretBox.cipherText}');
+    // // print(utf8.decode(secretBox.cipherText));
+    // print('MAC: ${secretBox.mac.bytes}');
+
+    // var clearText = await Encryption.decrypt(secretBox: secretBox);
+    // print('Cleartext: $clearText');
+
+    // secretBox = await Encryption.encrypt(text: gender!);
+    // print('Nonce: ${secretBox.nonce}');
+    // print('Ciphertext: ${secretBox.cipherText}');
+    // print('MAC: ${secretBox.mac.bytes}');
+
+    // clearText = await Encryption.decrypt(secretBox: secretBox);
+    // print('Cleartext: $clearText');
+
+    // secretBox = await Encryption.encrypt(text: birthday!);
+    // print('Nonce: ${secretBox.nonce}');
+    // print('Ciphertext: ${secretBox.cipherText}');
+    // print('MAC: ${secretBox.mac.bytes}');
+
+    // clearText = await Encryption.decrypt(secretBox: secretBox);
+    // print('Cleartext: $clearText');
+
+    // secretBox = await Encryption.encrypt(text: height!);
+    // print('Nonce: ${secretBox.nonce}');
+    // print('Ciphertext: ${secretBox.cipherText}');
+    // print('MAC: ${secretBox.mac.bytes}');
+
+    // final plainText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit';
+
+    // final key = Key.fromLength(32);
+    // final iv = IV.fromLength(16);
+    // final encrypter = Encrypter(AES(key, mode: AESMode.cbc));
+
+    // final encrypted = encrypter.encrypt(plainText, iv: iv);
+    // final decrypted = encrypter.decrypt(encrypted, iv: iv);
+
+    // print(encrypted.bytes);
+    // print(encrypted.base16);
+    // print(encrypted.base64);
+    // print(decrypted);
+
+    // final publicKey = await parseKeyFromFile<RSAPublicKey>('test/public.pem');
+
+    // print(rsa_key.public_key);
+
+    // var result = await fast_rsa.RSA.encryptOAEP(
+    //     "message", "cute_alpaca", fast_rsa.Hash.SHA256, rsa_key.public_key);
+    // // var result2 = await fast_rsa.RSA.decryptOAEP(
+    // //     result, "cute_alpaca", fast_rsa.Hash.SHA256, rsa_key.private_key);
+    // var result2 = await fast_rsa.RSA.generate(2048);
+    // print(result2.privateKey);
+    // print(result2.publicKey);
+    // print(rsa_key.pub);
+    // // print(rsa_key.public_key);
+    // result = await fast_rsa.RSA.encryptOAEP(
+    //     "message", "cute_alpaca", fast_rsa.Hash.SHA256, result2.publicKey);
+    // var result3 = await fast_rsa.RSA.decryptOAEP(
+    //     result, "cute_alpaca", fast_rsa.Hash.SHA256, result2.privateKey);
+    // print(result3);
+
+    // result = await fast_rsa.RSA.encryptOAEP("messagedsfdsf", "cute_alpaca",
+    //     fast_rsa.Hash.SHA256, rsa_key.public_key);
+    // // result3 = await fast_rsa.RSA.decryptOAEP(
+    // //     result, "cute_alpaca", fast_rsa.Hash.SHA256, rsa_key.private_key);
+    // print(result);
+    // var result4 = await fast_rsa.RSA.base64(result);
+    // print(result4);
+    // result = await fast_rsa.RSA.encryptOAEP(
+    //     "message", "cute_alpaca", fast_rsa.Hash.SHA256, rsa_key.public_key);
+    // print(result);
+    // var result =
+    //     await fast_rsa.RSA.encryptPKCS1v15("message", rsa_key.public_key);
+    // var result = await fast_rsa.RSA.base64("message");
+
+    // final signer = Signer(RSASigner(RSASignDigest.SHA256, publicKey: rsa_key.public_key));
+
+    // var result = await Encryption.encrypt_aes(text: "알파카 테스트");
+    // print(result);
+
+    // result = await Encryption.encrypt_rsa(text: "알파카");
+    // print(result);
+
+    // var result = await Encryption.encrypt(text: "알파카 테스트");
+
+    // print(result[0]);
+    // print(result[1]);
+
+    // await Encryption.encrypt_rsa(text: result[1]);
+
+    // final signer = Signer(RSASigner(RSASignDigest.SHA256, publicKey: rsa_key.public_key));
+
+    final key_list = await Encryption.create_aes_key();
+    final aes_key_encrypt_rsa = await Encryption.encrypt_rsa(text: key_list[1]);
+
+    var data = [];
+
+    for (int i = 0; i < 4; i++) {
+      var map = {};
+      map['startDate'] =
+          await Encryption.encrypt_aes(text: '2021_12_13', key: key_list[0]);
+      map['data'] =
+          await Encryption.encrypt_aes(text: i.toString(), key: key_list[0]);
+      data.add(map);
+    }
+
+    var data_string = json.encode(List.from(data.reversed));
+    print(data_string);
+
+    var data_string_encode =
+        await Encryption.encrypt_aes(text: data_string, key: key_list[0]);
+    print(data_string_encode);
+    var decryption_test = await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/decryption_test_with_flutter.php?aes_key_encrypt_rsa=" +
+            json.encode(aes_key_encrypt_rsa) +
+            "&data=" +
+            json.encode(data_string_encode)));
+    print(json.decode(decryption_test.body));
+
+    var sha_test = await Encryption.encrypt_sha(text: "alpaca");
+
+    print(sha_test);
+
+    ServerConnection.updateHeathData(originMyProfile.uid!);
+
+    // print('aes_key_encrypt_rsa : $aes_key_encrypt_rsa');
+
+    // var result = await Encryption.encrypt_aes(text: disease!, key: key_list[0]);
+    // print('result : $result');
+
+    final uid_encrypt = await Encryption.encrypt_aes(
+        text: originMyProfile.uid!, key: key_list[0]);
+    final gender_encrypt =
+        await Encryption.encrypt_aes(text: gender!, key: key_list[0]);
+    final birthday_encrypt =
+        await Encryption.encrypt_aes(text: birthday!, key: key_list[0]);
+    final height_encrypt =
+        await Encryption.encrypt_aes(text: height!, key: key_list[0]);
+    final disease_encrypt =
+        await Encryption.encrypt_aes(text: disease!, key: key_list[0]);
+
     final response = disease == ''
         ? await http.get(Uri.parse(
             "http://kaistuser.iptime.org:8080/update_profile.php?uid=" +
-                originMyProfile.uid! +
+                json.encode(uid_encrypt) +
                 '&gender=' +
-                gender! +
+                json.encode(gender_encrypt) +
                 '&birthday=' +
-                birthday! +
+                json.encode(birthday_encrypt) +
                 '&height=' +
-                height!))
+                json.encode(height_encrypt) +
+                '&aes_key_encrypt_rsa=' +
+                json.encode(aes_key_encrypt_rsa)))
         : await http.get(Uri.parse(
             "http://kaistuser.iptime.org:8080/update_profile.php?uid=" +
-                originMyProfile.uid! +
+                json.encode(uid_encrypt) +
                 '&gender=' +
-                gender! +
+                json.encode(gender_encrypt) +
                 '&birthday=' +
-                birthday! +
+                json.encode(birthday_encrypt) +
                 '&height=' +
-                height! +
+                json.encode(height_encrypt) +
                 '&disease=' +
-                disease!));
+                json.encode(disease_encrypt) +
+                '&aes_key_encrypt_rsa=' +
+                json.encode(aes_key_encrypt_rsa)));
+    // print(response.request);
     // print(json.decode(response.body));
     return (json.decode(response.body));
   }
@@ -565,10 +787,23 @@ class ProfileController extends GetxController {
     print('updateName');
     print(name);
     print(originMyProfile.uid);
+    final key_list = await Encryption.create_aes_key();
+    final aes_key_encrypt_rsa = await Encryption.encrypt_rsa(text: key_list[1]);
+    print('aes_key_encrypt_rsa : $aes_key_encrypt_rsa');
+
+    // var result = await Encryption.encrypt_aes(text: disease!, key: key_list[0]);
+    // print('result : $result');
+
+    final uid_encrypt = await Encryption.encrypt_aes(
+        text: originMyProfile.uid!, key: key_list[0]);
+    final name_encrypt =
+        await Encryption.encrypt_aes(text: name, key: key_list[0]);
     await http.get(Uri.parse(
         "http://kaistuser.iptime.org:8080/update_name.php?uid=" +
-            originMyProfile.uid! +
+            json.encode(uid_encrypt) +
             '&name=' +
-            name));
+            json.encode(name_encrypt) +
+            '&aes_key_encrypt_rsa=' +
+            json.encode(aes_key_encrypt_rsa)));
   }
 }
