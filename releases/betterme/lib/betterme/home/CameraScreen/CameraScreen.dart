@@ -51,6 +51,7 @@ class CameraScreenState extends State<CameraScreen>
       }
       setState(() {});
     });
+    _controller.lockCaptureOrientation();
   }
 
   @override
