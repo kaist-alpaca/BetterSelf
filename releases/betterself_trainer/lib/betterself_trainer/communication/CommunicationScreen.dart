@@ -32,12 +32,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
 
   TextEditingController searching = TextEditingController();
 
-  var user = AuthMethods()
-      .auth
-      .currentUser!
-      .email
-      .toString()
-      .replaceAll("@gmail.com", "");
+  var user = AuthMethods().auth.currentUser!.email.toString().split('@')[0];
 
   getchatroomid(String a, String b) {
     if (a.compareTo(b) < 0) {
@@ -86,7 +81,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
                                 .createChatroom(chatroomId, chatroomInfo);
                             var trainer_uid =
                                 await ServerConnection.get_uid_by_email(
-                                email: data['email']);
+                                    email: data['email']);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

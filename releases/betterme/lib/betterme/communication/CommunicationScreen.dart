@@ -34,12 +34,7 @@ class _CommunicationScreen extends State<CommunicationScreen> {
 
   TextEditingController searching = TextEditingController();
 
-  var user = AuthMethods()
-      .auth
-      .currentUser!
-      .email
-      .toString()
-      .replaceAll("@gmail.com", "");
+  var user = AuthMethods().auth.currentUser!.email.toString().split('@')[0];
 
   getchatroomid(String a, String b) {
     if (a.compareTo(b) < 0) {

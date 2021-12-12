@@ -15,7 +15,32 @@ class CheckSignedUser extends StatelessWidget {
           if (snapshot.hasData) {
             return checkSignedUser2(num: snapshot.data!, data: snapshot.data);
           } else {
-            return CircularProgressIndicator();
+            return Material(
+              type: MaterialType.transparency,
+              child: Container(
+                color: Color(0xff0B202A),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Center(
+                      child: Text(
+                        "로그인 중입니다....",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
           }
         });
   }

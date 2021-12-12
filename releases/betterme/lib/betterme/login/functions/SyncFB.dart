@@ -17,8 +17,31 @@ class SyncFB extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return DetectAuthStateChange();
         }
-        return Center(
-          child: CircularProgressIndicator(),
+        return Material(
+          type: MaterialType.transparency,
+          child: Container(
+            color: Color(0xff0B202A),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(
+                  height: 40,
+                ),
+                Center(
+                  child: Text(
+                    "앱 로딩중....",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
