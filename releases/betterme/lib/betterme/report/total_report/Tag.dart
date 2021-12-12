@@ -2,7 +2,8 @@ import 'package:betterme/functions/Widgets/WidgetInfo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-List<bool> graphTypes = [true, true, true, true, true, true];
+bool isGraphOn = true;
+List<bool> graphTypes = [true, true, true, true, true];
 List<String> tagTitle = ['전체', '체중', '수면', '스트레스', '섭취', '소모'];
 List<String> tagsubTitle = ['', '(kg)', '(시간)', '', '(kcal)', '(kcal)'];
 
