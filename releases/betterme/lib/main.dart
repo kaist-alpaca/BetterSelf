@@ -38,6 +38,7 @@ class BetterSelf extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'BetterSelf',
+      debugShowCheckedModeBanner: false,
       // theme: ThemeData.light().copyWith(primaryColor: Colors.white),
       theme: ThemeData.dark().copyWith(primaryColor: Color(0xff0B202A)),
       initialBinding: BindingsBuilder(() {

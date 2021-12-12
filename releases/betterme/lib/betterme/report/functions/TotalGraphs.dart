@@ -45,7 +45,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
     int tmpcnt = 0;
     widget.GraphTypes.forEach((e) {
       print("dedbug e : $e");
-      if(e) tmpcnt++;
+      if (e) tmpcnt++;
     });
     print("dedbug tmpcnt : $tmpcnt");
 
@@ -74,7 +74,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
               // print(snapshot.data!);
               if (widget.GraphTypes[0] &&
                   (ProfileController.to.total_graph_type == 0 ||
-                      ProfileController.to.total_graph_type == 3)) {
+                      ProfileController.to.total_graph_type == 3) &&
+                  snapshot.data!.length != 0) {
                 return Container(
                     child: CustomPaint(
                   size: Size(valWidth, valHeight / 2.8),
@@ -101,7 +102,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
               if (widget.GraphTypes[1] &&
-                  (ProfileController.to.total_graph_type <= 1)) {
+                  (ProfileController.to.total_graph_type <= 1) &&
+                  snapshot.data!.length != 0) {
                 // print('date list');
                 // print(ProfileController.to.datelist);
                 // print('have data');
@@ -132,7 +134,8 @@ class _TotalGraphsState extends State<TotalGraphs> {
           builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
             if (snapshot.hasData) {
               if (widget.GraphTypes[2] &&
-                  (ProfileController.to.total_graph_type <= 1)) {
+                  (ProfileController.to.total_graph_type <= 1) &&
+                  snapshot.data!.length != 0) {
                 // print('have data');
                 // print(snapshot.data);
                 // print(snapshot.data!);
@@ -162,10 +165,12 @@ class _TotalGraphsState extends State<TotalGraphs> {
             if (snapshot.hasData) {
               if (widget.GraphTypes[3] &&
                   (ProfileController.to.total_graph_type == 0 ||
-                      ProfileController.to.total_graph_type == 2)) {
+                      ProfileController.to.total_graph_type == 2) &&
+                  snapshot.data!.length != 0) {
                 // print('have data');
                 // print(snapshot.data);
                 // print(snapshot.data!);
+                print('food length : ${snapshot.data!.length}');
                 return Container(
                     child: CustomPaint(
                   size: Size(valWidth, valHeight / 2.8),
@@ -192,15 +197,19 @@ class _TotalGraphsState extends State<TotalGraphs> {
             if (snapshot.hasData) {
               if (widget.GraphTypes[4] &&
                   (ProfileController.to.total_graph_type == 0 ||
-                      ProfileController.to.total_graph_type == 2)) {
+                      ProfileController.to.total_graph_type == 2) &&
+                  snapshot.data!.length != 0) {
                 // print('have data burned');
                 // print(snapshot.data);
                 // print(snapshot.data!);
                 return Container(
                     child: CustomPaint(
                         size: Size(valWidth, valHeight / 2.8),
-                        painter: PathPainterBurned(snapshot.data!,
-                            widget.Duration, ProfileController.to.totaldate, isshowingone)));
+                        painter: PathPainterBurned(
+                            snapshot.data!,
+                            widget.Duration,
+                            ProfileController.to.totaldate,
+                            isshowingone)));
               } else {
                 return Container();
               }
@@ -624,22 +633,21 @@ class PathPainterWeight extends CustomPainter {
       ..strokeWidth = LineSize;
 
     Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
-    canvas.drawPath(path, LinePaint); /////////////////////////////////////// draw line
+    canvas.drawPath(
+        path, LinePaint); /////////////////////////////////////// draw line
 
-    if(isshowingone && ProfileController.to.total_graph_type == 3 && WeightData.isNotEmpty){ /////////////////////////////////////////////////////////// draw y axis
-      drawTextCentered(canvas,
-          Offset(size.width - 15, 0),
-          '${max+2}',
-          TextStyle(fontSize: 12, color: Color(0xff858e93)),
-          40);
-      drawTextCentered(canvas,
-          Offset(size.width - 15, size.height - 50),
-          '${min-2}',
-          TextStyle(fontSize: 12, color: Color(0xff858e93)),
-          40);
+    if (isshowingone &&
+        ProfileController.to.total_graph_type == 3 &&
+        WeightData.isNotEmpty) {
+      /////////////////////////////////////////////////////////// draw y axis
+      drawTextCentered(canvas, Offset(size.width - 15, 0), '${max + 2}',
+          TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
+      drawTextCentered(canvas, Offset(size.width - 15, size.height - 50),
+          '${min - 2}', TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
     }
 
-    if (ProfileController.to.duration == 7) { //////////////////////////////// draw circle
+    if (ProfileController.to.duration == 7) {
+      //////////////////////////////// draw circle
       datapath.forEach((dp) {
         final dotPaintFill = Paint()
           ..color = Color(0xffFFFDFD)
@@ -650,7 +658,6 @@ class PathPainterWeight extends CustomPainter {
     }
 
     path.close();
-
   }
 
   @override
@@ -673,7 +680,6 @@ class PathPainterWeight extends CustomPainter {
     tp.paint(canvas, offset);
     return tp.size;
   }
-
 }
 
 class PathPainterSleep extends CustomPainter {
@@ -760,7 +766,6 @@ class PathPainterSleep extends CustomPainter {
       });
     }
 
-
     double XPadd_right = 30;
     double XPadd_left = 15;
     double YPadd_bottom = 30;
@@ -812,13 +817,18 @@ class PathPainterSleep extends CustomPainter {
       });
     }
 
-    if(isshowingone && ProfileController.to.total_graph_type == 1 && SleepData.isNotEmpty){ /////////////////////////////////////////////////////////// draw y axis
-      drawTextCentered(canvas,
+    if (isshowingone &&
+        ProfileController.to.total_graph_type == 1 &&
+        SleepData.isNotEmpty) {
+      /////////////////////////////////////////////////////////// draw y axis
+      drawTextCentered(
+          canvas,
           Offset(size.width - 15, 0),
-          '${(max+2).round()}',
+          '${(max + 2).round()}',
           TextStyle(fontSize: 12, color: Color(0xff858e93)),
           40);
-      drawTextCentered(canvas,
+      drawTextCentered(
+          canvas,
           Offset(size.width - 15, size.height - 50),
           '${(min).round()}',
           TextStyle(fontSize: 12, color: Color(0xff858e93)),
@@ -977,17 +987,14 @@ class PathPainterStress extends CustomPainter {
     Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
 
-    if(isshowingone && ProfileController.to.total_graph_type == 1 && stress.isNotEmpty){ /////////////////////////////////////////////////////////// draw y axis
-      drawTextCentered(canvas,
-          Offset(size.width - 15, 0),
-          '${100}',
-          TextStyle(fontSize: 12, color: Color(0xff858e93)),
-          40);
-      drawTextCentered(canvas,
-          Offset(size.width - 15, size.height - 50),
-          '${0}',
-          TextStyle(fontSize: 12, color: Color(0xff858e93)),
-          40);
+    if (isshowingone &&
+        ProfileController.to.total_graph_type == 1 &&
+        stress.isNotEmpty) {
+      /////////////////////////////////////////////////////////// draw y axis
+      drawTextCentered(canvas, Offset(size.width - 15, 0), '${100}',
+          TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
+      drawTextCentered(canvas, Offset(size.width - 15, size.height - 50),
+          '${0}', TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
     }
 
     if (ProfileController.to.duration == 7) {
@@ -1109,7 +1116,8 @@ class PathPainterFood extends CustomPainter {
       });
     }
 
-    if(!max.isNaN && !max.isInfinite)max = (max/100.0).round()*100.0 + 300.0;
+    if (!max.isNaN && !max.isInfinite)
+      max = (max / 100.0).round() * 100.0 + 300.0;
     min = 0;
     // print('good...?');
     // print(DietData);
@@ -1130,8 +1138,7 @@ class PathPainterFood extends CustomPainter {
     DietData.forEach((e) {
       // e.value = e.value / 2;
       // e.value += floor + YPadd_bottom;
-      e.value =
-          (e.value - (min)) * ((GraphYSize - 1) / 3) / (max + 200 - min);
+      e.value = (e.value - (min)) * ((GraphYSize - 1) / 3) / (max + 200 - min);
 
       if (ProfileController.to.total_graph_type == 2) {
         e.value *= 3;
@@ -1157,13 +1164,14 @@ class PathPainterFood extends CustomPainter {
     Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
 
-    if(isshowingone && ProfileController.to.total_graph_type == 2 && food.isNotEmpty){ /////////////////////////////////////////////////////////// draw y axis
-      drawTextCentered(canvas,
-          Offset(size.width - 15, 0),
-          '${(max).round()}',
-          TextStyle(fontSize: 12, color: Color(0xff858e93)),
-          40);
-      drawTextCentered(canvas,
+    if (isshowingone &&
+        ProfileController.to.total_graph_type == 2 &&
+        food.isNotEmpty) {
+      /////////////////////////////////////////////////////////// draw y axis
+      drawTextCentered(canvas, Offset(size.width - 15, 0), '${(max).round()}',
+          TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
+      drawTextCentered(
+          canvas,
           Offset(size.width - 15, size.height - 50),
           '${(min).round()}',
           TextStyle(fontSize: 12, color: Color(0xff858e93)),
@@ -1222,7 +1230,6 @@ class PathPainterBurned extends CustomPainter {
     double min = double.infinity;
     double max = -double.infinity;
     List<DateData> BurnedData = [];
-    // print('burned');
     if (duration == 180) {
       List BurnedData1 = [];
       bool check = false;
@@ -1301,7 +1308,8 @@ class PathPainterBurned extends CustomPainter {
       });
     }
 
-    if(!max.isNaN && !max.isInfinite)max = (max/100.0).round()*100.0 + 300.0;
+    if (!max.isNaN && !max.isInfinite)
+      max = (max / 100.0).round() * 100.0 + 300.0;
     min = 0;
     // print('good...?');
     // print(BurnedData);
@@ -1322,8 +1330,7 @@ class PathPainterBurned extends CustomPainter {
     BurnedData.forEach((e) {
       // e.value = e.value / 2;
       // e.value += floor + YPadd_bottom;
-      e.value =
-          (e.value - (min)) * ((GraphYSize - 1) / 3) / (max - min);
+      e.value = (e.value - (min)) * ((GraphYSize - 1) / 3) / (max - min);
 
       if (ProfileController.to.total_graph_type == 2) {
         e.value *= 3;
@@ -1349,13 +1356,14 @@ class PathPainterBurned extends CustomPainter {
     Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
 
-    if(isshowingone && ProfileController.to.total_graph_type == 2 && BurnedData.isNotEmpty){ /////////////////////////////////////////////////////////// draw y axis
-      drawTextCentered(canvas,
-          Offset(size.width - 15, 0),
-          '${max.round()}',
-          TextStyle(fontSize: 12, color: Color(0xff858e93)),
-          40);
-      drawTextCentered(canvas,
+    if (isshowingone &&
+        ProfileController.to.total_graph_type == 2 &&
+        BurnedData.isNotEmpty) {
+      /////////////////////////////////////////////////////////// draw y axis
+      drawTextCentered(canvas, Offset(size.width - 15, 0), '${max.round()}',
+          TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
+      drawTextCentered(
+          canvas,
           Offset(size.width - 15, size.height - 50),
           '${(min).round()}',
           TextStyle(fontSize: 12, color: Color(0xff858e93)),
@@ -1426,6 +1434,7 @@ class TotalGraphHelper {
               15;
       // final x = width - (time.day - i.time.day) * XGridUnit;
       final y = height - (i.value);
+      // final y = height;
       final dp = Offset(x, y);
       points.add(dp);
     });

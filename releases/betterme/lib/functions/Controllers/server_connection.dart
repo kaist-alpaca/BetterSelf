@@ -14,6 +14,7 @@ import 'dart:convert';
 // import 'package:health_kit_reporter/model/type/series_type.dart';
 // import 'package:health_kit_reporter/model/type/workout_type.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
+import 'package:betterme/functions/Encryption/Encryption.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:http/http.dart' as http;
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -209,38 +210,53 @@ class ServerConnection {
 
   static Future<List<dynamic>> total_weight(
       String uid, List<dynamic> date) async {
+    final key_list = await Encryption.create_aes_key();
+    final aes_key_encrypt_rsa = await Encryption.encrypt_rsa(text: key_list[1]);
+
     final response = await http.post(
       Uri.http('kaistuser.iptime.org:8080', 'total_weight.php'),
       body: <String, String>{
+        'key': aes_key_encrypt_rsa,
         'uid': uid, //서버에 post key : 보내는 값
         'date': json.encode(date)
       },
     );
-    return List<dynamic>.from(json.decode(response.body));
+    return List<dynamic>.from(json.decode(
+        await Encryption.decrypt_aes(text: response.body, key: key_list[0])));
   }
 
   static Future<List<dynamic>> total_sleep(
       String uid, List<dynamic> date) async {
+    final key_list = await Encryption.create_aes_key();
+    final aes_key_encrypt_rsa = await Encryption.encrypt_rsa(text: key_list[1]);
+
     final response = await http.post(
       Uri.http('kaistuser.iptime.org:8080', 'total_sleep.php'),
       body: <String, String>{
+        'key': aes_key_encrypt_rsa,
         'uid': uid, //서버에 post key : 보내는 값
         'date': json.encode(date)
       },
     );
-    return List<dynamic>.from(json.decode(response.body));
+    return List<dynamic>.from(json.decode(
+        await Encryption.decrypt_aes(text: response.body, key: key_list[0])));
   }
 
   static Future<List<dynamic>> total_stress(
       String uid, List<dynamic> date) async {
+    final key_list = await Encryption.create_aes_key();
+    final aes_key_encrypt_rsa = await Encryption.encrypt_rsa(text: key_list[1]);
+
     final response = await http.post(
       Uri.http('kaistuser.iptime.org:8080', 'total_stress.php'),
       body: <String, String>{
+        'key': aes_key_encrypt_rsa,
         'uid': uid, //서버에 post key : 보내는 값
         'date': json.encode(date)
       },
     );
-    return List<dynamic>.from(json.decode(response.body));
+    return List<dynamic>.from(json.decode(
+        await Encryption.decrypt_aes(text: response.body, key: key_list[0])));
   }
 
   static Future<List<dynamic>> total_food(
@@ -259,26 +275,37 @@ class ServerConnection {
       String uid, List<dynamic> date) async {
     // print('showing date');
     // print(date);
+    final key_list = await Encryption.create_aes_key();
+    final aes_key_encrypt_rsa = await Encryption.encrypt_rsa(text: key_list[1]);
+
     final response = await http.post(
       Uri.http('kaistuser.iptime.org:8080', 'total_burned.php'),
       body: <String, String>{
+        'key': aes_key_encrypt_rsa,
         'uid': uid, //서버에 post key : 보내는 값
         'date': json.encode(date)
       },
     );
-    return List<dynamic>.from(json.decode(response.body));
+    print(response.body);
+    return List<dynamic>.from(json.decode(
+        await Encryption.decrypt_aes(text: response.body, key: key_list[0])));
   }
 
   static Future<List<dynamic>> total_seven_sleep(
       String uid, List<dynamic> date) async {
+    final key_list = await Encryption.create_aes_key();
+    final aes_key_encrypt_rsa = await Encryption.encrypt_rsa(text: key_list[1]);
+
     final response = await http.post(
       Uri.http('kaistuser.iptime.org:8080', 'total_seven_sleep.php'),
       body: <String, String>{
+        'key': aes_key_encrypt_rsa,
         'uid': uid, //서버에 post key : 보내는 값
         'date': json.encode(date)
       },
     );
-    return List<dynamic>.from(json.decode(response.body));
+    return List<dynamic>.from(json.decode(
+        await Encryption.decrypt_aes(text: response.body, key: key_list[0])));
   }
 
   static Future<List<dynamic>> total_seven_food(
@@ -437,6 +464,9 @@ class ServerConnection {
       //     activityData.add(map);
       //   }
       // }
+      final key_list = await Encryption.create_aes_key();
+      final aes_key_encrypt_rsa =
+          await Encryption.encrypt_rsa(text: key_list[1]);
 
       var activitySummaryData = [];
       final appleHealthactivitySummary =
@@ -447,12 +477,18 @@ class ServerConnection {
         // print(json.encode(q.map["harmonized"]["activeEnergyBurned"]));
         // print(json.encode(q.map["harmonized"]["activeEnergyBurnedGoal"]));
         var map = {};
-        map['startTime'] =
-            '${json.encode(q.map["date"]).substring(1, 11).replaceAll("-", "_")}';
-        map['activeEnergyBurned'] =
-            '${json.encode(q.map["harmonized"]["activeEnergyBurned"])}';
-        map['activeEnergyBurnedGoal'] =
-            '${json.encode(q.map["harmonized"]["activeEnergyBurnedGoal"])}';
+        // map['startTime'] =
+        //     '${json.encode(q.map["date"]).substring(1, 11).replaceAll("-", "_")}';
+        map['startTime'] = await Encryption.encrypt_sha(
+            text:
+                '${json.encode(q.map["date"]).substring(1, 11).replaceAll("-", "_")}');
+        map['activeEnergyBurned'] = await Encryption.encrypt_rsa(
+            text:
+                '${json.encode(q.map["harmonized"]["activeEnergyBurned"].round())}');
+        map['activeEnergyBurnedGoal'] = await Encryption.encrypt_rsa(
+            text:
+                '${json.encode(q.map["harmonized"]["activeEnergyBurnedGoal"].round())}');
+
         activitySummaryData.add(map);
       }
 
@@ -479,7 +515,7 @@ class ServerConnection {
         var map = {};
         var map2 = {};
         // var startTime = '${json.encode(q.map["startTimestamp"])}';
-        int startTime = q.map["startTimestamp"].toInt();
+        int startTime = (q.map["startTimestamp"].toInt());
         int endTime = q.map["endTimestamp"].toInt();
         var temp = startTime.toString() + '/' + endTime.toString();
         map['endTime'] =
@@ -495,8 +531,8 @@ class ServerConnection {
         map2['endTime'] =
             DateTime.fromMillisecondsSinceEpoch((endTime * 1000).toInt())
                 .toString();
-        print(DateTime.fromMillisecondsSinceEpoch((endTime * 1000).toInt())
-            .toString());
+        // print(DateTime.fromMillisecondsSinceEpoch((endTime * 1000).toInt())
+        //     .toString());
         map2['startDate'] =
             DateTime.fromMillisecondsSinceEpoch((startTime * 1000).toInt())
                 .toString()
@@ -507,7 +543,7 @@ class ServerConnection {
                 .toString()
                 .substring(0, 10)
                 .replaceAll("-", "_");
-        print(endTime.runtimeType);
+        // print(endTime.runtimeType);
         if (!tmp.contains(temp)) {
           // sleepData.add(map);
           tmp.add(temp);
@@ -515,16 +551,27 @@ class ServerConnection {
           sleepDataSpecific.add(map2);
           if (sleepData.isNotEmpty &&
               sleepData.last["endTime"] == map['endTime']) {
-            print("same");
+            // print("same");
             // print(sleepData.last["endTime"]);
             sleepData.last["period"] =
                 (int.parse(sleepData.last["period"]) + int.parse(map["period"]))
                     .toString();
           } else {
-            print("not same");
+            // print("not same");
             sleepData.add(map);
           }
         }
+      }
+
+      for (final q in sleepData) {
+        q['endTime'] = await Encryption.encrypt_sha(text: q['endTime']);
+        q['period'] = await Encryption.encrypt_rsa(text: q['period']);
+      }
+      for (final q in sleepDataSpecific) {
+        q['startDate'] = await Encryption.encrypt_sha(text: q['startDate']);
+        q['endDate'] = await Encryption.encrypt_sha(text: q['endDate']);
+        q['startTime'] = await Encryption.encrypt_rsa(text: q['startTime']);
+        q['endTime'] = await Encryption.encrypt_rsa(text: q['endTime']);
       }
 
       var stressData = [];
@@ -547,33 +594,38 @@ class ServerConnection {
               double.parse('${mapHR[json.encode(q.map["startTimestamp"])]}') -
                   double.parse('${json.encode(q.map["harmonized"]["value"])}') *
                       0.4;
-          map['startDate'] = DateTime.fromMillisecondsSinceEpoch(
-                  (q.map["startTimestamp"].toInt() * 1000).toInt())
-              .toString()
-              .substring(0, 10)
-              .replaceAll("-", "_");
-          map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
-          map['stress'] = stress.toString();
+          map['startDate'] = await Encryption.encrypt_sha(
+              text: DateTime.fromMillisecondsSinceEpoch(
+                      (q.map["startTimestamp"].toInt() * 1000).toInt())
+                  .toString()
+                  .substring(0, 10)
+                  .replaceAll("-", "_"));
+          map['startTime'] = await Encryption.encrypt_rsa(
+              text: '${json.encode(q.map["startTimestamp"])}');
+          map['stress'] = await Encryption.encrypt_rsa(text: stress.toString());
           stressData.add(map);
         }
       }
 
       var weightData = [];
-      print('weight!!!');
+      // print('weight!!!');
       final appleHealthWeight = await HealthKitReporter.sampleQuery(
           QuantityType.bodyMass.identifier, _predicate);
       for (final q in appleHealthWeight) {
         var map = {};
-        print('q: ${json.encode(q.map)} \n');
+        // print('q: ${json.encode(q.map)} \n');
         // print(
         //     'q: ${json.encode(q.map["startTimestamp"])} ${json.encode(q.map["harmonized"]["value"])} kg \n');
-        map['startDate'] = DateTime.fromMillisecondsSinceEpoch(
-                (q.map["startTimestamp"].toInt() * 1000).toInt())
-            .toString()
-            .substring(0, 10)
-            .replaceAll("-", "_");
-        map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
-        map['weight'] = '${json.encode(q.map["harmonized"]["value"])}';
+        map['startDate'] = await Encryption.encrypt_sha(
+            text: DateTime.fromMillisecondsSinceEpoch(
+                    (q.map["startTimestamp"].toInt() * 1000).toInt())
+                .toString()
+                .substring(0, 10)
+                .replaceAll("-", "_"));
+        map['startTime'] = await Encryption.encrypt_rsa(
+            text: '${json.encode(q.map["startTimestamp"])}');
+        map['weight'] = await Encryption.encrypt_rsa(
+            text: '${json.encode(q.map["harmonized"]["value"])}');
         // print('q: ${json.encode(q.map["harmonized"]["value"])} \n');
         weightData.add(map);
       }
@@ -592,39 +644,81 @@ class ServerConnection {
         // print('q: ${json.encode(q.map["harmonized"]["totalEnergyBurned"])}');
         // print(
         //     'q: ${json.encode(q.map["harmonized"]["totalEnergyBurnedUnit"])}');
-        map['startDate'] = DateTime.fromMillisecondsSinceEpoch(
-                (q.map["startTimestamp"].toInt() * 1000).toInt())
-            .toString()
-            .substring(0, 10)
-            .replaceAll("-", "_");
-        map['startTime'] = '${json.encode(q.map["startTimestamp"])}';
-        map['endTime'] = '${json.encode(q.map["endTimestamp"])}';
-        map['type'] = '${json.encode(q.map["harmonized"]["description"])}'
-            .replaceAll('"', '');
-        map['calorie'] =
-            '${json.encode(q.map["harmonized"]["totalEnergyBurned"])}';
+        map['startDate'] = await Encryption.encrypt_sha(
+            text: DateTime.fromMillisecondsSinceEpoch(
+                    (q.map["startTimestamp"].toInt() * 1000).toInt())
+                .toString()
+                .substring(0, 10)
+                .replaceAll("-", "_"));
+        map['startTime'] = await Encryption.encrypt_rsa(
+            text: '${json.encode(q.map["startTimestamp"])}');
+        map['endTime'] = await Encryption.encrypt_rsa(
+            text: '${json.encode(q.map["endTimestamp"])}');
+        map['type'] = await Encryption.encrypt_rsa(
+            text: '${json.encode(q.map["harmonized"]["description"])}'
+                .replaceAll('"', ''));
+        map['calorie'] = await Encryption.encrypt_rsa(
+            text: '${json.encode(q.map["harmonized"]["totalEnergyBurned"])}');
         workoutsData.add(map);
       }
 
       String checker = lastupdate == "0" ? "0" : "1";
 
-      final response = await http.post(
+      // final response = await http.post(
+      //   Uri.http('kaistuser.iptime.org:8080',
+      //       'upload_healthData.php'), // ex ) http://123.0.0.0/test
+      //   body: <String, String>{
+      //     'uid': uid, //서버에 post key : 보내는 값
+      //     'checkUser': checker,
+      //     'lastupdate': now.toString(),
+      //     // 'activityData': json.encode(activityData),
+      //     'activitySummaryData': json.encode(activitySummaryData),
+      //     'sleepData': json.encode(List.from(sleepData.reversed)),
+      //     'sleepDataSpecific':
+      //         json.encode(List.from(sleepDataSpecific.reversed)),
+      //     'stressData': json.encode(List.from(stressData.reversed)),
+      //     'weightData': json.encode(List.from(weightData.reversed)),
+      //     'workoutsData': json.encode(List.from(workoutsData.reversed))
+      //   },
+      // );
+
+      // final key_list = await Encryption.create_aes_key();
+      // final aes_key_encrypt_rsa =
+      //     await Encryption.encrypt_rsa(text: key_list[1]);
+
+      final response_with_encryption = await http.post(
         Uri.http('kaistuser.iptime.org:8080',
-            'upload_healthData.php'), // ex ) http://123.0.0.0/test
+            'upload_healthData_encryption.php'), // ex ) http://123.0.0.0/test
         body: <String, String>{
-          'uid': uid, //서버에 post key : 보내는 값
+          'key': aes_key_encrypt_rsa,
+          // 'uid': uid, //서버에 post key : 보내는 값
+          'uid': await Encryption.encrypt_aes_json_encoded(
+              text: uid, key: key_list[0]),
           'checkUser': checker,
           'lastupdate': now.toString(),
-          // 'activityData': json.encode(activityData),
-          'activitySummaryData': json.encode(activitySummaryData),
-          'sleepData': json.encode(List.from(sleepData.reversed)),
-          'sleepDataSpecific':
-              json.encode(List.from(sleepDataSpecific.reversed)),
-          'stressData': json.encode(List.from(stressData.reversed)),
-          'weightData': json.encode(List.from(weightData.reversed)),
-          'workoutsData': json.encode(List.from(workoutsData.reversed))
+          // 'activitySummaryData': json.encode(activitySummaryData),
+          'activitySummaryData': await Encryption.encrypt_aes_json_encoded(
+              text: json.encode(activitySummaryData), key: key_list[0]),
+          'sleepData': await Encryption.encrypt_aes_json_encoded(
+              text: json.encode(List.from(sleepData.reversed)),
+              key: key_list[0]),
+          'sleepDataSpecific': await Encryption.encrypt_aes_json_encoded(
+              text: json.encode(List.from(sleepDataSpecific.reversed)),
+              key: key_list[0]),
+          'stressData': await Encryption.encrypt_aes_json_encoded(
+              text: json.encode(List.from(stressData.reversed)),
+              key: key_list[0]),
+          'weightData': await Encryption.encrypt_aes_json_encoded(
+              text: json.encode(List.from(weightData.reversed)),
+              key: key_list[0]),
+          'workoutsData': await Encryption.encrypt_aes_json_encoded(
+              text: json.encode(List.from(workoutsData.reversed)),
+              key: key_list[0])
         },
       );
+      // print(response_with_encryption.request);
+      print(json.decode(response_with_encryption.body));
+
       // print("post test");
       // print(json.decode(response.body));
       // print(stressData);
