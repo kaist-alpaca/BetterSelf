@@ -1,4 +1,5 @@
 import 'package:betterme/betterme/report/functions/DataType.dart';
+import 'package:betterme/betterme/report/total_coaching/utils.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
