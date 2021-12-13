@@ -149,7 +149,8 @@ class _SevenDaysReport extends State<SevenDaysReport> {
               Container(
                 height: valWidth * 0.95 / 24 * 7 * 1.7,
                 width: valWidth * 0.95,
-                margin: EdgeInsets.only(left: valWidth * 0.025),
+                // margin: EdgeInsets.only(left: valWidth * 0.025),
+                margin: EdgeInsets.fromLTRB(valWidth * 0.025, 15, 0, 0),
                 child: TotalHorizontalChart(),
               ),
             ],
