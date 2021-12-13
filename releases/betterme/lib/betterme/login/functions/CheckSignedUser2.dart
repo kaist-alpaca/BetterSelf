@@ -1,7 +1,6 @@
 import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
 import 'package:betterme/betterme/login/initialsetting/InitialSettingScreen.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 class checkSignedUser2 extends StatefulWidget {

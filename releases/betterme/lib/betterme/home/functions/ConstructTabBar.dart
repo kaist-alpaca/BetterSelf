@@ -1,5 +1,4 @@
 import 'package:betterme/betterme/communication/chatroom/ChatroomScreen.dart';
-import 'package:betterme/betterme/home/HomeScreen.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +7,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:betterme/betterme/communication/CommunicationScreen.dart';
 import 'package:betterme/betterme/report/ReportScreen.dart';
 import 'package:betterme/betterme/setting/SettingScreen.dart';
-import 'package:get/get.dart';
-import 'package:keyboard_actions/external/platform_check/platform_check.dart';
 
 class ConstructTabBar extends StatefulWidget {
   ConstructTabBar({Key? key}) : super(key: key);

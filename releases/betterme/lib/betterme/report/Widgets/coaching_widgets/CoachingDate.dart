@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:betterme/functions/Widgets/WidgetInfo.dart';
 
-//코칭 종류와 날짜를 보여주는 위젯
+//월간 코칭, 월간 코칭 일자, 6달 코칭, 6달 코칭 일자를 표시하는 위젯
 
 Widget CoachingDate(
   BuildContext context,
@@ -8,45 +9,44 @@ Widget CoachingDate(
   String date,
 ) {
   final valWidth = MediaQuery.of(context).size.width;
-  final valHeight = MediaQuery.of(context).size.height;
-  double miniHeight = 0.02 * valHeight;
-  double defaultSize = valWidth * 0.0025;
-  double lineLength = valWidth * 0.7;
-
-  final bgColor = Color(0xff0B202A); //배경색
-  final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
-  final boxBorderRadius = valWidth * 0.015;
+  final HomeCoachingInfo homeInfo = HomeCoachingInfo(valWidth);
 
   return Container(
-    width: valWidth * 0.86,
+    width: valWidth,
     child: Column(
       children: [
-        Row(children: [
-          Container(
-            width: valWidth * 0.3,
-            child: Text(title, //ㅇㅇ데이터 코칭
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14 * defaultSize, color: txtColor)),
-          ),
-          SizedBox(
-            width: valWidth * 0.40,
-          ),
-          Container(
-              width: valWidth * 0.16,
+        //"oo데이터 코칭 + 선택한 날짜" 텍스트
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            //"oo데이터 코칭"
+            Container(
+              width: homeInfo.box_coaching,
+              margin: EdgeInsets.only(left: homeInfo.indent_coaching),
               child: Text(
-                //날짜
-                date,
-                style: TextStyle(color: txtColor, fontSize: 12 * defaultSize),
-              )),
-        ]),
-        SizedBox(height: valHeight * 0.0025),
-        Container(
-          width: valWidth * 0.88,
-          child: Divider(
-            color: Color(0xff858E93),
-            thickness: 0.6,
-          ),
+                title, //ㅇㅇ데이터 코칭
+                textAlign: TextAlign.left,
+                style: homeInfo.text_coaching,
+              ),
+            ),
+
+            //선택한 날짜
+            Container(
+                width: homeInfo.box_selectedDate,
+                margin: EdgeInsets.only(right: homeInfo.indent_coaching),
+                child: Text(
+                  date, //선택한 날짜
+                  textAlign: TextAlign.right,
+                  style: homeInfo.text_selectedDate,
+                )),
+          ],
         ),
+
+        //텍스트와 디바이더 사이 간격
+        SizedBox(height: homeInfo.blank_coachingInfo),
+
+        //코칭 디바이더
+        homeInfo.coachingDivider,
       ],
     ),
   );

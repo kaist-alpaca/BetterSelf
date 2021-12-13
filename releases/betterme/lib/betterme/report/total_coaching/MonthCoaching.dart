@@ -1,4 +1,4 @@
-import 'package:betterme/betterme/report/total_coaching/utils.dart';
+import 'package:betterme/betterme/report/functions/DataType.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class _MonthCoaching extends State<MonthCoaching> {
   Color button3Color = Color(0xff0B202A);
   Color button4Color = Color(0xff0B202A);
 
-  int buttonCase = 1;
+  DataType buttonCase = DataType.exercise;
 
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
@@ -182,7 +182,7 @@ class _MonthCoaching extends State<MonthCoaching> {
                             ServerConnection.write_log(
                                 'ReportScreen', 'month_coaching_exercise', '');
                             setState(() {
-                              buttonCase = 1;
+                              buttonCase = DataType.exercise;
                               button2Color = Color(0xff827380);
                               button4Color = Color(0xff0B202A);
                               button3Color = Color(0xff0B202A);
@@ -209,7 +209,7 @@ class _MonthCoaching extends State<MonthCoaching> {
                             ServerConnection.write_log(
                                 'ReportScreen', 'month_coaching_food', '');
                             setState(() {
-                              buttonCase = 2;
+                              buttonCase = DataType.diet;
                               button3Color = Color(0xff827380);
                               button2Color = Color(0xff0B202A);
                               button4Color = Color(0xff0B202A);
@@ -235,7 +235,7 @@ class _MonthCoaching extends State<MonthCoaching> {
                             ServerConnection.write_log(
                                 'ReportScreen', 'month_coaching_life', '');
                             setState(() {
-                              buttonCase = 3;
+                              buttonCase = DataType.life;
                               button3Color = Color(0xff0B202A);
                               button2Color = Color(0xff0B202A);
                               button4Color = Color(0xff827380);

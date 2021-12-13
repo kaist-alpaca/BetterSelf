@@ -1,5 +1,4 @@
 import 'package:betterme/functions/Controllers/server_connection.dart';
-import 'package:betterme/functions/Server/ServerConnectionMethods.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,19 +7,13 @@ import 'package:betterme/functions/Controllers/profile_controller.dart';
 
 import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
 
-import 'package:betterme/betterme/login/functions/SettingBar.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 
-import 'package:bottom_picker/bottom_picker.dart';
-import 'package:bottom_picker/resources/arrays.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
-
-import '../basicillscreen/BasicIllScreen.dart';
 
 class InitialSettingScreen extends StatefulWidget {
   @override

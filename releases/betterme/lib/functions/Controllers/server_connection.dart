@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 // import 'package:health_kit_reporter/health_kit_reporter.dart';
 // import 'package:health_kit_reporter/model/payload/device.dart';
@@ -18,30 +17,16 @@ import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Encryption/Encryption.dart';
 import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:health_kit_reporter/health_kit_reporter.dart';
-import 'package:health_kit_reporter/model/payload/category.dart';
-import 'package:health_kit_reporter/model/payload/date_components.dart';
-import 'package:health_kit_reporter/model/payload/device.dart';
-import 'package:health_kit_reporter/model/payload/preferred_unit.dart';
-import 'package:health_kit_reporter/model/payload/quantity.dart';
-import 'package:health_kit_reporter/model/payload/source.dart';
-import 'package:health_kit_reporter/model/payload/source_revision.dart';
-import 'package:health_kit_reporter/model/payload/workout.dart';
-import 'package:health_kit_reporter/model/payload/workout_activity_type.dart';
-import 'package:health_kit_reporter/model/payload/workout_event.dart';
-import 'package:health_kit_reporter/model/payload/workout_event_type.dart';
 import 'package:health_kit_reporter/model/predicate.dart';
 import 'package:health_kit_reporter/model/type/activity_summary_type.dart';
 import 'package:health_kit_reporter/model/type/category_type.dart';
 import 'package:health_kit_reporter/model/type/characteristic_type.dart';
-import 'package:health_kit_reporter/model/type/correlation_type.dart';
 import 'package:health_kit_reporter/model/type/electrocardiogram_type.dart';
 import 'package:health_kit_reporter/model/type/quantity_type.dart';
 import 'package:health_kit_reporter/model/type/series_type.dart';
 import 'package:health_kit_reporter/model/type/workout_type.dart';
-import 'package:health_kit_reporter/model/update_frequency.dart';
 
 import 'TypeUserModel.dart';
 

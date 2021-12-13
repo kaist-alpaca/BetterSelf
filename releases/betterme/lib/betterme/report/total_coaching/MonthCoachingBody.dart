@@ -1,3 +1,5 @@
+import 'package:betterme/betterme/report/functions/DataType.dart';
+import 'package:betterme/functions/Widgets/WidgetInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -153,17 +155,6 @@ Widget InitFoodCoaching(BuildContext context, DateTime selectedDate) {
         CoachingFoodtexts = [];
         CoachingFoodtimes = [];
         if (snapshot.hasData) {
-          List CoachingList =
-              snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map<String, dynamic> data =
-                document.data()! as Map<String, dynamic>;
-            print("time : ${DateTime.parse(data['time'].toDate().toString())}");
-            CoachingFoodtexts.add(data['message']);
-            CoachingFoodtimes.add(
-                DateTime.parse(data['time'].toDate().toString()));
-            return data['message'];
-          }).toList();
-
           int checkTime = CoachingFoodtimes.length - 1;
           // DateFormat('y/M/d').format(controller.selectedDay)
 
@@ -189,12 +180,12 @@ Widget InitFoodCoaching(BuildContext context, DateTime selectedDate) {
       });
 }
 
-int? buttonCase;
+DataType? buttonCase;
 DateTime? selectedDay1;
 
 class MonthCoachingBody extends StatefulWidget {
-  MonthCoachingBody(int a, DateTime selectedDay) {
-    buttonCase = a;
+  MonthCoachingBody(DataType dt, DateTime selectedDay) {
+    buttonCase = dt;
     selectedDay1 = selectedDay;
   }
 
@@ -205,72 +196,55 @@ class MonthCoachingBody extends StatefulWidget {
 class _MonthCoachingBody extends State<MonthCoachingBody> {
   @override
   Widget build(BuildContext context) {
-    final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
-    final bgColor = Color(0xff0B202A); //배경색
-    final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
-    final linetxtColor = Color(0xffAA8F9D); //라인-텍스트-라인 색
 
     DateTime selectedDay = selectedDay1!;
-    String formattedDate = DateFormat('y/M/d').format(selectedDay);
+    String formattedDate = DateFormat('y/M/dd').format(selectedDay);
+    HomeCoachingInfo homeInfo = HomeCoachingInfo(valWidth);
 
-    if (buttonCase == 1) {
-      //운동
-      return Column(
-        children: [
-          CoachingDate(context, '운동 기록 및 코칭', '$formattedDate'),
-          CoachingExerciseBox(context, selectedDay),
-          SizedBox(
-            height: 15,
-          ),
-          InitExerciseCoaching(context, selectedDay),
-          Container(
-            width: valWidth * 0.88,
-            child: Divider(
-              color: Color(0xff858E93),
-              thickness: 0.6,
-            ),
-          ),
-          SizedBox(
-            height: 200,
-          )
-        ],
-      );
-    } else if (buttonCase == 2) {
-      //식단
-      return Column(
-        children: [
-          CoachingDate(context, '식단 기록 및 코칭', '$formattedDate'),
-          CoachingFoodBox(context, selectedDay),
-          SizedBox(
-            height: 15,
-          ),
-          InitFoodCoaching(context, selectedDay),
-          Container(
-            width: valWidth * 0.88,
-            child: Divider(
-              color: Color(0xff858E93),
-              thickness: 0.6,
-            ),
-          ),
-          SizedBox(
-            height: 200,
-          )
-        ],
-      );
-    } else if (buttonCase == 3) {
-      //생활
-      return Column(
-        children: [
-          CoachingDate(context, '생활 데이터 코칭', '$formattedDate'),
-          InitBioCoaching(context, selectedDay, '$formattedDate'),
-          SizedBox(
-            height: 500,
-          )
-        ],
-      );
-    } else {
-      return Container();
+    switch (buttonCase) {
+      // 운동
+      case DataType.exercise:
+        return Column(
+          children: [
+            CoachingDate(context, '운동 기록 및 코칭', '$formattedDate'),
+            CoachingExerciseBox(context, selectedDay),
+            homeInfo.coachingDetailDivider,
+            InitExerciseCoaching(context, selectedDay),
+            homeInfo.coachingDivider,
+            SizedBox(
+              height: 200,
+            )
+          ],
+        );
+      // 식단
+      case DataType.diet:
+        return Column(
+          children: [
+            CoachingDate(context, '식단 기록 및 코칭', '$formattedDate'),
+            CoachingFoodBox(context, selectedDay),
+            homeInfo.coachingDetailDivider,
+            InitFoodCoaching(context, selectedDay),
+            homeInfo.coachingDivider,
+            SizedBox(
+              height: 200,
+            )
+          ],
+        );
+      // 생활
+      case DataType.life:
+        return Column(
+          children: [
+            CoachingDate(context, '생활 데이터 코칭', '$formattedDate'),
+            InitBioCoaching(context, selectedDay, '$formattedDate'),
+            SizedBox(
+              height: 500,
+            )
+          ],
+        );
+      //raise error
+      default:
+        return Container();
     }
   }
 }

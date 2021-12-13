@@ -1,4 +1,3 @@
-import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:flutter/material.dart';
 
 import 'package:betterme/betterme/home/functions/CustomIcons.dart';

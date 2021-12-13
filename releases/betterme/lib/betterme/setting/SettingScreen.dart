@@ -17,8 +17,6 @@ import 'package:get/get.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:keyboard_visibility/keyboard_visibility.dart';
 
-import 'SettingScreen_copy.dart';
-
 class SettingScreen extends StatefulWidget {
   @override
   State<SettingScreen> createState() => _SettingScreen();
