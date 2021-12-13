@@ -1,9 +1,11 @@
 import 'package:betterme/betterme/communication/functions/Widgets.dart';
+import 'package:betterme/betterme/home/functions/ConstructTabBar.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:random_string/random_string.dart';
 
 import 'package:betterme/functions/Firestore/AuthMethods.dart';
@@ -54,7 +56,7 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                     final blockColor = Color(0xff333C47); // 여러 블럭들 색
                     double defaultSize = valWidth * 0.0025;
                     if (data['email'].toString().contains(searching.text) &&
-                        data['isCoach'] == true) {
+                        data['isCoach'] == true && searching.text.length > 0) {
                       return ClipRRect(
                         borderRadius: BorderRadius.all(
                           Radius.circular(18),
@@ -102,6 +104,7 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                                                     .currentUser!
                                                     .uid);
                                             Navigator.pop(context, 'OK');
+                                            Get.offAll(ConstructTabBar());
                                           },
                                           child: const Text(
                                             '확인',
@@ -121,13 +124,49 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10))),
-                                      child: Text(
-                                        data['email'],
-                                        style: TextStyle(
-                                          color: txtColor,
-                                          fontSize: defaultSize * 15, //15,
-                                        ),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            '${data['name']}',
+                                            style: TextStyle(
+                                              color: txtColor,
+                                              fontSize: 15, //15,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Column(
+                                           children: [
+                                             SizedBox(
+                                               height: 17,
+                                             ),
+                                             Text(
+                                                '${data['email']}',
+                                                style: TextStyle(
+                                                  color: txtColor,
+                                                  fontSize: 10, //15,
+                                                ),
+                                              )
+                                           ]
+                                          )
+                                        ],
                                       )),
+                                  trailing: FutureBuilder(
+                                    future: DatabaseMethos().addTrainerQueryExist(
+                                      document.id,
+                                      AuthMethods()
+                                          .auth
+                                          .currentUser!
+                                          .uid),
+                                    builder: (BuildContext context, AsyncSnapshot<bool> snapshot){
+                                      if(snapshot.hasData){
+                                        if(snapshot.data!)return Text('대기중');
+                                        else return Text('');
+                                      }
+                                      return Text('');
+                                    },
+                                  )
                                 ),
                               )),
                         ),
@@ -296,7 +335,9 @@ class _FindTrainerScreenState extends State<FindTrainerScreen> {
                 ),
                 Container(
                     height: 0.75 * valHeight, // 트레이너 보이는 범위
-                    child: TrainerList(context, userlistStream)!),
+                    child:
+                      TrainerList(context, userlistStream)!,
+                    ),
                 // isSearching ? SizedBox(
                 //   height : 500,
                 //   child : searchUsersList(),
