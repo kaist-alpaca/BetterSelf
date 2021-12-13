@@ -89,7 +89,7 @@ class _SevenDaysReport extends State<SevenDaysReport> {
               Row(
                 // 여기는 식단/수면 그래프 색 설명해줌.
                 children: [
-                  SizedBox(width: valWidth * 0.095),
+                  SizedBox(width: homeinfo.indent_graph2Exp),
                   MiniBox(
                       context, Color(0xff48575F), miniBoxSize, 0.08, 10, '수면'),
                   MiniBox(
@@ -103,12 +103,13 @@ class _SevenDaysReport extends State<SevenDaysReport> {
                 ],
               ),
               SizedBox(
-                height: 15,
+                height: homeinfo.blank_graph2ExpContainer,
               ),
               Container(
                 height: valWidth * 0.95 / 24 * 7 * 1.7,
                 width: valWidth * 0.95,
-                margin: EdgeInsets.only(left: valWidth * 0.025),
+                margin: EdgeInsets.fromLTRB(
+                    valWidth * 0.025, homeinfo.blank_graph2ExpContainer, 0, 0),
                 child: TotalHorizontalChart(),
               ),
             ],
