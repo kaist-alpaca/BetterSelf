@@ -59,7 +59,7 @@ class _MonthReport extends State<MonthReport> {
                   Tag(homeinfo, 5),
                 ],
               ),
-              SizedBox(width: homeinfo.blank_tagcontainer),
+              SizedBox(height: homeinfo.blank_tagcontainer),
               TotalGraphs(GraphTypes: graphTypes, Duration: 31),
             ],
           ),

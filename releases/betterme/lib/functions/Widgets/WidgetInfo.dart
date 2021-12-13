@@ -52,6 +52,12 @@ class HomeGraphInfo {
 
   late final double blank_tagcontainer; //태그와 그래프1 사이의 간격
 
+  late final TextStyle text_graph1Date; //그래프1의 x축 텍스트 정보
+  late final Paint xAxis; //그래프1의 x축 정보
+  late final Paint ygrid; //그래프1의 y축 그리드 정보
+
+  late final double blank_graph1; //그래프1과 그래프2 설명 사이의 간격
+
   HomeGraphInfo(this.valWidth, {this.valPixel = 364}) {
     this.widthRatio = valWidth / valPixel;
 
@@ -84,6 +90,22 @@ class HomeGraphInfo {
     blank_spaceTags = 10 * widthRatio;
 
     blank_tagcontainer = 24;
+
+    text_graph1Date = TextStyle(
+      fontFamily: "NotoSans",
+      fontSize: 12,
+      color: Color(0xffFFFDFD),
+    );
+    xAxis = Paint()
+      ..color = Color(0xffFDFDFD)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.6;
+    ygrid = Paint()
+      ..color = Color(0xff546269)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.5;
+
+    blank_graph1 = 26;
   }
 }
 
