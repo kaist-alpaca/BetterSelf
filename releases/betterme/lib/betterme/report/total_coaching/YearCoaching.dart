@@ -1,6 +1,8 @@
+import 'package:betterme/betterme/report/total_coaching/utils.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:get/get.dart';
 
 import 'package:betterme/functions/Controllers/profile_controller.dart';
@@ -24,6 +26,11 @@ class _YearCoaching extends State<YearCoaching> {
 
   int buttonCase = 1;
 
+  List<Event> _getEventsForDay(DateTime day) {
+    // Implementation example
+    return kEvents[day] ?? [];
+  }
+
   @override
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
@@ -44,7 +51,7 @@ class _YearCoaching extends State<YearCoaching> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                color: Color(0xff333C47),
+                color: Color.fromRGBO(41, 53, 64, 1),
                 child: Stack(
                   children: [
                     Container(
@@ -52,7 +59,7 @@ class _YearCoaching extends State<YearCoaching> {
                       width: valWidth,
                       color: bgColor,
                     ),
-                    TableCalendar(
+                    TableCalendar<Event>(
                       availableGestures: AvailableGestures.horizontalSwipe,
                       firstDay: DateTime.utc(2010, 10, 16),
                       lastDay: DateTime.utc(2030, 3, 14),
@@ -87,14 +94,15 @@ class _YearCoaching extends State<YearCoaching> {
                           color: Color(0xffD2ABBA),
                         ),
                         selectedDecoration: BoxDecoration(
-                          color: Color(0xff333C47),
+                          color: const Color.fromRGBO(41, 53, 64, 1),
                           shape: BoxShape.circle,
-                          border: Border.all(
-                            width: 1,
-                            color: Color(0xffD2ABBA),
-                            style: BorderStyle.solid,
+                          image: DecorationImage(
+                            image: Svg('images/calendar_circle.svg'),
+                            fit: BoxFit.cover,
                           ),
                         ),
+                        markerDecoration: BoxDecoration(
+                            color: Color(0xffD2ABBA), shape: BoxShape.circle),
                       ),
                       selectedDayPredicate: (day) {
                         return isSameDay(controller.selectedDay, day);
@@ -111,6 +119,7 @@ class _YearCoaching extends State<YearCoaching> {
                               .format(controller.selectedDay);
                         });
                       },
+                      eventLoader: _getEventsForDay,
                       locale: 'ko-KR',
                     ),
                   ],

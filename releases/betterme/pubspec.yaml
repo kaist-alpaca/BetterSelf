@@ -37,7 +37,7 @@ dependencies:
   cloud_firestore: ^2.5.3
   google_sign_in: ^5.1.1
   http: ^0.13.3
-  flutter_svg: ^0.22.0
+  flutter_svg: ^0.23.0+1
   bottom_picker: ^1.0.2
   keyboard_actions: ^3.4.4
   restart_app: ^1.1.0
@@ -59,6 +59,7 @@ dependencies:
   encrypt: ^5.0.1
   fast_rsa: ^3.1.0
   pointycastle: ^3.4.0
+  flutter_svg_provider: ^0.1.11
   keyboard_visibility:
     git:
       url: https://github.com/kaist-alpaca/flutter_keyboard_visibility

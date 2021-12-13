@@ -281,7 +281,9 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                   width: valWidth * 0.12,
                                   child: Center(
                                     child: CupertinoTextField(
-                                      showCursor: false,
+                                      showCursor: true,
+                                      cursorColor:
+                                          Color.fromRGBO(160, 177, 233, 1),
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: defaultSize * 14,
@@ -312,11 +314,13 @@ class _RecordFoodScreen extends State<RecordFoodScreen> {
                                                 TextEditingValue(text: '10');
                                           }
                                         } catch (e) {
-                                          setState(() {
-                                            amount = 1;
-                                          });
-                                          NumFood.value =
-                                              TextEditingValue(text: '1');
+                                          if (value != '') {
+                                            setState(() {
+                                              amount = 1;
+                                            });
+                                            NumFood.value =
+                                                TextEditingValue(text: '1');
+                                          }
                                         }
                                         print(value);
                                       },
@@ -519,7 +523,7 @@ class InputDoneView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: Colors.white,
+      color: Color.fromRGBO(40, 51, 55, 1),
       child: Align(
         alignment: Alignment.topRight,
         child: Padding(
