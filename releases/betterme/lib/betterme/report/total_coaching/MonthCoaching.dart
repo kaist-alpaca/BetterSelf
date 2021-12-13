@@ -53,7 +53,7 @@ class _MonthCoaching extends State<MonthCoaching> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                color: Color(0xff333C47),
+                color: Color.fromRGBO(41, 53, 64, 1),
                 child: Stack(
                   children: [
                     Container(
@@ -100,7 +100,7 @@ class _MonthCoaching extends State<MonthCoaching> {
                         //   ),
                         // ),
                         selectedDecoration: BoxDecoration(
-                          color: const Color(0xff333C47),
+                          color: const Color.fromRGBO(41, 53, 64, 1),
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             // image:

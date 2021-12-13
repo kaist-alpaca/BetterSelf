@@ -94,7 +94,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                color: Color(0xff333C47),
+                color: Color.fromRGBO(41, 53, 64, 1),
                 child: Stack(
                   children: [
                     Container(
@@ -136,7 +136,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                           color: Color(0xffD2ABBA),
                         ),
                         selectedDecoration: BoxDecoration(
-                          color: const Color(0xff333C47),
+                          color: const Color.fromRGBO(41, 53, 64, 1),
                           shape: BoxShape.circle,
                           image: DecorationImage(
                             image: Svg('images/calendar_circle.svg'),
