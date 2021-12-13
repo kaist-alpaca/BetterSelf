@@ -1,3 +1,4 @@
+import 'package:betterme/betterme/report/total_coaching/utils.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'MonthCoachingBody.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class MonthCoaching extends StatefulWidget {
   @override
@@ -23,6 +26,11 @@ class _MonthCoaching extends State<MonthCoaching> {
   Color button4Color = Color(0xff0B202A);
 
   int buttonCase = 1;
+
+  List<Event> _getEventsForDay(DateTime day) {
+    // Implementation example
+    return kEvents[day] ?? [];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,13 +89,26 @@ class _MonthCoaching extends State<MonthCoaching> {
                         selectedTextStyle: TextStyle(
                           color: Color(0xffD2ABBA),
                         ),
+                        // selectedDecoration: BoxDecoration(
+                        //   color: Color(0xff333C47),
+                        //   shape: BoxShape.circle,
+                        //   border: Border.all(
+                        //     width: 1,
+                        //     color: Color(0xffD2ABBA),
+                        //     style: BorderStyle.solid,
+                        //   ),
+                        // ),
                         selectedDecoration: BoxDecoration(
-                          color: Color(0xff333C47),
+                          color: const Color(0xff333C47),
                           shape: BoxShape.circle,
-                          border: Border.all(
-                            width: 1,
-                            color: Color(0xffD2ABBA),
-                            style: BorderStyle.solid,
+                          image: DecorationImage(
+                            // image:
+                            //     ExactAssetImage("images/calendar_circle.png"),
+                            image: Svg('images/calendar_circle.svg'),
+                            fit: BoxFit.cover,
+                            // image: NetworkImage(
+                            //     'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
+                            // fit: BoxFit.cover,
                           ),
                         ),
                         outsideDaysVisible: false,
@@ -95,6 +116,8 @@ class _MonthCoaching extends State<MonthCoaching> {
                         weekendTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
                         disabledTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
                         defaultTextStyle: TextStyle(color: Color(0XFFFFFDFD)),
+                        markerDecoration: BoxDecoration(
+                            color: Color(0xffD2ABBA), shape: BoxShape.circle),
                       ),
                       selectedDayPredicate: (day) {
                         return isSameDay(controller.selectedDay, day);
@@ -111,6 +134,7 @@ class _MonthCoaching extends State<MonthCoaching> {
                               .format(controller.selectedDay);
                         });
                       },
+                      eventLoader: _getEventsForDay,
                       locale: 'ko-KR',
                     ),
                   ],
