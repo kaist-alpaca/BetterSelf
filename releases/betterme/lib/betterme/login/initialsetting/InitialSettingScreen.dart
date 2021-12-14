@@ -1,5 +1,6 @@
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -1033,6 +1034,19 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                     } else {
                       if (controller.myProfile.value.name! == "닉네임") {
                         controller.updateName(name: name);
+                        Map<String, dynamic> userInfoMap = {
+                          "profileUrl": "",
+                          "email": controller.myProfile.value.email,
+                          "username":
+                              controller.myProfile.value.email!.split('@')[0],
+                          "name": name,
+                          "imgUrl": controller.myProfile.value.profileUrl,
+                        };
+
+                        FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(controller.myProfile.value.uid)
+                            .set(userInfoMap);
                       }
                       controller.updateProfile();
                       ServerConnection.write_log(
