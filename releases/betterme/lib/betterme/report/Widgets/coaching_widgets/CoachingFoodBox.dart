@@ -12,7 +12,7 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
   final valHeight = MediaQuery.of(context).size.height;
   double miniHeight = 0.04 * valHeight;
   double defaultSize = valWidth * 0.0025;
-  double lineLength = valWidth * 0.44;
+  double lineLength = valWidth * 0.7;
 
   final bgColor = Color(0xff0B202A); //배경색
   final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
