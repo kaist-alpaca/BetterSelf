@@ -1,5 +1,6 @@
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -51,6 +52,10 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
 
               sum += double.parse(e['amount'].toString());
 
+              String dateurl = e['date'].replaceAll(" ", "").replaceAll("-", "_");
+              dateurl = 'http://kaistuser.iptime.org:8080/img/food/' + FirebaseAuth.instance.currentUser!.uid + '.' + dateurl + '.jpg';
+              print('debug : foodimg $dateurl');
+
               return Column(children: [
                 Row(
                   children: [
@@ -84,6 +89,18 @@ Widget CoachingFoodBox(BuildContext context, DateTime selectedDay) {
                 SizedBox(
                   height: 10,
                 ),
+                dateurl != null ? Column(
+                  children: [
+                    SizedBox(
+                      width: 100,
+                      height: 30,
+                      child : Image.network(dateurl)
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                  ],
+                ) : SizedBox(),
               ]);
             }).toList();
 
