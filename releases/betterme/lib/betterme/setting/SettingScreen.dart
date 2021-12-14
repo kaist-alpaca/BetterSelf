@@ -68,7 +68,15 @@ class _SettingScreen extends State<SettingScreen>
         left: 0.0,
         bottom: MediaQuery.of(context).viewInsets.bottom,
         child: InputDoneView(
-            height, weight, disease, KeyBoard, KeyBoard1, KeyBoard2),
+            height,
+            weight,
+            disease,
+            KeyBoard,
+            KeyBoard1,
+            KeyBoard2,
+            phoneNumberFocusNode,
+            phoneNumberFocusNode1,
+            phoneNumberFocusNode2),
       );
     });
 
@@ -163,16 +171,16 @@ class _SettingScreen extends State<SettingScreen>
     ServerConnection.write_log('SettingScreen', 'start', '');
     KeyBoard1.value = TextEditingValue(text: weight);
     super.initState();
-    KeyboardVisibilityNotification().addNewListener(
-      onShow: () {
-        print("show");
-        showOverlay(context);
-      },
-      onHide: () {
-        print("hide");
-        removeOverlay();
-      },
-    );
+    // KeyboardVisibilityNotification().addNewListener(
+    //   onShow: () {
+    //     print("show");
+    //     showOverlay(context);
+    //   },
+    //   onHide: () {
+    //     print("hide");
+    //     removeOverlay();
+    //   },
+    // );
     phoneNumberFocusNode.addListener(() {
       bool hasFocus = phoneNumberFocusNode.hasFocus;
       if (hasFocus) {
@@ -233,7 +241,7 @@ class _SettingScreen extends State<SettingScreen>
 
     bool hasFocus = phoneNumberFocusNode.hasFocus;
     bool hasFocus1 = phoneNumberFocusNode1.hasFocus;
-    bool hasFocus2 = phoneNumberFocusNode1.hasFocus;
+    bool hasFocus2 = phoneNumberFocusNode2.hasFocus;
 
     return GetBuilder<ProfileController>(builder: (controller) {
       return Scaffold(
@@ -279,8 +287,8 @@ class _SettingScreen extends State<SettingScreen>
                                           builder: (BuildContext context) =>
                                               CupertinoActionSheet(
                                             title: const Text('프로필 이미지 수정'),
-                                            message:
-                                                const Text('Your options are '),
+                                            // message:
+                                            //     const Text('Your options are '),
                                             actions: <Widget>[
                                               CupertinoActionSheetAction(
                                                 child: const Text('사진 촬영'),
@@ -432,6 +440,15 @@ class _SettingScreen extends State<SettingScreen>
                                 textAlign: TextAlign.center)),
                         GestureDetector(
                           onTap: () {
+                            if (hasFocus) {
+                              phoneNumberFocusNode.unfocus();
+                            }
+                            if (hasFocus1) {
+                              phoneNumberFocusNode1.unfocus();
+                            }
+                            if (hasFocus2) {
+                              phoneNumberFocusNode2.unfocus();
+                            }
                             gender = controller.gender == '여'
                                 ? '여'
                                 : controller.gender == '남'
@@ -587,6 +604,15 @@ class _SettingScreen extends State<SettingScreen>
                                 textAlign: TextAlign.center)),
                         GestureDetector(
                           onTap: () {
+                            if (hasFocus) {
+                              phoneNumberFocusNode.unfocus();
+                            }
+                            if (hasFocus1) {
+                              phoneNumberFocusNode1.unfocus();
+                            }
+                            if (hasFocus2) {
+                              phoneNumberFocusNode2.unfocus();
+                            }
                             birth = controller.birthday == '/00/00'
                                 ? "2000-01-01"
                                 : controller.birthday!;
@@ -1021,8 +1047,16 @@ class _SettingScreen extends State<SettingScreen>
 }
 
 class InputDoneView extends StatelessWidget {
-  InputDoneView(this.height, this.weight, this.disease, this.KeyBoard,
-      this.KeyBoard1, this.KeyBoard2);
+  InputDoneView(
+      this.height,
+      this.weight,
+      this.disease,
+      this.KeyBoard,
+      this.KeyBoard1,
+      this.KeyBoard2,
+      this.phoneNumberFocusNode,
+      this.phoneNumberFocusNode1,
+      this.phoneNumberFocusNode2);
 
   final String height;
   final String weight;
@@ -1030,12 +1064,15 @@ class InputDoneView extends StatelessWidget {
   final TextEditingController KeyBoard;
   final TextEditingController KeyBoard1;
   final TextEditingController KeyBoard2;
+  final FocusNode phoneNumberFocusNode;
+  final FocusNode phoneNumberFocusNode1;
+  final FocusNode phoneNumberFocusNode2;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      color: Color.fromRGBO(40, 51, 55, 1),
+      color: Color.fromRGBO(52, 54, 55, 1),
       child: Align(
         alignment: Alignment.topRight,
         child: Padding(
@@ -1058,22 +1095,13 @@ class InputDoneView extends StatelessWidget {
                 }
               }
 
-              if (weight != ProfileController.to.weight) {
-                if (double.tryParse(weight) != null) {
-                  ProfileController.to.weightSelected(
-                      ((double.parse(weight) * 10).round() / 10).toString());
-                  // NumFood.value = double.parse(height).toString();
-                  KeyBoard1.value = TextEditingValue(
-                      text: ((double.parse(weight) * 10).round() / 10)
-                          .toString());
-                } else {
-                  KeyBoard1.clear();
-                }
-              }
-
               if (disease != ProfileController.to.disease) {
                 ProfileController.to.diseaseSelected(disease);
               }
+
+              phoneNumberFocusNode.unfocus();
+              phoneNumberFocusNode1.unfocus();
+              phoneNumberFocusNode2.unfocus();
             },
             child: Text(
               "Done",
