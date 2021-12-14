@@ -7,6 +7,9 @@ import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'SaveFoodLoading.dart';
+import 'SaveFoodScreenImageLoading.dart';
+
 class SaveFoodScreen extends StatefulWidget {
   const SaveFoodScreen({Key? key}) : super(key: key);
 
@@ -267,27 +270,29 @@ class _SaveFoodScreenState extends State<SaveFoodScreen> {
           ),
           GestureDetector(
             onTap: () async {
-              // print(Get.arguments);
-              String time = await ServerConnection.save_food(
-                ProfileController.to.originMyProfile.uid!,
-                Get.arguments[0],
-                Get.arguments[1] == 0 ? '0' : Get.arguments[1],
-              );
-              print(Get.arguments[1]);
-              print(time);
-              if (Get.arguments[1] != 0) {
-                await ProfileController.to.uploadFoodImage(
-                  uid: ProfileController.to.myProfile.value.uid!,
-                  file: Get.arguments[1],
-                  time:
-                      time.toString().replaceAll(" ", "").replaceAll("-", "_"),
-                );
-              }
-              // Get.to(() => SaveFoodScreen(), arguments: Get.arguments);
-              ServerConnection.write_log('SaveFoodScreen', 'save_food', '');
-              ServerConnection.write_log(
-                  'SaveFoodScreen', 'end', 'ConstructTabBar');
-              Get.offAll(() => ConstructTabBar());
+              Get.offAll(() => SaveFoodScreenDataLoading(),
+                  arguments: Get.arguments);
+              // // print(Get.arguments);
+              // String time = await ServerConnection.save_food(
+              //   ProfileController.to.originMyProfile.uid!,
+              //   Get.arguments[0],
+              //   Get.arguments[1] == 0 ? '0' : Get.arguments[1],
+              // );
+              // print(Get.arguments[1]);
+              // print(time);
+              // if (Get.arguments[1] != 0) {
+              //   await ProfileController.to.uploadFoodImage(
+              //     uid: ProfileController.to.myProfile.value.uid!,
+              //     file: Get.arguments[1],
+              //     time:
+              //         time.toString().replaceAll(" ", "").replaceAll("-", "_"),
+              //   );
+              // }
+              // // Get.to(() => SaveFoodScreen(), arguments: Get.arguments);
+              // ServerConnection.write_log('SaveFoodScreen', 'save_food', '');
+              // ServerConnection.write_log(
+              //     'SaveFoodScreen', 'end', 'ConstructTabBar');
+              // // Get.offAll(() => ConstructTabBar());
             },
             child: Container(
               width: valWidth * 0.47,

@@ -504,7 +504,7 @@ class ProfileController extends GetxController {
     return 123121;
   }
 
-  Future<void> uploadFoodImage(
+  Future<String> uploadFoodImage(
       {required String uid, required File file, required String time}) async {
     print("food start");
     var stream = new http.ByteStream(DelegatingStream.typed(file.openRead()));
@@ -530,6 +530,8 @@ class ProfileController extends GetxController {
       print(value);
       tmp = value;
     });
+
+    return tmp;
   }
 
   Future<bool> updateProfile() async {
