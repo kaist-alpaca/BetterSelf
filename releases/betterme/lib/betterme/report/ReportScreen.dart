@@ -5,6 +5,7 @@ import 'package:betterme/betterme/report/Widgets/total_report/ReportSet.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -50,12 +51,48 @@ class _ReportScreen extends State<ReportScreen> {
   Color button3Color = Color(0xff0B202A);
   DateTime record_date = DateTime.now();
 
+  FocusNode phoneNumberFocusNode1 = new FocusNode();
+  var overlayEntry;
+  String weight = ProfileController.to.weight;
+  TextEditingController KeyBoard1 = TextEditingController();
+
+  showOverlay(BuildContext context) {
+    if (overlayEntry != null) return;
+    OverlayState? overlayState = Overlay.of(context);
+    overlayEntry = OverlayEntry(builder: (context) {
+      return Positioned(
+        right: 0.0,
+        left: 0.0,
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+        child: InputDoneView(weight, KeyBoard1),
+      );
+    });
+
+    overlayState!.insert(overlayEntry);
+  }
+
+  removeOverlay() {
+    if (overlayEntry != null) {
+      overlayEntry.remove();
+      overlayEntry = null;
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     ServerConnection.write_log('ReportScreen', 'start', '');
     buttonCase = 0;
     print('init at report');
     ProfileController.to.initalDatelist(7);
+
+    phoneNumberFocusNode1.addListener(() {
+      bool hasFocus1 = phoneNumberFocusNode1.hasFocus;
+      if (hasFocus1)
+        showOverlay(context);
+      else
+        removeOverlay();
+    });
   }
 
   @override
@@ -74,6 +111,8 @@ class _ReportScreen extends State<ReportScreen> {
     final double TextfieldSize = 40;
 
     print('rebuild2');
+
+    bool hasFocus1 = phoneNumberFocusNode1.hasFocus;
 
     return Container(
       color: bgColor,
@@ -423,68 +462,191 @@ class _ReportScreen extends State<ReportScreen> {
                                                       ),
                                                     ),
                                                     onTap: () {
-                                                      Picker(
-                                                          adapter:
-                                                              NumberPickerAdapter(
-                                                                  data: [
-                                                                NumberPickerColumn(
-                                                                  begin: 0,
-                                                                  end: 23,
-                                                                  initValue: date
-                                                                      .hour
-                                                                      .toInt(),
+                                                      showCupertinoModalPopup(
+                                                        context: context,
+                                                        builder: (context) {
+                                                          return Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: <Widget>[
+                                                              Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  // color: Color(0xffffffff),
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          40,
+                                                                          51,
+                                                                          55,
+                                                                          1),
+                                                                  border:
+                                                                      Border(
+                                                                    bottom:
+                                                                        BorderSide(
+                                                                      color: Color(
+                                                                          0xff999999),
+                                                                      width:
+                                                                          0.0,
+                                                                    ),
+                                                                  ),
                                                                 ),
-                                                                NumberPickerColumn(
-                                                                  begin: 00,
-                                                                  end: 59,
-                                                                  initValue: date
-                                                                      .minute
-                                                                      .toInt(),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    CupertinoButton(
+                                                                      child: Text(
+                                                                          '취소'),
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                              .symmetric(
+                                                                        horizontal:
+                                                                            16.0,
+                                                                        vertical:
+                                                                            5.0,
+                                                                      ),
+                                                                    ),
+                                                                    CupertinoButton(
+                                                                      child: Text(
+                                                                          '완료'),
+                                                                      onPressed:
+                                                                          () {
+                                                                        print(
+                                                                            record_date);
+                                                                        controller.weightdaySelected(record_date
+                                                                            .toString()
+                                                                            .substring(0,
+                                                                                10));
+                                                                        setState(
+                                                                            () {});
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                              .symmetric(
+                                                                        horizontal:
+                                                                            16.0,
+                                                                        vertical:
+                                                                            5.0,
+                                                                      ),
+                                                                    )
+                                                                  ],
                                                                 ),
-                                                              ]),
-                                                          delimiter: [
-                                                            PickerDelimiter(
+                                                              ),
+                                                              Container(
+                                                                padding: EdgeInsets
+                                                                    .only(
+                                                                        bottom:
+                                                                            35),
+                                                                height: 300.0,
+                                                                width: valWidth,
+                                                                color: Color
+                                                                    .fromRGBO(
+                                                                        40,
+                                                                        51,
+                                                                        55,
+                                                                        1),
                                                                 child:
-                                                                    Container(
-                                                              width: 10,
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Text(':'),
-                                                            ))
-                                                          ],
-                                                          hideHeader: true,
-                                                          title: Text(
-                                                              "시간을 입력해주세요."),
-                                                          selectedTextStyle:
-                                                              TextStyle(
-                                                                  color: Colors
-                                                                      .blue),
-                                                          onConfirm:
-                                                              (Picker picker,
-                                                                  List value) {
-                                                            print(value
-                                                                .toString());
-                                                            print(picker
-                                                                .getSelectedValues());
-                                                            List
-                                                                selectedValues =
-                                                                [];
-                                                            selectedValues = picker
-                                                                .getSelectedValues();
-                                                            date = DateTime(
-                                                                DateTime.now()
-                                                                    .year,
-                                                                DateTime.now()
-                                                                    .month,
-                                                                DateTime.now()
-                                                                    .day,
-                                                                selectedValues[
-                                                                    0],
-                                                                selectedValues[
-                                                                    1]);
-                                                            setState(() {});
-                                                          }).showDialog(context);
+                                                                    CupertinoTheme(
+                                                                  data:
+                                                                      CupertinoThemeData(
+                                                                    textTheme:
+                                                                        CupertinoTextThemeData(
+                                                                      textStyle:
+                                                                          TextStyle(
+                                                                              color: Colors.white),
+                                                                    ),
+                                                                  ),
+                                                                  child:
+                                                                      CupertinoDatePicker(
+                                                                    // initialDateTime:
+                                                                    //     DateTime.parse(
+                                                                    //         controller.weightday!),
+                                                                    onDateTimeChanged:
+                                                                        (e) {
+                                                                      print(e);
+                                                                      date = e;
+                                                                    },
+                                                                    mode: CupertinoDatePickerMode
+                                                                        .time,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                      // Picker(
+                                                      //     adapter:
+                                                      //         NumberPickerAdapter(
+                                                      //             data: [
+                                                      //           NumberPickerColumn(
+                                                      //             begin: 0,
+                                                      //             end: 23,
+                                                      //             initValue: date
+                                                      //                 .hour
+                                                      //                 .toInt(),
+                                                      //           ),
+                                                      //           NumberPickerColumn(
+                                                      //             begin: 00,
+                                                      //             end: 59,
+                                                      //             initValue: date
+                                                      //                 .minute
+                                                      //                 .toInt(),
+                                                      //           ),
+                                                      //         ]),
+                                                      //     delimiter: [
+                                                      //       PickerDelimiter(
+                                                      //           child:
+                                                      //               Container(
+                                                      //         width: 10,
+                                                      //         alignment:
+                                                      //             Alignment
+                                                      //                 .center,
+                                                      //         child: Text(':'),
+                                                      //       ))
+                                                      //     ],
+                                                      //     hideHeader: true,
+                                                      //     title: Text(
+                                                      //         "시간을 입력해주세요."),
+                                                      //     selectedTextStyle:
+                                                      //         TextStyle(
+                                                      //             color: Colors
+                                                      //                 .blue),
+                                                      //     onConfirm:
+                                                      //         (Picker picker,
+                                                      //             List value) {
+                                                      //       print(value
+                                                      //           .toString());
+                                                      //       print(picker
+                                                      //           .getSelectedValues());
+                                                      //       List
+                                                      //           selectedValues =
+                                                      //           [];
+                                                      //       selectedValues = picker
+                                                      //           .getSelectedValues();
+                                                      //       date = DateTime(
+                                                      //           DateTime.now()
+                                                      //               .year,
+                                                      //           DateTime.now()
+                                                      //               .month,
+                                                      //           DateTime.now()
+                                                      //               .day,
+                                                      //           selectedValues[
+                                                      //               0],
+                                                      //           selectedValues[
+                                                      //               1]);
+                                                      //       setState(() {});
+                                                      //     }).showDialog(context);
                                                     },
                                                   ),
                                                   Container(
@@ -523,97 +685,176 @@ class _ReportScreen extends State<ReportScreen> {
                                                       ),
                                                     ),
                                                   ),
-                                                  GestureDetector(
-                                                    onTap: () {
-                                                      Picker(
-                                                          adapter:
-                                                              NumberPickerAdapter(
-                                                                  data: [
-                                                                NumberPickerColumn(
-                                                                  begin: 0,
-                                                                  end: 200,
-                                                                  // initValue: weight!.toInt(),
-                                                                  initValue: int.parse(
-                                                                      controller
-                                                                          .weight
-                                                                          .split(
-                                                                              ".")[0]),
-                                                                ),
-                                                                NumberPickerColumn(
-                                                                  begin: 00,
-                                                                  end: 99,
-                                                                  initValue: ((double.parse(controller.weight) %
-                                                                              1) *
-                                                                          100)
-                                                                      .toInt(),
-                                                                ),
-                                                              ]),
-                                                          delimiter: [
-                                                            PickerDelimiter(
-                                                                child:
-                                                                    Container(
-                                                              width: 10,
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: Text('.'),
-                                                            ))
-                                                          ],
-                                                          hideHeader: true,
-                                                          title: Text(
-                                                              "체중(kg)을 입력해주세요."),
-                                                          selectedTextStyle:
-                                                              TextStyle(
-                                                                  color: Colors
-                                                                      .blue),
-                                                          onConfirm:
-                                                              (Picker picker,
-                                                                  List value) {
-                                                            print(value
-                                                                .toString());
-                                                            print(picker
-                                                                .getSelectedValues());
-                                                            List
-                                                                selectedValues =
-                                                                [];
-                                                            selectedValues = picker
-                                                                .getSelectedValues();
-                                                            ProfileController.to.weightSelected(
-                                                                (selectedValues[
-                                                                            0] +
-                                                                        selectedValues[1] *
-                                                                            0.01)
-                                                                    .toString());
-                                                            setState(() {});
-                                                          }).showDialog(context);
-                                                    },
-                                                    child: Container(
-                                                      height: valHeight * 0.04,
-                                                      width: valWidth * 0.25,
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            Color(0xff333C47),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(
+                                                  Container(
+                                                    height: valHeight * 0.04,
+                                                    width: valWidth * 0.25,
+                                                    decoration: BoxDecoration(
+                                                      color: Color(0xff333C47),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              valWidth * 0.015),
+                                                    ),
+                                                    margin: EdgeInsets.only(
+                                                        top:
+                                                            valHeight * 0.0153),
+                                                    // width: valWidth * 0.35,
+                                                    // height: TextfieldSize,
+                                                    // alignment: Alignment.center,
+                                                    // decoration: BoxDecoration(
+                                                    //     color: txtFeildColor,
+                                                    //     borderRadius:
+                                                    //         BorderRadius.all(
+                                                    //             Radius.circular(
+                                                    //                 valWidth *
+                                                    //                     0.015))),
+                                                    // margin: EdgeInsets.fromLTRB(
+                                                    //     valWidth * 0.02,
+                                                    //     0,
+                                                    //     valWidth * 0.02,
+                                                    //     valWidth * 0.015),
+                                                    child: Center(
+                                                      child: CupertinoTextField(
+                                                        showCursor: false,
+                                                        keyboardAppearance:
+                                                            Brightness.dark,
+                                                        style: TextStyle(
+                                                            color: txtColor,
+                                                            fontSize:
+                                                                defaultSize *
+                                                                    15),
+                                                        decoration: BoxDecoration(
+                                                            color:
+                                                                txtFeildColor,
+                                                            borderRadius: BorderRadius.all(
+                                                                Radius.circular(
                                                                     valWidth *
-                                                                        0.015),
-                                                      ),
-                                                      margin: EdgeInsets.only(
-                                                          top: valHeight *
-                                                              0.0153),
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text(
-                                                          // weight.toString(),
-                                                          controller.weight,
-                                                          style: TextStyle(
-                                                              color: txtColor),
+                                                                        0.015))),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        keyboardType: TextInputType
+                                                            .numberWithOptions(
+                                                                decimal: true),
+                                                        maxLength: 4,
+                                                        focusNode:
+                                                            phoneNumberFocusNode1,
+                                                        controller: KeyBoard1,
+                                                        onChanged: (value) {
+                                                          weight = value;
+                                                        },
+                                                        inputFormatters: [
+                                                          FilteringTextInputFormatter
+                                                              .allow(RegExp(
+                                                                  r'[0-9.]')),
+                                                        ],
+                                                        placeholder: controller
+                                                                    .weight ==
+                                                                '0.0'
+                                                            ? '체중 선택'
+                                                            : controller.weight,
+                                                        placeholderStyle:
+                                                            TextStyle(
+                                                          fontSize:
+                                                              defaultSize * 15,
+                                                          // color: Colors.red,
+                                                          color: hasFocus1
+                                                              ? CupertinoColors
+                                                                  .placeholderText
+                                                              : txtColor,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
+                                                  // GestureDetector(
+                                                  //   onTap: () {
+                                                  //     Picker(
+                                                  //         adapter:
+                                                  //             NumberPickerAdapter(
+                                                  //                 data: [
+                                                  //               NumberPickerColumn(
+                                                  //                 begin: 0,
+                                                  //                 end: 200,
+                                                  //                 // initValue: weight!.toInt(),
+                                                  //                 initValue: int.parse(
+                                                  //                     controller
+                                                  //                         .weight
+                                                  //                         .split(
+                                                  //                             ".")[0]),
+                                                  //               ),
+                                                  //               NumberPickerColumn(
+                                                  //                 begin: 00,
+                                                  //                 end: 99,
+                                                  //                 initValue: ((double.parse(controller.weight) %
+                                                  //                             1) *
+                                                  //                         100)
+                                                  //                     .toInt(),
+                                                  //               ),
+                                                  //             ]),
+                                                  //         delimiter: [
+                                                  //           PickerDelimiter(
+                                                  //               child:
+                                                  //                   Container(
+                                                  //             width: 10,
+                                                  //             alignment:
+                                                  //                 Alignment
+                                                  //                     .center,
+                                                  //             child: Text('.'),
+                                                  //           ))
+                                                  //         ],
+                                                  //         hideHeader: true,
+                                                  //         title: Text(
+                                                  //             "체중(kg)을 입력해주세요."),
+                                                  //         selectedTextStyle:
+                                                  //             TextStyle(
+                                                  //                 color: Colors
+                                                  //                     .blue),
+                                                  //         onConfirm:
+                                                  //             (Picker picker,
+                                                  //                 List value) {
+                                                  //           print(value
+                                                  //               .toString());
+                                                  //           print(picker
+                                                  //               .getSelectedValues());
+                                                  //           List
+                                                  //               selectedValues =
+                                                  //               [];
+                                                  //           selectedValues = picker
+                                                  //               .getSelectedValues();
+                                                  //           ProfileController.to.weightSelected(
+                                                  //               (selectedValues[
+                                                  //                           0] +
+                                                  //                       selectedValues[1] *
+                                                  //                           0.01)
+                                                  //                   .toString());
+                                                  //           setState(() {});
+                                                  //         }).showDialog(context);
+                                                  //   },
+                                                  //   child: Container(
+                                                  //     height: valHeight * 0.04,
+                                                  //     width: valWidth * 0.25,
+                                                  //     decoration: BoxDecoration(
+                                                  //       color:
+                                                  //           Color(0xff333C47),
+                                                  //       borderRadius:
+                                                  //           BorderRadius
+                                                  //               .circular(
+                                                  //                   valWidth *
+                                                  //                       0.015),
+                                                  //     ),
+                                                  //     margin: EdgeInsets.only(
+                                                  //         top: valHeight *
+                                                  //             0.0153),
+                                                  //     child: Align(
+                                                  //       alignment:
+                                                  //           Alignment.center,
+                                                  //       child: Text(
+                                                  //         // weight.toString(),
+                                                  //         controller.weight,
+                                                  //         style: TextStyle(
+                                                  //             color: txtColor),
+                                                  //       ),
+                                                  //     ),
+                                                  //   ),
+                                                  // ),
                                                   Container(
                                                     height: valHeight * 0.03,
                                                     width: valWidth * 0.07,
@@ -675,9 +916,7 @@ class _ReportScreen extends State<ReportScreen> {
                                                                               .toString()
                                                                               .length))
                                                               .millisecondsSinceEpoch,
-                                                          double.parse(
-                                                              controller
-                                                                  .weight));
+                                                          double.parse(weight));
                                                       Navigator.pop(
                                                           context, '저장');
                                                     },
@@ -992,4 +1231,48 @@ class SalesData {
   SalesData(this.year, this.sales);
   final String year;
   final double sales;
+}
+
+class InputDoneView extends StatelessWidget {
+  InputDoneView(this.weight, this.KeyBoard1);
+
+  final String weight;
+  final TextEditingController KeyBoard1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: Color.fromRGBO(46, 48, 48, 1),
+      child: Align(
+        alignment: Alignment.topRight,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 4.0, bottom: 4.0),
+          child: CupertinoButton(
+            padding: EdgeInsets.only(right: 24.0, top: 8.0, bottom: 8.0),
+            onPressed: () {
+              FocusScope.of(context).requestFocus(new FocusNode());
+
+              if (weight != ProfileController.to.weight) {
+                if (double.tryParse(weight) != null) {
+                  ProfileController.to.weightSelected(
+                      ((double.parse(weight) * 10).round() / 10).toString());
+                  // NumFood.value = double.parse(height).toString();
+                  KeyBoard1.value = TextEditingValue(
+                      text: ((double.parse(weight) * 10).round() / 10)
+                          .toString());
+                } else {
+                  KeyBoard1.clear();
+                }
+              }
+            },
+            child: Text(
+              "Done",
+              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
