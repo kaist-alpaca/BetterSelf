@@ -230,6 +230,8 @@ class _ChatroomScreen extends State<ChatroomScreen> {
           final maxtxtcontsize = valWidth * 0.55;
           double defaultSize = valWidth * 0.0025;
 
+          int printTime = 61;
+
           DateTime PrevTime = DateTime(0, 1, 22); //initialize
           bool PrevWhoSended = true;
 

@@ -1,6 +1,7 @@
 import 'package:betterme/betterme/report/functions/DataType.dart';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
+import 'package:betterme/functions/Widgets/WidgetInfo.dart';
 import 'package:flutter/material.dart';
 
 class TotalGraphs extends StatefulWidget {
@@ -23,8 +24,6 @@ class _TotalGraphsState extends State<TotalGraphs> {
   Widget build(BuildContext context) {
     final valHeight = MediaQuery.of(context).size.height; //화면 높이
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
-    final bgColor = Color(0xff0B202A); //배경색
-    final txtColor = Color(0xffFFFDFD); //텍스트 , 앱바 텍스트 색
     // int test = ProfileController.to.initalDatelist(widget.Duration);
 
     // // int k = widget.Duration;
@@ -42,7 +41,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
     // print('send date');
     // print(time);
 
-    int tmpcnt = 0;
+    int tmpcnt = 1;
     widget.GraphTypes.forEach((e) {
       print("dedbug e : $e");
       if (e) tmpcnt++;
@@ -298,18 +297,18 @@ class PathPainter extends CustomPainter {
     // tmp = DateData(temp, 50);
     double XPadd_right = 30;
     double XPadd_left = 15;
-    double YPadd_bottom = 30;
+    double YPadd_bottom = 20;
     double YPadd_top = 0;
     DateTime today = date;
 
+    HomeGraphInfo homeinfo = HomeGraphInfo(size.width);
     // print('x date');
     // print(today);
-
-    double LineSize = 1.5;
 
     final clipRect = Rect.fromLTRB(0, 0, size.width, size.height);
     canvas.clipRect(clipRect);
 
+    //그래프1의 배경색
     canvas.drawPaint(Paint()..color = Color(0xff0B202A));
 
     final GraphXSize = size.width - XPadd_right - XPadd_left;
@@ -318,22 +317,62 @@ class PathPainter extends CustomPainter {
 
     final floorCorrection = 20;
     final floor = (GraphYSize + floorCorrection) / 5;
+    //////////////////////////////////////////////////////////////////////////////////////YSubLine
+
+    if (duration == 7) {
+      for (int i = 0; i < 7; i++) {
+        final XGridUnit = GraphXSize / 7;
+        final x = GraphXSize - i * XGridUnit + XPadd_left;
+        final y = GraphYSize + 6;
+
+        Path path = Path();
+        path.moveTo(x, y);
+        path.lineTo(x, YPadd_top);
+        canvas.drawPath(path, homeinfo.ygrid);
+
+        path.close();
+      }
+    } else if (duration == 31) {
+      for (int i = 0; i < 4; i++) {
+        final XGridUnit = GraphXSize / 4;
+        final x = GraphXSize - i * XGridUnit + XPadd_left;
+        final y = GraphYSize + 6;
+
+        Path path = Path();
+        path.moveTo(x, y);
+        path.lineTo(x, YPadd_top);
+        canvas.drawPath(path, homeinfo.ygrid);
+
+        path.close();
+      }
+    } else {
+      for (int i = 0; i < 6; i++) {
+        final XGridUnit = GraphXSize / 6;
+        final x = GraphXSize - i * XGridUnit + XPadd_left;
+        final y = GraphYSize + 6;
+
+        Path path = Path();
+        path.moveTo(x, y);
+        path.lineTo(x, YPadd_top);
+        canvas.drawPath(path, homeinfo.ygrid);
+
+        path.close();
+      }
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////Underbar
 
-    Paint LinePaint = Paint()
-      ..color = Color(0xffFFFDFD)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
-
+    //x축 그리기
     Path path = Path();
     path.moveTo(0, GraphYSize);
     path.lineTo(GraphXSize + XPadd_left + XPadd_right / 2, GraphYSize);
-    canvas.drawPath(path, LinePaint);
+    canvas.drawPath(path, homeinfo.xAxis);
 
     path.close();
 
     //////////////////////////////////////////////////////////////////////////////////////XLabel
     // print('date check');
+    //날짜 입력
     if (duration == 7) {
       for (int i = 0; i < 7; i++) {
         final XGridUnit = GraphXSize / 7;
@@ -359,7 +398,7 @@ class PathPainter extends CustomPainter {
             canvas,
             p,
             today.day == 1 ? '${today.month}/${today.day}' : '${today.day}',
-            TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),
+            homeinfo.text_graph1Date,
             40);
         // textPainter.layout();
 
@@ -375,21 +414,6 @@ class PathPainter extends CustomPainter {
 
         final p = Offset(x, y);
 
-        final textPainter = (today.day == 1 ||
-                (i != 0 && today.day < today.subtract(Duration(days: 7)).day))
-            ? TextPainter(
-                text: TextSpan(
-                    text: '${today.month}/${today.day}',
-                    style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
-                textDirection: TextDirection.ltr,
-              )
-            : TextPainter(
-                text: TextSpan(
-                    text: '${today.day}',
-                    style: TextStyle(fontSize: 12, color: Color(0xffFFFDFD))),
-                textDirection: TextDirection.ltr,
-              );
-
         drawTextCentered(
             canvas,
             p,
@@ -398,7 +422,7 @@ class PathPainter extends CustomPainter {
                         today.day < today.subtract(Duration(days: 7)).day)
                 ? '${today.month}/${today.day}'
                 : '${today.day}',
-            TextStyle(fontSize: 12, color: Color(0xffFFFDFD)),
+            homeinfo.text_graph1Date,
             40);
 
         // textPainter.layout();
@@ -421,70 +445,19 @@ class PathPainter extends CustomPainter {
         print("today");
         print(today);
 
-        drawTextCentered(canvas, p, '${today.month}',
-            TextStyle(fontSize: 12, color: Color(0xffFFFDFD)), 40);
+        drawTextCentered(
+          canvas,
+          p,
+          '${today.month}',
+          homeinfo.text_graph1Date,
+          40,
+        );
 
         // textPainter.layout();
 
         // textPainter.paint(canvas, p);
         today = DateTime(today.year, today.month, 0);
         today = DateTime(today.year, today.month, 1);
-      }
-    }
-    //////////////////////////////////////////////////////////////////////////////////////YSubLine
-    if (duration == 7) {
-      for (int i = 0; i < 7; i++) {
-        final XGridUnit = GraphXSize / 7;
-        final x = GraphXSize - i * XGridUnit + XPadd_left;
-        final y = GraphYSize - 1;
-
-        Paint LinePaint = Paint()
-          ..color = Color(0xff858E93)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 0.75;
-
-        Path path = Path();
-        path.moveTo(x, y);
-        path.lineTo(x, YPadd_top);
-        canvas.drawPath(path, LinePaint);
-
-        path.close();
-      }
-    } else if (duration == 31) {
-      for (int i = 0; i < 4; i++) {
-        final XGridUnit = GraphXSize / 4;
-        final x = GraphXSize - i * XGridUnit + XPadd_left;
-        final y = GraphYSize - 1;
-
-        Paint LinePaint = Paint()
-          ..color = Color(0xff858E93)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 0.75;
-
-        Path path = Path();
-        path.moveTo(x, y);
-        path.lineTo(x, YPadd_top);
-        canvas.drawPath(path, LinePaint);
-
-        path.close();
-      }
-    } else {
-      for (int i = 0; i < 6; i++) {
-        final XGridUnit = GraphXSize / 6;
-        final x = GraphXSize - i * XGridUnit + XPadd_left;
-        final y = GraphYSize - 1;
-
-        Paint LinePaint = Paint()
-          ..color = Color(0xff858E93)
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 0.75;
-
-        Path path = Path();
-        path.moveTo(x, y);
-        path.lineTo(x, YPadd_top);
-        canvas.drawPath(path, LinePaint);
-
-        path.close();
       }
     }
   }

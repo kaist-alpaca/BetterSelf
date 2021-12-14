@@ -52,6 +52,22 @@ class HomeGraphInfo {
 
   late final double blank_tagcontainer; //태그와 그래프1 사이의 간격
 
+  late final TextStyle text_graph1Date; //그래프1의 x축 텍스트 정보
+  late final Paint xAxis; //그래프1의 x축 정보
+  late final Paint ygrid; //그래프1의 y축 그리드 정보
+
+  late final double blank_graph1; //그래프1과 그래프2 설명 사이의 간격
+
+  late final double indent_graph2Exp; //그래프2 설명들의 들여쓰기 정도
+  late final TextStyle text_graph2Exp; //그래프2 설명 텍스트 정보
+  late final double blank_graph2Exp; //그래프2 설명 사이의 간격
+  late final double blank_graph2ExpContainer; //그래프2 설명과 그래프2 사이의 간격
+  late final Color graph2Color_sleep; //그래프2의 수면 색
+  late final Color graph2Color_breakfast; //그래프2의 아침 색
+  late final Color graph2Color_lunch; //그래프2의 점심 색
+  late final Color graph2Color_dinner; //그래프2의 저녁 색
+  late final Color graph2Color_snack; //그래프2의 간식 색
+
   HomeGraphInfo(this.valWidth, {this.valPixel = 364}) {
     this.widthRatio = valWidth / valPixel;
 
@@ -84,6 +100,38 @@ class HomeGraphInfo {
     blank_spaceTags = 10 * widthRatio;
 
     blank_tagcontainer = 24;
+
+    text_graph1Date = TextStyle(
+      fontFamily: "NotoSans",
+      fontSize: 12,
+      color: Color(0xffFFFDFD),
+    );
+    xAxis = Paint()
+      ..color = Color(0xffFDFDFD)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.6;
+    ygrid = Paint()
+      ..color = Color(0xff546269)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.5;
+
+    blank_graph1 = 26;
+
+    indent_graph2Exp = 25 * widthRatio;
+    text_graph2Exp = TextStyle(
+      fontFamily: 'NotoSans',
+      fontWeight: FontWeight.w500,
+      fontSize: 10,
+      color: Color(0xffFFFDFD),
+    );
+    blank_graph2Exp = 9 * widthRatio;
+    blank_graph2ExpContainer = 13 * widthRatio;
+
+    graph2Color_sleep = Color(0xff48575F);
+    graph2Color_breakfast = Color(0xff8DBFBC);
+    graph2Color_lunch = Color(0xffF2D8A7);
+    graph2Color_dinner = Color(0xffA0B1DF);
+    graph2Color_snack = Color(0xffD2ABBA);
   }
 }
 
@@ -94,6 +142,12 @@ class HomeCoachingInfo {
   double valPixel;
 
   late final double widthRatio; //피그마의 수치를 실제 픽셀값으로 바꿔주는 비율
+
+  late final double blank_graph1; //그래프1과 홈 디바이더 사이 간격
+  late final TextStyle homeDivider; //홈 디바이더 정보
+  late final double lefthomeDivider; //홈 디바이더의 왼쪽 크기
+  late final double texthomeDivider; //홈 디바이더의 텍스트 부분 크기
+  late final Color color_homeDivder; //홈 디바이더 색
 
   late final double indent_coaching; //"oo데이터 코칭+날짜" 컨테이너의 들여쓰기 크기
   late final double box_coaching; //"oo데이터 코칭" 텍스트 컨테이너 사이즈
@@ -110,6 +164,16 @@ class HomeCoachingInfo {
   //실제 context의 크기에 맞춰 값 생성
   HomeCoachingInfo(this.valWidth, {this.valPixel = 364}) {
     this.widthRatio = valWidth / valPixel;
+
+    blank_graph1 = 35 * widthRatio;
+
+    homeDivider = TextStyle(
+      fontSize: 14,
+      color: Color(0xffAA8F9D),
+    );
+    lefthomeDivider = 48 * widthRatio;
+    texthomeDivider = 58 * widthRatio;
+    color_homeDivder = Color(0xff6E6572);
 
     indent_coaching = 40 * widthRatio;
     box_coaching = 100 * widthRatio;
@@ -131,34 +195,28 @@ class HomeCoachingInfo {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: valWidth * 0.02,
-          ),
-          Container(
-            width: valWidth * 0.3,
+            width: 121 * widthRatio,
             child: Divider(
               color: Color(0xff30414A),
               thickness: 1,
             ),
           ),
-          Container(
-            width: valWidth * 0.045,
+          SizedBox(
+            width: 9 * widthRatio,
           ),
           Container(
-              width: valWidth * 0.06,
-              height: valWidth * 0.06,
+              width: 25 * widthRatio,
+              height: 25 * widthRatio,
               child: Image.asset('images/coaching_icon.png')),
-          Container(
-            width: valWidth * 0.045,
+          SizedBox(
+            width: 9 * widthRatio,
           ),
           Container(
-            width: valWidth * 0.3,
+            width: 121 * widthRatio,
             child: Divider(
               color: Color(0xff30414A),
-              thickness: 0.6,
+              thickness: 1,
             ),
-          ),
-          SizedBox(
-            height: 15,
           ),
         ],
       ),

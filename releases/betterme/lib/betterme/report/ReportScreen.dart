@@ -2,6 +2,7 @@ import 'package:betterme/betterme/report/Widgets/total_report/CoachingSet.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
 import 'package:betterme/functions/Widgets/DividewithObj.dart';
 import 'package:betterme/betterme/report/Widgets/total_report/ReportSet.dart';
+import 'package:betterme/functions/Widgets/WidgetInfo.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -109,6 +110,8 @@ class _ReportScreen extends State<ReportScreen> {
 
     final txtFeildColor = Color(0xff333C47); //텍스트
     final double TextfieldSize = 40;
+
+    HomeCoachingInfo homeinfo = HomeCoachingInfo(valWidth);
 
     print('rebuild2');
 
@@ -1194,24 +1197,21 @@ class _ReportScreen extends State<ReportScreen> {
                         // ),
                         ReportSet(buttonCase: buttonCase),
                         SizedBox(
-                          height: 7,
+                          height: homeinfo.blank_graph1,
                         ),
                         DividewithObj(
                             context,
                             Container(
-                                width: valWidth * 0.25,
+                                width: homeinfo.texthomeDivider,
                                 child: Text(
                                   "코칭",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.pink[100],
-                                  ),
+                                  style: homeinfo.homeDivider,
                                   textAlign: TextAlign.center,
                                 )),
                             0.15,
                             0.6),
                         SizedBox(
-                          height: 10,
+                          height: 0,
                         ),
                         CoachingSet(buttonCase)
                       ],

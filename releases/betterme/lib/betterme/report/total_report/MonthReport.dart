@@ -59,9 +59,7 @@ class _MonthReport extends State<MonthReport> {
                   Tag(homeinfo, 5),
                 ],
               ),
-              SizedBox(
-                width: homeinfo.blank_tagcontainer,
-              ),
+              SizedBox(height: homeinfo.blank_tagcontainer),
               TotalGraphs(GraphTypes: graphTypes, Duration: 31),
             ],
           ),
@@ -76,9 +74,15 @@ class _MonthReport extends State<MonthReport> {
         ServerConnection.write_log('ReportScreen', 'month_tag_whole', '');
         setState(
           () {
-            for (var i = 0; i < graphTypes.length; i++) {
-              graphTypes[i] = !graphTypes[0];
-            } //모두 끈다
+            (graphTypes.contains(true))
+                ? {
+                    for (var i = 0; i < graphTypes.length; i++)
+                      {graphTypes[i] = false} //모두 끈다
+                  }
+                : {
+                    for (var i = 0; i < graphTypes.length; i++)
+                      {graphTypes[i] = true} //모두 끈다
+                  };
           },
         );
       },
@@ -103,15 +107,7 @@ class _MonthReport extends State<MonthReport> {
           ServerConnection.write_log(
               'ReportScreen', 'month_tag_' + graphNum.toString(), '');
           setState(() {
-            graphTypes[graphNum] = !graphTypes[graphNum];
-
-            graphTypes[0] = false;
-            for (int i = 1; i < graphTypes.length; i++) {
-              if (graphTypes[i] == true) {
-                graphTypes[0] = true;
-                break;
-              }
-            }
+            graphTypes[graphNum - 1] = !graphTypes[graphNum - 1];
           });
         },
         child: Container(
