@@ -15,12 +15,13 @@ var CoachingBiotimes = [];
 var CoachingFoodtexts = [];
 var CoachingFoodtimes = [];
 
-var user = AuthMethods()
-    .auth
-    .currentUser!
-    .email
-    .toString()
-    .replaceAll("@gmail.com", "");
+// var user = AuthMethods()
+//     .auth
+//     .currentUser!
+//     .email
+//     .toString()
+//     .replaceAll("@gmail.com", "");
+var user = AuthMethods().auth.currentUser!.email.toString().split('@')[0];
 
 var currentuser = AuthMethods().auth.currentUser!.uid;
 
