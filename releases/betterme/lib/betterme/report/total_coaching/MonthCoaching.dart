@@ -215,6 +215,7 @@ class _MonthCoaching extends State<MonthCoaching> {
                               button2Color = Color(0xff0B202A);
                               button4Color = Color(0xff0B202A);
                             });
+                            print('buttonCase ?? : ${buttonCase}');
                           },
                         ),
                         ElevatedButton(

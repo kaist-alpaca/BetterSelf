@@ -202,9 +202,12 @@ class _MonthCoachingBody extends State<MonthCoachingBody> {
     String formattedDate = DateFormat('y/M/dd').format(selectedDay);
     HomeCoachingInfo homeInfo = HomeCoachingInfo(valWidth);
 
+    print('buttonCase : ${buttonCase}');
+
     switch (buttonCase) {
       // 운동
       case DataType.exercise:
+        print('운동');
         return Column(
           children: [
             CoachingDate(context, '운동 기록 및 코칭', '$formattedDate'),

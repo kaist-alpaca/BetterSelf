@@ -214,7 +214,7 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                             ServerConnection.write_log(
                                 'ReportScreen', 'month_coaching_exercise', '');
                             setState(() {
-                              DataType buttonCase = DataType.exercise;
+                              buttonCase = DataType.exercise;
                               button2Color = Color(0xff827380);
                               button4Color = Color(0xff0B202A);
                               button3Color = Color(0xff0B202A);
@@ -241,11 +241,12 @@ class _SevenDaysCoaching extends State<SevenDaysCoaching> {
                             ServerConnection.write_log(
                                 'ReportScreen', 'month_coaching_food', '');
                             setState(() {
-                              DataType buttonCase = DataType.diet;
+                              buttonCase = DataType.diet;
                               button3Color = Color(0xff827380);
                               button2Color = Color(0xff0B202A);
                               button4Color = Color(0xff0B202A);
                             });
+                            print('buttonCase !! : ${buttonCase}');
                           },
                         ),
                         ElevatedButton(
