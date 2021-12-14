@@ -112,15 +112,33 @@ class ServerConnection {
     print(startDate);
     print(startTime);
     print(weight);
-    await http.get(Uri.parse(
-        "http://kaistuser.iptime.org:8080/upload_weight.php?uid=" +
-            uid +
-            "&startDate=" +
-            startDate +
-            "&startTime=" +
-            startTime.toString() +
-            "&weight=" +
-            weight.toString()));
+    final key_list = await Encryption.create_aes_key();
+    final aes_key_encrypt_rsa = await Encryption.encrypt_rsa(text: key_list[1]);
+
+    var data = {};
+    data['uid'] = await Encryption.encrypt_aes(text: uid, key: key_list[0]);
+    data['startDate'] = await Encryption.encrypt_sha(text: startDate);
+    data['startTime'] =
+        await Encryption.encrypt_rsa(text: startTime.toString());
+    data['weight'] = await Encryption.encrypt_rsa(text: weight.toString());
+
+    var result = await http.get(Uri.parse(
+        "http://kaistuser.iptime.org:8080/upload_weight.php?aes_key_encrypt_rsa=" +
+            json.encode(aes_key_encrypt_rsa) +
+            "&data=" +
+            await Encryption.encrypt_aes_json_encoded(
+                text: json.encode(data), key: key_list[0])));
+
+    print(json.decode(result.body));
+    // await http.get(Uri.parse(
+    //     "http://kaistuser.iptime.org:8080/upload_weight.php?uid=" +
+    //         uid +
+    //         "&startDate=" +
+    //         startDate +
+    //         "&startTime=" +
+    //         startTime.toString() +
+    //         "&weight=" +
+    //         weight.toString()));
   }
 
   static Future<void> createUser(

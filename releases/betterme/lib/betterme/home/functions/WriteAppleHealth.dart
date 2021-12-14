@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:betterme/functions/Controllers/profile_controller.dart';
 import 'package:betterme/functions/Controllers/server_connection.dart';
+import 'package:betterme/functions/Encryption/Encryption.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:health_kit_reporter/health_kit_reporter.dart';
