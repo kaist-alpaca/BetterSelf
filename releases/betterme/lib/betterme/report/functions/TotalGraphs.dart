@@ -41,7 +41,7 @@ class _TotalGraphsState extends State<TotalGraphs> {
     // print('send date');
     // print(time);
 
-    int tmpcnt = 1;
+    int tmpcnt = 0;
     widget.GraphTypes.forEach((e) {
       print("dedbug e : $e");
       if (e) tmpcnt++;
@@ -590,7 +590,7 @@ class PathPainterWeight extends CustomPainter {
       e.value =
           (e.value - (min - 2)) * ((GraphYSize - 1) / 3) / (max - min + 4);
 
-      if (ProfileController.to.total_graph_type == 3) {
+      if (ProfileController.to.total_graph_type == 3 || isshowingone) {
         e.value *= 3;
       }
     });
@@ -609,15 +609,16 @@ class PathPainterWeight extends CustomPainter {
     canvas.drawPath(
         path, LinePaint); /////////////////////////////////////// draw line
 
-    if (isshowingone &&
-        ProfileController.to.total_graph_type == 3 &&
-        WeightData.isNotEmpty) {
+    if (isshowingone && WeightData.isNotEmpty) {
       /////////////////////////////////////////////////////////// draw y axis
       drawTextCentered(canvas, Offset(size.width - 15, 0), '${max + 2}',
           TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
       drawTextCentered(canvas, Offset(size.width - 15, size.height - 50),
           '${min - 2}', TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
     }
+
+    print(
+        'weight checker : ${isshowingone} & ${ProfileController.to.total_graph_type} & ${WeightData.isNotEmpty}');
 
     if (ProfileController.to.duration == 7) {
       //////////////////////////////// draw circle
@@ -756,7 +757,7 @@ class PathPainterSleep extends CustomPainter {
       e.value =
           (e.value - (min - 2)) * ((GraphYSize - 1) / 3) / (max - min + 4);
 
-      if (ProfileController.to.total_graph_type == 1) {
+      if (ProfileController.to.total_graph_type == 1 || isshowingone) {
         e.value *= 3;
       }
     });
@@ -764,7 +765,7 @@ class PathPainterSleep extends CustomPainter {
     var datapath = TotalGraphHelper.ComputePoints(
         SleepData,
         GraphXSize,
-        ProfileController.to.total_graph_type == 1
+        ProfileController.to.total_graph_type == 1 || isshowingone
             ? (GraphYSize - 1)
             : (GraphYSize - 1) / 3,
         duration,
@@ -790,9 +791,7 @@ class PathPainterSleep extends CustomPainter {
       });
     }
 
-    if (isshowingone &&
-        ProfileController.to.total_graph_type == 1 &&
-        SleepData.isNotEmpty) {
+    if (isshowingone && SleepData.isNotEmpty) {
       /////////////////////////////////////////////////////////// draw y axis
       drawTextCentered(
           canvas,
@@ -937,7 +936,7 @@ class PathPainterStress extends CustomPainter {
       e.value =
           (e.value - (min - 2)) * ((GraphYSize - 1) / 3) / (max - min + 4);
 
-      if (ProfileController.to.total_graph_type == 1) {
+      if (ProfileController.to.total_graph_type == 1 || isshowingone) {
         e.value *= 3;
       }
     });
@@ -945,7 +944,7 @@ class PathPainterStress extends CustomPainter {
     var datapath = TotalGraphHelper.ComputePoints(
         StressData,
         GraphXSize,
-        ProfileController.to.total_graph_type == 1
+        ProfileController.to.total_graph_type == 1 || isshowingone
             ? (GraphYSize - 1)
             : (GraphYSize - 1) / 3,
         duration,
@@ -960,9 +959,7 @@ class PathPainterStress extends CustomPainter {
     Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
 
-    if (isshowingone &&
-        ProfileController.to.total_graph_type == 1 &&
-        stress.isNotEmpty) {
+    if (isshowingone && stress.isNotEmpty) {
       /////////////////////////////////////////////////////////// draw y axis
       drawTextCentered(canvas, Offset(size.width - 15, 0), '${100}',
           TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
@@ -1113,7 +1110,7 @@ class PathPainterFood extends CustomPainter {
       // e.value += floor + YPadd_bottom;
       e.value = (e.value - (min)) * ((GraphYSize - 1) / 3) / (max + 200 - min);
 
-      if (ProfileController.to.total_graph_type == 2) {
+      if (ProfileController.to.total_graph_type == 2 || isshowingone) {
         e.value *= 3;
       }
     });
@@ -1121,7 +1118,7 @@ class PathPainterFood extends CustomPainter {
     var datapath = TotalGraphHelper.ComputePoints(
         DietData,
         GraphXSize,
-        ProfileController.to.total_graph_type == 2
+        ProfileController.to.total_graph_type == 2 || isshowingone
             ? (GraphYSize - 1)
             : ((GraphYSize - 1) / 3 * 2),
         duration,
@@ -1137,9 +1134,7 @@ class PathPainterFood extends CustomPainter {
     Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
 
-    if (isshowingone &&
-        ProfileController.to.total_graph_type == 2 &&
-        food.isNotEmpty) {
+    if (isshowingone && food.isNotEmpty) {
       /////////////////////////////////////////////////////////// draw y axis
       drawTextCentered(canvas, Offset(size.width - 15, 0), '${(max).round()}',
           TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
@@ -1305,7 +1300,7 @@ class PathPainterBurned extends CustomPainter {
       // e.value += floor + YPadd_bottom;
       e.value = (e.value - (min)) * ((GraphYSize - 1) / 3) / (max - min);
 
-      if (ProfileController.to.total_graph_type == 2) {
+      if (ProfileController.to.total_graph_type == 2 || isshowingone) {
         e.value *= 3;
       }
     });
@@ -1313,7 +1308,7 @@ class PathPainterBurned extends CustomPainter {
     var datapath = TotalGraphHelper.ComputePoints(
         BurnedData,
         GraphXSize,
-        ProfileController.to.total_graph_type == 2
+        ProfileController.to.total_graph_type == 2 || isshowingone
             ? (GraphYSize - 1)
             : ((GraphYSize - 1) / 3 * 2),
         duration,
@@ -1329,9 +1324,7 @@ class PathPainterBurned extends CustomPainter {
     Path path = TotalGraphHelper.ComputePath(datapath, GraphXSize, duration);
     canvas.drawPath(path, LinePaint);
 
-    if (isshowingone &&
-        ProfileController.to.total_graph_type == 2 &&
-        BurnedData.isNotEmpty) {
+    if (isshowingone && BurnedData.isNotEmpty) {
       /////////////////////////////////////////////////////////// draw y axis
       drawTextCentered(canvas, Offset(size.width - 15, 0), '${max.round()}',
           TextStyle(fontSize: 12, color: Color(0xff858e93)), 40);
