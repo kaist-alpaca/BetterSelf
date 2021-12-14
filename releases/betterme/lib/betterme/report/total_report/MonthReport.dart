@@ -17,6 +17,14 @@ class MonthReport extends StatefulWidget {
 
 class _MonthReport extends State<MonthReport> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('sevenreport init');
+    graphTypes = [true, true, true, true, true];
+  }
+
+  @override
   Widget build(BuildContext context) {
     final valWidth = MediaQuery.of(context).size.width; //화면 너비
     final HomeGraphInfo homeinfo = HomeGraphInfo(valWidth);

@@ -16,7 +16,13 @@ class YearReport extends StatefulWidget {
 }
 
 class _YearReport extends State<YearReport> {
-  List<bool> graphTypes = [true, true, true, true, true];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('sevenreport init');
+    graphTypes = [true, true, true, true, true];
+  }
 
   @override
   Widget build(BuildContext context) {

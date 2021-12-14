@@ -31,7 +31,13 @@ class SevenDaysReport extends StatefulWidget {
 //   int count;
 
 class _SevenDaysReport extends State<SevenDaysReport> {
-  List<bool> graphTypes = [true, true, true, true, true];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('sevenreport init');
+    graphTypes = [true, true, true, true, true];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +47,8 @@ class _SevenDaysReport extends State<SevenDaysReport> {
     double miniBoxSize = 0.015;
 
     HomeGraphInfo homeinfo = HomeGraphInfo(valWidth);
+
+    print('sevenreport again');
 
     return GetBuilder<ProfileController>(builder: (controller) {
       return Container(
