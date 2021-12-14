@@ -179,7 +179,7 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
 
     bool hasFocus = phoneNumberFocusNode.hasFocus;
     bool hasFocus1 = phoneNumberFocusNode1.hasFocus;
-    bool hasFocus2 = phoneNumberFocusNode1.hasFocus;
+    bool hasFocus2 = phoneNumberFocusNode2.hasFocus;
 
     return GetBuilder<ProfileController>(builder: (controller) {
       return Scaffold(
@@ -225,8 +225,8 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                                           builder: (BuildContext context) =>
                                               CupertinoActionSheet(
                                             title: const Text('프로필 이미지 수정'),
-                                            message:
-                                                const Text('Your options are '),
+                                            // message:
+                                            //     const Text('Your options are '),
                                             actions: <Widget>[
                                               CupertinoActionSheetAction(
                                                 child: const Text('사진 촬영'),
@@ -408,7 +408,20 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                                 textAlign: TextAlign.center)),
                         GestureDetector(
                           onTap: () {
-                            gender = controller.gender == '여' ? '여' : '남';
+                            if (hasFocus) {
+                              phoneNumberFocusNode.unfocus();
+                            }
+                            if (hasFocus1) {
+                              phoneNumberFocusNode1.unfocus();
+                            }
+                            if (hasFocus2) {
+                              phoneNumberFocusNode2.unfocus();
+                            }
+                            gender = controller.gender == '여'
+                                ? '여'
+                                : controller.gender == '남'
+                                    ? '남'
+                                    : '선택안함';
                             // _openDatePicker(context);
                             // BottomPicker(
                             //         items: genderList,
@@ -564,6 +577,15 @@ class _InitialSettingScreenState extends State<InitialSettingScreen>
                                 textAlign: TextAlign.center)),
                         GestureDetector(
                           onTap: () {
+                            if (hasFocus) {
+                              phoneNumberFocusNode.unfocus();
+                            }
+                            if (hasFocus1) {
+                              phoneNumberFocusNode1.unfocus();
+                            }
+                            if (hasFocus2) {
+                              phoneNumberFocusNode2.unfocus();
+                            }
                             birth = controller.birthday == '/00/00'
                                 ? "2000-01-01"
                                 : controller.birthday!;
