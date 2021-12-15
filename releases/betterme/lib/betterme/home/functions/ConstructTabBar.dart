@@ -37,14 +37,16 @@ class _ConstructTabBar extends State<ConstructTabBar> {
       //     duration: Duration(milliseconds: 100), curve: Curves.bounceInOut);
       // ConstructTabBar(getPageIndex: 1);
       // ConstructTabBar(getPageIndex: 1);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ChatroomScreen(
-                  message.data['tousernamechatwith_uid'],
-                  message.data['namechatwith'],
-                  message.data['imgUrl'],
-                  message.data['send_uid'])));
+      if (message.data['timed'] != "timed") {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ChatroomScreen(
+                    message.data['tousernamechatwith_uid'],
+                    message.data['namechatwith'],
+                    message.data['imgUrl'],
+                    message.data['send_uid'])));
+      }
       // Navigator.push(
       //     context,
       //     MaterialPageRoute(
