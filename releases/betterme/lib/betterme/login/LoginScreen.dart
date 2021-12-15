@@ -115,7 +115,7 @@ class _LoginScreen extends State<LoginScreen> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(
-            height: valHeight * 0.27,
+            height: valHeight * 0.25,
           ), // 가장 위 빈 공간
           // CircleAvatar(
           //   radius: valWidth * 0.12,
@@ -129,7 +129,7 @@ class _LoginScreen extends State<LoginScreen> {
             // child: SvgPicture.asset('images/appLogo.svg'), //나중 여기에 앱아이콘
           ),
           SizedBox(
-            height: 131,
+            height: 100,
           ),
           GestureDetector(
             onTap: () {
