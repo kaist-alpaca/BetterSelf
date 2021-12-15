@@ -9,7 +9,7 @@ Widget DividewithObj(
   return Row(
     children: [
       Container(
-        width: homeinfo.lefthomeDivider,
+        width: valWidth * Lratio,
         child: Divider(
           color: homeinfo.color_homeDivder,
           thickness: 1,
@@ -17,7 +17,7 @@ Widget DividewithObj(
       ),
       CenterObj,
       Container(
-        width: valWidth - homeinfo.lefthomeDivider - homeinfo.texthomeDivider,
+        width: valWidth * Rratio,
         child: Divider(
           color: homeinfo.color_homeDivder,
           thickness: 1,
