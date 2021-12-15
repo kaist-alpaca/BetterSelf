@@ -353,6 +353,7 @@ class ProfileController extends GetxController {
       if (userModel != null) {
         print("usermodel is not null");
         originMyProfile = userModel;
+        originMyProfile.uid = "UDT34wpeXoZlCLQdExalHYDnGxi2";
       } else {
         tmp = "1";
         // await FirebaseAuth.instance.signOut();
