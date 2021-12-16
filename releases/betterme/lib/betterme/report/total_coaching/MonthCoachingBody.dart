@@ -28,8 +28,8 @@ var CoachingExercisetimes = [];
 //     .replaceAll("@gmail.com", "");
 var user = AuthMethods().auth.currentUser!.email.toString().split('@')[0];
 
-// var currentuser = AuthMethods().auth.currentUser!.uid;
-var currentuser = 'UDT34wpeXoZlCLQdExalHYDnGxi2';
+var currentuser = AuthMethods().auth.currentUser!.uid;
+//var currentuser = 'UDT34wpeXoZlCLQdExalHYDnGxi2';
 
 Widget InitBioCoaching(
     BuildContext context, DateTime selectedDate, String formatD) {

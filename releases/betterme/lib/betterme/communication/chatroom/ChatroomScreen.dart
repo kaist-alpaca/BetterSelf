@@ -280,8 +280,6 @@ class _ChatroomScreen extends State<ChatroomScreen> {
 
                   String formatted = DateFormat.jm().format(ThisMessageTime);
 
-                  print("debug time : $time, $cnt, ${snapshot.data!.docs.length}");
-
                   cnt = cnt + 1;
 
                   if (messageday != prevmessageday) {
