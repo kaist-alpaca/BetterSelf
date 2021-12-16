@@ -230,24 +230,32 @@ class _ChatroomScreen extends State<ChatroomScreen> {
           final maxtxtcontsize = valWidth * 0.55;
           double defaultSize = valWidth * 0.0025;
 
-          int printTime = 61;
 
           DateTime PrevTime = DateTime(0, 1, 22); //initialize
-          bool PrevWhoSended = true;
+          int PrevWhoSended = 2;
+          int cnt = 0;
+          List<bool> ptimelist;
 
           if (snapshot.hasData) {
             print('decrese app badge');
             ServerConnection.app_badge_count(trainer_uid: widget.trainer_uid);
 
+            List result = snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+              document.data()! as Map<String, dynamic>;
+              return data['time'].toDate();
+            }).toList();
+
             List<Widget> ChatList = List.from(snapshot.data!.docs
                 .map((DocumentSnapshot document) {
+
                   Map<String, dynamic> data =
                       document.data()! as Map<String, dynamic>;
 
-                  bool WhoSended =
+                  int WhoSended =
                       data['sendby'].toString().compareTo(user.toString()) == 0
-                          ? true
-                          : false;
+                          ? 1
+                          : 0;
 
                   bool SendedUserChanged = (PrevWhoSended == WhoSended);
 
@@ -258,15 +266,26 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                   String messageday = DateFormat.d().format(ThisMessageTime);
                   String prevmessageday = DateFormat.d().format(PrevTime);
 
-                  PrevTime = data['time'].toDate();
+                  bool time = true;
 
-                  DateTime Prontime = DateTime(0, 1, 22);
+                  if(cnt < snapshot.data!.docs.length - 1){
+                    time = ((result[cnt].day != result[cnt+1].day) ||
+                        (result[cnt].hour != result[cnt+1].hour) ||
+                        (result[cnt].minute != result[cnt+1].minute));
+                  } else{
+                    time = true;
+                  }
+
+                  PrevTime = ThisMessageTime;
+
                   String formatted = DateFormat.jm().format(ThisMessageTime);
 
-                  print("debug :$formatted");
+                  print("debug time : $time, $cnt, ${snapshot.data!.docs.length}");
+
+                  cnt = cnt + 1;
 
                   if (messageday != prevmessageday) {
-                    if (WhoSended) {
+                    if (WhoSended == 1) {
                       return ListTile(
                           title: Column(
                         children: [
@@ -437,47 +456,90 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                       }
                     }
                   } else {
-                    if (WhoSended) {
-                      return ListTile(
-                          title: Column(
-                        children: [
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                              //여기가 사용자 채팅
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: <Widget>[
-                                Text(formatted,
-                                    style: TextStyle(
-                                        color: txtColor, fontSize: 10)),
+                    if (WhoSended == 1) {
+                      if (!SendedUserChanged) {
+                        return ListTile(
+                            title: Column(
+                              children: [
                                 SizedBox(
-                                  width: 5,
+                                  height: 10,
                                 ),
-                                Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 6,
-                                        horizontal: valWidth * 0.02),
-                                    decoration: BoxDecoration(
-                                        color: blockColor,
-                                        borderRadius: BorderRadius.circular(
-                                            valWidth * 0.02)),
-                                    child: Align(
-                                      alignment: Alignment.center,
-                                      child: Container(
-                                          constraints: BoxConstraints(
-                                              maxWidth: maxtxtcontsize),
-                                          child: Text(
-                                            data['message'],
-                                            style: TextStyle(
-                                                color: txtColor, fontSize: 13),
-                                            softWrap: true,
-                                          )),
-                                    ))
-                              ])
-                        ],
-                      ));
+                                Row(
+                                  //여기가 사용자 채팅
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      Text(formatted,
+                                          style: TextStyle(
+                                              color: txtColor, fontSize: 10)),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 6,
+                                              horizontal: valWidth * 0.02),
+                                          decoration: BoxDecoration(
+                                              color: blockColor,
+                                              borderRadius: BorderRadius.circular(
+                                                  valWidth * 0.02)),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Container(
+                                                constraints: BoxConstraints(
+                                                    maxWidth: maxtxtcontsize),
+                                                child: Text(
+                                                  data['message'],
+                                                  style: TextStyle(
+                                                      color: txtColor, fontSize: 13),
+                                                  softWrap: true,
+                                                )),
+                                          ))
+                                    ])
+                              ],
+                            ));
+                      } else{
+                        return ListTile(
+                            title: Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  //여기가 사용자 채팅
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: <Widget>[
+                                      time? Text(formatted,
+                                          style: TextStyle(
+                                              color: txtColor, fontSize: 10)) : Container(),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Container(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 6,
+                                              horizontal: valWidth * 0.02),
+                                          decoration: BoxDecoration(
+                                              color: blockColor,
+                                              borderRadius: BorderRadius.circular(
+                                                  valWidth * 0.02)),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Container(
+                                                constraints: BoxConstraints(
+                                                    maxWidth: maxtxtcontsize),
+                                                child: Text(
+                                                  data['message'],
+                                                  style: TextStyle(
+                                                      color: txtColor, fontSize: 13),
+                                                  softWrap: true,
+                                                )),
+                                          ))
+                                    ])
+                              ],
+                            ));
+                      }
                     } else {
                       if (!SendedUserChanged) {
                         return ListTile(
@@ -576,9 +638,9 @@ class _ChatroomScreen extends State<ChatroomScreen> {
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  Text(formatted,
+                                  time ? Text(formatted,
                                       style: TextStyle(
-                                          color: txtColor, fontSize: 10))
+                                          color: txtColor, fontSize: 10)) : Container()
                                 ])
                           ],
                         ));
